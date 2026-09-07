@@ -1,4 +1,3 @@
-"use client";
 import { useState, useRef, useEffect } from "react";
 import {
   Activity,
@@ -26,7 +25,7 @@ import {
 import AnatomyViewer, { type ViewerAPI, type Structure } from "./viewer";
 import { lines, lessons, questions } from "./study-data";
 
-export default function Home() {
+export default function App() {
   const api = useRef<ViewerAPI | null>(null),
     stage = useRef<HTMLElement>(null);
   const [mode, setMode] = useState("muscles"),
@@ -114,7 +113,7 @@ export default function Home() {
   return (
     <div className="app-shell">
       <header className="topbar">
-        <a className="brand" href="/" aria-label="Form home">
+        <a className="brand" href={import.meta.env.BASE_URL} aria-label="Form home">
           <span className="brand-mark">
             <Activity size={24} />
           </span>
@@ -734,7 +733,7 @@ export default function Home() {
                 >
                   Creative Commons BY-SA 4.0 ↗
                 </a>
-                <a href="/body.glb" download>
+                <a href={`${import.meta.env.BASE_URL}body.glb`} download>
                   Download the anatomy model
                 </a>
                 <h3>Learning references</h3>

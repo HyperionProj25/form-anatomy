@@ -1,4 +1,3 @@
-"use client";
 import { useEffect, useRef, useState, type MutableRefObject } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
@@ -182,7 +181,7 @@ export default function AnatomyViewer(props: Props) {
       });
     };
     const draco = new DRACOLoader();
-    draco.setDecoderPath("/draco/");
+    draco.setDecoderPath(`${import.meta.env.BASE_URL}draco/`);
     draco.setWorkerLimit(2);
     const loader = new GLTFLoader();
     loader.setDRACOLoader(draco);
@@ -195,7 +194,7 @@ export default function AnatomyViewer(props: Props) {
         }
       });
     loader.load(
-      "/body.glb",
+      `${import.meta.env.BASE_URL}body.glb`,
       (gltf) => {
         if (disposed) {
           disposeModel(gltf.scene);
