@@ -1,0 +1,76 @@
+import { isPartId } from "../data/catalog";
+import { LINE_IDS, type LineId } from "../data/lines";
+import { REGION_ORDER } from "../data/regions";
+import type { Region } from "../data/types";
+import { initialState, type AppState, type LayerFilter, type Mode, type SideFilter } from "./store";
+import type { CameraPose, ViewPreset } from "../viewer/engine";
+
+const MODES: Mode[] = ["muscles", "bones", "fascia"];
+const PRESETS: ViewPreset[] = ["front", "back", "side"];
+const LAYERS: LayerFilter[] = ["all", "superficial", "deep"];
+const SIDES: SideFilter[] = ["both", "left", "right"];
+const MAX_HIDDEN = 20;
+
+const two = (n: number) => String(Math.round(n * 100) / 100);
+
+/** Query string for the shareable parts of state; "" when everything is default. */
+export function encodeState(s: AppState): string {
+  const q = new URLSearchParams();
+  if (s.mode !== initialState.mode) q.set("m", s.mode);
+  if (s.selected && isPartId(s.selected)) q.set("s", s.selected);
+  if (s.view === "custom") {
+    if (s.camera) q.set("c", [...s.camera.position, ...s.camera.target].map(two).join(","));
+  } else if (s.view !== initialState.view) q.set("v", s.view);
+  if (s.line !== initialState.line) q.set("l", s.line);
+  const hidden = s.hidden.filter(isPartId).slice(0, MAX_HIDDEN);
+  if (hidden.length) q.set("h", hidden.join(","));
+  if (s.filters.region !== "all") q.set("r", s.filters.region);
+  if (s.filters.layer !== "all") q.set("d", s.filters.layer);
+  if (s.filters.side !== "both") q.set("side", s.filters.side);
+  // Commas are safe in a query string; keep them readable instead of %2C.
+  const str = q.toString().replace(/%2C/g, ",");
+  return str ? `?${str}` : "";
+}
+
+/** Partial state from a query string. Every value is validated on its own; bad ones are dropped. */
+export function decodeSearch(search: string): Partial<AppState> {
+  const q = new URLSearchParams(search);
+  const out: Partial<AppState> = {};
+  const m = q.get("m");
+  if (m && (MODES as string[]).includes(m)) out.mode = m as Mode;
+  const s = q.get("s");
+  if (s && isPartId(s)) out.selected = s;
+  const c = q.get("c");
+  const v = q.get("v");
+  if (c) {
+    const nums = c.split(",").map(Number);
+    if (nums.length === 6 && nums.every(Number.isFinite)) {
+      out.view = "custom";
+      out.camera = {
+        position: [nums[0], nums[1], nums[2]],
+        target: [nums[3], nums[4], nums[5]],
+      } as CameraPose;
+    }
+  } else if (v && (PRESETS as string[]).includes(v)) out.view = v as ViewPreset;
+  const l = q.get("l");
+  if (l && (LINE_IDS as string[]).includes(l)) out.line = l as LineId;
+  const h = q.get("h");
+  if (h) {
+    const ids = h.split(",").filter(isPartId).slice(0, MAX_HIDDEN);
+    if (ids.length) out.hidden = ids;
+  }
+  const r = q.get("r");
+  const d = q.get("d");
+  const side = q.get("side");
+  const region = r && (REGION_ORDER as string[]).includes(r) ? (r as Region) : null;
+  const layer = d && (LAYERS as string[]).includes(d) ? (d as LayerFilter) : null;
+  const sideF = side && (SIDES as string[]).includes(side) ? (side as SideFilter) : null;
+  if (region || layer || sideF)
+    out.filters = {
+      ...initialState.filters,
+      ...(region ? { region } : {}),
+      ...(layer ? { layer } : {}),
+      ...(sideF ? { side: sideF } : {}),
+    };
+  return out;
+}

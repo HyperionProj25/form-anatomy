@@ -1,5 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { lessons, lines, questions } from "../src/study-data";
+import { lessons } from "../src/data/lessons";
+import { LINE_IDS, lines } from "../src/data/lines";
+import { questions } from "../src/data/questions";
 
 describe("fascial line data", () => {
   test("has five lines with hex colors, a camera view, and at least three stops", () => {
@@ -14,6 +16,10 @@ describe("fascial line data", () => {
         expect(stop.match).toBe(stop.match.toLowerCase());
       }
     }
+  });
+
+  test("line ids are unique short slugs", () => {
+    expect(LINE_IDS).toEqual(["sbl", "sfl", "ll", "bfl", "ffl"]);
   });
 
   test("line names are unique", () => {

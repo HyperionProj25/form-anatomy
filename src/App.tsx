@@ -25,7 +25,9 @@ import {
 import Viewer, { type CameraCommand, type ViewerHandle } from "./viewer/Viewer";
 import { computeStyles } from "./viewer/appearance";
 import { parts } from "./data/catalog";
-import { lines, lessons, questions } from "./study-data";
+import { lines } from "./data/lines";
+import { lessons } from "./data/lessons";
+import { questions } from "./data/questions";
 import { toStructure, uniqueByName, type Structure } from "./structures";
 
 export default function App() {
