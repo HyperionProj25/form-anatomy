@@ -3,8 +3,8 @@ import { lessons } from "../src/data/lessons";
 import { LINE_IDS, lines } from "../src/data/lines";
 
 describe("fascial line data", () => {
-  test("has six lines with hex colors, a camera view, and at least three stops", () => {
-    expect(lines.length).toBe(6);
+  test("has nine lines with hex colors, a camera view, and at least three stops", () => {
+    expect(lines.length).toBe(9);
     for (const line of lines) {
       expect(line.color).toMatch(/^#[0-9a-f]{6}$/i);
       expect(["front", "back", "side"]).toContain(line.view);
@@ -16,7 +16,7 @@ describe("fascial line data", () => {
   });
 
   test("line ids are unique short slugs", () => {
-    expect(LINE_IDS).toEqual(["sbl", "sfl", "ll", "sl", "bfl", "ffl"]);
+    expect(LINE_IDS).toEqual(["sbl", "sfl", "ll", "sl", "bfl", "ffl", "val", "lal", "dal"]);
   });
 
   test("line names are unique", () => {

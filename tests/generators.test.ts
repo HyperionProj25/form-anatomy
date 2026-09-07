@@ -71,6 +71,14 @@ describe("buildSet", () => {
     expect(set.some((q) => q.kind === "evidence")).toBe(true);
   });
 
+  test("arm chain sets draw only from that chain's muscles", () => {
+    const set = buildSet("line:dal", { rng: mulberry32(8), webgl: true });
+    const keys = lineKeys(lineById("dal")!);
+    expect(set.length).toBeGreaterThan(3);
+    for (const q of set) if (q.kind !== "evidence") expect(keys.has(q.key), q.key).toBe(true);
+    expect(set.some((q) => q.kind === "evidence")).toBe(true);
+  });
+
   test("without WebGL there are no find or identify questions", () => {
     const set = buildSet("mixed", { rng: mulberry32(9), webgl: false });
     expect(set.every((q) => q.kind === "fact" || q.kind === "evidence")).toBe(true);

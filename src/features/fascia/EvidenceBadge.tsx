@@ -6,6 +6,7 @@ const STATUS_LABEL: Record<Transition["status"], string> = {
   "not-verified": "Not verified",
   mechanical: "Mechanical only",
   "not-assessed": "Not assessed",
+  "chain-reported": "Chain reported",
 };
 
 function detailText(t: Transition): string {
@@ -20,6 +21,7 @@ function detailText(t: Transition): string {
       ? `0 continuity studies · ${t.generalAnatomyStudies} general-anatomy studies checked`
       : "0 continuity studies";
   if (t.status === "mechanical") return "not searched";
+  if (t.status === "chain-reported") return `${t.studies} studies for the whole chain`;
   return "outside the review";
 }
 
@@ -42,12 +44,14 @@ export function EvidenceBadge({ transition }: { transition: Transition }) {
   );
 }
 
-export function GradeBadge({ grade }: { grade: "strong" | "moderate" | "none" }) {
+export function GradeBadge({ grade }: { grade: "strong" | "moderate" | "none" | "reported" }) {
   const label =
     grade === "strong"
       ? "Strong evidence"
       : grade === "moderate"
         ? "Moderate evidence for parts"
-        : "No evidence";
+        : grade === "reported"
+          ? "Reported chain (2019 review)"
+          : "No evidence";
   return <span className={`grade-pill grade-${grade}`}>{label}</span>;
 }

@@ -13,7 +13,7 @@ import {
 import { useMemo } from "react";
 import { parts, partForSide, partById } from "../../data/catalog";
 import { filterParts, groupParts } from "../../data/groups";
-import { lines } from "../../data/lines";
+import { LINE_GROUPS, lines } from "../../data/lines";
 import { REGION_LABELS, REGION_ORDER } from "../../data/regions";
 import { useStore, type LayerFilter, type Mode, type SideFilter } from "../../state/store";
 
@@ -74,25 +74,31 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
 
       {showLines ? (
         <>
-          <div className="section-label">
-            MYOFASCIAL LINES <span>{lines.length}</span>
-          </div>
-          <div className="line-list">
-            {lines.map((l) => (
-              <button
-                className={`line-item ${line === l.id ? "selected" : ""}`}
-                key={l.id}
-                onClick={() => dispatch({ type: "setLine", line: l.id })}
-              >
-                <span className="line-dot" style={{ background: l.color }} />
-                <span>
-                  {l.name}
-                  <small>{l.subtitle}</small>
-                </span>
-                <ChevronRight size={15} />
-              </button>
-            ))}
-          </div>
+          {LINE_GROUPS.map((g) => (
+            <div key={g.id}>
+              <div className="section-label">
+                {g.label.toUpperCase()} <span>{lines.filter((l) => l.group === g.id).length}</span>
+              </div>
+              <div className="line-list">
+                {lines
+                  .filter((l) => l.group === g.id)
+                  .map((l) => (
+                    <button
+                      className={`line-item ${line === l.id ? "selected" : ""}`}
+                      key={l.id}
+                      onClick={() => dispatch({ type: "setLine", line: l.id })}
+                    >
+                      <span className="line-dot" style={{ background: l.color }} />
+                      <span>
+                        {l.name}
+                        <small>{l.subtitle}</small>
+                      </span>
+                      <ChevronRight size={15} />
+                    </button>
+                  ))}
+              </div>
+            </div>
+          ))}
           <div className="context-note">
             <Network size={18} />
             <p>

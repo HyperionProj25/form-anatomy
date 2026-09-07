@@ -2,9 +2,20 @@ import { partForSide } from "./catalog";
 import type { Side } from "./types";
 import type { CitationId } from "./research";
 
-export type LineId = "sbl" | "sfl" | "ll" | "sl" | "bfl" | "ffl";
+export type LineId = "sbl" | "sfl" | "ll" | "sl" | "bfl" | "ffl" | "val" | "lal" | "dal";
+export type LineGroup = "body" | "arm";
+export const LINE_GROUPS: { id: LineGroup; label: string }[] = [
+  { id: "body", label: "Body lines" },
+  { id: "arm", label: "Arm chains" },
+];
 export type ViewPreset = "front" | "back" | "side";
-export type EvidenceStatus = "verified" | "not-verified" | "mechanical" | "not-assessed";
+export type EvidenceStatus =
+  | "verified"
+  | "not-verified"
+  | "mechanical"
+  | "not-assessed"
+  /** The review reports the whole chain with a study count but no hop-level figures. */
+  | "chain-reported";
 
 /** Offset in side-relative model units: lateral (away from the midline), up, forward. */
 export type Anchor = { key: string; offset: [number, number, number] };
@@ -44,6 +55,7 @@ export type Stop = {
 
 export type Line = {
   id: LineId;
+  group: LineGroup;
   name: string;
   subtitle: string;
   color: string;
@@ -51,7 +63,7 @@ export type Line = {
   description: string;
   movement: string;
   evidence: {
-    grade: "strong" | "moderate" | "none";
+    grade: "strong" | "moderate" | "none" | "reported";
     summary: string;
     source: CitationId;
     forceTransfer?: { summary: string; source: CitationId };
@@ -75,6 +87,7 @@ const ERECTOR_KEYS = [
 export const lines: Line[] = [
   {
     id: "sbl",
+    group: "body",
     name: "Superficial back line",
     subtitle: "From sole to scalp",
     color: "#bd914b",
@@ -161,6 +174,7 @@ export const lines: Line[] = [
   },
   {
     id: "sfl",
+    group: "body",
     name: "Superficial front line",
     subtitle: "The anterior perspective",
     color: "#ca735b",
@@ -237,6 +251,7 @@ export const lines: Line[] = [
   },
   {
     id: "ll",
+    group: "body",
     name: "Lateral line",
     subtitle: "Along the sides of the body",
     color: "#7097a4",
@@ -328,6 +343,7 @@ export const lines: Line[] = [
   },
   {
     id: "sl",
+    group: "body",
     name: "Spiral line",
     subtitle: "Wrapping the trunk and leg",
     color: "#4f8a8b",
@@ -487,6 +503,7 @@ export const lines: Line[] = [
   },
   {
     id: "bfl",
+    group: "body",
     name: "Back functional line",
     subtitle: "Across the back and pelvis",
     color: "#809571",
@@ -557,6 +574,7 @@ export const lines: Line[] = [
   },
   {
     id: "ffl",
+    group: "body",
     name: "Front functional line",
     subtitle: "Across the chest and pelvis",
     color: "#9e7c9b",
@@ -611,6 +629,181 @@ export const lines: Line[] = [
         key: "adductor-longus",
         note: "Medial thigh, back on the first side",
         crosses: true,
+      },
+    ],
+  },
+  {
+    id: "val",
+    group: "arm",
+    name: "Ventral arm chain",
+    subtitle: "Chest to the front of the forearm",
+    color: "#c4586e",
+    view: "front",
+    description:
+      "A serial chain reported by Wilke and Krause (2019) from pectoralis major through the brachial fascia and biceps brachii into the forearm flexors, brachioradialis and supinator.",
+    movement:
+      "Pushing and pulling with the arm in front of the body recruit this sequence. Compare the joints each muscle crosses: the chain does not mean they share one action.",
+    evidence: {
+      grade: "reported",
+      summary:
+        "Identified in the 2019 systematic review of upper-limb dissection studies from five studies. The review found good evidence for serial tissue continuity from the shoulder to the forearm but did not establish mechanical relevance. Hop-level counts are not available from its abstract.",
+      source: "wilkeKrause2019",
+    },
+    path: [
+      {
+        name: "Pectoralis major",
+        key: "sternocostal-head-of-pectoralis-major-muscle",
+        keys: ["clavicular-head-of-pectoralis-major-muscle", "abdominal-part-of-pectoralis-major-muscle"],
+        note: "Anterior chest",
+        transition: {
+          status: "chain-reported",
+          studies: 5,
+          note: "The 2019 review identified this chain from five dissection studies. Hop-level counts are not reported in its abstract.",
+          source: "wilkeKrause2019",
+        },
+      },
+      {
+        name: "Biceps brachii & brachial fascia",
+        key: "long-head-of-biceps-brachii",
+        keys: ["short-head-of-biceps-brachii"],
+        note: "Front of the upper arm; the brachial fascia is not separately modeled",
+        transition: {
+          status: "chain-reported",
+          studies: 5,
+          note: "The 2019 review identified this chain from five dissection studies. Hop-level counts are not reported in its abstract.",
+          source: "wilkeKrause2019",
+        },
+      },
+      {
+        name: "Forearm flexors, brachioradialis & supinator",
+        key: "humeral-head-of-flexor-carpi-ulnaris",
+        keys: ["ulnar-head-of-flexor-carpi-ulnaris", "brachioradialis-muscle", "supinator"],
+        note: "Proximal forearm",
+      },
+    ],
+  },
+  {
+    id: "lal",
+    group: "arm",
+    name: "Lateral arm chain",
+    subtitle: "Neck to the outer forearm",
+    color: "#5c7fb8",
+    view: "side",
+    description:
+      "A serial chain reported by Wilke and Krause (2019) from trapezius over the deltoid and the lateral intermuscular septum to brachialis and brachioradialis.",
+    movement:
+      "Reaching and lifting the arm to the side pass through these muscles in sequence. Each acts on a different joint: neck and shoulder blade, shoulder, elbow.",
+    evidence: {
+      grade: "reported",
+      summary:
+        "Identified in the 2019 systematic review from four dissection studies. Serial tissue continuity was supported; mechanical relevance was not established. Hop-level counts are not available from the abstract.",
+      source: "wilkeKrause2019",
+    },
+    path: [
+      {
+        name: "Trapezius",
+        key: "descending-part-of-trapezius-muscle",
+        keys: ["transverse-part-of-trapezius-muscle", "ascending-part-of-trapezius-muscle"],
+        note: "Neck and upper back",
+        view: "back",
+        transition: {
+          status: "chain-reported",
+          studies: 4,
+          note: "The 2019 review identified this chain from four dissection studies. Hop-level counts are not reported in its abstract.",
+          source: "wilkeKrause2019",
+        },
+      },
+      {
+        name: "Deltoid",
+        key: "acromial-part-of-deltoid-muscle",
+        keys: ["clavicular-part-of-deltoid-muscle", "scapular-spinal-part-of-deltoid-muscle"],
+        note: "Shoulder cap",
+        view: "side",
+        transition: {
+          status: "chain-reported",
+          studies: 4,
+          note: "The 2019 review identified this chain from four dissection studies. Hop-level counts are not reported in its abstract.",
+          source: "wilkeKrause2019",
+        },
+      },
+      {
+        name: "Brachialis & lateral intermuscular septum",
+        key: "brachialis-muscle",
+        note: "Deep front of the upper arm; the septum is not separately modeled",
+        view: "side",
+        transition: {
+          status: "chain-reported",
+          studies: 4,
+          note: "The 2019 review identified this chain from four dissection studies. Hop-level counts are not reported in its abstract.",
+          source: "wilkeKrause2019",
+        },
+      },
+      {
+        name: "Brachioradialis",
+        key: "brachioradialis-muscle",
+        note: "Lateral forearm",
+        view: "front",
+      },
+    ],
+  },
+  {
+    id: "dal",
+    group: "arm",
+    name: "Dorsal arm chain",
+    subtitle: "Back to the back of the forearm",
+    color: "#8a5fb0",
+    view: "back",
+    description:
+      "A serial chain reported by Wilke and Krause (2019) from latissimus dorsi, teres minor and infraspinatus through triceps brachii and anconeus to extensor carpi ulnaris.",
+    movement:
+      "Pulling the arm down and back and straightening the elbow use these muscles in turn. Compare their attachments on the humerus and ulna.",
+    evidence: {
+      grade: "reported",
+      summary:
+        "Identified in the 2019 systematic review from six dissection studies, the best-supported of the three arm chains. Mechanical relevance was not established. Hop-level counts are not available from the abstract.",
+      source: "wilkeKrause2019",
+    },
+    path: [
+      {
+        name: "Latissimus dorsi, teres minor & infraspinatus",
+        key: "latissimus-dorsi-muscle",
+        keys: ["teres-minor-muscle", "infraspinatus-muscle"],
+        note: "Back and posterior shoulder",
+        transition: {
+          status: "chain-reported",
+          studies: 6,
+          note: "The 2019 review identified this chain from six dissection studies. Hop-level counts are not reported in its abstract.",
+          source: "wilkeKrause2019",
+        },
+      },
+      {
+        name: "Triceps brachii",
+        key: "long-head-of-triceps-brachii",
+        keys: ["lateral-head-of-triceps-brachii", "medial-head-of-triceps-brachii"],
+        note: "Back of the upper arm",
+        transition: {
+          status: "chain-reported",
+          studies: 6,
+          note: "The 2019 review identified this chain from six dissection studies. Hop-level counts are not reported in its abstract.",
+          source: "wilkeKrause2019",
+        },
+      },
+      {
+        name: "Anconeus",
+        key: "anconeus-muscle",
+        note: "Small muscle behind the elbow",
+        transition: {
+          status: "chain-reported",
+          studies: 6,
+          note: "The 2019 review identified this chain from six dissection studies. Hop-level counts are not reported in its abstract.",
+          source: "wilkeKrause2019",
+        },
+      },
+      {
+        name: "Extensor carpi ulnaris",
+        key: "humeral-head-of-extensor-carpi-ulnaris",
+        keys: ["ulnar-head-of-extensor-carpi-ulnaris"],
+        note: "Posterior forearm",
       },
     ],
   },

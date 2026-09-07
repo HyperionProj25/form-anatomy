@@ -4,9 +4,27 @@ import { LINE_IDS, lineById, lineKeys, lines, stopSides } from "../src/data/line
 import { citationById } from "../src/data/research";
 
 describe("fascial lines", () => {
-  test("there are six lines in review order with unique ids and colors", () => {
-    expect(LINE_IDS).toEqual(["sbl", "sfl", "ll", "sl", "bfl", "ffl"]);
-    expect(new Set(lines.map((l) => l.color)).size).toBe(6);
+  test("there are six body lines and three arm chains with unique ids and colors", () => {
+    expect(LINE_IDS).toEqual(["sbl", "sfl", "ll", "sl", "bfl", "ffl", "val", "lal", "dal"]);
+    expect(new Set(lines.map((l) => l.color)).size).toBe(9);
+    expect(lines.filter((l) => l.group === "body").length).toBe(6);
+    expect(lines.filter((l) => l.group === "arm").length).toBe(3);
+  });
+
+  test("arm chains carry chain-level evidence only, with the review's study counts", () => {
+    const counts = (id: string) => lineById(id)!.path.filter((s) => s.transition?.status === "chain-reported").length;
+    expect(counts("val")).toBe(2);
+    expect(counts("lal")).toBe(3);
+    expect(counts("dal")).toBe(3);
+    for (const id of ["val", "lal", "dal"]) {
+      const line = lineById(id)!;
+      expect(line.evidence.grade).toBe("reported");
+      expect(line.evidence.source).toBe("wilkeKrause2019");
+      for (const s of line.path) if (s.transition) expect(s.transition.source).toBe("wilkeKrause2019");
+    }
+    expect(lineById("val")!.path[0].transition?.studies).toBe(5);
+    expect(lineById("lal")!.path[0].transition?.studies).toBe(4);
+    expect(lineById("dal")!.path[0].transition?.studies).toBe(6);
   });
 
   test("every stop key and extra key exists in the catalog; keyless stops have an anchor", () => {
@@ -28,7 +46,8 @@ describe("fascial lines", () => {
         if (i < line.path.length - 1) {
           expect(stop.transition, `${line.id}:${stop.name}`).toBeDefined();
           expect(citationById(stop.transition!.source)).toBeDefined();
-          if (stop.transition!.status === "verified") expect(stop.transition!.studies).toBeGreaterThan(0);
+          if (stop.transition!.status === "verified" || stop.transition!.status === "chain-reported")
+            expect(stop.transition!.studies).toBeGreaterThan(0);
           if (stop.transition!.status === "not-verified") expect(stop.transition!.studies).toBe(0);
         } else expect(stop.transition).toBeUndefined();
       });

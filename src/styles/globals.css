@@ -1856,3 +1856,17 @@ footer button {
     max-height: 60%;
   }
 }
+
+.evidence-chain-reported .evidence-pill {
+  background: #e6e2f0;
+  border-color: #c9bfdd;
+  color: #4f3f70;
+}
+.evidence-chain-reported {
+  border-left-color: #b9a9d6;
+}
+.grade-reported {
+  background: #e6e2f0;
+  border-color: #c9bfdd;
+  color: #4f3f70;
+}

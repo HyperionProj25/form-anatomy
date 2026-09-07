@@ -335,4 +335,46 @@ export const EVIDENCE_BANK: EvidenceQuestion[] = [
       "Gastrocnemius arises from the femoral condyles and inserts through the calcaneal tendon, crossing both joints. Soleus arises below the knee.",
     source: "openstax",
   },
+  {
+    id: "arm-ventral",
+    line: "val",
+    prompt: "Which sequence forms the ventral arm chain reported in the 2019 upper-limb review?",
+    options: [
+      "Pectoralis major, brachial fascia and biceps brachii, forearm flexors with brachioradialis and supinator",
+      "Trapezius, deltoid, brachialis, brachioradialis",
+      "Latissimus dorsi, triceps brachii, anconeus, extensor carpi ulnaris",
+    ],
+    correct: 0,
+    explanation:
+      "Five dissection studies supported the ventral chain from the chest through the front of the arm into the forearm.",
+    source: "wilkeKrause2019",
+  },
+  {
+    id: "arm-lateral",
+    line: "lal",
+    prompt: "In the lateral arm chain, what links the deltoid to the brachialis?",
+    options: [
+      "The lateral intermuscular septum",
+      "The thoracolumbar fascia",
+      "The bicipital aponeurosis",
+    ],
+    correct: 0,
+    explanation:
+      "The review describes the lateral chain as trapezius, deltoid, lateral intermuscular septum and brachialis, then brachioradialis, based on four studies.",
+    source: "wilkeKrause2019",
+  },
+  {
+    id: "arm-dorsal",
+    line: "dal",
+    prompt: "What did the 2019 review conclude about the mechanical relevance of the arm chains?",
+    options: [
+      "It was demonstrated in vivo for all three chains",
+      "It was not established; only serial tissue continuity was supported",
+      "It applies only to the dorsal chain",
+    ],
+    correct: 1,
+    explanation:
+      "Thirteen studies supported continuity from the neck and shoulder to the forearm, but the authors state that further research is needed to establish mechanical relevance.",
+    source: "wilkeKrause2019",
+  },
 ];
