@@ -24,6 +24,7 @@ import {
 } from "lucide-react";
 import AnatomyViewer, { type ViewerAPI, type Structure } from "./viewer";
 import { lines, lessons, questions } from "./study-data";
+import { uniqueByName } from "./structures";
 
 export default function App() {
   const api = useRef<ViewerAPI | null>(null),
@@ -52,7 +53,7 @@ export default function App() {
       (mode !== "muscles" || s.type === "muscle") &&
       `${s.name} ${s.detail}`.toLowerCase().includes(search.toLowerCase()),
   );
-  const unique = results;
+  const unique = uniqueByName(results);
   useEffect(() => {
     if (!modal) return;
     const previous = document.activeElement as HTMLElement | null;
@@ -262,7 +263,11 @@ export default function App() {
                   unique.map((s) => (
                     <button
                       key={s.id}
-                      className={selected?.id === s.id ? "selected" : ""}
+                      className={
+                        selected?.name.toLowerCase() === s.name.toLowerCase()
+                          ? "selected"
+                          : ""
+                      }
                       onClick={() => choose(s)}
                     >
                       <span>{s.name}</span>
@@ -336,7 +341,9 @@ export default function App() {
             <Layers size={15} /> Layers & search
           </button>
           <AnatomyViewer
-            api={api}
+            onApi={(a) => {
+              api.current = a;
+            }}
             mode={mode}
             line={activeLine}
             opacity={opacity / 100}
@@ -688,13 +695,18 @@ export default function App() {
         </div>
       </footer>
       {modal && (
-        <div className="modal-backdrop" onClick={() => setModal(null)}>
+        <div
+          className="modal-backdrop"
+          role="presentation"
+          onClick={(e) => {
+            if (e.target === e.currentTarget) setModal(null);
+          }}
+        >
           <section
             className="modal"
             role="dialog"
             aria-modal="true"
             aria-labelledby="modal-title"
-            onClick={(e) => e.stopPropagation()}
           >
             <button
               className="modal-close icon-button"
