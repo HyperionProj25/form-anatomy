@@ -9,7 +9,7 @@ import {
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
-import { useMemo, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { parts } from "./data/catalog";
 import { lineById, lineKeys, lines } from "./data/lines";
 import { StoreProvider, useStore } from "./state/store";
@@ -22,6 +22,9 @@ import DetailPanel from "./features/detail/DetailPanel";
 import StartPanel from "./features/detail/StartPanel";
 import FasciaPanel from "./features/fascia/FasciaPanel";
 import Modals from "./features/guide/Modals";
+import QuizOverlay from "./features/quiz/QuizOverlay";
+import { buildSet, mulberry32, type QuizSetId } from "./features/quiz/generators";
+import { loadProgress, weakSpots } from "./features/quiz/progress";
 import Toast from "./features/shared/Toast";
 
 export default function App() {
@@ -41,11 +44,27 @@ function Shell() {
   const [mobilePanel, setMobilePanel] = useState(false);
   const [toast, setToast] = useState<string | null>(null);
   const toastTimer = useRef(0);
-  const showToast = (message: string) => {
+  const showToast = useCallback((message: string) => {
     setToast(message);
     window.clearTimeout(toastTimer.current);
-    toastTimer.current = window.setTimeout(() => setToast(null), 2200);
-  };
+    toastTimer.current = window.setTimeout(() => setToast(null), 2600);
+  }, []);
+  const startQuiz = useCallback(
+    (setId: QuizSetId) =>
+      dispatch({
+        type: "startQuiz",
+        setId,
+        questions: buildSet(setId, {
+          rng: mulberry32(Date.now() >>> 0),
+          webgl: ready,
+          weakKeys: weakSpots(loadProgress()),
+        }),
+      }),
+    [dispatch, ready],
+  );
+  useEffect(() => {
+    if (state.quizRequest && !state.quiz && ready) startQuiz(state.quizRequest);
+  }, [state.quizRequest, state.quiz, ready, startQuiz]);
 
   const activeLine = lineById(state.line) ?? lines[0];
   const styles = useMemo(
@@ -230,6 +249,7 @@ function Shell() {
               explore
             </span>
           </div>
+          <QuizOverlay onStart={startQuiz} />
         </section>
         <aside className="right-panel">
           {state.selected ? (
@@ -256,7 +276,7 @@ function Shell() {
           </button>
         </div>
       </footer>
-      <Modals />
+      <Modals ready={ready} onStartQuiz={startQuiz} />
       <Toast message={toast} />
     </div>
   );

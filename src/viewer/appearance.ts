@@ -43,6 +43,8 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
     const chain = input.mode === "fascia" && p.type === "muscle" && input.lineKeys.has(p.key);
     const focused = !!input.focusIds?.has(p.id);
     const dimmedChain = chain && focusing && !focused;
+    // Outside fascia mode a focus (quiz target, "show me") fades everything else so deep parts show.
+    const revealed = focusing && input.mode !== "fascia" && !focused && !selected;
     const visible =
       !input.hidden.has(p.id) &&
       (!input.isolated || selected) &&
@@ -58,7 +60,8 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
             : COLORS.muscle;
     const emissive = selected ? COLORS.selectedEmissive : chain ? input.lineColor : COLORS.none;
     const emissiveIntensity = selected ? 0.26 : focused ? 0.45 : chain ? 0.08 : 0;
-    const opacity =
+    const emissiveColor = focused && !chain && !selected ? input.lineColor : emissive;
+    const baseOpacity =
       selected || focused
         ? 1
         : chain
@@ -72,7 +75,8 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
             : input.mode === "fascia"
               ? 0.1
               : input.opacity;
-    out.set(p.id, { visible, color, emissive, emissiveIntensity, opacity });
+    const opacity = revealed ? Math.min(baseOpacity, 0.28) : baseOpacity;
+    out.set(p.id, { visible, color, emissive: emissiveColor, emissiveIntensity, opacity });
   }
   return out;
 }

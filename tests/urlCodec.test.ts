@@ -44,6 +44,22 @@ describe("encodeState", () => {
     expect(decodeSearch("?t=2")).toEqual({});
     expect(decodeSearch("?m=fascia&t=99")).toEqual({ mode: "fascia" });
   });
+
+  test("pinned ids round-trip as p, capped at four valid ids", () => {
+    const s: AppState = { ...initialState, pinned: ["femur-l", "femur-r", "ghost"] };
+    expect(encodeState(s)).toBe("?p=femur-l,femur-r");
+    expect(decodeSearch("?p=femur-l,ghost,femur-r")).toEqual({ pinned: ["femur-l", "femur-r"] });
+  });
+
+  test("quiz set id round-trips as q", () => {
+    const s: AppState = {
+      ...initialState,
+      quiz: { setId: "region:leg-foot", questions: [], index: 0, answers: [], showing: false },
+    };
+    expect(encodeState(s)).toBe("?q=region:leg-foot");
+    expect(decodeSearch("?q=region:leg-foot")).toEqual({ quizRequest: "region:leg-foot" });
+    expect(decodeSearch("?q=region:moon")).toEqual({});
+  });
 });
 
 describe("decodeSearch", () => {

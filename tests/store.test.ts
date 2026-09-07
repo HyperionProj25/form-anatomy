@@ -1,4 +1,6 @@
 import { describe, expect, test } from "vitest";
+import { partForSide } from "../src/data/catalog";
+import { buildSet, mulberry32 } from "../src/features/quiz/generators";
 import { initialState, reducer } from "../src/state/store";
 
 describe("store reducer", () => {
@@ -124,5 +126,70 @@ describe("tours", () => {
       state: { mode: "fascia", line: "bfl", tour: { step: 2, playing: false } },
     });
     expect(s.focus?.flyId).toBe("gluteus-maximus-muscle-l");
+  });
+});
+
+describe("pins", () => {
+  test("togglePin adds, removes, and keeps at most four (oldest dropped)", () => {
+    let s = initialState;
+    for (const id of ["a", "b", "c", "d", "e"]) s = reducer(s, { type: "togglePin", id });
+    expect(s.pinned).toEqual(["b", "c", "d", "e"]);
+    s = reducer(s, { type: "togglePin", id: "c" });
+    expect(s.pinned).toEqual(["b", "d", "e"]);
+    s = reducer(s, { type: "unpin", id: "b" });
+    expect(s.pinned).toEqual(["d", "e"]);
+    expect(reducer(s, { type: "clearPins" }).pinned).toEqual([]);
+  });
+});
+
+describe("quiz session", () => {
+  const questions = buildSet("region:hip-thigh", { rng: mulberry32(4), webgl: true });
+
+  test("startQuiz opens a session, clears the modal and frames identify questions", () => {
+    let s = reducer(initialState, { type: "setModal", modal: "quiz" });
+    s = reducer(s, { type: "startQuiz", setId: "region:hip-thigh", questions });
+    expect(s.modal).toBeNull();
+    expect(s.quiz?.index).toBe(0);
+    expect(s.quiz?.answers.every((a) => a === null)).toBe(true);
+    if (questions[0].kind === "identify") expect(s.focus?.flyId).toBe(questions[0].partId);
+  });
+
+  test("clicking the model answers an open find question, either side counts", () => {
+    const find = questions.find((q) => q.kind === "find")!;
+    let s = reducer(initialState, { type: "startQuiz", setId: "region:hip-thigh", questions: [find] });
+    const left = partForSide(find.key, "left")!.id;
+    s = reducer(s, { type: "select", id: left });
+    expect(s.quiz?.answers[0]).toEqual({ correct: true, pickedId: left });
+    expect(s.selected).toBe(left);
+    s = reducer(s, { type: "select", id: "femur-l" });
+    expect(s.quiz?.answers[0]?.correct).toBe(true); // first answer sticks
+  });
+
+  test("a wrong click is recorded as incorrect with what was clicked", () => {
+    const find = questions.find((q) => q.kind === "find" && q.key !== "femur")!;
+    let s = reducer(initialState, { type: "startQuiz", setId: "region:hip-thigh", questions: [find] });
+    s = reducer(s, { type: "select", id: "femur-l" });
+    expect(s.quiz?.answers[0]).toEqual({ correct: false, pickedId: "femur-l" });
+  });
+
+  test("answer, show, resume, next and end", () => {
+    let s = reducer(initialState, { type: "startQuiz", setId: "mixed", questions });
+    s = reducer(s, { type: "answerQuiz", answer: { correct: false, picked: 1 } });
+    expect(s.quiz?.answers[0]).toEqual({ correct: false, picked: 1 });
+    s = reducer(s, { type: "quizShow" });
+    if (questions[0].kind !== "evidence") expect(s.quiz?.showing).toBe(true);
+    s = reducer(s, { type: "quizResume" });
+    expect(s.quiz?.showing).toBe(false);
+    s = reducer(s, { type: "quizNext" });
+    expect(s.quiz?.index).toBe(1);
+    expect(reducer(s, { type: "endQuiz" }).quiz).toBeNull();
+    expect(reducer(s, { type: "setMode", mode: "bones" }).quiz).toBeNull();
+  });
+
+  test("a URL quiz request is stored until the app starts it", () => {
+    const s = reducer(initialState, { type: "hydrate", state: { quizRequest: "line:sbl" } });
+    expect(s.quizRequest).toBe("line:sbl");
+    const started = reducer(s, { type: "startQuiz", setId: "line:sbl", questions });
+    expect(started.quizRequest).toBeNull();
   });
 });

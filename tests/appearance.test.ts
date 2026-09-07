@@ -81,6 +81,13 @@ describe("computeStyles", () => {
     expect(s.get("femur")?.opacity).toBe(1);
   });
 
+  test("outside fascia mode a focus fades everything else so a deep target shows", () => {
+    const s = computeStyles({ ...base, focusIds: new Set(["soleus"]) });
+    expect(s.get("soleus")).toMatchObject({ opacity: 1, emissiveIntensity: 0.45, emissive: "#bd914b" });
+    expect(s.get("gastro")?.opacity).toBe(0.28);
+    expect(s.get("femur")?.opacity).toBe(0.28);
+  });
+
   test("a focused tour part glows and the rest of the chain dims", () => {
     const s = computeStyles({
       ...base,

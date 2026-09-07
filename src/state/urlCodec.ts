@@ -4,12 +4,14 @@ import { REGION_ORDER } from "../data/regions";
 import type { Region } from "../data/types";
 import { initialState, type AppState, type LayerFilter, type Mode, type SideFilter } from "./store";
 import type { CameraPose, ViewPreset } from "../viewer/engine";
+import { parseSetId } from "../features/quiz/generators";
 
 const MODES: Mode[] = ["muscles", "bones", "fascia"];
 const PRESETS: ViewPreset[] = ["front", "back", "side"];
 const LAYERS: LayerFilter[] = ["all", "superficial", "deep"];
 const SIDES: SideFilter[] = ["both", "left", "right"];
 const MAX_HIDDEN = 20;
+const MAX_PINS = 4;
 
 const two = (n: number) => String(Math.round(n * 100) / 100);
 
@@ -25,11 +27,14 @@ export function encodeState(s: AppState): string {
   if (s.mode === "fascia" && s.tour) q.set("t", String(s.tour.step));
   const hidden = s.hidden.filter(isPartId).slice(0, MAX_HIDDEN);
   if (hidden.length) q.set("h", hidden.join(","));
+  const pinned = s.pinned.filter(isPartId).slice(0, MAX_PINS);
+  if (pinned.length) q.set("p", pinned.join(","));
+  if (s.quiz) q.set("q", s.quiz.setId);
   if (s.filters.region !== "all") q.set("r", s.filters.region);
   if (s.filters.layer !== "all") q.set("d", s.filters.layer);
   if (s.filters.side !== "both") q.set("side", s.filters.side);
-  // Commas are safe in a query string; keep them readable instead of %2C.
-  const str = q.toString().replace(/%2C/g, ",");
+  // Commas and colons are safe in a query string; keep them readable instead of %2C and %3A.
+  const str = q.toString().replace(/%2C/g, ",").replace(/%3A/g, ":");
   return str ? `?${str}` : "";
 }
 
@@ -66,6 +71,14 @@ export function decodeSearch(search: string): Partial<AppState> {
     const ids = h.split(",").filter(isPartId).slice(0, MAX_HIDDEN);
     if (ids.length) out.hidden = ids;
   }
+  const p = q.get("p");
+  if (p) {
+    const ids = p.split(",").filter(isPartId).slice(0, MAX_PINS);
+    if (ids.length) out.pinned = ids;
+  }
+  const qs = q.get("q");
+  const setId = qs ? parseSetId(qs) : null;
+  if (setId) out.quizRequest = setId;
   const r = q.get("r");
   const d = q.get("d");
   const side = q.get("side");

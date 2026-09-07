@@ -1,7 +1,8 @@
-import { ArrowRight, Check, Layers, Move, Network, RotateCcw, Search, X } from "lucide-react";
-import { useEffect, useState } from "react";
-import { questions } from "../../data/questions";
+import { ArrowRight, Layers, Move, Network, Search, X } from "lucide-react";
+import { useEffect } from "react";
 import { useStore } from "../../state/store";
+import type { QuizSetId } from "../quiz/generators";
+import QuizStart from "../quiz/QuizStart";
 import ResearchDigest from "../research/ResearchDigest";
 
 const GUIDE_STEPS = [
@@ -13,7 +14,7 @@ const GUIDE_STEPS = [
   {
     icon: Layers,
     title: "Explore one layer at a time",
-    text: "Switch between muscles and bones. Filter by body region, approximate layer and side. Select a structure, then isolate it or hide it to study deeper anatomy.",
+    text: "Switch between muscles and bones. Filter by body region, approximate layer and side. Select a structure, then isolate it, hide it, or pin it to compare with others.",
   },
   {
     icon: Network,
@@ -27,8 +28,10 @@ const GUIDE_STEPS = [
   },
 ];
 
-/** About, learning guide and quiz dialogs. Which one shows comes from the store. */
-export default function Modals() {
+type Props = { ready: boolean; onStartQuiz: (setId: QuizSetId) => void };
+
+/** About, learning guide, research digest and quiz set picker. Which one shows comes from the store. */
+export default function Modals({ ready, onStartQuiz }: Props) {
   const { state, dispatch } = useStore();
   const modal = state.modal;
   const close = () => dispatch({ type: "setModal", modal: null });
@@ -81,7 +84,7 @@ export default function Modals() {
         ) : modal === "research" ? (
           <ResearchDigest />
         ) : (
-          <Quiz />
+          <QuizStart ready={ready} onStart={onStartQuiz} />
         )}
       </section>
     </div>
@@ -138,7 +141,7 @@ function About({ onResearch }: { onResearch: () => void }) {
       <p className="subtle">
         Fascial lines are teaching models with varying anatomical support. Tissue continuity alone
         does not establish a predictable whole-body effect or treatment benefit. This atlas does not
-        simulate movement or diagnose conditions.
+        simulate movement or diagnose conditions. Quiz progress is stored only in this browser.
       </p>
     </>
   );
@@ -161,78 +164,6 @@ function Guide({ onClose }: { onClose: () => void }) {
       <button className="primary-button" onClick={onClose}>
         Start exploring <ArrowRight size={16} />
       </button>
-    </>
-  );
-}
-
-/** Quiz state lives here so it resets every time the dialog opens. */
-function Quiz() {
-  const [q, setQ] = useState(0);
-  const [answers, setAnswers] = useState<number[]>([]);
-  const done = q >= questions.length;
-  return (
-    <>
-      <div className="eyebrow">A MOMENT TO CONNECT THE DOTS</div>
-      <h2 id="modal-title">{done ? "Your study check-in" : "Test your knowledge"}</h2>
-      {done ? (
-        <>
-          <div className="quiz-score">
-            {answers.filter((a, i) => a === questions[i].correct).length}
-            <span> / {questions.length}</span>
-          </div>
-          <p>
-            Keep exploring the structures and their relationships. You can revisit this check-in any
-            time.
-          </p>
-          <button
-            className="primary-button"
-            onClick={() => {
-              setQ(0);
-              setAnswers([]);
-            }}
-          >
-            Try again <RotateCcw size={16} />
-          </button>
-        </>
-      ) : (
-        <>
-          <div className="quiz-progress">
-            Question {q + 1} of {questions.length}
-            <div style={{ width: `${((q + 1) / questions.length) * 100}%` }} />
-          </div>
-          <h3 className="question">{questions[q].prompt}</h3>
-          <div className="quiz-options">
-            {questions[q].options.map((o, i) => (
-              <button
-                disabled={answers[q] !== undefined}
-                className={
-                  answers[q] !== undefined
-                    ? i === questions[q].correct
-                      ? "correct"
-                      : i === answers[q]
-                        ? "incorrect"
-                        : ""
-                    : ""
-                }
-                key={o}
-                onClick={() => setAnswers([...answers, i])}
-              >
-                <span>{String.fromCharCode(65 + i)}</span>
-                {o}
-                {answers[q] !== undefined && i === questions[q].correct && <Check size={16} />}
-              </button>
-            ))}
-          </div>
-          {answers[q] !== undefined && (
-            <>
-              <p className="answer-explanation">{questions[q].explanation}</p>
-              <button className="primary-button" onClick={() => setQ(q + 1)}>
-                {q === questions.length - 1 ? "See results" : "Next question"} <ArrowRight size={16} />
-              </button>
-            </>
-          )}
-        </>
-      )}
     </>
   );
 }
