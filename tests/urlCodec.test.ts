@@ -30,6 +30,20 @@ describe("encodeState", () => {
     };
     expect(encodeState(s)).toBe("?c=0.12,0.46,2.79,0,0.2,0");
   });
+
+  test("tour step round-trips only in fascia mode", () => {
+    const s: AppState = {
+      ...initialState,
+      mode: "fascia",
+      line: "sl",
+      view: "back",
+      tour: { step: 3, playing: true },
+    };
+    expect(encodeState(s)).toBe("?m=fascia&v=back&l=sl&t=3");
+    expect(decodeSearch("?m=fascia&l=sl&t=3")).toMatchObject({ tour: { step: 3, playing: false } });
+    expect(decodeSearch("?t=2")).toEqual({});
+    expect(decodeSearch("?m=fascia&t=99")).toEqual({ mode: "fascia" });
+  });
 });
 
 describe("decodeSearch", () => {
@@ -59,12 +73,16 @@ describe("decodeSearch", () => {
       view: "custom",
       camera: { position: [0.12, 0.46, 2.79], target: [0, 0.2, 0] },
     });
-    expect(decodeSearch("?c=0.12%2C0.46%2C2.79%2C0%2C0.2%2C0").camera?.position).toEqual([0.12, 0.46, 2.79]);
+    expect(decodeSearch("?c=0.12%2C0.46%2C2.79%2C0%2C0.2%2C0").camera?.position).toEqual([
+      0.12, 0.46, 2.79,
+    ]);
   });
 
   test("ignores unknown and invalid values individually", () => {
     expect(
-      decodeSearch("?m=organs&s=not-a-part&v=top&l=zzz&h=femur-l,ghost&r=moon&d=middle&side=up&c=1,2,x"),
+      decodeSearch(
+        "?m=organs&s=not-a-part&v=top&l=zzz&h=femur-l,ghost&r=moon&d=middle&side=up&c=1,2,x",
+      ),
     ).toEqual({ hidden: ["femur-l"] });
     expect(decodeSearch("")).toEqual({});
     expect(decodeSearch("?junk")).toEqual({});

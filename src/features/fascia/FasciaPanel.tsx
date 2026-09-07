@@ -4,6 +4,7 @@ import { citationById, citationUrl } from "../../data/research";
 import { useStore } from "../../state/store";
 import CopyLink from "../shared/CopyLink";
 import { EvidenceBadge, GradeBadge } from "./EvidenceBadge";
+import TourPlayer from "./TourPlayer";
 
 export default function FasciaPanel({ onToast }: { onToast: (m: string) => void }) {
   const { state, dispatch } = useStore();
@@ -25,6 +26,20 @@ export default function FasciaPanel({ onToast }: { onToast: (m: string) => void 
       <GradeBadge grade={line.evidence.grade} />
       <p className="detail-copy">{line.description}</p>
       <CopyLink onCopied={onToast} label="Copy link to this line" />
+      <TourPlayer line={line} />
+      {state.tour ? (
+        <details className="evidence-note">
+          <summary>
+            How to read the badges <ChevronDown size={14} />
+          </summary>
+          <p>
+            “Verified” and “not verified” are the terms used by Wilke et al. (2016), who searched
+            for human dissection studies showing tissue continuity at each hop. Study counts and
+            specimen shares are copied from their Table 3.
+          </p>
+        </details>
+      ) : (
+      <>
       <div className="section-label">FOLLOW THE CONNECTION</div>
       <ol className="connection-path">
         {line.path.map((stop, i) => {
@@ -92,6 +107,8 @@ export default function FasciaPanel({ onToast }: { onToast: (m: string) => void 
           the review did not examine.
         </p>
       </details>
+      </>
+      )}
     </>
   );
 }

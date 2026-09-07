@@ -15,7 +15,8 @@ import { lineById, lineKeys, lines } from "./data/lines";
 import { StoreProvider, useStore } from "./state/store";
 import { useUrlSync } from "./state/useUrlSync";
 import { computeStyles } from "./viewer/appearance";
-import Viewer, { type CameraCommand, type ViewerHandle } from "./viewer/Viewer";
+import { linePaths } from "./viewer/paths";
+import Viewer, { type CameraCommand, type DrawnPath, type ViewerHandle } from "./viewer/Viewer";
 import LibraryPanel from "./features/library/LibraryPanel";
 import DetailPanel from "./features/detail/DetailPanel";
 import StartPanel from "./features/detail/StartPanel";
@@ -58,19 +59,27 @@ function Shell() {
         opacity: state.opacity / 100,
         lineColor: activeLine.color,
         lineKeys: lineKeys(activeLine),
+        focusIds: state.focus ? new Set(state.focus.ids) : undefined,
       }),
-    [state.mode, state.selected, state.hidden, state.isolated, state.opacity, activeLine],
+    [state.mode, state.selected, state.hidden, state.isolated, state.opacity, state.focus, activeLine],
   );
-  const cameraCommand = useMemo<CameraCommand>(
+  const cameraCommand = useMemo<CameraCommand>(() => {
+    if (state.focus?.flyId)
+      return { kind: "fly", id: state.focus.flyId, direction: state.focus.direction, nonce: state.cameraNonce };
+    if (state.view === "custom" && state.camera)
+      return { kind: "pose", pose: state.camera, nonce: state.cameraNonce };
+    return {
+      kind: "preset",
+      preset: state.view === "custom" ? "front" : state.view,
+      nonce: state.cameraNonce,
+    };
+  }, [state.focus, state.view, state.camera, state.cameraNonce]);
+  const paths = useMemo<DrawnPath[]>(
     () =>
-      state.view === "custom" && state.camera
-        ? { kind: "pose", pose: state.camera, nonce: state.cameraNonce }
-        : {
-            kind: "preset",
-            preset: state.view === "custom" ? "front" : state.view,
-            nonce: state.cameraNonce,
-          },
-    [state.view, state.camera, state.cameraNonce],
+      state.mode === "fascia" && state.showPath
+        ? linePaths(activeLine).map((p) => ({ points: p.points, color: activeLine.color }))
+        : [],
+    [state.mode, state.showPath, activeLine],
   );
   const orientation =
     state.view === "back" ? "P" : state.view === "side" ? "L" : state.view === "custom" ? "·" : "A";
@@ -159,6 +168,7 @@ function Shell() {
           <Viewer
             styles={styles}
             cameraCommand={cameraCommand}
+            paths={paths}
             onSelect={(id) => dispatch({ type: "select", id })}
             onReady={() => setReady(true)}
             onCameraChange={(pose) => dispatch({ type: "cameraMoved", pose })}
@@ -196,7 +206,10 @@ function Shell() {
             <div className="line-legend">
               <span className="line-dot" style={{ background: activeLine.color }} />
               {activeLine.name}
-              <small>Highlighted model components</small>
+              <small>Teaching path drawn through structure centers. Not a fascial sheet.</small>
+              <button className="text-button" onClick={() => dispatch({ type: "togglePath" })}>
+                {state.showPath ? "Hide path" : "Show path"}
+              </button>
             </div>
           )}
           <div className="stage-bottom">

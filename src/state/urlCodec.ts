@@ -1,5 +1,5 @@
 import { isPartId } from "../data/catalog";
-import { LINE_IDS, type LineId } from "../data/lines";
+import { LINE_IDS, lineById, type LineId } from "../data/lines";
 import { REGION_ORDER } from "../data/regions";
 import type { Region } from "../data/types";
 import { initialState, type AppState, type LayerFilter, type Mode, type SideFilter } from "./store";
@@ -22,6 +22,7 @@ export function encodeState(s: AppState): string {
     if (s.camera) q.set("c", [...s.camera.position, ...s.camera.target].map(two).join(","));
   } else if (s.view !== initialState.view) q.set("v", s.view);
   if (s.line !== initialState.line) q.set("l", s.line);
+  if (s.mode === "fascia" && s.tour) q.set("t", String(s.tour.step));
   const hidden = s.hidden.filter(isPartId).slice(0, MAX_HIDDEN);
   if (hidden.length) q.set("h", hidden.join(","));
   if (s.filters.region !== "all") q.set("r", s.filters.region);
@@ -54,6 +55,12 @@ export function decodeSearch(search: string): Partial<AppState> {
   } else if (v && (PRESETS as string[]).includes(v)) out.view = v as ViewPreset;
   const l = q.get("l");
   if (l && (LINE_IDS as string[]).includes(l)) out.line = l as LineId;
+  const t = q.get("t");
+  if (out.mode === "fascia" && t !== null) {
+    const n = Number(t);
+    const len = lineById(out.line ?? initialState.line)?.path.length ?? 0;
+    if (Number.isInteger(n) && n >= 0 && n < len) out.tour = { step: n, playing: false };
+  }
   const h = q.get("h");
   if (h) {
     const ids = h.split(",").filter(isPartId).slice(0, MAX_HIDDEN);
