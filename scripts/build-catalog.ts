@@ -96,7 +96,7 @@ function sideOf(name: string, x: number): Side {
 const parts: CatalogPart[] = raws.map(({ node, min, max }) => {
   const extras = node.extras ?? {};
   const name = displayName(node);
-  const groupName = str(extras.name)?.replace(/#.*$/, "").replace(/s*([^)]*$/, "").trim() || undefined;
+  const groupName = str(extras.name)?.replace(/#.*$/, "").replace(/\s*\([^)]*$/, "").trim() || undefined;
   const group = groupName && groupName !== name && groupName !== `(${name})` ? groupName : undefined;
   const typeRaw = str(extras.type);
   const type: PartType = typeRaw === "muscle" || typeRaw === "bone" ? typeRaw : "connective";
