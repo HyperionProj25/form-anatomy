@@ -2,12 +2,15 @@ import { useEffect, useRef, useState } from "react";
 import { AnatomyEngine, type CameraPose, type ViewPreset } from "./engine";
 import type { PartStyle } from "./appearance";
 import { catalog, nodeToId, partById } from "../data/catalog";
+import type { Vec3 } from "../data/types";
 
 /** A camera instruction from the store. `nonce` changes whenever the app wants the camera moved. */
 export type CameraCommand =
   | { kind: "preset"; preset: ViewPreset; nonce: number }
   | { kind: "pose"; pose: CameraPose; nonce: number }
-  | { kind: "fly"; id: string; preset?: ViewPreset; nonce: number };
+  | { kind: "fly"; id: string; direction: Vec3; nonce: number };
+
+export type DrawnPath = { points: Vec3[]; color: string };
 
 export type ViewerHandle = {
   zoom(factor: number): void;
@@ -17,6 +20,7 @@ export type ViewerHandle = {
 type Props = {
   styles: Map<string, PartStyle>;
   cameraCommand: CameraCommand;
+  paths: DrawnPath[];
   onSelect(id: string): void;
   onReady(ids: string[]): void;
   onCameraChange(pose: CameraPose): void;
@@ -96,6 +100,10 @@ export default function Viewer(props: Props) {
   }, [ready, props.styles]);
 
   useEffect(() => {
+    if (ready) engine.current?.drawPaths(props.paths);
+  }, [ready, props.paths]);
+
+  useEffect(() => {
     const e = engine.current;
     if (!ready || !e) return;
     const c = props.cameraCommand;
@@ -103,7 +111,7 @@ export default function Viewer(props: Props) {
     appliedNonce.current = c.nonce;
     if (c.kind === "preset") void e.setView(c.preset, c.nonce > 0);
     else if (c.kind === "pose") void e.setCamera(c.pose, false);
-    else void e.flyTo(c.id, { preset: c.preset });
+    else void e.flyTo(c.id, { direction: c.direction, padding: 2.6 });
   }, [ready, props.cameraCommand]);
 
   return (

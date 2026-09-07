@@ -51,6 +51,8 @@ export class AnatomyEngine {
   private downX = 0;
   private downY = 0;
   private cameraTimer = 0;
+  private pathGroup = new THREE.Group();
+  private pulses: { curve: THREE.CatmullRomCurve3; mesh: THREE.Mesh; phase: number }[] = [];
 
   constructor(
     private host: HTMLElement,
@@ -92,6 +94,7 @@ export class AnatomyEngine {
     const rim = new THREE.DirectionalLight(0xffffff, 2);
     rim.position.set(-2, 2, -3);
     this.scene.add(key, fill, rim);
+    this.scene.add(this.pathGroup);
 
     this.observer = new ResizeObserver(this.resize);
     this.observer.observe(host);
@@ -207,7 +210,10 @@ export class AnatomyEngine {
   }
 
   /** Frame one part: keep the current viewing direction (or use a preset) and fit its bounding sphere. */
-  flyTo(id: string, opts: { padding?: number; preset?: ViewPreset } = {}): Promise<void> {
+  flyTo(
+    id: string,
+    opts: { padding?: number; preset?: ViewPreset; direction?: Vec3 } = {},
+  ): Promise<void> {
     const mesh = this.meshes.get(id);
     if (!mesh) return Promise.resolve();
     mesh.geometry.computeBoundingBox();
@@ -219,15 +225,62 @@ export class AnatomyEngine {
       this.controls.minDistance,
       this.controls.maxDistance,
     );
-    const dir = opts.preset
-      ? new THREE.Vector3(...PRESET_DIRECTIONS[opts.preset])
-      : this.camera.position.clone().sub(this.controls.target).normalize();
+    const dir = opts.direction
+      ? new THREE.Vector3(...opts.direction).normalize()
+      : opts.preset
+        ? new THREE.Vector3(...PRESET_DIRECTIONS[opts.preset])
+        : this.camera.position.clone().sub(this.controls.target).normalize();
     const pos = sphere.center.clone().add(dir.multiplyScalar(distance));
     return this.moveCamera(
       [pos.x, pos.y, pos.z],
       [sphere.center.x, sphere.center.y, sphere.center.z],
       true,
     );
+  }
+
+  /** Replace the drawn teaching cables. Points are in model space (catalog coordinates). */
+  drawPaths(paths: { points: Vec3[]; color: string }[]): void {
+    this.clearPaths();
+    paths.forEach((path, i) => {
+      if (path.points.length < 2) return;
+      const curve = new THREE.CatmullRomCurve3(
+        path.points.map((p) => new THREE.Vector3(...p)),
+        false,
+        "centripetal",
+        0.5,
+      );
+      // A dark core with a pale strand keeps the cable readable over muscles drawn in the same hue.
+      const core = new THREE.Color(path.color).multiplyScalar(0.45);
+      const strand = new THREE.Color(path.color).lerp(new THREE.Color("#fffefb"), 0.75);
+      const outer = new THREE.Mesh(
+        new THREE.TubeGeometry(curve, 240, 0.009, 10, false),
+        new THREE.MeshBasicMaterial({ color: core, transparent: true, opacity: 0.9, depthTest: false }),
+      );
+      outer.renderOrder = 10;
+      const inner = new THREE.Mesh(
+        new THREE.TubeGeometry(curve, 240, 0.004, 8, false),
+        new THREE.MeshBasicMaterial({ color: strand, depthTest: false }),
+      );
+      inner.renderOrder = 11;
+      const pulse = new THREE.Mesh(
+        new THREE.SphereGeometry(0.014, 16, 12),
+        new THREE.MeshBasicMaterial({ color: "#fffefb", depthTest: false }),
+      );
+      pulse.renderOrder = 12;
+      this.pathGroup.add(outer, inner, pulse);
+      this.pulses.push({ curve, mesh: pulse, phase: (i * 0.5) % 1 });
+    });
+  }
+
+  clearPaths(): void {
+    for (const child of [...this.pathGroup.children]) {
+      this.pathGroup.remove(child);
+      if (child instanceof THREE.Mesh) {
+        child.geometry.dispose();
+        (child.material as THREE.Material).dispose();
+      }
+    }
+    this.pulses = [];
   }
 
   zoom(factor: number): void {
@@ -252,6 +305,7 @@ export class AnatomyEngine {
     el.removeEventListener("pointerleave", this.onLeave);
     this.controls.dispose();
     this.draco.dispose();
+    this.clearPaths();
     if (this.model) disposeObject(this.model);
     this.meshes.clear();
     this.renderer.dispose();
@@ -312,6 +366,10 @@ export class AnatomyEngine {
   private render = () => {
     this.frame = requestAnimationFrame(this.render);
     this.controls.update();
+    if (this.pulses.length) {
+      const t = (performance.now() % 4000) / 4000;
+      for (const p of this.pulses) p.curve.getPointAt((t + p.phase) % 1, p.mesh.position);
+    }
     this.renderer.render(this.scene, this.camera);
   };
 
