@@ -50,7 +50,7 @@ export default defineConfig({
     rolldownOptions: {
       output: {
         // three.js is ~700 kB minified and changes rarely; keep it in its own long-lived chunk.
-        advancedChunks: { groups: [{ name: "three", test: /node_modules[\/]three[\/]/ }] },
+        advancedChunks: { groups: [{ name: "three", test: /node_modules\/three\// }] },
       },
     },
   },
