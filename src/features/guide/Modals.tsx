@@ -18,7 +18,7 @@ const GUIDE_STEPS = [
   {
     icon: Network,
     title: "Study the relationships",
-    text: "Choose Fascia and follow a line’s sequence. Colored muscles show components of a proposed chain. Read the evidence note alongside each line.",
+    text: "Choose Fascia, start a guided tour, and read the evidence badge on every hop. Colored muscles show components of a proposed chain; the cable is a teaching path, not fascia.",
   },
   {
     icon: Search,

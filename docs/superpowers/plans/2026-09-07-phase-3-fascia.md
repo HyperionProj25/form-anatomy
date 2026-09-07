@@ -42,7 +42,7 @@ Modify: `src/data/lines.ts` (rewritten), `src/viewer/appearance.ts`, `src/viewer
 - Produces from `research.ts`: `CitationId`, `Citation`, `citations`, `citationById(id)`, `citationUrl(c)`.
 - `computeStyles` input field `lineMatches: string[]` becomes `lineKeys: Set<string>`; adds optional `focusIds?: Set<string>`.
 
-- [ ] **Step 1: Write the failing lines test**
+- [x] **Step 1: Write the failing lines test**
 
 `tests/lines.test.ts`:
 
@@ -118,7 +118,7 @@ describe("fascial lines", () => {
 });
 ```
 
-- [ ] **Step 2: Write the failing research test**
+- [x] **Step 2: Write the failing research test**
 
 `tests/research.test.ts`:
 
@@ -155,7 +155,7 @@ describe("research citations", () => {
 });
 ```
 
-- [ ] **Step 3: Run both to verify they fail**
+- [x] **Step 3: Run both to verify they fail**
 
 ```bash
 npx vitest run tests/lines.test.ts tests/research.test.ts 2>&1 | grep -E "FAIL|Cannot find|does not provide|passed|failed" | head -4
@@ -163,7 +163,7 @@ npx vitest run tests/lines.test.ts tests/research.test.ts 2>&1 | grep -E "FAIL|C
 
 Expected: failures (missing `research.ts`, missing exports from `lines.ts`).
 
-- [ ] **Step 4: Write `src/data/research.ts`**
+- [x] **Step 4: Write `src/data/research.ts`**
 
 ```ts
 export type CitationId =
@@ -501,7 +501,7 @@ export function citationUrl(c: Citation): string {
 
 Note the StatPearls author line: check the chapter's author list on the page when writing the file; if it differs, use the page's names. The OpenStax author line follows the book's title page.
 
-- [ ] **Step 5: Rewrite `src/data/lines.ts`**
+- [x] **Step 5: Rewrite `src/data/lines.ts`**
 
 ```ts
 import { partForSide } from "./catalog";
@@ -1146,7 +1146,7 @@ export function stopPartId(stop: Stop, side: Side): string | null {
 }
 ```
 
-- [ ] **Step 6: Switch styling from name substrings to catalog keys**
+- [x] **Step 6: Switch styling from name substrings to catalog keys**
 
 In `src/viewer/appearance.ts`, replace `lineMatches: string[]` with `lineKeys: Set<string>` and add `focusIds?: Set<string>`:
 
@@ -1199,7 +1199,7 @@ Note `femur` is a bone in the fixture; the chain rule requires `type === "muscle
 
 Callers: `src/App.tsx` passes `lineKeys: lineKeys(activeLine)` (import from `./data/lines`) and `focusIds` (Task 5; pass `undefined` for now). `src/features/detail/DetailPanel.tsx` computes related lines as `lines.filter((l) => lineKeys(l).has(part.key))`. `src/features/fascia/FasciaPanel.tsx` path buttons use `stopPartId(stop, "right")` instead of `matchPart(p.match)` (full rewrite of the panel comes in Task 3; here only make it compile). `tests/data.test.ts`: the line test now expects six lines, `line.path.length >= 3`, and no `matches` field; drop the `stop.match` assertions.
 
-- [ ] **Step 7: Run everything**
+- [x] **Step 7: Run everything**
 
 ```bash
 npm test 2>&1 | grep -E "Test Files|Tests |FAIL|×|AssertionError" | head; npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm run typecheck 2>&1 | grep -i error; npm run build 2>&1 | tail -1
@@ -1207,7 +1207,7 @@ npm test 2>&1 | grep -E "Test Files|Tests |FAIL|×|AssertionError" | head; npm r
 
 Expected: all green. Then in Chrome at `http://localhost:3131/form-anatomy/?m=fascia&l=sl`: the Spiral line appears in the list and highlights splenius, rhomboids, serratus anterior, obliques, tibialis anterior, fibularis longus, biceps femoris and erector spinae on both sides.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add -A && git commit -q -m "Key the six fascial lines to the catalog with transcribed dissection evidence and add the citation table
@@ -1227,7 +1227,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 - Consumes: `citations` from `src/data/research.ts`.
 - Produces: exit code 0 only when every PMID resolves on PubMed with a matching title, every DOI resolves at doi.org, and every URL answers 200.
 
-- [ ] **Step 1: Write `scripts/verify-citations.ts`**
+- [x] **Step 1: Write `scripts/verify-citations.ts`**
 
 ```ts
 /**
@@ -1332,7 +1332,7 @@ console.log(`\nAll ${citations.length} citations verified.`);
 
 Add to `package.json` scripts: `"verify:citations": "tsx scripts/verify-citations.ts"`.
 
-- [ ] **Step 2: Run it**
+- [x] **Step 2: Run it**
 
 ```bash
 npm run verify:citations 2>&1 | tail -25
@@ -1340,11 +1340,11 @@ npm run verify:citations 2>&1 | tail -25
 
 Expected: one ✓ line per PMID, DOI and URL and `All 19 citations verified.` If a title overlap is below 70 percent, compare the recorded title with PubMed's and fix the recorded title; if a PMID is wrong, remove the citation.
 
-- [ ] **Step 3: Add the CI step**
+- [x] **Step 3: Add the CI step**
 
 In `.github/workflows/deploy.yml`, after `- run: npm run typecheck` add `- run: npm run verify:citations`.
 
-- [ ] **Step 4: Commit**
+- [x] **Step 4: Commit**
 
 ```bash
 git add -A && git commit -q -m "Verify every research citation against PubMed and doi.org in CI
@@ -1363,7 +1363,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 - `<EvidenceBadge transition={t} />` renders the status pill with study counts; `<GradeBadge grade={line.evidence.grade} />` renders the line-level pill.
 - `<ResearchDigest />` renders inside the modal shell.
 
-- [ ] **Step 1: `EvidenceBadge.tsx`**
+- [x] **Step 1: `EvidenceBadge.tsx`**
 
 ```tsx
 import type { Transition } from "../../data/lines";
@@ -1407,7 +1407,7 @@ export function GradeBadge({ grade }: { grade: "strong" | "moderate" | "none" })
 }
 ```
 
-- [ ] **Step 2: Rewrite `FasciaPanel.tsx` (tour player is added in Task 5; leave a slot)**
+- [x] **Step 2: Rewrite `FasciaPanel.tsx` (tour player is added in Task 5; leave a slot)**
 
 ```tsx
 import { Activity, BookOpen, ChevronDown, ChevronRight } from "lucide-react";
@@ -1504,7 +1504,7 @@ export default function FasciaPanel({ onToast }: { onToast: (m: string) => void 
 }
 ```
 
-- [ ] **Step 3: `ResearchDigest.tsx`**
+- [x] **Step 3: `ResearchDigest.tsx`**
 
 ```tsx
 import { citations, citationUrl, GROUP_LABELS, KIND_LABELS, type CitationGroup } from "../../data/research";
@@ -1551,7 +1551,7 @@ export default function ResearchDigest() {
 }
 ```
 
-- [ ] **Step 4: Wire it up**
+- [x] **Step 4: Wire it up**
 
 - `store.tsx`: `export type ModalId = "about" | "guide" | "quiz" | "research" | null;`
 - `Modals.tsx`: import `ResearchDigest`; render `modal === "research" ? <ResearchDigest /> : …`; in `About`, add under "Learning references" a button `Open the research digest` that dispatches `setModal research` (pass `dispatch` via a prop or use `useStore` inside About).
@@ -1607,7 +1607,7 @@ export default function ResearchDigest() {
 .digest-entry a { display: inline-block; margin-top: 6px; font-size: 11px; text-decoration: underline; }
 ```
 
-- [ ] **Step 5: Verify and commit**
+- [x] **Step 5: Verify and commit**
 
 ```bash
 npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm run typecheck 2>&1 | grep -i error; npm test 2>&1 | grep -E "Test Files|Tests |FAIL"; npm run build 2>&1 | tail -1
@@ -1634,7 +1634,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 - Engine: `drawPaths(paths: { points: Vec3[]; color: string }[]): void` (replaces any previous paths), `clearPaths(): void`.
 - Viewer prop: `paths: { points: Vec3[]; color: string }[]`.
 
-- [ ] **Step 1: Failing paths test**
+- [x] **Step 1: Failing paths test**
 
 `tests/paths.test.ts`:
 
@@ -1678,7 +1678,7 @@ describe("linePaths", () => {
 });
 ```
 
-- [ ] **Step 2: `src/viewer/paths.ts`**
+- [x] **Step 2: `src/viewer/paths.ts`**
 
 ```ts
 import { partForSide } from "../data/catalog";
@@ -1724,7 +1724,7 @@ export function linePaths(line: Line): LinePath[] {
 
 Run the test: `npx vitest run tests/paths.test.ts` → expected 3 passed. (If `anchorPoint` for a midline part such as `vertebra-l3` is asked for side "left", `partForSide` returns the midline part and the lateral offset sign follows the requested side; with offset 0 the point stays on the midline.)
 
-- [ ] **Step 3: Engine `drawPaths` / `clearPaths` with a travelling pulse**
+- [x] **Step 3: Engine `drawPaths` / `clearPaths` with a travelling pulse**
 
 Add to `AnatomyEngine` fields: `private pathGroup = new THREE.Group(); private pulses: { curve: THREE.CatmullRomCurve3; mesh: THREE.Mesh; phase: number }[] = [];` and in the constructor `this.scene.add(this.pathGroup);`.
 
@@ -1764,7 +1764,7 @@ Add to `AnatomyEngine` fields: `private pathGroup = new THREE.Group(); private p
 
 In `render()`, before `renderer.render`, advance the pulses: `const t = (performance.now() % 4000) / 4000; for (const p of this.pulses) p.curve.getPointAt((t + p.phase) % 1, p.mesh.position);`. In `dispose()`, call `this.clearPaths()`.
 
-- [ ] **Step 4: Viewer prop and store toggle**
+- [x] **Step 4: Viewer prop and store toggle**
 
 `Viewer.tsx`: add `paths: { points: Vec3[]; color: string }[]` to `Props` and an effect: `useEffect(() => { if (ready) engine.current?.drawPaths(props.paths); }, [ready, props.paths]);`.
 
@@ -1787,7 +1787,7 @@ In `render()`, before `renderer.render`, advance the pulses: `const t = (perform
 
 Add CSS: `.line-legend button { margin-left: 8px; font-size: 11px; }` and let `.line-legend small` wrap (`display: block; max-width: 220px;`).
 
-- [ ] **Step 5: Verify and commit**
+- [x] **Step 5: Verify and commit**
 
 Full check, then Chrome at `?m=fascia&l=bfl`: two cables cross at the lumbar spine from each latissimus to the opposite gluteus maximus and down the lateral thigh, a small pale pulse travels along each, the cable reads through the faded muscles, and "Hide path" removes it. At `?m=fascia&l=sl` the two spirals cross twice. Switching to Muscles removes the cables.
 
@@ -1810,7 +1810,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 - URL: `t=<step>` written when `tour` is set and mode is fascia; decoded into `tour: { step, playing: false }`.
 - `CameraCommand` gains `{ kind: "fly"; id: string; direction: Vec3; nonce }`; engine `flyTo(id, { direction })`.
 
-- [ ] **Step 1: Failing store and codec tests**
+- [x] **Step 1: Failing store and codec tests**
 
 Append to `tests/store.test.ts`:
 
@@ -1868,7 +1868,7 @@ Append to `tests/urlCodec.test.ts`:
   });
 ```
 
-- [ ] **Step 2: Store changes**
+- [x] **Step 2: Store changes**
 
 Add to `AppState`: `showPath: boolean; tour: { step: number; playing: boolean } | null; focus: { ids: string[]; flyId: string | null; direction: Vec3 } | null;` with initial `showPath: true, tour: null, focus: null`. Add to `Action`: `| { type: "togglePath" } | { type: "startTour" } | { type: "tourStep"; step: number } | { type: "tourNext" } | { type: "tourPrev" } | { type: "tourPlay"; playing: boolean } | { type: "endTour" }`.
 
@@ -1928,7 +1928,7 @@ and end the tour (`tour: null, focus: null`) inside `select`, `setMode`, `setLin
 
 `urlCodec.ts`: encode `if (s.mode === "fascia" && s.tour) q.set("t", String(s.tour.step));` after `l`; decode `const t = q.get("t"); const lineForT = out.line ?? initialState.line; if (out.mode === "fascia" && t !== null) { const n = Number(t); const len = lineById(lineForT)?.path.length ?? 0; if (Number.isInteger(n) && n >= 0 && n < len) out.tour = { step: n, playing: false }; }`.
 
-- [ ] **Step 3: Camera fly command with a direction**
+- [x] **Step 3: Camera fly command with a direction**
 
 `engine.ts` `flyTo(id, opts: { padding?: number; preset?: ViewPreset; direction?: Vec3 })`: when `opts.direction` is given use `new THREE.Vector3(...opts.direction).normalize()` as `dir`. `Viewer.tsx` `CameraCommand` fly variant becomes `{ kind: "fly"; id: string; direction: Vec3; nonce: number }` and the effect calls `e.flyTo(c.id, { direction: c.direction, padding: 2.6 })`. `App.tsx` derives the command:
 
@@ -1942,7 +1942,7 @@ and end the tour (`tour: null, focus: null`) inside `select`, `setMode`, `setLin
 
 and passes `focusIds: state.focus ? new Set(state.focus.ids) : undefined` into `computeStyles` (add `state.focus` to its deps).
 
-- [ ] **Step 4: `TourPlayer.tsx` and its slot in the fascia panel**
+- [x] **Step 4: `TourPlayer.tsx` and its slot in the fascia panel**
 
 ```tsx
 import { ChevronLeft, ChevronRight, Pause, Play, Route, X } from "lucide-react";
@@ -2037,7 +2037,7 @@ CSS:
 .tour-start { width: 100%; justify-content: center; margin: 10px 0; }
 ```
 
-- [ ] **Step 5: Verify and commit**
+- [x] **Step 5: Verify and commit**
 
 ```bash
 npm test 2>&1 | grep -E "Test Files|Tests |FAIL|×"; npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm run typecheck 2>&1 | grep -i error; npm run build 2>&1 | tail -1
@@ -2055,13 +2055,13 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 
 ### Task 6: Docs, deploy, live verification
 
-- [ ] **Step 1: README and guide copy**
+- [x] **Step 1: README and guide copy**
 
 README "What is included": replace "Five fascial-line teaching models with evidence notes and linked references." with "Six fascial-line teaching models (including the spiral line). Every hop shows whether human dissection studies verified the tissue link, with study counts from Wilke et al. 2016, plus force-transfer notes from Krause et al. 2016. Guided tours fly the camera stop by stop, and a drawn teaching cable traces each line." Add a bullet: "A research digest of 19 verified papers and references, grouped by question, with a build-time citation check." Under "Validate", add `npm run verify:citations` with a note that it needs network access.
 
 `Modals.tsx` guide step 3 text: "Choose Fascia, start a guided tour, and read the evidence badge on every hop. Colored muscles show components of a proposed chain; the cable is a teaching path, not fascia."
 
-- [ ] **Step 2: Tick, commit, push, watch**
+- [x] **Step 2: Tick, commit, push, watch**
 
 ```bash
 sed -i 's/^- \[ \] \*\*Step/- [x] **Step/' docs/superpowers/plans/2026-09-07-phase-3-fascia.md
@@ -2074,7 +2074,7 @@ sleep 25; gh run watch --exit-status $(gh run list --limit 1 --json databaseId -
 
 Expected: the `verify:citations` step passes in CI and the deploy succeeds.
 
-- [ ] **Step 3: Live checks**
+- [x] **Step 3: Live checks**
 
 Chrome: `https://hyperionproj25.github.io/form-anatomy/?m=fascia&l=sl&t=1` lands on the spiral line tour at the rhomboids with cables drawn; the Research nav opens the digest; a PubMed link opens the right record. Embedded pane at 375 px: the fascia panel with badges has no horizontal overflow.
 

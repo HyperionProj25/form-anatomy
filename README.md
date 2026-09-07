@@ -21,8 +21,11 @@ Open the Local URL the server prints (it includes the `/form-anatomy/` path).
     npm run typecheck
     npm test
     npm run build
+    npm run verify:citations
 
-`npm run preview` serves the production build locally.
+`npm run preview` serves the production build locally. The citation check
+needs network access; it resolves every reference in `src/data/research.ts`
+against PubMed and doi.org and fails if any cannot be found.
 
 ## Data files
 
@@ -54,7 +57,14 @@ checks without deploying.
 - Rotate, zoom, pan, camera presets, hide, restore, isolate and opacity
   controls. Every view has a shareable link that restores mode, selection,
   filters, fascial line and camera.
-- Five fascial-line teaching models with evidence notes and linked references.
+- Six fascial-line teaching models, including the spiral line. Every hop shows
+  whether human dissection studies verified the tissue link, with study counts
+  and specimen shares transcribed from Wilke et al. 2016, plus force-transfer
+  notes from Krause et al. 2016. Guided tours fly the camera stop by stop, and
+  a drawn teaching cable traces each line through the structure centers.
+- A research digest of 19 verified papers and references, grouped by
+  question, each with a plain-language summary and a note on what it means
+  for the model. A build-time check resolves every PMID, DOI and URL.
 - A short study check, responsive layout and keyboard-accessible controls.
 
 Fascial highlights identify model components. They are not segmented fascial
@@ -82,4 +92,10 @@ AI-generated `public/og.png` is a promotional card, not an anatomical
 reference.
 
 Educational references: OpenStax Anatomy & Physiology 2e; Wilke et al.
-(2016), PMID 26281953; Krause et al. (2016), PMCID PMC5341578.
+(2016), PMID 26281953; Krause et al. (2016), PMCID PMC5341578; and the full
+list in `src/data/research.ts`, shown in the app under Research.
+
+The evidence badges use the vocabulary of Wilke et al. 2016 ("verified",
+"not verified") and copy the study counts and specimen shares from its
+Table 3. They describe tissue continuity found in cadaver dissection, not
+force transmission, and not clinical benefit.
