@@ -20,6 +20,7 @@ import { computeStyles } from "./viewer/appearance";
 import { linePaths } from "./viewer/paths";
 import Viewer, { type CameraCommand, type DrawnPath, type ViewerHandle } from "./viewer/Viewer";
 import PinLegend from "./features/compare/PinLegend";
+import PlaylistCard from "./features/playlist/PlaylistCard";
 import LibraryPanel from "./features/library/LibraryPanel";
 import DetailPanel from "./features/detail/DetailPanel";
 import StartPanel from "./features/detail/StartPanel";
@@ -215,7 +216,10 @@ function Shell() {
           <button className="mobile-layers outline-button" onClick={() => setMobilePanel(true)}>
             <Layers size={15} /> Layers & search
           </button>
-          <PinLegend />
+          <div className="stage-left">
+            <PinLegend />
+            <PlaylistCard onToast={showToast} />
+          </div>
           <Viewer
             styles={styles}
             cameraCommand={cameraCommand}

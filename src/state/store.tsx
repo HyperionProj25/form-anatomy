@@ -28,6 +28,10 @@ export type QuizSession = {
 };
 
 export const MAX_PINS = 4;
+export const MAX_PLAYLIST = 30;
+export const MAX_PLAYLIST_TITLE = 80;
+/** A teacher's ordered list of structures; `step` is the item being shown, or null while idle. */
+export type Playlist = { title: string; ids: string[]; step: number | null };
 
 export type AppState = {
   mode: Mode;
@@ -50,6 +54,7 @@ export type AppState = {
   quizRequest: QuizSetId | null;
   /** Primary language for structure names; a browser preference, not part of the URL. */
   names: NameLang;
+  playlist: Playlist | null;
   filters: Filters;
   modal: ModalId;
 };
@@ -71,6 +76,7 @@ export const initialState: AppState = {
   quiz: null,
   quizRequest: null,
   names: loadNamePref(),
+  playlist: null,
   filters: { region: "all", layer: "all", side: "both", search: "" },
   modal: null,
 };
@@ -106,6 +112,14 @@ export type Action =
   | { type: "quizNext" }
   | { type: "endQuiz" }
   | { type: "setNames"; names: NameLang }
+  | { type: "playlistAdd"; id: string }
+  | { type: "playlistRemove"; id: string }
+  | { type: "playlistTitle"; title: string }
+  | { type: "playlistPlay"; step: number }
+  | { type: "playlistNext" }
+  | { type: "playlistPrev" }
+  | { type: "playlistStop" }
+  | { type: "playlistClear" }
   | { type: "reset" }
   | { type: "hydrate"; state: Partial<AppState> };
 
@@ -150,6 +164,7 @@ function withTour(s: AppState, step: number, playing: boolean): AppState {
     tour: { step: clamped, playing },
     focus: tourFocus(s.line, clamped),
     selected: null,
+    playlist: idlePlaylist(s),
     cameraNonce: s.cameraNonce + 1,
   };
 }
@@ -158,6 +173,33 @@ function withTour(s: AppState, step: number, playing: boolean): AppState {
 function directionFor(id: string | null): Vec3 {
   const p = id ? partById(id) : undefined;
   return p && p.centroid[2] < -0.02 ? [0, 0, -1] : [0, 0, 1];
+}
+
+/** The playlist with playback stopped; the list itself is kept. */
+function idlePlaylist(s: AppState): Playlist | null {
+  return s.playlist && s.playlist.step !== null ? { ...s.playlist, step: null } : s.playlist;
+}
+
+/** Show playlist item `step`: select it, frame it, and leave any tour or quiz. */
+function withPlaylistStep(s: AppState, step: number): AppState {
+  if (!s.playlist || !s.playlist.ids.length) return s;
+  const clamped = Math.max(0, Math.min(step, s.playlist.ids.length - 1));
+  const id = s.playlist.ids[clamped];
+  const part = partById(id);
+  const mode: Mode = part?.type === "muscle" ? "muscles" : s.mode === "fascia" ? "bones" : s.mode;
+  return {
+    ...s,
+    mode,
+    playlist: { ...s.playlist, step: clamped },
+    selected: id,
+    isolated: false,
+    hidden: s.hidden.filter((h) => h !== id),
+    quiz: null,
+    modal: null,
+    tour: null,
+    focus: { ids: [id], flyId: id, direction: directionFor(id) },
+    cameraNonce: s.cameraNonce + 1,
+  };
 }
 
 /** The part a question is about, framed from the side the question used. */
@@ -186,6 +228,7 @@ export function reducer(s: AppState, a: Action): AppState {
         isolated: false,
         hidden: [],
         quiz: null,
+        playlist: idlePlaylist(s),
         ...noTour,
       };
       return a.mode === "fascia"
@@ -198,6 +241,7 @@ export function reducer(s: AppState, a: Action): AppState {
         selected: a.id,
         isolated: false,
         hidden: s.hidden.filter((h) => h !== a.id),
+        playlist: idlePlaylist(s),
         ...noTour,
       };
       const q = s.quiz?.questions[s.quiz.index];
@@ -234,6 +278,7 @@ export function reducer(s: AppState, a: Action): AppState {
         selected: null,
         view: lineView(a.line),
         camera: null,
+        playlist: idlePlaylist(s),
         ...noTour,
         cameraNonce: s.cameraNonce + 1,
       };
@@ -288,6 +333,7 @@ export function reducer(s: AppState, a: Action): AppState {
         modal: null,
         selected: null,
         tour: null,
+        playlist: idlePlaylist(s),
         focus,
         cameraNonce: focus ? s.cameraNonce + 1 : s.cameraNonce,
       };
@@ -327,6 +373,48 @@ export function reducer(s: AppState, a: Action): AppState {
       return { ...s, quiz: null, focus: null };
     case "setNames":
       return { ...s, names: a.names };
+    case "playlistAdd": {
+      const pl = s.playlist ?? { title: "", ids: [], step: null };
+      if (pl.ids.includes(a.id) || pl.ids.length >= MAX_PLAYLIST || !partById(a.id)) return s;
+      return { ...s, playlist: { ...pl, ids: [...pl.ids, a.id] } };
+    }
+    case "playlistRemove": {
+      if (!s.playlist) return s;
+      const index = s.playlist.ids.indexOf(a.id);
+      if (index < 0) return s;
+      const ids = s.playlist.ids.filter((x) => x !== a.id);
+      if (!ids.length) return { ...s, playlist: null, focus: null };
+      const step = s.playlist.step;
+      const wasShowing = step === index;
+      const nextStep = step === null || wasShowing ? null : step > index ? step - 1 : step;
+      return {
+        ...s,
+        playlist: { ...s.playlist, ids, step: nextStep },
+        focus: wasShowing ? null : s.focus,
+      };
+    }
+    case "playlistTitle":
+      return s.playlist
+        ? { ...s, playlist: { ...s.playlist, title: a.title.slice(0, MAX_PLAYLIST_TITLE) } }
+        : s;
+    case "playlistPlay":
+      return withPlaylistStep(s, a.step);
+    case "playlistNext": {
+      const step = s.playlist?.step ?? null;
+      if (step === null || !s.playlist || step >= s.playlist.ids.length - 1) return s;
+      return withPlaylistStep(s, step + 1);
+    }
+    case "playlistPrev": {
+      const step = s.playlist?.step ?? null;
+      if (step === null || step <= 0) return s;
+      return withPlaylistStep(s, step - 1);
+    }
+    case "playlistStop":
+      return s.playlist?.step === null || !s.playlist
+        ? s
+        : { ...s, playlist: idlePlaylist(s), focus: null };
+    case "playlistClear":
+      return { ...s, playlist: null, focus: s.playlist?.step === null ? s.focus : null };
     case "reset":
       return {
         ...s,
@@ -337,6 +425,7 @@ export function reducer(s: AppState, a: Action): AppState {
         view: "front",
         camera: null,
         quiz: null,
+        playlist: idlePlaylist(s),
         ...noTour,
         cameraNonce: s.cameraNonce + 1,
       };

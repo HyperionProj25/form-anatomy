@@ -1,4 +1,14 @@
-import { ArrowRight, ChevronDown, EyeOff, Focus, Pin, PinOff, X } from "lucide-react";
+import {
+  ArrowRight,
+  ChevronDown,
+  EyeOff,
+  Focus,
+  ListMinus,
+  ListPlus,
+  Pin,
+  PinOff,
+  X,
+} from "lucide-react";
 import { useState } from "react";
 import { partById } from "../../data/catalog";
 import { factsForWiki } from "../../data/facts";
@@ -36,6 +46,7 @@ export default function DetailPanel({ describe, onToast }: Props) {
     ["ARTICULATIONS", facts?.articulations],
   ];
   const hasFacts = factRows.some(([, v]) => v);
+  const inPlaylist = state.playlist?.ids.includes(part.id) ?? false;
   const attributionUrl = facts?.url ?? part.wiki;
 
   return (
@@ -73,6 +84,20 @@ export default function DetailPanel({ describe, onToast }: Props) {
         >
           {state.pinned.includes(part.id) ? <PinOff size={15} /> : <Pin size={15} />}
           {state.pinned.includes(part.id) ? "Unpin" : "Pin"}
+        </button>
+        <button
+          className="outline-button"
+          onClick={() =>
+            dispatch(
+              inPlaylist
+                ? { type: "playlistRemove", id: part.id }
+                : { type: "playlistAdd", id: part.id },
+            )
+          }
+          title="Build an ordered list of structures for a lesson and share it as one link"
+        >
+          {inPlaylist ? <ListMinus size={15} /> : <ListPlus size={15} />}
+          {inPlaylist ? "Remove from playlist" : "Add to playlist"}
         </button>
       </div>
       <CopyLink onCopied={onToast} />

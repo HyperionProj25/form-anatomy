@@ -1,7 +1,7 @@
 import { describe, expect, test } from "vitest";
-import { partForSide } from "../src/data/catalog";
+import { parts, partForSide } from "../src/data/catalog";
 import { buildSet, mulberry32 } from "../src/features/quiz/generators";
-import { initialState, reducer } from "../src/state/store";
+import { initialState, MAX_PLAYLIST, reducer } from "../src/state/store";
 
 describe("store reducer", () => {
   test("selecting a part clears isolation and unhides it", () => {
@@ -191,5 +191,81 @@ describe("quiz session", () => {
     expect(s.quizRequest).toBe("line:sbl");
     const started = reducer(s, { type: "startQuiz", setId: "line:sbl", questions });
     expect(started.quizRequest).toBeNull();
+  });
+});
+
+describe("playlists", () => {
+  test("add creates the list, ignores duplicates and unknown ids, and caps at the limit", () => {
+    let s = reducer(initialState, { type: "playlistAdd", id: "femur-l" });
+    expect(s.playlist).toEqual({ title: "", ids: ["femur-l"], step: null });
+    s = reducer(s, { type: "playlistAdd", id: "femur-l" });
+    s = reducer(s, { type: "playlistAdd", id: "not-a-part" });
+    expect(s.playlist?.ids).toEqual(["femur-l"]);
+    for (const p of parts.slice(0, MAX_PLAYLIST + 10)) s = reducer(s, { type: "playlistAdd", id: p.id });
+    expect(s.playlist?.ids.length).toBe(MAX_PLAYLIST);
+  });
+
+  test("play selects and frames a step; next and prev move; stop keeps the list", () => {
+    let s = reducer(initialState, { type: "playlistAdd", id: "femur-l" });
+    s = reducer(s, { type: "playlistAdd", id: "soleus-muscle-l" });
+    s = reducer(s, { type: "playlistTitle", title: "Knee day" });
+    s = reducer(s, { type: "playlistPlay", step: 0 });
+    expect(s.playlist?.step).toBe(0);
+    expect(s.selected).toBe("femur-l");
+    expect(s.focus?.flyId).toBe("femur-l");
+    expect(s.focus?.ids).toEqual(["femur-l"]);
+    expect(s.cameraNonce).toBe(initialState.cameraNonce + 1);
+    s = reducer(s, { type: "playlistNext" });
+    expect(s.playlist?.step).toBe(1);
+    expect(s.selected).toBe("soleus-muscle-l");
+    expect(reducer(s, { type: "playlistNext" })).toBe(s);
+    s = reducer(s, { type: "playlistPrev" });
+    expect(s.playlist?.step).toBe(0);
+    expect(reducer(s, { type: "playlistPrev" })).toBe(s);
+    s = reducer(s, { type: "playlistStop" });
+    expect(s.playlist).toEqual({ title: "Knee day", ids: ["femur-l", "soleus-muscle-l"], step: null });
+    expect(s.focus).toBeNull();
+    expect(s.selected).toBe("femur-l");
+  });
+
+  test("removing the shown item stops playback; removing the last item drops the list", () => {
+    let s = reducer(initialState, { type: "playlistAdd", id: "femur-l" });
+    s = reducer(s, { type: "playlistAdd", id: "soleus-muscle-l" });
+    s = reducer(s, { type: "playlistAdd", id: "femur-r" });
+    s = reducer(s, { type: "playlistPlay", step: 2 });
+    s = reducer(s, { type: "playlistRemove", id: "femur-l" });
+    expect(s.playlist?.step).toBe(1);
+    expect(s.focus?.flyId).toBe("femur-r");
+    s = reducer(s, { type: "playlistRemove", id: "femur-r" });
+    expect(s.playlist).toEqual({ title: "", ids: ["soleus-muscle-l"], step: null });
+    expect(s.focus).toBeNull();
+    s = reducer(s, { type: "playlistRemove", id: "soleus-muscle-l" });
+    expect(s.playlist).toBeNull();
+  });
+
+  test("playing a muscle from bones or fascia mode switches modes; other actions stop playback", () => {
+    let s = reducer(initialState, { type: "setMode", mode: "fascia" });
+    s = reducer(s, { type: "playlistAdd", id: "soleus-muscle-l" });
+    s = reducer(s, { type: "playlistAdd", id: "femur-l" });
+    s = reducer(s, { type: "playlistPlay", step: 0 });
+    expect(s.mode).toBe("muscles");
+    expect(s.tour).toBeNull();
+    s = reducer(s, { type: "select", id: "femur-l" });
+    expect(s.playlist?.step).toBeNull();
+    expect(s.playlist?.ids).toEqual(["soleus-muscle-l", "femur-l"]);
+    s = reducer(s, { type: "playlistPlay", step: 1 });
+    s = reducer(s, { type: "startTour" });
+    expect(s.playlist?.step).toBeNull();
+    s = reducer(s, { type: "playlistClear" });
+    expect(s.playlist).toBeNull();
+  });
+
+  test("hydrating with a playlist keeps it idle", () => {
+    const s = reducer(initialState, {
+      type: "hydrate",
+      state: { playlist: { title: "t", ids: ["femur-l"], step: null } },
+    });
+    expect(s.playlist?.ids).toEqual(["femur-l"]);
+    expect(s.selected).toBeNull();
   });
 });

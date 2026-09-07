@@ -109,3 +109,27 @@ describe("decodeSearch", () => {
     expect(decodeSearch(`?h=${ids}`).hidden?.length).toBe(20);
   });
 });
+
+describe("playlists in the URL", () => {
+  test("ids and title round-trip as pl and plt; junk ids and long titles are trimmed", () => {
+    const s: AppState = {
+      ...initialState,
+      playlist: { title: "  Knee day ", ids: ["femur-l", "soleus-muscle-l", "nope"], step: 1 },
+    };
+    const encoded = encodeState(s);
+    expect(encoded).toBe("?pl=femur-l,soleus-muscle-l&plt=Knee+day");
+    expect(decodeSearch(encoded).playlist).toEqual({
+      title: "Knee day",
+      ids: ["femur-l", "soleus-muscle-l"],
+      step: null,
+    });
+    const long = "x".repeat(100);
+    expect(decodeSearch("?pl=junk,,femur-l,femur-l&plt=" + long).playlist).toEqual({
+      title: "x".repeat(80),
+      ids: ["femur-l"],
+      step: null,
+    });
+    expect(decodeSearch("?pl=junk").playlist).toBeUndefined();
+    expect(encodeState({ ...initialState, playlist: { title: "t", ids: [], step: null } })).toBe("");
+  });
+});

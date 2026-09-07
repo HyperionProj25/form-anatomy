@@ -2,7 +2,15 @@ import { isPartId } from "../data/catalog";
 import { LINE_IDS, lineById, type LineId } from "../data/lines";
 import { REGION_ORDER } from "../data/regions";
 import type { Region } from "../data/types";
-import { initialState, type AppState, type LayerFilter, type Mode, type SideFilter } from "./store";
+import {
+  initialState,
+  MAX_PLAYLIST,
+  MAX_PLAYLIST_TITLE,
+  type AppState,
+  type LayerFilter,
+  type Mode,
+  type SideFilter,
+} from "./store";
 import type { CameraPose, ViewPreset } from "../viewer/engine";
 import { parseSetId } from "../features/quiz/generators";
 
@@ -29,6 +37,12 @@ export function encodeState(s: AppState): string {
   if (hidden.length) q.set("h", hidden.join(","));
   const pinned = s.pinned.filter(isPartId).slice(0, MAX_PINS);
   if (pinned.length) q.set("p", pinned.join(","));
+  const playlist = s.playlist?.ids.filter(isPartId).slice(0, MAX_PLAYLIST) ?? [];
+  if (playlist.length) {
+    q.set("pl", playlist.join(","));
+    const title = s.playlist?.title.trim().slice(0, MAX_PLAYLIST_TITLE);
+    if (title) q.set("plt", title);
+  }
   if (s.quiz) q.set("q", s.quiz.setId);
   if (s.filters.region !== "all") q.set("r", s.filters.region);
   if (s.filters.layer !== "all") q.set("d", s.filters.layer);
@@ -75,6 +89,14 @@ export function decodeSearch(search: string): Partial<AppState> {
   if (p) {
     const ids = p.split(",").filter(isPartId).slice(0, MAX_PINS);
     if (ids.length) out.pinned = ids;
+  }
+  const pl = q.get("pl");
+  if (pl) {
+    const ids = [...new Set(pl.split(",").filter(isPartId))].slice(0, MAX_PLAYLIST);
+    if (ids.length) {
+      const title = (q.get("plt") ?? "").trim().slice(0, MAX_PLAYLIST_TITLE);
+      out.playlist = { title, ids, step: null };
+    }
   }
   const qs = q.get("q");
   const setId = qs ? parseSetId(qs) : null;
