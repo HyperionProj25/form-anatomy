@@ -61,7 +61,7 @@ Delete:
 **Interfaces:**
 - Produces: `npm run dev`, `npm run build`, `npm run preview`, `npm run typecheck` scripts; `import.meta.env.BASE_URL` available to source files; `src/App.tsx` default-exports `App`.
 
-- [ ] **Step 1: Move source files with git so history follows them**
+- [x] **Step 1: Move source files with git so history follows them**
 
 ```bash
 mkdir -p src
@@ -71,7 +71,7 @@ git mv app/study-data.ts src/study-data.ts
 git mv app/globals.css src/globals.css
 ```
 
-- [ ] **Step 2: Delete template scaffolding**
+- [x] **Step 2: Delete template scaffolding**
 
 ```bash
 git rm -q app/chatgpt-auth.ts app/layout.tsx
@@ -83,7 +83,7 @@ git status --short | head -30
 
 Expected: `R` lines for the four moves, `D` lines for deletions, no `app/` directory left on disk.
 
-- [ ] **Step 3: Write `index.html`**
+- [x] **Step 3: Write `index.html`**
 
 ```html
 <!doctype html>
@@ -124,7 +124,7 @@ Expected: `R` lines for the four moves, `D` lines for deletions, no `app/` direc
 </html>
 ```
 
-- [ ] **Step 4: Write `src/main.tsx`**
+- [x] **Step 4: Write `src/main.tsx`**
 
 ```tsx
 import { StrictMode } from "react";
@@ -139,7 +139,7 @@ createRoot(document.getElementById("root")!).render(
 );
 ```
 
-- [ ] **Step 5: Rewrite `vite.config.ts`**
+- [x] **Step 5: Rewrite `vite.config.ts`**
 
 ```ts
 import { defineConfig } from "vitest/config";
@@ -159,7 +159,7 @@ export default defineConfig({
 });
 ```
 
-- [ ] **Step 6: Rewrite `tsconfig.json`**
+- [x] **Step 6: Rewrite `tsconfig.json`**
 
 ```json
 {
@@ -181,7 +181,7 @@ export default defineConfig({
 }
 ```
 
-- [ ] **Step 7: Rewrite `package.json`**
+- [x] **Step 7: Rewrite `package.json`**
 
 ```json
 {
@@ -228,7 +228,7 @@ export default defineConfig({
 }
 ```
 
-- [ ] **Step 8: Reinstall to regenerate the lockfile**
+- [x] **Step 8: Reinstall to regenerate the lockfile**
 
 ```bash
 rm -rf node_modules package-lock.json
@@ -237,7 +237,7 @@ npm install 2>&1 | tail -5
 
 Expected: ends with `added N packages` and no `ERESOLVE` error. If npm reports a peer conflict on `vitest`, change its version to `4.0.0` in package.json and rerun.
 
-- [ ] **Step 9: Strip Next-only code from `src/App.tsx`**
+- [x] **Step 9: Strip Next-only code from `src/App.tsx`**
 
 Remove the first line `"use client";`. Rename the component and fix the two absolute hrefs:
 
@@ -256,7 +256,7 @@ export default function App() {
                 <a href={`${import.meta.env.BASE_URL}body.glb`} download>
 ```
 
-- [ ] **Step 10: Strip Next-only code from `src/viewer.tsx` and fix asset paths**
+- [x] **Step 10: Strip Next-only code from `src/viewer.tsx` and fix asset paths**
 
 Remove the first line `"use client";`. Change the two asset paths:
 
@@ -271,7 +271,7 @@ Remove the first line `"use client";`. Change the two asset paths:
       `${import.meta.env.BASE_URL}body.glb`,
 ```
 
-- [ ] **Step 11: Rewrite `.gitignore`**
+- [x] **Step 11: Rewrite `.gitignore`**
 
 ```gitignore
 /node_modules
@@ -283,7 +283,7 @@ Remove the first line `"use client";`. Change the two asset paths:
 /.claude/
 ```
 
-- [ ] **Step 12: Type-check and build**
+- [x] **Step 12: Type-check and build**
 
 ```bash
 npm run typecheck && npm run build 2>&1 | tail -15
@@ -291,7 +291,7 @@ npm run typecheck && npm run build 2>&1 | tail -15
 
 Expected: typecheck prints nothing; build ends with `✓ built in` and lists `dist/index.html`, `dist/assets/index-*.js`, `dist/assets/index-*.css`. No `error` lines.
 
-- [ ] **Step 13: Confirm the built HTML has the base path and meta**
+- [x] **Step 13: Confirm the built HTML has the base path and meta**
 
 ```bash
 grep -o 'src="/form-anatomy/assets/[^"]*"' dist/index.html
@@ -302,7 +302,7 @@ ls dist/body.glb dist/draco/draco_decoder.wasm dist/og.png dist/ATTRIBUTION.md
 
 Expected: one script src, the favicon href, `og:image" content="https://hyperionproj25.github.io/form-anatomy/og.png"`, and all four files listed.
 
-- [ ] **Step 14: Manual check in the browser**
+- [x] **Step 14: Manual check in the browser**
 
 ```bash
 npm run dev -- --port 3131
@@ -310,7 +310,7 @@ npm run dev -- --port 3131
 
 Open `http://localhost:3131/form-anatomy/` in Chrome. Expected: the model loads and renders, clicking the chest selects "Sternocostal Head Of Pectoralis Major Muscle", the Fascia button highlights the superficial back line, and the browser tab title is `Form — Anatomy, connected`. Stop the server afterwards.
 
-- [ ] **Step 15: Commit**
+- [x] **Step 15: Commit**
 
 ```bash
 git add -A
@@ -334,7 +334,7 @@ EOF
 - Consumes: `src/study-data.ts` exports `lines`, `lessons`, `questions` (unchanged from Codex).
 - Produces: `npm test` exits 0 with three passing files; CI in Task 6 relies on it.
 
-- [ ] **Step 1: Write the GLB integrity test (ported from the old node:test file)**
+- [x] **Step 1: Write the GLB integrity test (ported from the old node:test file)**
 
 `tests/glb.test.ts`:
 
@@ -409,7 +409,7 @@ describe("anatomy model asset", () => {
 });
 ```
 
-- [ ] **Step 2: Write the study data shape test**
+- [x] **Step 2: Write the study data shape test**
 
 `tests/data.test.ts`:
 
@@ -460,7 +460,7 @@ describe("quiz questions", () => {
 });
 ```
 
-- [ ] **Step 3: Write the index.html meta test**
+- [x] **Step 3: Write the index.html meta test**
 
 `tests/index-html.test.ts`:
 
@@ -490,7 +490,7 @@ describe("index.html", () => {
 });
 ```
 
-- [ ] **Step 4: Remove the old test and run the suite**
+- [x] **Step 4: Remove the old test and run the suite**
 
 ```bash
 git rm -q tests/rendered-html.test.mjs
@@ -499,7 +499,7 @@ npm test 2>&1 | tail -12
 
 Expected: `Test Files  3 passed (3)` and `Tests  9 passed (9)`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -522,7 +522,7 @@ EOF
 - Consumes: `AnatomyViewer` props from `src/viewer.tsx`.
 - Produces: `AnatomyViewer` prop `onApi: (api: ViewerAPI | null) => void` replaces `api: MutableRefObject<ViewerAPI | null>`; `npm run lint` exits 0.
 
-- [ ] **Step 1: Rewrite `eslint.config.mjs` without the Next plugin and with `public/` ignored**
+- [x] **Step 1: Rewrite `eslint.config.mjs` without the Next plugin and with `public/` ignored**
 
 ```js
 import { defineConfig, globalIgnores } from "eslint/config";
@@ -550,7 +550,7 @@ export default defineConfig([
 ]);
 ```
 
-- [ ] **Step 2: Run lint to see the exact remaining errors**
+- [x] **Step 2: Run lint to see the exact remaining errors**
 
 ```bash
 npm run lint 2>&1 | grep -E "error|warning" | head -20
@@ -558,7 +558,7 @@ npm run lint 2>&1 | grep -E "error|warning" | head -20
 
 Expected: five messages in `src/viewer.tsx` (`react-hooks/refs` at the `current.current = props` line, `react-hooks/immutability` twice, `react-hooks/set-state-in-effect`, `react-hooks/exhaustive-deps`) and four `jsx-a11y` messages in `src/App.tsx` on the modal backdrop and dialog. Nothing from `public/`.
 
-- [ ] **Step 3: Fix `src/viewer.tsx` props mirroring, WebGL detection, and API handoff**
+- [x] **Step 3: Fix `src/viewer.tsx` props mirroring, WebGL detection, and API handoff**
 
 Replace the import line and the top of the component:
 
@@ -610,7 +610,7 @@ Replace the component head (the block from `const mount = useRef` through the `h
     );
 ```
 
-- [ ] **Step 4: Fix the effect body: mutable locals in one object, no setState at effect start**
+- [x] **Step 4: Fix the effect body: mutable locals in one object, no setState at effect start**
 
 Replace the start of the main `useEffect` (from `const host = mount.current;` through the `catch` block that returns) with:
 
@@ -735,7 +735,7 @@ Update the retry button so error state resets from the click handler, not the ef
             </button>
 ```
 
-- [ ] **Step 5: Update `src/App.tsx` to the callback API and fix the modal a11y errors**
+- [x] **Step 5: Update `src/App.tsx` to the callback API and fix the modal a11y errors**
 
 ```tsx
 // was: <AnatomyViewer api={api} ...
@@ -766,7 +766,7 @@ Replace the modal backdrop and dialog opening tags:
           >
 ```
 
-- [ ] **Step 6: Lint, type-check, test, build**
+- [x] **Step 6: Lint, type-check, test, build**
 
 ```bash
 npm run lint && npm run typecheck && npm test 2>&1 | tail -4 && npm run build 2>&1 | tail -3
@@ -774,7 +774,7 @@ npm run lint && npm run typecheck && npm test 2>&1 | tail -4 && npm run build 2>
 
 Expected: lint prints nothing and exits 0; typecheck prints nothing; `Tests  9 passed`; build ends with `✓ built in`.
 
-- [ ] **Step 7: Manual check that the viewer still works after the refactor**
+- [x] **Step 7: Manual check that the viewer still works after the refactor**
 
 ```bash
 npm run dev -- --port 3131
@@ -782,7 +782,7 @@ npm run dev -- --port 3131
 
 Open `http://localhost:3131/form-anatomy/` in Chrome. Expected: model renders; Anterior/Posterior/Lateral buttons move the camera (this exercises the new `onApi` handoff); zoom buttons work; Reset works; Escape closes the Learning guide modal and clicking the dimmed backdrop closes it too. Stop the server.
 
-- [ ] **Step 8: Commit**
+- [x] **Step 8: Commit**
 
 ```bash
 git add -A
@@ -806,7 +806,7 @@ EOF
 - Consumes: `Structure` type from `src/viewer.tsx` (`{ id, name, detail, type, wiki? }`).
 - Produces: `uniqueByName(list: Structure[]): Structure[]` keeping the first occurrence of each case-insensitive name.
 
-- [ ] **Step 1: Write the failing test**
+- [x] **Step 1: Write the failing test**
 
 `tests/structures.test.ts`:
 
@@ -834,7 +834,7 @@ describe("uniqueByName", () => {
 });
 ```
 
-- [ ] **Step 2: Run the test to verify it fails**
+- [x] **Step 2: Run the test to verify it fails**
 
 ```bash
 npx vitest run tests/structures.test.ts 2>&1 | tail -6
@@ -842,7 +842,7 @@ npx vitest run tests/structures.test.ts 2>&1 | tail -6
 
 Expected: FAIL with `Failed to resolve import "../src/structures"`.
 
-- [ ] **Step 3: Write `src/structures.ts`**
+- [x] **Step 3: Write `src/structures.ts`**
 
 ```ts
 import type { Structure } from "./viewer";
@@ -859,7 +859,7 @@ export function uniqueByName(list: Structure[]): Structure[] {
 }
 ```
 
-- [ ] **Step 4: Run the test to verify it passes**
+- [x] **Step 4: Run the test to verify it passes**
 
 ```bash
 npx vitest run tests/structures.test.ts 2>&1 | tail -6
@@ -867,7 +867,7 @@ npx vitest run tests/structures.test.ts 2>&1 | tail -6
 
 Expected: `Tests  2 passed (2)`.
 
-- [ ] **Step 5: Use it in `src/App.tsx`**
+- [x] **Step 5: Use it in `src/App.tsx`**
 
 Add the import after the `study-data` import:
 
@@ -893,7 +893,7 @@ Make the list highlight by name so a right-side click on the model still lights 
                       }
 ```
 
-- [ ] **Step 6: Lint, test, and check in the browser**
+- [x] **Step 6: Lint, test, and check in the browser**
 
 ```bash
 npm run lint && npm test 2>&1 | tail -4
@@ -907,7 +907,7 @@ npm run dev -- --port 3131
 
 Open `http://localhost:3131/form-anatomy/`. Expected: the STRUCTURE LIBRARY count reads 220 or close to it (not 439), "Adductor Brevis" appears once, and clicking the model's right pectoral highlights the single "Sternocostal Head Of Pectoralis Major Muscle" entry in the list. Stop the server.
 
-- [ ] **Step 7: Commit**
+- [x] **Step 7: Commit**
 
 ```bash
 git add -A
@@ -930,7 +930,7 @@ EOF
 **Interfaces:**
 - Produces: nothing programmatic; the README's "Run locally" and "Validate" sections are what a contributor follows.
 
-- [ ] **Step 1: Replace the template favicon with a Form mark**
+- [x] **Step 1: Replace the template favicon with a Form mark**
 
 `public/favicon.svg`:
 
@@ -941,7 +941,7 @@ EOF
 </svg>
 ```
 
-- [ ] **Step 2: Delete the Next.js template icons**
+- [x] **Step 2: Delete the Next.js template icons**
 
 ```bash
 git rm -q public/file.svg public/globe.svg public/window.svg
@@ -950,7 +950,7 @@ grep -rn "file.svg\|globe.svg\|window.svg" src index.html || echo "no references
 
 Expected: `no references`.
 
-- [ ] **Step 3: Rewrite `README.md`**
+- [x] **Step 3: Rewrite `README.md`**
 
 ```markdown
 # Form — Anatomy, connected
@@ -1024,7 +1024,7 @@ Educational references: OpenStax Anatomy & Physiology 2e; Wilke et al.
 (2016), PMID 26281953; Krause et al. (2016), PMCID PMC5341578.
 ```
 
-- [ ] **Step 4: Build and confirm the icon is served**
+- [x] **Step 4: Build and confirm the icon is served**
 
 ```bash
 npm run build 2>&1 | tail -2 && grep -c "rx=\"8\"" dist/favicon.svg
@@ -1032,7 +1032,7 @@ npm run build 2>&1 | tail -2 && grep -c "rx=\"8\"" dist/favicon.svg
 
 Expected: build succeeds and the grep prints `1`.
 
-- [ ] **Step 5: Commit**
+- [x] **Step 5: Commit**
 
 ```bash
 git add -A
@@ -1055,7 +1055,7 @@ EOF
 - Consumes: `npm run lint`, `npm test`, `npm run build` from earlier tasks.
 - Produces: the live site at `https://hyperionproj25.github.io/form-anatomy/`; `origin` remote on `main`.
 
-- [ ] **Step 1: Write the workflow**
+- [x] **Step 1: Write the workflow**
 
 `.github/workflows/deploy.yml`:
 
@@ -1112,7 +1112,7 @@ jobs:
         uses: actions/deploy-pages@v4
 ```
 
-- [ ] **Step 2: Commit the workflow**
+- [x] **Step 2: Commit the workflow**
 
 ```bash
 git add .github/workflows/deploy.yml
@@ -1124,7 +1124,7 @@ EOF
 )"
 ```
 
-- [ ] **Step 3: Create the public repo and push**
+- [x] **Step 3: Create the public repo and push**
 
 ```bash
 gh repo create HyperionProj25/form-anatomy --public --source=. --remote=origin --push \
@@ -1134,7 +1134,7 @@ git remote -v
 
 Expected: `https://github.com/HyperionProj25/form-anatomy` created, `origin` listed for fetch and push, and `main` pushed.
 
-- [ ] **Step 4: Watch the first workflow run**
+- [x] **Step 4: Watch the first workflow run**
 
 ```bash
 sleep 20 && gh run list --limit 1
@@ -1148,7 +1148,7 @@ gh api -X POST repos/HyperionProj25/form-anatomy/pages -f build_type=workflow
 gh run rerun $(gh run list --limit 1 --json databaseId --jq '.[0].databaseId')
 ```
 
-- [ ] **Step 5: Verify the live site over HTTP**
+- [x] **Step 5: Verify the live site over HTTP**
 
 ```bash
 curl -s -o /dev/null -w "%{http_code}\n" https://hyperionproj25.github.io/form-anatomy/
@@ -1160,11 +1160,11 @@ curl -s -o /dev/null -w "%{http_code}\n" https://hyperionproj25.github.io/form-a
 
 Expected: `200`; `<title>Form — Anatomy, connected</title>`; the og:image URL; `200 8249484`; `200`. Pages can take a minute after the run finishes; retry once if the first call returns 404.
 
-- [ ] **Step 6: Verify in Chrome**
+- [x] **Step 6: Verify in Chrome**
 
 Open `https://hyperionproj25.github.io/form-anatomy/` in Chrome. Expected: the model renders, clicking the chest selects a pectoralis part, Fascia mode highlights a line, the tab shows the green Form icon, and the browser console has no errors. Also open it at a 375 px wide viewport: the "Layers & search" button appears and opens the side panel.
 
-- [ ] **Step 7: Record the outcome**
+- [x] **Step 7: Record the outcome**
 
 Append the live URL and first successful run id to the bottom of `README.md` only if the URL differs from the one already written there; otherwise no change. Confirm `git status` is clean.
 
