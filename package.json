@@ -14,7 +14,8 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit",
     "catalog": "tsx scripts/build-catalog.ts",
-    "facts": "tsx scripts/fetch-facts.ts"
+    "facts": "tsx scripts/fetch-facts.ts",
+    "verify:citations": "tsx scripts/verify-citations.ts"
   },
   "dependencies": {
     "lucide-react": "^1.41.0",
