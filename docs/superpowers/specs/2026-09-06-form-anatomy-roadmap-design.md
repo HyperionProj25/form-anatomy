@@ -538,3 +538,80 @@ Escape stops. No accounts, no server: the URL is the playlist.
 
 Three.js is emitted as its own chunk so the app shell parses before the 3D
 library finishes downloading. No behaviour change.
+
+## 8. Phase 6 addendum: study tools (2026-09-07)
+
+Phase 5 made the atlas shareable. Phase 6 makes it a study tool: curated
+sets to work through, exam-style innervation questions, a printable handout,
+and attachment highlighting so a muscle's pull on the skeleton is visible.
+
+### 8.1 Study sets
+
+- `src/data/study-sets.ts` holds curated sets: `{ id, title, blurb, kind:
+  "muscles" | "bones", keys }` where every key is a catalog key (a test
+  enforces this). Sets stay within the playlist limit of 30.
+- Sets cover the standard undergraduate groupings: rotator cuff, shoulder
+  girdle, arm, forearm flexors, forearm extensors, hip flexors and adductors,
+  gluteal region, quadriceps and hamstrings, posterior leg, anterior and
+  lateral leg, abdominal wall, erector spinae, neck, face and mastication,
+  breathing muscles, and three bone sets (upper limb, lower limb, axial).
+- The start panel lists the sets for the current mode (muscle sets in muscle
+  mode, bone sets in bone mode). Choosing one loads it as the playlist
+  (`playlistLoad`, right-side parts for bilateral structures) and shows the
+  first item, so the existing card, link and handout all apply. A set is a
+  starting point: students can edit it like any playlist.
+
+### 8.2 Innervation questions
+
+- The `fact` question kind gains `field: "action" | "nerve"`. Nerve questions
+  ask "Which nerve supplies the X?" with the muscle's nerve text as the
+  answer and three distinct nerve texts from other quiz muscles as
+  distractors. Nerve text is clipped to its first clause (before "(" or ";")
+  and 70 characters so options stay readable; the explanation shows the
+  full text.
+- Structural questions now cycle find, identify, action, nerve. A muscle
+  without nerve facts falls back to the next kind, as action does today.
+- Progress keys are unchanged (catalog key), so weak spots keep working.
+
+### 8.3 Printable handout
+
+- A `handout` modal renders the current playlist as a study sheet: title,
+  date, then one block per structure with origin, insertion, action,
+  innervation (muscles) or articulations (bones), the Latin name when the
+  toggle is on, and one Wikipedia attribution line. A Print button calls
+  `window.print()`.
+- `@media print` hides the app shell and shows only the handout, black on
+  white, page breaks avoided inside a block.
+- The playlist card gets a "Handout" button. Without a playlist there is no
+  handout.
+
+### 8.4 Attachment highlighting
+
+- `src/data/attachments.ts` maps a muscle's origin and insertion text to
+  catalog bone keys by name: each bone group has a small alias list
+  (femur/femoral, scapula/acromion/coracoid/glenoid, hip bone/ilium/iliac/
+  ischium/ischial/pubis/pubic/acetabulum, sternum/manubrium/xiphoid, and so
+  on), vertebra tokens and ranges expand (`C7-T12`, `T7-S5`, "lumbar
+  vertebrae"), and numbered ribs and costal cartilages resolve by ordinal or
+  digit. Unmatched phrases are simply not highlighted. The result is
+  `{ origin: keys[], insertion: keys[] }` or undefined when nothing matched.
+- Ids follow the muscle's side: a left muscle lights left bones; midline
+  bones light as they are; a midline muscle lights both sides.
+- Store `attach: boolean` (URL `a=1`), sticky across selections, cleared by
+  reset. When true, a selected muscle outside fascia mode shows origin bones
+  in blue (#2b7bd9) and insertion bones in orange (#d9822b); a bone in both
+  lists shows blue. Everything else dims to 0.28 like a quiz reveal, so the
+  bones show through the muscles.
+- The detail panel shows an "Attachments on the skeleton" block: origin and
+  insertion chips (click selects the bone), a Show/Hide toggle, and the
+  caveat "Matched from the attachment text by bone name. Approximate." The
+  block is absent when nothing matched.
+- Tests: known muscles (gastrocnemius femur/calcaneus, trapezius occipital
+  and C7 to T12 to clavicle/scapula, deltoid clavicle/scapula to humerus),
+  range expansion, side mapping, and coverage: at least 70% of quiz muscles
+  with facts match both an origin and an insertion bone.
+
+### 8.5 Feedback
+
+- The footer links to the GitHub issues page so students can report what
+  confused them.
