@@ -1,5 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { AnatomyEngine, type CameraPose, type PullDrawing, type ViewPreset } from "./engine";
+import {
+  AnatomyEngine,
+  type CameraPose,
+  type MotionDrawing,
+  type PullDrawing,
+  type ViewPreset,
+} from "./engine";
 import type { PartStyle } from "./appearance";
 import { catalog, nodeToId, partById } from "../data/catalog";
 import type { Vec3 } from "../data/types";
@@ -8,7 +14,8 @@ import type { Vec3 } from "../data/types";
 export type CameraCommand =
   | { kind: "preset"; preset: ViewPreset; nonce: number }
   | { kind: "pose"; pose: CameraPose; nonce: number }
-  | { kind: "fly"; id: string; direction: Vec3; nonce: number };
+  | { kind: "fly"; id: string; direction: Vec3; nonce: number }
+  | { kind: "frame"; center: Vec3; radius: number; direction: Vec3; nonce: number };
 
 export type DrawnPath = { points: Vec3[]; color: string };
 
@@ -29,6 +36,11 @@ type Props = {
   autoRotate?: boolean;
   /** Animated direction of pull for the selected muscle. */
   pull?: PullDrawing | null;
+  /** Rigid joint motion; phase applies while not playing, the engine drives it while playing. */
+  motion?: MotionDrawing | null;
+  motionPhase?: number;
+  motionPlaying?: boolean;
+  onMotionPhase?(phase: number): void;
   onSelect(id: string): void;
   onReady(ids: string[]): void;
   onCameraChange(pose: CameraPose): void;
@@ -86,6 +98,7 @@ export default function Viewer(props: Props) {
           ),
         onSelect: (id) => latest.current.onSelect(id),
         onCameraChange: (pose) => latest.current.onCameraChange(pose),
+        onMotionPhase: (phase) => latest.current.onMotionPhase?.(phase),
       });
     } catch {
       queueMicrotask(() => {
@@ -127,6 +140,18 @@ export default function Viewer(props: Props) {
   }, [ready, props.pull]);
 
   useEffect(() => {
+    if (ready) engine.current?.setMotion(props.motion ?? null);
+  }, [ready, props.motion]);
+
+  useEffect(() => {
+    if (ready && !props.motionPlaying) engine.current?.setMotionPhase(props.motionPhase ?? 0);
+  }, [ready, props.motionPhase, props.motionPlaying, props.motion]);
+
+  useEffect(() => {
+    if (ready) engine.current?.setMotionPlaying(!!props.motionPlaying);
+  }, [ready, props.motionPlaying, props.motion]);
+
+  useEffect(() => {
     const e = engine.current;
     if (!ready || !e) return;
     const c = props.cameraCommand;
@@ -134,6 +159,7 @@ export default function Viewer(props: Props) {
     appliedNonce.current = c.nonce;
     if (c.kind === "preset") void e.setView(c.preset, c.nonce > 0);
     else if (c.kind === "pose") void e.setCamera(c.pose, false);
+    else if (c.kind === "frame") void e.frame(c.center, c.radius, c.direction);
     else void e.flyTo(c.id, { direction: c.direction, padding: 2.6 });
   }, [ready, props.cameraCommand]);
 

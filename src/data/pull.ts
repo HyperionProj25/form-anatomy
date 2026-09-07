@@ -16,10 +16,13 @@ export type Pull = {
 
 const MAX_PATHS = 4;
 
+/** How far a contact point is pulled off the box face toward the bone's centre, in model units. */
+const INSET = 0.015;
+
 /**
  * Where a muscle meets a bone, approximated without mesh geometry: the point on the bone's bounding
- * box nearest the muscle's centroid, pulled a quarter of the way toward the bone's centre so it sits
- * inside the bone rather than on a box corner.
+ * box nearest the muscle's centroid, pulled about 1.5 cm toward the bone's centre so it sits inside
+ * the bone rather than on a box corner. The inset is capped so long bones keep their ends.
  */
 export function contactPoint(bone: CatalogPart, towards: Vec3): Vec3 {
   const [min, max] = bone.bbox;
@@ -29,10 +32,12 @@ export function contactPoint(bone: CatalogPart, towards: Vec3): Vec3 {
     Math.min(Math.max(towards[2], min[2]), max[2]),
   ];
   const c = bone.centroid;
+  const d = Math.hypot(c[0] - clamped[0], c[1] - clamped[1], c[2] - clamped[2]);
+  const f = d > 0 ? Math.min(0.25, INSET / d) : 0;
   return [
-    clamped[0] + (c[0] - clamped[0]) * 0.25,
-    clamped[1] + (c[1] - clamped[1]) * 0.25,
-    clamped[2] + (c[2] - clamped[2]) * 0.25,
+    clamped[0] + (c[0] - clamped[0]) * f,
+    clamped[1] + (c[1] - clamped[1]) * f,
+    clamped[2] + (c[2] - clamped[2]) * f,
   ];
 }
 

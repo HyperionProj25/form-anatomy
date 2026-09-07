@@ -2346,3 +2346,80 @@ footer a:hover {
 .model-label-insertion {
   background: #d9822b;
 }
+
+.motion-card {
+  width: 236px;
+  max-width: 100%;
+  background: rgba(255, 254, 251, 0.96);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 12px;
+  box-shadow: 0 8px 24px rgba(20, 30, 20, 0.08);
+  font-size: 12px;
+  backdrop-filter: blur(6px);
+}
+.motion-card .playlist-head strong {
+  flex: 1;
+  font-size: 12.5px;
+}
+.motion-controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 4px 0 8px;
+}
+.motion-controls .outline-button {
+  padding: 4px 8px;
+}
+.motion-controls input[type="range"] {
+  flex: 1;
+  min-width: 0;
+  accent-color: var(--green);
+}
+.motion-side {
+  margin-bottom: 8px;
+}
+.motion-roles {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.motion-roles > div {
+  display: flex;
+  align-items: flex-start;
+  gap: 6px;
+  font-weight: 600;
+}
+.motion-roles .line-dot {
+  margin-top: 4px;
+  flex: none;
+}
+.motion-roles small {
+  display: block;
+  font-weight: 400;
+  color: var(--muted);
+  line-height: 1.3;
+  font-size: 10.5px;
+}
+.motion-card .subtle {
+  margin: 8px 0 0;
+  font-size: 10.5px;
+}
+.animate-joint {
+  margin: 8px 0 2px;
+  width: 100%;
+  justify-content: center;
+}
+
+/* The motion card sits at the bottom of the left column so the joint stays visible mid-stage. */
+.stage-left {
+  bottom: 104px;
+}
+.motion-card {
+  margin-top: auto;
+}
+@media (max-width: 600px) {
+  .stage-left {
+    bottom: 120px;
+  }
+}

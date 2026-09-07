@@ -219,14 +219,21 @@ export function boneKeysIn(text: string): string[] {
   return [...new Set(found)].filter((k) => partsByKey(k).length > 0);
 }
 
+const cache = new Map<string, Attachments | undefined>();
+
 /** Origin and insertion bone keys for a muscle, from its reference facts; undefined when nothing matched. */
 export function attachmentsFor(part: CatalogPart): Attachments | undefined {
   if (part.type !== "muscle") return undefined;
+  if (cache.has(part.key)) return cache.get(part.key);
   const f = factsForWiki(part.wiki);
-  if (!f) return undefined;
-  const origin = f.origin ? boneKeysIn(f.origin) : [];
-  const insertion = f.insertion ? boneKeysIn(f.insertion) : [];
-  return origin.length || insertion.length ? { origin, insertion } : undefined;
+  let result: Attachments | undefined;
+  if (f) {
+    const origin = f.origin ? boneKeysIn(f.origin) : [];
+    const insertion = f.insertion ? boneKeysIn(f.insertion) : [];
+    result = origin.length || insertion.length ? { origin, insertion } : undefined;
+  }
+  cache.set(part.key, result);
+  return result;
 }
 
 /** Part ids on the muscle's side (both sides for a midline muscle; midline bones as they are). */

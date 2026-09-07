@@ -15,6 +15,9 @@ import { attachmentIds } from "./data/attachments";
 import { lineById, lineKeys, lines } from "./data/lines";
 import { displayName, saveNamePref } from "./data/names";
 import { pullFor } from "./data/pull";
+import { motionSetup } from "./data/motion";
+import MotionCard from "./features/motion/MotionCard";
+import type { MotionDrawing } from "./viewer/engine";
 import { StoreProvider, useStore } from "./state/store";
 import { useUrlSync } from "./state/useUrlSync";
 import { computeStyles } from "./viewer/appearance";
@@ -91,13 +94,37 @@ function Shell() {
   }, [ready, showToast]);
 
   const activeLine = lineById(state.line) ?? lines[0];
+  const motionJoint = state.motion?.joint;
+  const motionSide = state.motion?.side;
+  const motion = useMemo(
+    () => (motionJoint && motionSide ? (motionSetup(motionJoint, motionSide) ?? null) : null),
+    [motionJoint, motionSide],
+  );
+  const motionDrawing = useMemo<MotionDrawing | null>(
+    () =>
+      motion && {
+        pivot: motion.pivot,
+        axis: motion.axis,
+        range: motion.range,
+        movingIds: motion.movingIds,
+        cables: motion.cables.map((c) => ({
+          id: c.id,
+          from: c.from,
+          via: c.via,
+          to: c.to,
+          moveVia: c.moveVia,
+          color: c.role === "shortens" ? "#c8473f" : c.role === "lengthens" ? "#2b7bd9" : "#8a8f86",
+        })),
+      },
+    [motion],
+  );
   const attachments = useMemo(() => {
-    if (!state.attach || state.mode === "fascia" || !state.selected) return undefined;
+    if (!state.attach || state.mode === "fascia" || !state.selected || state.motion) return undefined;
     const part = partById(state.selected);
     if (!part || part.type !== "muscle") return undefined;
     const ids = attachmentIds(part);
     return ids ? { origin: new Set(ids.origin), insertion: new Set(ids.insertion) } : undefined;
-  }, [state.attach, state.mode, state.selected]);
+  }, [state.attach, state.mode, state.selected, state.motion]);
   const pull = useMemo(() => {
     if (!attachments || !state.selected) return null;
     const part = partById(state.selected);
@@ -109,7 +136,7 @@ function Shell() {
         parts,
         mode: state.mode,
         selected: state.selected,
-        hidden: new Set(state.hidden),
+        hidden: new Set([...state.hidden, ...(motion?.hiddenIds ?? [])]),
         isolated: state.isolated,
         opacity: state.opacity / 100,
         lineColor: activeLine.color,
@@ -128,9 +155,18 @@ function Shell() {
       state.pinned,
       activeLine,
       attachments,
+      motion,
     ],
   );
   const cameraCommand = useMemo<CameraCommand>(() => {
+    if (motion && state.motion && state.motion.frameNonce === state.cameraNonce)
+      return {
+        kind: "frame",
+        center: motion.pivot,
+        radius: motion.radius,
+        direction: motion.view,
+        nonce: state.cameraNonce,
+      };
     if (state.focus?.flyId)
       return { kind: "fly", id: state.focus.flyId, direction: state.focus.direction, nonce: state.cameraNonce };
     if (state.view === "custom" && state.camera)
@@ -140,7 +176,7 @@ function Shell() {
       preset: state.view === "custom" ? "front" : state.view,
       nonce: state.cameraNonce,
     };
-  }, [state.focus, state.view, state.camera, state.cameraNonce]);
+  }, [state.focus, state.view, state.camera, state.cameraNonce, state.motion, motion]);
   const paths = useMemo<DrawnPath[]>(
     () =>
       state.mode === "fascia" && state.showPath
@@ -241,6 +277,7 @@ function Shell() {
           </button>
           <div className="stage-left">
             <PinLegend />
+            <MotionCard setup={motion} />
             <PlaylistCard onToast={showToast} />
           </div>
           <Viewer
@@ -251,6 +288,10 @@ function Shell() {
             selectedId={state.selected}
             autoRotate={state.mode === "fascia" && !!state.tour?.playing}
             pull={pull}
+            motion={motionDrawing}
+            motionPhase={state.motion?.phase ?? 0}
+            motionPlaying={!!state.motion?.playing}
+            onMotionPhase={(phase) => dispatch({ type: "motionTick", phase })}
             onSelect={(id) => dispatch({ type: "select", id })}
             onReady={() => setReady(true)}
             onCameraChange={(pose) => dispatch({ type: "cameraMoved", pose })}

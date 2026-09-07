@@ -17,12 +17,12 @@ const GUIDE_STEPS = [
   {
     icon: Layers,
     title: "Explore one layer at a time",
-    text: "Switch between muscles and bones. Filter by body region, approximate layer and side, and choose English or Latin names. Select a structure, then isolate it, hide it, pin it to compare with others, or show its origin and insertion bones on the skeleton. The joint chips list every muscle that crosses a joint.",
+    text: "Switch between muscles and bones. Filter by body region, approximate layer and side, and choose English or Latin names. Select a structure, then isolate it, hide it, pin it to compare with others, or show its origin and insertion bones on the skeleton with the direction of pull animated. The joint chips list every muscle that crosses a joint, and Animate bends the joint with those muscles drawn as lines of action: red shortens, blue lengthens.",
   },
   {
     icon: Network,
     title: "Study the relationships",
-    text: "Choose Fascia, start a guided tour, and read the evidence badge on every hop. Body lines carry hop-level dissection counts; the three arm chains are badged for the whole chain. Colored muscles show components of a proposed chain; the cable is a teaching path, not fascia.",
+    text: "Choose Fascia, start a guided tour, press Play for a slow cinematic drift, and read the evidence badge on every hop. Body lines carry hop-level dissection counts; the three arm chains are badged for the whole chain. Colored muscles show components of a proposed chain; the cable is a teaching path, not fascia.",
   },
   {
     icon: Search,

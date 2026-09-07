@@ -7,6 +7,7 @@ import {
   Eye,
   Layers,
   Network,
+  Play,
   Search,
   X,
 } from "lucide-react";
@@ -33,6 +34,7 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
   const selectedPart = selected ? partById(selected) : undefined;
   const groups = useMemo(() => groupParts(filterParts(parts, mode, filters)), [mode, filters]);
   const showLines = mode === "fascia" && !filters.search;
+  const activeJoint = filters.joint === "all" ? null : filters.joint;
 
   return (
     <aside className={`left-panel ${mobileOpen ? "mobile-open" : ""}`} aria-label="Explore the body">
@@ -159,12 +161,27 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
                   </button>
                 ))}
               </div>
-              {filters.joint !== "all" && (
-                <p className="subtle joint-note">
-                  Muscles attached on both sides of the {JOINT_LABELS[filters.joint].toLowerCase()},
-                  derived from the attachment text. Connective attachments such as aponeuroses and
-                  the iliotibial tract are not seen.
-                </p>
+              {activeJoint && (
+                <>
+                  <button
+                    className="primary-button animate-joint"
+                    onClick={() =>
+                      state.motion?.joint === activeJoint
+                        ? dispatch({ type: "motionStop" })
+                        : dispatch({ type: "motionStart", joint: activeJoint })
+                    }
+                  >
+                    <Play size={14} />
+                    {state.motion?.joint === activeJoint
+                      ? "Stop the animation"
+                      : `Animate the ${JOINT_LABELS[activeJoint].toLowerCase()}`}
+                  </button>
+                  <p className="subtle joint-note">
+                    Muscles attached on both sides of the {JOINT_LABELS[activeJoint].toLowerCase()},
+                    derived from the attachment text. Connective attachments such as aponeuroses and
+                    the iliotibial tract are not seen.
+                  </p>
+                </>
               )}
             </>
           )}

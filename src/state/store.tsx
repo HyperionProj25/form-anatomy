@@ -4,6 +4,7 @@ import type { Region, Vec3 } from "../data/types";
 import { partById, partForSide, partsByKey } from "../data/catalog";
 import { lineById, stopPartId, stopSides, type LineId } from "../data/lines";
 import type { JointId } from "../data/joints";
+import type { MotionSide } from "../data/motion";
 import { loadNamePref, type NameLang } from "../data/names";
 import type { Question, QuizSetId } from "../features/quiz/generators";
 
@@ -40,6 +41,14 @@ export const MAX_PLAYLIST = 30;
 export const MAX_PLAYLIST_TITLE = 80;
 /** A teacher's ordered list of structures; `step` is the item being shown, or null while idle. */
 export type Playlist = { title: string; ids: string[]; step: number | null };
+/** A rigid joint animation. `frameNonce` marks the camera nonce that should frame the joint. */
+export type Motion = {
+  joint: JointId;
+  side: MotionSide;
+  phase: number;
+  playing: boolean;
+  frameNonce: number;
+};
 
 export type AppState = {
   mode: Mode;
@@ -65,6 +74,7 @@ export type AppState = {
   playlist: Playlist | null;
   /** Light the selected muscle's origin and insertion bones (URL `a`). Sticky across selections. */
   attach: boolean;
+  motion: Motion | null;
   filters: Filters;
   modal: ModalId;
 };
@@ -88,6 +98,7 @@ export const initialState: AppState = {
   names: loadNamePref(),
   playlist: null,
   attach: false,
+  motion: null,
   filters: { region: "all", layer: "all", side: "both", joint: "all", search: "" },
   modal: null,
 };
@@ -133,6 +144,12 @@ export type Action =
   | { type: "playlistClear" }
   | { type: "playlistLoad"; title: string; ids: string[] }
   | { type: "toggleAttach" }
+  | { type: "motionStart"; joint: JointId; side?: MotionSide }
+  | { type: "motionTick"; phase: number }
+  | { type: "motionScrub"; phase: number }
+  | { type: "motionPlay"; playing: boolean }
+  | { type: "motionSide"; side: MotionSide }
+  | { type: "motionStop" }
   | { type: "reset" }
   | { type: "hydrate"; state: Partial<AppState> };
 
@@ -242,6 +259,7 @@ export function reducer(s: AppState, a: Action): AppState {
         hidden: [],
         quiz: null,
         playlist: idlePlaylist(s),
+        motion: a.mode === "fascia" ? null : s.motion,
         ...noTour,
       };
       return a.mode === "fascia"
@@ -295,8 +313,11 @@ export function reducer(s: AppState, a: Action): AppState {
         ...noTour,
         cameraNonce: s.cameraNonce + 1,
       };
-    case "setFilters":
-      return { ...s, filters: { ...s.filters, ...a.filters } };
+    case "setFilters": {
+      const joint = a.filters.joint;
+      const motion = joint !== undefined && s.motion && joint !== s.motion.joint ? null : s.motion;
+      return { ...s, filters: { ...s.filters, ...a.filters }, motion };
+    }
     case "setModal":
       return { ...s, modal: a.modal };
     case "togglePath":
@@ -436,6 +457,41 @@ export function reducer(s: AppState, a: Action): AppState {
     }
     case "toggleAttach":
       return { ...s, attach: !s.attach };
+    case "motionStart":
+      return {
+        ...s,
+        mode: s.mode === "fascia" ? "muscles" : s.mode,
+        selected: null,
+        isolated: false,
+        quiz: null,
+        playlist: idlePlaylist(s),
+        ...noTour,
+        filters: { ...s.filters, joint: a.joint },
+        motion: {
+          joint: a.joint,
+          side: a.side ?? "right",
+          phase: 0,
+          playing: true,
+          frameNonce: s.cameraNonce + 1,
+        },
+        cameraNonce: s.cameraNonce + 1,
+      };
+    case "motionTick":
+      return s.motion ? { ...s, motion: { ...s.motion, phase: a.phase } } : s;
+    case "motionScrub":
+      return s.motion ? { ...s, motion: { ...s.motion, phase: a.phase, playing: false } } : s;
+    case "motionPlay":
+      return s.motion ? { ...s, motion: { ...s.motion, playing: a.playing } } : s;
+    case "motionSide":
+      return s.motion
+        ? {
+            ...s,
+            motion: { ...s.motion, side: a.side, phase: 0, frameNonce: s.cameraNonce + 1 },
+            cameraNonce: s.cameraNonce + 1,
+          }
+        : s;
+    case "motionStop":
+      return { ...s, motion: null };
     case "reset":
       return {
         ...s,
@@ -447,6 +503,7 @@ export function reducer(s: AppState, a: Action): AppState {
         camera: null,
         quiz: null,
         attach: false,
+        motion: null,
         playlist: idlePlaylist(s),
         ...noTour,
         cameraNonce: s.cameraNonce + 1,

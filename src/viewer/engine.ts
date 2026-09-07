@@ -17,7 +17,21 @@ export type EngineHandlers = {
   onSelect(id: string): void;
   /** Fires ~300 ms after the user finishes dragging or wheel-zooming. */
   onCameraChange(pose: CameraPose): void;
+  /** Fires a few times a second while a joint motion plays, with the current phase 0..1. */
+  onMotionPhase?(phase: number): void;
 };
+
+/** A rigid joint motion: the moving meshes rotate about the pivot; cables follow their insertion end. */
+export type MotionDrawing = {
+  pivot: Vec3;
+  axis: Vec3;
+  range: [number, number];
+  movingIds: string[];
+  cables: { id: string; from: Vec3; via: Vec3; to: Vec3; moveVia: boolean; color: string }[];
+};
+
+/** Seconds for a full sweep of a joint motion in one direction. */
+const MOTION_SWEEP_MS = 2600;
 
 type PartMesh = THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
 type Target = { style: PartStyle; color: THREE.Color; emissive: THREE.Color };
@@ -80,7 +94,7 @@ export class AnatomyEngine {
   private ground: THREE.Mesh | null = null;
   private halo: THREE.Mesh | null = null;
   private fitDistance = 3.7;
-  private frame = 0;
+  private rafHandle = 0;
   private lastFrame = performance.now();
   private disposed = false;
   private animation: number | null = null;
@@ -94,6 +108,22 @@ export class AnatomyEngine {
   private pullGroup = new THREE.Group();
   private pullFlows: { curve: THREE.CatmullRomCurve3; particles: THREE.Mesh[] }[] = [];
   private labels: { el: HTMLDivElement; position: THREE.Vector3 }[] = [];
+  private cableGroup = new THREE.Group();
+  private cables: {
+    first: THREE.Mesh;
+    second: THREE.Mesh;
+    dot: THREE.Mesh;
+    from: THREE.Vector3;
+    via: THREE.Vector3;
+    to: THREE.Vector3;
+    moveVia: boolean;
+  }[] = [];
+  private motion: MotionDrawing | null = null;
+  private motionPhase = 0;
+  private motionDir = 1;
+  private motionPlaying = false;
+  private motionReported = 0;
+  private posed = new Set<string>();
   private targets = new Map<string, Target>();
   private pending = new Set<string>();
   private hoverId: string | null = null;
@@ -148,7 +178,7 @@ export class AnatomyEngine {
     const rim = new THREE.DirectionalLight(0xffffff, 1.1);
     rim.position.set(-2, 2, -3);
     this.scene.add(key, fill, rim);
-    this.scene.add(this.pathGroup, this.pullGroup);
+    this.scene.add(this.pathGroup, this.pullGroup, this.cableGroup);
 
     this.observer = new ResizeObserver(this.resize);
     this.observer.observe(host);
@@ -283,8 +313,138 @@ export class AnatomyEngine {
       .multiply(new THREE.Matrix4().makeScale(s, s, s))
       .multiply(new THREE.Matrix4().makeTranslation(-c.x, -c.y, -c.z));
     halo.renderOrder = -1;
-    this.model.add(halo);
+    // A child of the mesh, so it follows any joint pose the mesh is given.
+    mesh.add(halo);
     this.halo = halo;
+  }
+
+  /** Frame a region: look at `center` from `direction`, fitting a sphere of `radius`. */
+  frame(center: Vec3, radius: number, direction: Vec3): Promise<void> {
+    const halfFov = THREE.MathUtils.degToRad(this.camera.fov / 2);
+    const distance = THREE.MathUtils.clamp(
+      (Math.max(radius, 0.05) * 1.6) / Math.sin(halfFov),
+      this.controls.minDistance,
+      this.controls.maxDistance,
+    );
+    const dir = new THREE.Vector3(...direction).normalize();
+    const pos = new THREE.Vector3(...center).add(dir.multiplyScalar(distance));
+    return this.moveCamera([pos.x, pos.y, pos.z], center, true);
+  }
+
+  /** Start (or clear) a rigid joint motion. Cables are drawn as cylinders that follow the moving end. */
+  setMotion(m: MotionDrawing | null): void {
+    this.clearMotion();
+    this.motion = m;
+    this.motionPhase = 0;
+    this.motionDir = 1;
+    if (!m) return;
+    for (const c of m.cables) {
+      const material = new THREE.MeshBasicMaterial({
+        color: c.color,
+        transparent: true,
+        opacity: 0.92,
+        depthTest: false,
+      });
+      const first = new THREE.Mesh(new THREE.CylinderGeometry(0.0055, 0.0055, 1, 10, 1, true), material);
+      first.renderOrder = 30;
+      const second = new THREE.Mesh(new THREE.CylinderGeometry(0.0065, 0.0065, 1, 10, 1, true), material);
+      second.renderOrder = 30;
+      const dot = new THREE.Mesh(
+        new THREE.SphereGeometry(0.011, 12, 10),
+        new THREE.MeshBasicMaterial({ color: c.color, depthTest: false }),
+      );
+      dot.renderOrder = 31;
+      this.cableGroup.add(first, second, dot);
+      this.cables.push({
+        first,
+        second,
+        dot,
+        from: new THREE.Vector3(...c.from),
+        via: new THREE.Vector3(...c.via),
+        to: new THREE.Vector3(...c.to),
+        moveVia: c.moveVia,
+      });
+    }
+    this.applyMotion();
+  }
+
+  private static placeSegment(mesh: THREE.Mesh, a: THREE.Vector3, b: THREE.Vector3): void {
+    const delta = b.clone().sub(a);
+    mesh.position.copy(a).add(delta.clone().multiplyScalar(0.5));
+    mesh.scale.set(1, Math.max(delta.length(), 0.001), 1);
+    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), delta.normalize());
+  }
+
+  setMotionPhase(phase: number): void {
+    if (!this.motion) return;
+    this.motionPhase = Math.min(1, Math.max(0, phase));
+    this.applyMotion();
+  }
+
+  setMotionPlaying(on: boolean): void {
+    this.motionPlaying = on && !this.reduced;
+  }
+
+  private applyMotion(): void {
+    const m = this.motion;
+    if (!m) return;
+    const deg = m.range[0] + (m.range[1] - m.range[0]) * this.motionPhase;
+    const q = new THREE.Quaternion().setFromAxisAngle(
+      new THREE.Vector3(...m.axis).normalize(),
+      (deg * Math.PI) / 180,
+    );
+    // Mesh-local coordinates are the raw model coordinates: catalog point + model centre.
+    const pivotLocal = new THREE.Vector3(
+      m.pivot[0] + this.modelCenter[0],
+      m.pivot[1] + this.modelCenter[1],
+      m.pivot[2] + this.modelCenter[2],
+    );
+    const pose = new THREE.Matrix4()
+      .makeTranslation(pivotLocal.x, pivotLocal.y, pivotLocal.z)
+      .multiply(new THREE.Matrix4().makeRotationFromQuaternion(q))
+      .multiply(new THREE.Matrix4().makeTranslation(-pivotLocal.x, -pivotLocal.y, -pivotLocal.z));
+    for (const id of m.movingIds) {
+      const mesh = this.meshes.get(id);
+      if (!mesh) continue;
+      mesh.matrixAutoUpdate = false;
+      mesh.matrix.copy(pose);
+      mesh.matrixWorldNeedsUpdate = true;
+      this.posed.add(id);
+    }
+    const pivotWorld = new THREE.Vector3(...m.pivot);
+    const turn = (p: THREE.Vector3) => p.clone().sub(pivotWorld).applyQuaternion(q).add(pivotWorld);
+    for (const c of this.cables) {
+      const via = c.moveVia ? turn(c.via) : c.via;
+      const to = turn(c.to);
+      AnatomyEngine.placeSegment(c.first, c.from, via);
+      AnatomyEngine.placeSegment(c.second, via, to);
+      c.dot.position.copy(to);
+    }
+  }
+
+  private clearMotion(): void {
+    for (const id of this.posed) {
+      const mesh = this.meshes.get(id);
+      if (!mesh) continue;
+      mesh.matrix.identity();
+      mesh.position.set(0, 0, 0);
+      mesh.rotation.set(0, 0, 0);
+      mesh.scale.set(1, 1, 1);
+      mesh.matrixAutoUpdate = true;
+      mesh.matrixWorldNeedsUpdate = true;
+    }
+    this.posed.clear();
+    for (const c of this.cables) {
+      this.cableGroup.remove(c.first, c.second, c.dot);
+      c.first.geometry.dispose();
+      c.second.geometry.dispose();
+      (c.second.material as THREE.Material).dispose();
+      c.dot.geometry.dispose();
+      (c.dot.material as THREE.Material).dispose();
+    }
+    this.cables = [];
+    this.motion = null;
+    this.motionPlaying = false;
   }
 
   /** Slow drift around the target, for cinematic tours. Off under reduced motion. */
@@ -493,7 +653,7 @@ export class AnatomyEngine {
   dispose(): void {
     this.disposed = true;
     this.cancelAnimation();
-    cancelAnimationFrame(this.frame);
+    cancelAnimationFrame(this.rafHandle);
     window.clearTimeout(this.cameraTimer);
     this.observer.disconnect();
     const el = this.renderer.domElement;
@@ -505,6 +665,7 @@ export class AnatomyEngine {
     this.draco.dispose();
     this.clearPaths();
     this.clearPull();
+    this.clearMotion();
     this.setSelected(null);
     if (this.ground) {
       this.scene.remove(this.ground);
@@ -654,7 +815,7 @@ export class AnatomyEngine {
   };
 
   private render = () => {
-    this.frame = requestAnimationFrame(this.render);
+    this.rafHandle = requestAnimationFrame(this.render);
     const now = performance.now();
     const dt = Math.min(64, now - this.lastFrame);
     this.lastFrame = now;
@@ -670,6 +831,21 @@ export class AnatomyEngine {
         flow.particles.forEach((dot, i) =>
           flow.curve.getPointAt((t + i / PULL_PARTICLES) % 1, dot.position),
         );
+    }
+    if (this.motion && this.motionPlaying) {
+      this.motionPhase += (this.motionDir * dt) / MOTION_SWEEP_MS;
+      if (this.motionPhase >= 1) {
+        this.motionPhase = 1;
+        this.motionDir = -1;
+      } else if (this.motionPhase <= 0) {
+        this.motionPhase = 0;
+        this.motionDir = 1;
+      }
+      this.applyMotion();
+      if (now - this.motionReported > 120) {
+        this.motionReported = now;
+        this.handlers.onMotionPhase?.(this.motionPhase);
+      }
     }
     this.placeLabels();
     this.renderer.render(this.scene, this.camera);

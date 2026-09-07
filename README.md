@@ -95,6 +95,20 @@ checks without deploying.
   crosses.
 - Anki export: any playlist or study set downloads as a tab-separated deck,
   one card per structure with its facts and a link back to the atlas.
+- Joint motion: animate the jaw, shoulder, elbow, wrist, hip, knee or ankle.
+  The distal bones rotate rigidly about an estimated joint centre while the
+  muscles that cross the joint become lines of action bending through their
+  bellies, red where the line shortens and blue where it lengthens, so
+  agonists and antagonists read at a glance. Scrub the angle, switch sides,
+  and read the caveat: real joints roll and glide.
+- Direction of pull: with attachments shown, particles flow from the
+  insertion through the muscle to the origin with the fixed and moving ends
+  labelled.
+- Cinematic tours: while a fascial-line tour plays, the camera drifts around
+  each stop under a caption band with the hop's evidence.
+- Rendering: image-based lighting, a contact shadow, a halo on the selected
+  part, hover lift, and every colour or opacity change eased over about a
+  quarter of a second. Reduced-motion settings snap instead.
 - A research digest of 47 verified papers and references, grouped by
   question, each with a plain-language summary and a note on what it means
   for the model, including sections on how fascia responds to load, an
