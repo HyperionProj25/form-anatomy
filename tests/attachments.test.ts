@@ -106,6 +106,6 @@ describe("attachmentsFor", () => {
       return a && a.origin.length > 0 && a.insertion.length > 0;
     });
     expect(withFacts.length).toBeGreaterThan(50);
-    expect(both.length / withFacts.length).toBeGreaterThan(0.7);
+    expect(both.length / withFacts.length).toBeGreaterThan(0.8);
   });
 });

@@ -78,6 +78,20 @@
   "retrieved": "2026-09-07",
   "latin": "Musculus adductor brevis"
  },
+ "Adductor hallucis muscle": {
+  "title": "Adductor hallucis muscle",
+  "url": "https://en.wikipedia.org/wiki/Adductor_hallucis_muscle",
+  "template": "muscle",
+  "origin": "Oblique head: proximal ends of middle 3 metatarsal bones; Transverse head: MTP ligaments of lateral 3 toes",
+  "insertion": "Lateral side of base of first phalanx of the 1st toe; sesamoid apparatus",
+  "action": "Adducts hallux",
+  "nerve": "Lateral plantar nerve",
+  "antagonist": "Abductor hallucis muscle",
+  "blood": "Lateral plantar artery",
+  "revision": 1222233258,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus adductor hallucis"
+ },
  "Adductor longus muscle": {
   "title": "Adductor longus muscle",
   "url": "https://en.wikipedia.org/wiki/Adductor_longus_muscle",
@@ -135,8 +149,21 @@
   "title": "Anserine bursa",
   "url": "https://en.wikipedia.org/wiki/Anserine_bursa",
   "template": "other",
-  "revision": 1220370873,
+  "revision": 1373700948,
   "retrieved": "2026-09-07"
+ },
+ "Aryepiglottic muscle": {
+  "title": "Aryepiglottic muscle",
+  "url": "https://en.wikipedia.org/wiki/Aryepiglottic_muscle",
+  "template": "muscle",
+  "origin": "Continuation of the oblique arytenoid past the arytenoid apex",
+  "insertion": "Aryepiglottic fold",
+  "action": "Closes the laryngeal inlet",
+  "nerve": "Inferior laryngeal nerve (from the vagus nerve)",
+  "blood": "Laryngeal branch of superior thyroid artery",
+  "revision": 1301001652,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus aryepiglotticus"
  },
  "Arytenoid cartilage": {
   "title": "Arytenoid cartilage",
@@ -145,6 +172,18 @@
   "revision": 1365646419,
   "retrieved": "2026-09-07",
   "latin": "Cartilagines arytaenoideae"
+ },
+ "Arytenoid muscle": {
+  "title": "Arytenoid muscle",
+  "url": "https://en.wikipedia.org/wiki/Arytenoid_muscle",
+  "template": "muscle",
+  "origin": "Arytenoid cartilage on one side",
+  "insertion": "Arytenoid cartilage on opposite side",
+  "action": "Approximate the arytenoid cartilages (close rima glottis)",
+  "nerve": "Recurrent laryngeal branch of the vagus",
+  "blood": "Superior laryngeal artery",
+  "revision": 1300874093,
+  "retrieved": "2026-09-07"
  },
  "Atlas (anatomy)": {
   "title": "Atlas (anatomy)",
@@ -323,12 +362,31 @@
   "retrieved": "2026-09-07",
   "latin": "Musculus corrugator supercilii"
  },
+ "Costal cartilage": {
+  "title": "Costal cartilage",
+  "url": "https://en.wikipedia.org/wiki/Costal_cartilage",
+  "template": "other",
+  "revision": 1350513374,
+  "retrieved": "2026-09-07"
+ },
  "Cricoid cartilage": {
   "title": "Cricoid cartilage",
   "url": "https://en.wikipedia.org/wiki/Cricoid_cartilage",
   "template": "other",
   "revision": 1371514801,
   "retrieved": "2026-09-07"
+ },
+ "Cricothyroid muscle": {
+  "title": "Cricothyroid muscle",
+  "url": "https://en.wikipedia.org/wiki/Cricothyroid_muscle",
+  "template": "muscle",
+  "origin": "Anterior and lateral cricoid cartilage",
+  "insertion": "Inferior cornu and lamina of the thyroid cartilage",
+  "action": "Tension and elongation of the vocal folds",
+  "nerve": "External branch of superior laryngeal nerve (branch of the vagus nerve)",
+  "revision": 1362397771,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus cricothyreoideus"
  },
  "Cuboid bone": {
   "title": "Cuboid bone",
@@ -467,6 +525,20 @@
   "revision": 1360657171,
   "retrieved": "2026-09-07",
   "latin": "Musculus extensor carpi radialis longus"
+ },
+ "Extensor carpi ulnaris muscle": {
+  "title": "Extensor carpi ulnaris muscle",
+  "url": "https://en.wikipedia.org/wiki/Extensor_carpi_ulnaris_muscle",
+  "template": "muscle",
+  "origin": "Humeral head: Lateral epicondyle of the humerus. (???-->)Ulnar head: Olecranon, posterior surface of ulna, antebrachial fascia",
+  "insertion": "5th metacarpal",
+  "action": "Extends and adducts the wrist",
+  "nerve": "Posterior interosseous nerve",
+  "antagonist": "Flexor carpi radialis",
+  "blood": "Ulnar artery",
+  "revision": 1345277848,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor carpi ulnaris"
  },
  "Extensor digiti minimi muscle": {
   "title": "Extensor digiti minimi muscle",
@@ -637,6 +709,20 @@
   "retrieved": "2026-09-07",
   "latin": "Musculus flexor carpi radialis"
  },
+ "Flexor carpi ulnaris muscle": {
+  "title": "Flexor carpi ulnaris muscle",
+  "url": "https://en.wikipedia.org/wiki/Flexor_carpi_ulnaris_muscle",
+  "template": "muscle",
+  "origin": "Medial epicondyle (common flexor tendon) and medial margin on olecranon of ulna",
+  "insertion": "Pisiform, hook of the hamate, base of the fifth metacarpal bone (volar aspect)",
+  "action": "Flexion and adduction of wrist",
+  "nerve": "Muscular branches of ulnar nerve (from C8 and T1)",
+  "antagonist": "Extensor carpi radialis brevis muscle and extensor carpi radialis longus muscle",
+  "blood": "Ulnar artery",
+  "revision": 1344841887,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor carpi ulnaris"
+ },
  "Flexor digiti minimi brevis muscle (hand)": {
   "title": "Flexor digiti minimi brevis muscle of hand",
   "url": "https://en.wikipedia.org/wiki/Flexor_digiti_minimi_brevis_muscle_of_hand",
@@ -692,6 +778,19 @@
   "revision": 1361709869,
   "retrieved": "2026-09-07",
   "latin": "Musculus flexor digitorum superficialis"
+ },
+ "Flexor hallucis brevis muscle": {
+  "title": "Flexor hallucis brevis muscle",
+  "url": "https://en.wikipedia.org/wiki/Flexor_hallucis_brevis_muscle",
+  "template": "muscle",
+  "origin": "Plantar aspect of the cuneiforms, plantar calcaneocuboid ligament, long plantar ligament",
+  "insertion": "Medial Head: Medial sesamoid bone of the metatarsophalangeal joint, proximal phalanx of great toe. Lateral head: Lateral sesamoid bone of the metatarsophalangeal joint, proximal phalanx of great toe",
+  "action": "Flex hallux",
+  "nerve": "Medial plantar nerve",
+  "antagonist": "Extensor hallucis longus muscle",
+  "revision": 1360659628,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor hallucis brevis"
  },
  "Flexor hallucis longus muscle": {
   "title": "Flexor hallucis longus muscle",
@@ -1061,6 +1160,18 @@
   "retrieved": "2026-09-07",
   "latin": "Musculi interspinales"
  },
+ "Intertransversarii": {
+  "title": "Intertransversarii",
+  "url": "https://en.wikipedia.org/wiki/Intertransversarii",
+  "template": "muscle",
+  "origin": "Transverse process",
+  "insertion": "Transverse process above",
+  "action": "Lateral flexion of trunk",
+  "nerve": "Ventral rami and dorsal rami of spinal nerves",
+  "revision": 1253177864,
+  "retrieved": "2026-09-07",
+  "latin": "Musculi intertransversarii"
+ },
  "Lacrimal bone": {
   "title": "Lacrimal bone",
   "url": "https://en.wikipedia.org/wiki/Lacrimal_bone",
@@ -1068,6 +1179,19 @@
   "revision": 1362835757,
   "retrieved": "2026-09-07",
   "latin": "Os lacrimale"
+ },
+ "Lateral cricoarytenoid muscle": {
+  "title": "Lateral cricoarytenoid muscle",
+  "url": "https://en.wikipedia.org/wiki/Lateral_cricoarytenoid_muscle",
+  "template": "muscle",
+  "origin": "Lateral part of the arch of the cricoid",
+  "insertion": "Muscular process of the arytenoid cartilage",
+  "action": "Adduct and medially rotate the cartilage, pulling the vocal ligaments towards the midline and backwards and so closing off the rima glottidis",
+  "nerve": "Recurrent laryngeal branch of the vagus",
+  "antagonist": "Posterior cricoarytenoid muscle",
+  "revision": 1325042787,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus cricoarytaenoideus lateralis"
  },
  "Lateral nasal cartilage": {
   "title": "Lateral nasal cartilage",
@@ -1114,6 +1238,19 @@
   "revision": 1349365271,
   "retrieved": "2026-09-07",
   "latin": "Musculus latissimus dorsi"
+ },
+ "Levator anguli oris": {
+  "title": "Levator anguli oris",
+  "url": "https://en.wikipedia.org/wiki/Levator_anguli_oris",
+  "template": "muscle",
+  "origin": "Maxilla",
+  "insertion": "Modiolus",
+  "action": "Smile (elevates angle of mouth)",
+  "nerve": "Buccal branches of the facial nerve",
+  "blood": "Facial artery",
+  "revision": 1254139580,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus levator anguli oris"
  },
  "Levator labii superioris": {
   "title": "Levator labii superioris",
@@ -1256,6 +1393,13 @@
   "revision": 1369788388,
   "retrieved": "2026-09-07",
   "latin": "Os lunatum"
+ },
+ "Major alar cartilage": {
+  "title": "Major alar cartilage",
+  "url": "https://en.wikipedia.org/wiki/Major_alar_cartilage",
+  "template": "other",
+  "revision": 1192300331,
+  "retrieved": "2026-09-07"
  },
  "Malleus": {
   "title": "Malleus",
@@ -1739,6 +1883,19 @@
   "retrieved": "2026-09-07",
   "latin": "Musculus popliteus"
  },
+ "Posterior cricoarytenoid muscle": {
+  "title": "Posterior cricoarytenoid muscle",
+  "url": "https://en.wikipedia.org/wiki/Posterior_cricoarytenoid_muscle",
+  "template": "muscle",
+  "origin": "Posterior part of the cricoid",
+  "insertion": "Posterior surface of muscular process of the arytenoid cartilage",
+  "action": "Abducts and laterally rotates arytenoid cartilage, pulling vocal ligaments away from the midline and forward and so opening rima glottidis",
+  "nerve": "Recurrent laryngeal nerve branch of the vagus nerve (CN X)",
+  "antagonist": "Lateral cricoarytenoid muscle",
+  "revision": 1301177460,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus cricoarytaenoideus posterior"
+ },
  "Premolar": {
   "title": "Premolar",
   "url": "https://en.wikipedia.org/wiki/Premolar",
@@ -1772,6 +1929,20 @@
   "revision": 1360730200,
   "retrieved": "2026-09-07",
   "latin": "Musculus pronator quadratus"
+ },
+ "Pronator teres muscle": {
+  "title": "Pronator teres muscle",
+  "url": "https://en.wikipedia.org/wiki/Pronator_teres_muscle",
+  "template": "muscle",
+  "origin": "Humeral head: medial supracondylar ridge of humerus slightly above the medial epicondyle of humerus (common flexor tendon), Ulnar head: coronoid process of ulna",
+  "insertion": "Middle of the lateral surface of the body of the radius",
+  "action": "Pronation of forearm, flexes elbow",
+  "nerve": "Median nerve",
+  "antagonist": "Supinator muscle",
+  "blood": "Ulnar artery and radial artery",
+  "revision": 1345264622,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus pronator teres"
  },
  "Psoas major muscle": {
   "title": "Psoas major muscle",
@@ -1826,19 +1997,6 @@
   "retrieved": "2026-09-07",
   "latin": "Musculus quadratus lumborum"
  },
- "Quadriceps femoris muscle": {
-  "title": "Quadriceps",
-  "url": "https://en.wikipedia.org/wiki/Quadriceps",
-  "template": "muscle",
-  "origin": "Combined rectus femoris and vastus muscles",
-  "insertion": "Tibial tuberosity",
-  "action": "Knee extension; hip flexion (rectus femoris only)",
-  "nerve": "Femoral nerve",
-  "blood": "Femoral artery",
-  "revision": 1365075025,
-  "retrieved": "2026-09-07",
-  "latin": "Musculus quadriceps femoris"
- },
  "Radius (bone)": {
   "title": "Radius (bone)",
   "url": "https://en.wikipedia.org/wiki/Radius_(bone)",
@@ -1860,6 +2018,31 @@
   "revision": 1368402259,
   "retrieved": "2026-09-07",
   "latin": "Musculus rectus abdominis"
+ },
+ "Rectus capitis anterior muscle": {
+  "title": "Rectus capitis anterior muscle",
+  "url": "https://en.wikipedia.org/wiki/Rectus_capitis_anterior_muscle",
+  "template": "muscle",
+  "origin": "Atlas (C1)",
+  "insertion": "Basilar part of the occipital bone",
+  "action": "Flexion of neck at atlanto-occipital joint",
+  "nerve": "Ventral primary rami of spinal nerves C1-2",
+  "blood": "Ascending artery",
+  "revision": 1263738198,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rectus capitis anterior"
+ },
+ "Rectus capitis lateralis muscle": {
+  "title": "Rectus capitis lateralis muscle",
+  "url": "https://en.wikipedia.org/wiki/Rectus_capitis_lateralis_muscle",
+  "template": "muscle",
+  "origin": "Upper surface of the transverse process of the atlas",
+  "insertion": "Under surface of the jugular process of the occipital bone",
+  "action": "Lateral flexion, stabilise atlanto-occipital joint",
+  "nerve": "C1, C2",
+  "revision": 1263738184,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rectus capitis lateralis"
  },
  "Rectus capitis posterior major muscle": {
   "title": "Rectus capitis posterior major muscle",
@@ -1885,6 +2068,20 @@
   "revision": 1354034848,
   "retrieved": "2026-09-07",
   "latin": "Musculus rectus capitis posterior minor"
+ },
+ "Rectus femoris muscle": {
+  "title": "Rectus femoris muscle",
+  "url": "https://en.wikipedia.org/wiki/Rectus_femoris_muscle",
+  "template": "muscle",
+  "origin": "Anterior inferior iliac spine and the exterior surface of the bony ridge which forms the groove on the iliac portion of the acetabulum",
+  "insertion": "Inserts into the patellar tendon as one of the four quadriceps muscles",
+  "action": "Knee extension; hip flexion",
+  "nerve": "Femoral nerve",
+  "antagonist": "Hamstring",
+  "blood": "Descending branch of the lateral femoral circumflex artery",
+  "revision": 1306526597,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rectus femoris"
  },
  "Rhomboid major muscle": {
   "title": "Rhomboid major muscle",
@@ -2190,6 +2387,14 @@
   "retrieved": "2026-09-07",
   "latin": "Musculus sternothyreoideus"
  },
+ "Sternum": {
+  "title": "Sternum",
+  "url": "https://en.wikipedia.org/wiki/Sternum",
+  "template": "bone",
+  "revision": 1367199442,
+  "retrieved": "2026-09-07",
+  "latin": "Sternum"
+ },
  "Stylohyoid muscle": {
   "title": "Stylohyoid muscle",
   "url": "https://en.wikipedia.org/wiki/Stylohyoid_muscle",
@@ -2409,6 +2614,18 @@
   "retrieved": "2026-09-07",
   "latin": "vertebrae thoracicae"
  },
+ "Thyroarytenoid muscle": {
+  "title": "Thyroarytenoid muscle",
+  "url": "https://en.wikipedia.org/wiki/Thyroarytenoid_muscle",
+  "template": "muscle",
+  "origin": "Inner surface of the thyroid cartilage (anterior aspect)",
+  "insertion": "Anterior surface of arytenoid cartilage",
+  "action": "Helps to reduce tension on the vocal folds during speech to decrease pitch",
+  "nerve": "Recurrent laryngeal branch of the vagus",
+  "revision": 1277631305,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus thyroarytenoideus"
+ },
  "Thyrohyoid muscle": {
   "title": "Thyrohyoid muscle",
   "url": "https://en.wikipedia.org/wiki/Thyrohyoid_muscle",
@@ -2547,6 +2764,13 @@
   "retrieved": "2026-09-07",
   "latin": "os triquetrum"
  },
+ "Trochlea of superior oblique": {
+  "title": "Trochlea of superior oblique",
+  "url": "https://en.wikipedia.org/wiki/Trochlea_of_superior_oblique",
+  "template": "other",
+  "revision": 1321903405,
+  "retrieved": "2026-09-07"
+ },
  "Ulna": {
   "title": "Ulna",
   "url": "https://en.wikipedia.org/wiki/Ulna",
@@ -2555,6 +2779,46 @@
   "retrieved": "2026-09-07",
   "latin": "Ulna"
  },
+ "Vastus intermedius muscle": {
+  "title": "Vastus intermedius muscle",
+  "url": "https://en.wikipedia.org/wiki/Vastus_intermedius_muscle",
+  "template": "muscle",
+  "origin": "Anterolateral femur",
+  "insertion": "Quadriceps tendon",
+  "action": "Extension of knee joint",
+  "nerve": "Femoral nerve",
+  "blood": "Femoral artery",
+  "revision": 1338088416,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus vastus intermedius"
+ },
+ "Vastus lateralis muscle": {
+  "title": "Vastus lateralis muscle",
+  "url": "https://en.wikipedia.org/wiki/Vastus_lateralis_muscle",
+  "template": "muscle",
+  "origin": "Greater trochanter, intertrochanteric line, and linea aspera of the femur",
+  "insertion": "Patella by the quadriceps tendon and tibial tuberosity by the patellar ligament",
+  "action": "Extends and stabilizes knee",
+  "nerve": "Femoral nerve",
+  "antagonist": "Hamstring",
+  "blood": "Lateral circumflex femoral artery",
+  "revision": 1282030801,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus vastus lateralis"
+ },
+ "Vastus medialis": {
+  "title": "Vastus medialis",
+  "url": "https://en.wikipedia.org/wiki/Vastus_medialis",
+  "template": "muscle",
+  "origin": "Medial side of femur",
+  "insertion": "Quadriceps tendon",
+  "action": "Extends knee",
+  "nerve": "Femoral nerve",
+  "blood": "Femoral artery",
+  "revision": 1336718053,
+  "retrieved": "2026-09-07",
+  "latin": "Musculus vastus medialis"
+ },
  "Vomer": {
   "title": "Vomer",
   "url": "https://en.wikipedia.org/wiki/Vomer",
@@ -2562,6 +2826,14 @@
   "revision": 1347459993,
   "retrieved": "2026-09-07",
   "latin": "Vomer (anatomia)"
+ },
+ "Xiphoid process": {
+  "title": "Xiphoid process",
+  "url": "https://en.wikipedia.org/wiki/Xiphoid_process",
+  "template": "bone",
+  "revision": 1319507224,
+  "retrieved": "2026-09-07",
+  "latin": "Processus xiphoideus"
  },
  "Zygomatic bone": {
   "title": "Zygomatic bone",

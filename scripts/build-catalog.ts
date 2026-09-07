@@ -7,6 +7,7 @@ import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { classifyLayer, classifyRegion, slugify } from "../src/data/regions";
 import type { Catalog, CatalogPart, PartType, Side, Vec3 } from "../src/data/types";
+import { WIKI_OVERRIDES, wikiUrl } from "./wiki-overrides";
 
 type GltfNode = {
   name: string;
@@ -115,9 +116,14 @@ const parts: CatalogPart[] = raws.map(({ node, min, max }) => {
     round((bmin[2] + bmax[2]) / 2),
   ];
   const side: Side = sideOf(name, centroid[0]);
-  const wikiRaw = str(extras.wikiLink);
-  const wiki = wikiRaw?.startsWith("https://en.wikipedia.org/wiki/") ? repairParens(wikiRaw.split("#")[0]) : undefined;
   const key = slugify(name);
+  const wikiRaw = str(extras.wikiLink);
+  const override = WIKI_OVERRIDES[key];
+  const wiki = override
+    ? wikiUrl(override)
+    : wikiRaw?.startsWith("https://en.wikipedia.org/wiki/")
+      ? repairParens(wikiRaw.split("#")[0])
+      : undefined;
   return {
     id: key + (side === "left" ? "-l" : side === "right" ? "-r" : ""),
     node: node.name,
