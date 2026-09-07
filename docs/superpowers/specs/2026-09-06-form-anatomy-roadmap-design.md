@@ -615,3 +615,52 @@ and attachment highlighting so a muscle's pull on the skeleton is visible.
 
 - The footer links to the GitHub issues page so students can report what
   confused them.
+
+## 9. Phase 7 addendum: recent research, joints, Anki (2026-09-07)
+
+### 9.1 Recent findings in the research digest
+
+- A new citation group `recent`, labelled "Recent findings, 2023 to 2026",
+  holds about a dozen papers published since the lines were built: in-vivo
+  force-transmission studies (latissimus to contralateral gluteus maximus in
+  runners and in low back pain; levator scapulae to serratus anterior and
+  rhomboid minor), the myofascial-junction anatomy review, thoracolumbar
+  fascia ultrasound (systematic review, shear-strain study), the superficial
+  fascia narrative review, trapezius fascia innervation, the remote-stiffness
+  meta-analysis, the stretching and deep-fascia stiffness trial, the fascia
+  manipulation scoping review, and the "polyconnective network" proposal.
+- Every entry carries a PMID and DOI and passes `scripts/verify-citations.ts`
+  in CI. Summaries are two to four sentences supportable from the abstract;
+  `modelNote` says what it means for what is on screen (which line, which
+  muscles, or "not represented in this model").
+- The group renders last in the digest with a one-line intro. README and
+  guide counts update.
+
+### 9.2 Muscles by joint
+
+- `src/data/joints.ts` defines seven joints (temporomandibular, shoulder,
+  elbow, wrist, hip, knee, ankle) as two bone-key sets: `proximal` (bones on
+  the near side) and `distal` (every bone beyond the joint along the limb).
+  A muscle crosses a joint when its matched attachments (spec 8.4) include at
+  least one bone from each set. Two-joint muscles therefore appear at both
+  joints, which is correct.
+- Filters gain `joint: JointId | "all"` (URL `j`). The library shows a
+  "CROSSES JOINT" chip row in muscles mode; the detail panel's attachment
+  block lists "Crosses: hip, knee" chips that set the filter. Caveat text:
+  "Derived from the attachment text; connective attachments such as
+  aponeuroses and the iliotibial tract are not seen."
+- Tests pin known crossings (knee: vasti, hamstrings, gastrocnemius, not
+  soleus or gluteus maximus; elbow: biceps, brachialis, not deltoid; ankle:
+  soleus, tibialis anterior; TMJ: masseter, temporalis) and bound counts.
+
+### 9.3 Anki export
+
+- `ankiTsv(parts, lang)` in `src/features/playlist/anki.ts` builds a
+  tab-separated file with Anki header lines (`#separator:tab`, `#html:true`,
+  `#tags:form-anatomy`), one card per structure: front is the display name
+  (Latin beneath when the toggle is on), back is HTML rows for origin,
+  insertion, action, innervation or articulations, plus a link to the
+  structure in the atlas.
+- The handout gains "Download for Anki" (Blob download, filename
+  `form-<title>.txt`) and a one-line import hint. Structures without facts
+  still get a card with the atlas link so the deck matches the list.
