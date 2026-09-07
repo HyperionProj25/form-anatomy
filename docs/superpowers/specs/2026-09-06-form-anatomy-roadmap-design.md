@@ -493,3 +493,48 @@ Wikipedia text: CC BY-SA 4.0 with per-block attribution. OpenStax and
 StatPearls: CC BY 4.0. Draco decoder: Apache 2.0. Original interface and
 lesson text: MIT for code, CC BY-SA 4.0 for lesson content so it can be
 shared alike with the model text.
+
+## 7. Phase 5 addendum (approved 2026-09-07): arm chains, Latin names, playlists, bundle split
+
+### 7.1 Arm chains
+
+Three upper-limb lines from Wilke & Krause 2019 (Clin Anat, PMID 31226229),
+grouped separately from the six body lines in the line list:
+
+| id | name | stops (catalog keys) | studies |
+| --- | --- | --- | --- |
+| val | Ventral arm chain | pectoralis major -> biceps brachii (with brachial fascia, not modeled) -> forearm flexors, brachioradialis, supinator | 5 |
+| lal | Lateral arm chain | trapezius -> deltoid -> brachialis (with lateral intermuscular septum, not modeled) -> brachioradialis | 4 |
+| dal | Dorsal arm chain | latissimus dorsi, teres minor, infraspinatus -> triceps brachii -> anconeus -> extensor carpi ulnaris | 6 |
+
+The review's abstract reports each chain and its study count but no hop-level
+figures. Hops therefore carry a new status `chain-reported` whose badge reads
+"Chain reported · N studies" with the note that hop-level counts are not
+available from the abstract. Line grade `reported`. No force-transfer note.
+`Line.group` is `"body"` or `"arm"`; tours, cables, deep links and quiz line
+sets work unchanged. Three evidence questions cover the chains.
+
+### 7.2 Latin names
+
+`fetch-facts.ts` adds a Wikidata pass (batches of 50 titles,
+`wbgetentities` with `languages=la`) and stores `latin` on each facts entry.
+Wikidata labels are CC0. A store preference `names: "english" | "latin"`
+(persisted in `localStorage` `form.names.v1`, not in the URL) switches the
+primary label in the library and the detail title; the other language shows
+as the secondary line so sub-part detail such as "lateral head" is never lost.
+Search matches either language. Quiz prompts stay in English. Parts without a
+Latin label fall back to English.
+
+### 7.3 Teacher playlists
+
+`playlist: { title, ids (max 30), step | null }` in the store, encoded as
+`pl=<ids>` and `plt=<title, max 80 chars>`. "Add to playlist" in the detail
+panel builds it in click order; a floating card over the stage lists the items
+with remove buttons, a title field, Play / Previous / Next / Stop, Copy link
+and Clear. Playing a step selects the part and flies to it; arrow keys step,
+Escape stops. No accounts, no server: the URL is the playlist.
+
+### 7.4 Bundle split
+
+Three.js is emitted as its own chunk so the app shell parses before the 3D
+library finishes downloading. No behaviour change.
