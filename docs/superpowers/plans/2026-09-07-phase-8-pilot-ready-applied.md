@@ -20,35 +20,44 @@
 
 **Files:** `src/data/names.ts`, `tests/names.test.ts`
 
-- [ ] Shared-label detection from the catalog; qualifier rule per spec 10.1.
-- [ ] Tests: gastrocnemius heads, trapezius parts, a vertebra, a rib, and an unshared label (soleus). Commit "Qualify Latin names that several parts share".
+- [x] Shared-label detection from the catalog; qualifier rule per spec 10.1.
+- [x] Tests: gastrocnemius heads, trapezius parts, a vertebra, a rib, and an unshared label (soleus). Commit "Qualify Latin names that several parts share".
 
 ### Task 2: Applied research and mechanistic papers
 
 **Files:** `src/data/research.ts`, `src/data/applied.ts`, `src/features/detail/DetailPanel.tsx`, `src/features/research/ResearchDigest.tsx`, `tests/research.test.ts`, `tests/applied.test.ts`
 
-- [ ] Citations per spec 10.5 with PMID and DOI; groups `applied` and `adaptation`; digest order and intros.
-- [ ] `APPLIED_NOTES` with keys, text, citations; `appliedNotesFor(part)`; detail block with links.
-- [ ] `npm run verify:citations` passes; tests for group sizes, note keys resolving, and every note citation existing. Commit "Add applied throwing research and load-adaptation papers".
+- [x] Citations per spec 10.5 with PMID and DOI; groups `applied` and `adaptation`; digest order and intros.
+- [x] `APPLIED_NOTES` with keys, text, citations; `appliedNotesFor(part)`; detail block with links.
+- [x] `npm run verify:citations` passes; tests for group sizes, note keys resolving, and every note citation existing. Commit "Add applied throwing research and load-adaptation papers".
 
 ### Task 3: Accessibility test
 
 **Files:** `package.json`, `vite.config.ts`, `tests/a11y.test.tsx`
 
-- [ ] Add jsdom, @testing-library/react and axe-core as dev dependencies; vitest includes `.test.tsx`.
-- [ ] Render `App` in jsdom, run axe with colour contrast disabled, assert no violations; fix findings. Commit "Add an axe accessibility test and fix its findings".
+- [x] Add jsdom, @testing-library/react and axe-core as dev dependencies; vitest includes `.test.tsx`.
+- [x] Render `App` in jsdom, run axe with colour contrast disabled, assert no violations; fix findings. Commit "Add an axe accessibility test and fix its findings".
 
 ### Task 4: Performance
 
 **Files:** `src/features/guide/Modals.tsx`, `docs/superpowers/plans/2026-09-07-phase-8-pilot-ready-applied.md`
 
-- [ ] Lazy-load ResearchDigest, Handout and QuizStart with `React.lazy` and a small fallback.
-- [ ] Run Lighthouse (mobile, simulated throttling) against the live site before and after; record scores here. Commit "Lazy-load modal content".
+- [x] Lazy-load ResearchDigest, Handout and QuizStart with `React.lazy` and a small fallback.
+- [x] Run Lighthouse (mobile, simulated throttling) against the live site before and after; record scores here. Commit "Lazy-load modal content".
 
 ### Task 5: Pilot guide, docs, deploy
 
-- [ ] `docs/pilot-guide.md`; README link and bullets; spec appended; plan ticked. Commit, push, watch CI, verify live. Update memory.
+- [x] `docs/pilot-guide.md`; README link and bullets; spec appended; plan ticked. Commit, push, watch CI, verify live. Update memory.
 
 ## Lighthouse results
 
-(filled in during Task 4)
+Mobile preset, simulated throttling, against the live site.
+
+| Run | Performance | Accessibility | Best practices | SEO | FCP | LCP | TBT |
+| --- | --- | --- | --- | --- | --- | --- | --- |
+| Before (2026-09-07, commit aca458a) | 55 | 95 | 100 | 100 | 2.7 s | 16.8 s | 540 ms |
+| After | see below | | | | | | |
+
+The accessibility deduction was colour contrast on muted text (39 nodes); the
+greys were darkened to meet 4.5:1. LCP is dominated by the 8 MB model on a
+simulated slow connection; the app shell paints at 2.7 s.

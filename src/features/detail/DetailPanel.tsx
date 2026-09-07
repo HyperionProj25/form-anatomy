@@ -12,8 +12,10 @@ import {
 } from "lucide-react";
 import { useState } from "react";
 import { partById, partForSide, partsByKey } from "../../data/catalog";
+import { appliedNotesFor } from "../../data/applied";
 import { attachmentsFor } from "../../data/attachments";
 import { factsForWiki } from "../../data/facts";
+import { citationById, citationUrl } from "../../data/research";
 import { JOINT_LABELS, jointsCrossed } from "../../data/joints";
 import { lessons } from "../../data/lessons";
 import { lineKeys, lines } from "../../data/lines";
@@ -53,6 +55,7 @@ export default function DetailPanel({ describe, onToast }: Props) {
   const inPlaylist = state.playlist?.ids.includes(part.id) ?? false;
   const attachments = attachmentsFor(part);
   const crossed = attachments ? jointsCrossed(part) : [];
+  const applied = appliedNotesFor(part);
   const boneFor = (key: string) =>
     partForSide(key, part.side === "left" ? "left" : "right") ?? partsByKey(key)[0];
   const attributionUrl = facts?.url ?? part.wiki;
@@ -208,6 +211,34 @@ export default function DetailPanel({ describe, onToast }: Props) {
               <p className="subtle">Matched from the attachment text by bone name. Approximate.</p>
             </div>
           )}
+          {applied.map((note) => (
+            <div className="applied" key={note.id}>
+              <div className="section-label">APPLIED · {note.title.toUpperCase()}</div>
+              <p className="detail-copy">{note.text}</p>
+              <p className="attribution">
+                {note.citations.map((id, i) => {
+                  const c = citationById(id);
+                  return (
+                    c && (
+                      <span key={id}>
+                        {i > 0 && " · "}
+                        <a href={citationUrl(c)} target="_blank" rel="noreferrer">
+                          {c.authors.split(",")[0]} {c.year}
+                        </a>
+                      </span>
+                    )
+                  );
+                })}
+                {" · "}
+                <button
+                  className="link-button"
+                  onClick={() => dispatch({ type: "setModal", modal: "research" })}
+                >
+                  Full entries in the research digest
+                </button>
+              </p>
+            </div>
+          ))}
           {description && (
             <details className="description-expander">
               <summary>

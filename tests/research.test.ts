@@ -25,7 +25,7 @@ describe("research citations", () => {
     const groups = new Map<string, number>();
     for (const c of citations) groups.set(c.group, (groups.get(c.group) ?? 0) + 1);
     for (const [g, n] of groups) expect(n, g).toBeGreaterThanOrEqual(2);
-    expect(groups.size).toBe(6);
+    expect(groups.size).toBe(8);
   });
 });
 

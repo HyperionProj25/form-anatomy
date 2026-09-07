@@ -24,7 +24,7 @@ describe("ankiTsv", () => {
   test("Latin mode puts the Latin name first with English beneath", () => {
     const gastro = partById("lateral-head-of-gastrocnemius-l")!;
     const [front] = ankiTsv([gastro], "latin").trimEnd().split("\n")[3].split("\t");
-    expect(front).toBe("Musculus gastrocnemius<br><i>Lateral Head Of Gastrocnemius</i>");
+    expect(front).toBe("Musculus gastrocnemius (lateral head)<br><i>Lateral Head Of Gastrocnemius</i>");
   });
 
   test("escapes angle brackets and ampersands in facts", () => {

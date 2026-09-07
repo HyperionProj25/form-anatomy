@@ -95,10 +95,14 @@ checks without deploying.
   crosses.
 - Anki export: any playlist or study set downloads as a tab-separated deck,
   one card per structure with its facts and a link back to the atlas.
-- A research digest of 33 verified papers and references, grouped by
+- A research digest of 47 verified papers and references, grouped by
   question, each with a plain-language summary and a note on what it means
-  for the model, including a section of 2023 to 2026 findings. A build-time
-  check resolves every PMID, DOI and URL.
+  for the model, including sections on how fascia responds to load, an
+  applied case study on overhead throwing, and 2023 to 2026 findings. A
+  build-time check resolves every PMID, DOI and URL.
+- Applied notes on structures: the posterior shoulder, the flexor-pronator
+  group and the upper trapezius show what shear-wave elastography studies in
+  throwing athletes found, with links to the papers.
 - Quizzes by region, by fascial line, or mixed: find a structure on the
   model, name the highlighted one, recall its action, or read the evidence.
   Ten questions per set from a pool of 82 muscles and 44 bones plus 18
@@ -107,7 +111,10 @@ checks without deploying.
   through any mode, filter or hidden layer.
 - Works offline after the first visit and installs as an app. The 8 MB model
   is cached on first use so later visits open instantly.
-- Responsive layout and keyboard-accessible controls.
+- Responsive layout and keyboard-accessible controls, with an axe-core
+  accessibility test in the suite and text colours that meet WCAG contrast.
+- A [pilot guide](docs/pilot-guide.md): a twenty-minute session plan and four
+  questions for running the atlas with a class.
 
 Fascial highlights identify model components. They are not segmented fascial
 sheets, measurements of force transmission or animated movement simulations.

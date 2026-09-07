@@ -31,7 +31,21 @@ export type CitationId =
   | "isaji2025"
   | "neumann2026"
   | "dellaPosta2025"
-  | "ficarra2024";
+  | "ficarra2024"
+  | "tsurukami2024"
+  | "shitara2025"
+  | "itoigawa2023"
+  | "mukohara2024"
+  | "gupta2023"
+  | "leong2016"
+  | "carvalhais2013"
+  | "wilke2018"
+  | "steccoA2022"
+  | "pratt2021"
+  | "hyldahl2015"
+  | "benias2018"
+  | "berrueta2016"
+  | "langevin2013";
 
 export type CitationKind =
   | "systematic-review"
@@ -43,6 +57,7 @@ export type CitationKind =
   | "narrative-review"
   | "consensus"
   | "modelling"
+  | "animal"
   | "reference";
 
 export type CitationGroup =
@@ -51,6 +66,8 @@ export type CitationGroup =
   | "force-transmission"
   | "sensory"
   | "clinical"
+  | "adaptation"
+  | "applied"
   | "recent";
 
 export type Citation = {
@@ -72,6 +89,8 @@ export type Citation = {
 
 export const GROUP_LABELS: Record<CitationGroup, string> = {
   recent: "Recent findings, 2023 to 2026",
+  adaptation: "How fascia responds to load",
+  applied: "Applied: overhead throwing",
   "what-fascia-is": "What fascia is",
   continuity: "Anatomical continuity",
   "force-transmission": "Force transmission",
@@ -81,6 +100,7 @@ export const GROUP_LABELS: Record<CitationGroup, string> = {
 
 export const KIND_LABELS: Record<CitationKind, string> = {
   modelling: "Computational model",
+  animal: "Animal / ex vivo",
   "systematic-review": "Systematic review",
   "scoping-review": "Scoping review",
   "meta-analysis": "Meta-analysis",
@@ -602,6 +622,227 @@ export const citations: Citation[] = [
       "Twenty-nine participants completed a control week and then static stretching and PNF of the hamstrings in random order, with local hamstring extensibility and remote shoulder extension measured before, immediately after and fifteen minutes later. Both methods increased local range of motion. Remote shoulder range showed no interaction with treatment, with only a small immediate rise in the dominant arm after static stretching in post-hoc tests, so the authors report no clear non-local effect.",
     modelNote:
       "A negative finding to weigh against the remote-effects meta-analysis above. The hamstrings are a stop on the superficial back line; the shoulder is not, which makes this a fair but indirect test of the chain idea.",
+  },
+
+  // Applied: overhead throwing. Added 2026-09-07; summaries stay within each abstract.
+  {
+    id: "tsurukami2024",
+    authors: "Tsurukami H, Itoigawa Y, Uehara H, et al.",
+    year: 2024,
+    title:
+      "Stiffness Changes in Shoulder Muscles between Pitchers and Position Players after Throwing Overhead Using Shear Wave Elastography and Throwing Motion Analysis",
+    journal: "Journal of Clinical Medicine",
+    pmid: "38610821",
+    doi: "10.3390/jcm13072056",
+    kind: "in-vivo",
+    group: "applied",
+    summary:
+      "Thirty-two male college baseball players, twelve pitchers and twenty position players, threw twenty times while shear-wave elastography tracked thirteen shoulder items and motion analysis recorded the throw. In pitchers, teres minor and latissimus dorsi stiffened after throwing; in position players teres minor stiffened and pectoralis minor softened. Teres minor stiffness correlated with forearm rotation speed and latissimus with forearm angle, and strength did not change in either group.",
+    modelNote:
+      "Teres minor, latissimus dorsi and pectoralis minor are selectable here; latissimus is also a stop on the back functional line and the dorsal arm chain. Twenty throws is a light load, so effects after a full outing may differ.",
+  },
+  {
+    id: "shitara2025",
+    authors: "Shitara H, Koda R, Tajika T, et al.",
+    year: 2025,
+    title:
+      "Impact of Pitching on Infraspinatus Muscle Elasticity in High School Baseball Pitchers: A Continuous Shear Wave Elastography Study",
+    journal: "Diagnostics (Basel)",
+    pmid: "40150091",
+    doi: "10.3390/diagnostics15060749",
+    kind: "in-vivo",
+    group: "applied",
+    summary:
+      "High-school pitchers were assessed at a medical check-up with continuous shear-wave elastography of the infraspinatus, plus shoulder range of motion and strength, and grouped by whether they had pitched at full effort that day. Those who had pitched showed higher infraspinatus shear-wave velocity on the throwing side, and the velocity rose with the number of pitches thrown. The authors conclude that pitching acutely stiffens the infraspinatus and contributes to posterior shoulder tightness.",
+    modelNote:
+      "The infraspinatus is in the rotator cuff study set and on the dorsal arm chain. This is a dose-response signal within one day, not a long-term change.",
+  },
+  {
+    id: "itoigawa2023",
+    authors: "Itoigawa Y, Koga A, Morikawa D, et al.",
+    year: 2023,
+    title:
+      "Posterior shoulder stiffness was associated with shoulder pain during throwing in college baseball players: assessment of shear wave elastography",
+    journal: "European Journal of Orthopaedic Surgery & Traumatology",
+    pmid: "35583565",
+    doi: "10.1007/s00590-022-03286-z",
+    kind: "in-vivo",
+    group: "applied",
+    summary:
+      "Forty-nine college baseball players had both shoulders measured with shear-wave elastography across the rotator cuff tendons and muscles and the posterior capsule, then were grouped by shoulder pain during throwing in the previous month. The throwing side had a stiffer infraspinatus tendon, muscle and posterior capsule, a softer subscapularis tendon, more external and less internal rotation. Higher infraspinatus muscle stiffness and less internal rotation in abduction were associated with pain during throwing.",
+    modelNote:
+      "A between-sides comparison in the same athletes, so training history is controlled. Association, not cause: the authors say stiffness and pain may be correlated.",
+  },
+  {
+    id: "mukohara2024",
+    authors: "Mukohara S, Mifune Y, Inui A, et al.",
+    year: 2024,
+    title:
+      "Assessing the Elasticity of the Flexor Pronator Muscles After Throwing Using Ultrasound Shear Wave Elastography",
+    journal: "Orthopaedic Journal of Sports Medicine",
+    pmid: "39611120",
+    doi: "10.1177/23259671241298001",
+    kind: "in-vivo",
+    group: "applied",
+    summary:
+      "Fourteen healthy amateur baseball players had flexor digitorum superficialis and profundus elasticity measured by ultrasound shear-wave elastography before, immediately after and 24 hours after 100 pitches, with good to excellent reliability. Both muscles were markedly stiffer immediately after pitching. The superficialis was still stiffer at 24 hours while the profundus had returned to its baseline value.",
+    modelNote:
+      "Both heads of flexor digitorum superficialis and the profundus are in the forearm flexors study set. The 24-hour difference between the two layers is the kind of detail a single reading would miss.",
+  },
+  {
+    id: "gupta2023",
+    authors: "Gupta N, Taylor RE, Lambert B, et al.",
+    year: 2023,
+    title:
+      "Shear wave elastography of the ulnar collateral ligament in division IA pitchers across a competitive collegiate season",
+    journal: "JSES International",
+    pmid: "37426937",
+    doi: "10.1016/j.jseint.2023.03.014",
+    kind: "in-vivo",
+    group: "applied",
+    summary:
+      "Seventeen Division I college pitchers had ulnar collateral ligament shear-wave velocity measured at three sites in both elbows before, during and after a season, with questionnaire scores, alongside eleven volunteers for repeatability. Preseason values did not differ from the volunteers. At midseason the throwing arm's midsubstance and proximal velocities had fallen from preseason, and the proximal value was also lower than in the non-throwing arm and remained reduced relative to preseason.",
+    modelNote:
+      "The ulnar collateral ligament is not a mesh in this model; its dynamic stabilisers, the flexor-pronator muscles, are. A fall in shear-wave velocity indicates softer tissue.",
+  },
+  {
+    id: "leong2016",
+    authors: "Leong HT, Hug F, Fu SN",
+    year: 2016,
+    title: "Increased Upper Trapezius Muscle Stiffness in Overhead Athletes with Rotator Cuff Tendinopathy",
+    journal: "PLoS One",
+    pmid: "27159276",
+    doi: "10.1371/journal.pone.0155187",
+    kind: "in-vivo",
+    group: "applied",
+    summary:
+      "Forty-three male volleyball players, seventeen asymptomatic and twenty-six with rotator cuff tendinopathy, had upper trapezius shear modulus measured while actively holding the arm at 30 and 60 degrees of abduction and passively at 0, 30 and 60 degrees. The tendinopathy group had a higher shear modulus in the active tasks at both angles, and passively only with the arm down. Cut-off values separated the groups with areas under the curve of about 0.76 to 0.82.",
+    modelNote:
+      "The upper (descending) trapezius is selectable here and starts the lateral arm chain. A cross-sectional comparison: it cannot say whether the stiffness came first.",
+  },
+
+  // Mechanistic additions to existing groups, and the load-adaptation group. Added 2026-09-07.
+  {
+    id: "carvalhais2013",
+    authors: "Carvalhais VO, Ocarino JM, Araújo VL, et al.",
+    year: 2013,
+    title:
+      "Myofascial force transmission between the latissimus dorsi and gluteus maximus muscles: an in vivo experiment",
+    journal: "Journal of Biomechanics",
+    pmid: "23394717",
+    doi: "10.1016/j.jbiomech.2012.11.044",
+    kind: "in-vivo",
+    group: "force-transmission",
+    summary:
+      "Thirty-seven people had passive hip torque against medial rotation measured on a dynamometer under three conditions: control, passive latissimus dorsi tensioning and active tensioning, with electromyography monitoring the hip muscles. Passive tensioning shifted the hip resting position toward lateral rotation without changing stiffness; active tensioning shifted it further and increased passive hip stiffness. The authors take this as in-vivo evidence of force transmission from latissimus to the opposite gluteus maximus through the thoracolumbar fascia.",
+    modelNote:
+      "The original experiment behind the 2024 and 2025 studies in the recent section. All three trace the back functional line drawn here.",
+  },
+  {
+    id: "wilke2018",
+    authors: "Wilke J, Schleip R, Yucesoy CA, Banzer W",
+    year: 2018,
+    title: "Not merely a protective packing organ? A review of fascia and its force transmission capacity",
+    journal: "Journal of Applied Physiology",
+    pmid: "29122963",
+    doi: "10.1152/japplphysiol.00565.2017",
+    kind: "narrative-review",
+    group: "force-transmission",
+    summary:
+      "A synthesis review of whether fascia matters mechanically for the locomotor system. Cadaveric and animal studies suggest clinically relevant force transmission to neighbouring structures within a limb and along muscle-fascia chains between leg and trunk, and early in-vivo trials show non-local exercise effects. How much force is transmitted, and how age, activity and the nervous system shape the remote effects, remains controversial.",
+    modelNote:
+      "A readable bridge between the dissection evidence behind the badges and the in-vivo studies. Its open questions are still open in the 2026 meta-analysis.",
+  },
+  {
+    id: "benias2018",
+    authors: "Benias PC, Wells RG, Sackey-Aboagye B, et al.",
+    year: 2018,
+    title: "Structure and Distribution of an Unrecognized Interstitium in Human Tissues",
+    journal: "Scientific Reports",
+    pmid: "29588511",
+    doi: "10.1038/s41598-018-23062-6",
+    kind: "in-vivo",
+    group: "what-fascia-is",
+    summary:
+      "Confocal laser endomicroscopy during endoscopy showed a reticular pattern in the bile duct submucosa with no known anatomical correlate. Freezing biopsies before fixation preserved it as a fluid-filled interstitial space draining to lymph nodes, supported by thick collagen bundles lined on one side by fibroblast-like cells. Similar structures appeared in many tissues under intermittent compression, including the dermis, peri-arterial tissue and fascia.",
+    modelNote:
+      "Relevant to how fascial layers are described as fluid-rich interfaces. The paper reports structure, not function; claims about what the interstitium does remain hypotheses.",
+  },
+  {
+    id: "steccoA2022",
+    authors: "Stecco A, Cowman M, Pirri N, Raghavan P, Pirri C",
+    year: 2022,
+    title: "Densification: Hyaluronan Aggregation in Different Human Organs",
+    journal: "Bioengineering (Basel)",
+    pmid: "35447719",
+    doi: "10.3390/bioengineering9040159",
+    kind: "narrative-review",
+    group: "adaptation",
+    summary:
+      "A narrative review of hyaluronan aggregation, called densification, across human organs including muscle, fascia and skin. Wherever it occurs, aggregated hyaluronan raises extracellular matrix viscosity, causing stiffness and dysfunction, and long-term densification may progress to fibrosis in some organs. Dynamic ultrasound, elastography and MRI variants are proposed for early detection.",
+    modelNote:
+      "Densification is the proposed mechanism behind fascial stiffness in several papers here. It is a review, so treat it as a framework rather than a measurement.",
+  },
+  {
+    id: "pratt2021",
+    authors: "Pratt RL",
+    year: 2021,
+    title: "Hyaluronan and the Fascial Frontier",
+    journal: "International Journal of Molecular Sciences",
+    pmid: "34202183",
+    doi: "10.3390/ijms22136845",
+    kind: "narrative-review",
+    group: "adaptation",
+    summary:
+      "A review of hyaluronan, the most abundant polysaccharide of connective tissue matrix, and its place in the fascial system. Hyaluronan binds cell receptors that influence survival, proliferation, adhesion and migration, and responds to chemical, mechanical and hormonal change. The review connects fasciacytes, the cells that produce it at fascial boundaries, to fascial health and chronic pain.",
+    modelNote:
+      "Background for the gliding layers in the fascial-system definition above: the slippery layer between fascial sheets is a hyaluronan-rich one.",
+  },
+  {
+    id: "hyldahl2015",
+    authors: "Hyldahl RD, Nelson B, Xin L, et al.",
+    year: 2015,
+    title:
+      "Extracellular matrix remodeling and its contribution to protective adaptation following lengthening contractions in human muscle",
+    journal: "FASEB Journal",
+    pmid: "25808538",
+    doi: "10.1096/fj.14-266668",
+    kind: "in-vivo",
+    group: "adaptation",
+    summary:
+      "Muscle biopsies taken three hours, two days and 27 days after a bout of lengthening contractions, and two days after a repeated bout, tracked extracellular matrix remodelling in human muscle. Transcripts for matrix structure, de-adhesion and signalling changed within three hours; tenascin-C rose more than tenfold after the first bout and less after the second, correlating with strength loss. Collagen I, III and IV transcripts rose only by day 27, alongside satellite cell increases, suggesting early de-adhesion then delayed rebuilding contributes to the repeated-bout effect.",
+    modelNote:
+      "Human evidence that the connective-tissue scaffold of muscle remodels over days to weeks after unaccustomed eccentric load. The muscles in this model carry that scaffold, though it is not drawn.",
+  },
+  {
+    id: "berrueta2016",
+    authors: "Berrueta L, Muskaj I, Olenich S, et al.",
+    year: 2016,
+    title: "Stretching Impacts Inflammation Resolution in Connective Tissue",
+    journal: "Journal of Cellular Physiology",
+    pmid: "26588184",
+    doi: "10.1002/jcp.25263",
+    kind: "animal",
+    group: "adaptation",
+    summary:
+      "In rats with carrageenan-induced subcutaneous inflammation of the back, stretching for ten minutes twice daily for 48 hours reduced lesion thickness and neutrophil count and raised resolvin D1 in the lesion; injecting resolvin mimicked stretching. In ex-vivo connective tissue, stretching reduced neutrophil migration and increased resolvin. The authors conclude stretching has a direct mechanical effect on inflammation-resolving mechanisms in connective tissue.",
+    modelNote:
+      "Rat and ex-vivo tissue, so mechanism only. It underlies later claims that stretching does more than lengthen tissue; human outcome studies would be needed to settle that.",
+  },
+  {
+    id: "langevin2013",
+    authors: "Langevin HM, Fujita T, Bouffard NA, et al.",
+    year: 2013,
+    title: "Fibroblast cytoskeletal remodeling induced by tissue stretch involves ATP signaling",
+    journal: "Journal of Cellular Physiology",
+    pmid: "23460361",
+    doi: "10.1002/jcp.24356",
+    kind: "animal",
+    group: "adaptation",
+    summary:
+      "Fibroblasts in whole areolar connective tissue expand and remodel their cytoskeleton within minutes of static stretch. In stretched tissue ex vivo, extracellular ATP rose for about twenty minutes and returned to baseline by an hour, and did not rise without stretch or with a Rho-kinase inhibitor. Blocking purinergic receptors, degrading ATP or blocking connexin channels prevented the fibroblast expansion, pointing to ATP release through connexin hemichannels as the mechanism.",
+    modelNote:
+      "Cell-level mechanotransduction in mouse tissue. It suggests how connective tissue could sense the stretch that the tour paths here only depict.",
   },
 ];
 

@@ -297,7 +297,7 @@ function Shell() {
           </div>
           <QuizOverlay onStart={startQuiz} />
         </section>
-        <aside className="right-panel">
+        <aside className="right-panel" aria-label="Structure details">
           {state.selected ? (
             <DetailPanel
               describe={(id) => (ready ? handle.current?.description(id) : undefined)}

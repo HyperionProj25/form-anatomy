@@ -1,7 +1,7 @@
 @import "tailwindcss";
 :root {
   --ink: #273a31;
-  --muted: #7d847a;
+  --muted: #636a60;
   --green: #365646;
   --border: #e3e5dc;
   --paper: #fafbf7;
@@ -114,7 +114,7 @@ p {
   align-items: center;
   gap: 8px;
   font-size: 12px;
-  color: #6f796f;
+  color: #5a635a;
   border-bottom: 2px solid transparent;
   padding: 0 2px;
 }
@@ -153,7 +153,7 @@ p {
   font-size: 9px;
   font-weight: 600;
   letter-spacing: 1.8px;
-  color: #72806a;
+  color: #566349;
   margin-bottom: 11px;
 }
 h1 {
@@ -269,7 +269,7 @@ h1 em {
 .section-label {
   font-size: 9px;
   letter-spacing: 1.3px;
-  color: #939b8d;
+  color: #646c5f;
   font-weight: 600;
   display: flex;
   justify-content: space-between;
@@ -638,7 +638,7 @@ h1 em {
   font-size: 8px;
   letter-spacing: 1.3px;
   line-height: 1.5;
-  color: #849272;
+  color: #5d6b4d;
 }
 .chapter {
   font-size: 9px;
@@ -663,7 +663,7 @@ h1 em {
 .detail-copy {
   font-size: 11px;
   line-height: 1.85;
-  color: #849078;
+  color: #5e6b52;
   margin: 21px 0 27px;
 }
 .start-tips {
@@ -679,7 +679,7 @@ h1 em {
 .start-tips > div > span {
   font-family: Georgia, serif;
   font-size: 13px;
-  color: #a9b497;
+  color: #6b7a5a;
   padding-top: 1px;
 }
 .start-tips p {
@@ -690,7 +690,7 @@ h1 em {
   display: block;
   line-height: 1.6;
   font-size: 10px;
-  color: #98a28b;
+  color: #66705b;
   margin-top: 5px;
 }
 .feature-card {
@@ -721,14 +721,14 @@ h1 em {
   font-size: 10px;
   line-height: 1.8;
   margin: 14px 0 20px;
-  color: #8a9a7a;
+  color: #5f6e4f;
 }
 .feature-link {
   display: flex;
   justify-content: space-between;
   align-items: center;
   font-size: 10px;
-  color: #667f52;
+  color: #4c6139;
 }
 .detail-actions {
   flex-wrap: wrap;
@@ -893,12 +893,12 @@ footer {
   align-items: center;
   padding: 21px 32px;
   font-size: 9px;
-  color: #9ba18f;
+  color: #666c5c;
   gap: 20px;
 }
 .footer-mark {
   font-size: 18px;
-  color: #74846a;
+  color: #4f5e46;
   font-weight: 600;
   letter-spacing: -1px;
   margin-right: 14px;
@@ -912,7 +912,7 @@ footer button {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #809172;
+  color: #5b6c4d;
   font-size: 9px;
 }
 .modal-backdrop {
@@ -971,7 +971,7 @@ footer button {
 .modal .subtle,
 .subtle {
   font-size: 10px;
-  color: #9ba68f;
+  color: #667158;
   line-height: 1.8;
 }
 .guide-step {
@@ -2202,7 +2202,7 @@ footer a {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #809172;
+  color: #5b6c4d;
   font-size: 9px;
   text-decoration: none;
 }
@@ -2229,4 +2229,25 @@ footer a:hover {
   max-width: 220px;
   text-align: right;
   font-size: 10px;
+}
+
+.applied {
+  margin: 14px 0 4px;
+  padding: 10px 12px;
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--green);
+  border-radius: 10px;
+  background: #fbfcf8;
+}
+.applied .detail-copy {
+  margin: 6px 0;
+}
+.applied .attribution {
+  margin: 4px 0 0;
+}
+.link-button {
+  font: inherit;
+  color: inherit;
+  text-decoration: underline;
+  padding: 0;
 }

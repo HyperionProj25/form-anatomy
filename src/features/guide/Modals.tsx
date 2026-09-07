@@ -1,10 +1,12 @@
 import { ArrowRight, BookOpen, Layers, Move, Network, Search, X } from "lucide-react";
-import { useEffect } from "react";
+import { lazy, Suspense, useEffect } from "react";
 import { useStore } from "../../state/store";
 import type { QuizSetId } from "../quiz/generators";
-import Handout from "../playlist/Handout";
-import QuizStart from "../quiz/QuizStart";
-import ResearchDigest from "../research/ResearchDigest";
+
+// Modal bodies load on first open so their text stays out of the startup chunk.
+const Handout = lazy(() => import("../playlist/Handout"));
+const QuizStart = lazy(() => import("../quiz/QuizStart"));
+const ResearchDigest = lazy(() => import("../research/ResearchDigest"));
 
 const GUIDE_STEPS = [
   {
@@ -88,17 +90,19 @@ export default function Modals({ ready, onStartQuiz }: Props) {
         <button className="modal-close icon-button" aria-label="Close dialog" onClick={close}>
           <X size={21} />
         </button>
-        {modal === "about" ? (
-          <About onResearch={() => dispatch({ type: "setModal", modal: "research" })} />
-        ) : modal === "guide" ? (
-          <Guide onClose={close} />
-        ) : modal === "research" ? (
-          <ResearchDigest />
-        ) : modal === "handout" ? (
-          <Handout />
-        ) : (
-          <QuizStart ready={ready} onStart={onStartQuiz} />
-        )}
+        <Suspense fallback={<p className="subtle">Loading…</p>}>
+          {modal === "about" ? (
+            <About onResearch={() => dispatch({ type: "setModal", modal: "research" })} />
+          ) : modal === "guide" ? (
+            <Guide onClose={close} />
+          ) : modal === "research" ? (
+            <ResearchDigest />
+          ) : modal === "handout" ? (
+            <Handout />
+          ) : (
+            <QuizStart ready={ready} onStart={onStartQuiz} />
+          )}
+        </Suspense>
       </section>
     </div>
   );

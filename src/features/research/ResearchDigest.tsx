@@ -11,11 +11,17 @@ const ORDER: CitationGroup[] = [
   "continuity",
   "force-transmission",
   "sensory",
+  "adaptation",
   "clinical",
+  "applied",
   "recent",
 ];
 
 const GROUP_INTRO: Partial<Record<CitationGroup, string>> = {
+  adaptation:
+    "How connective tissue responds to loading, stretching and rest, mostly at the tissue and cell level. Animal and ex-vivo studies are labelled; they show mechanism, not outcomes in people.",
+  applied:
+    "The first applied case study: what a specific, repeated load does to specific muscles, measured by shear-wave elastography in throwing athletes. The same approach could later cover running, lifting or desk work. Structures with a note show it in their detail panel.",
   recent:
     "Papers published since the lines above were built, added September 2026. They extend, qualify or contradict the older evidence; none changes a hop's grade on its own.",
 };

@@ -35,7 +35,7 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
   const showLines = mode === "fascia" && !filters.search;
 
   return (
-    <aside className={`left-panel ${mobileOpen ? "mobile-open" : ""}`}>
+    <aside className={`left-panel ${mobileOpen ? "mobile-open" : ""}`} aria-label="Explore the body">
       <div className="panel-heading">
         <Layers size={17} />
         <h2>Explore the body</h2>
