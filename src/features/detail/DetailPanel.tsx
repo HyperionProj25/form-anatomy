@@ -4,6 +4,7 @@ import { partById } from "../../data/catalog";
 import { factsForWiki } from "../../data/facts";
 import { lessons } from "../../data/lessons";
 import { lineKeys, lines } from "../../data/lines";
+import { displayName, secondaryName } from "../../data/names";
 import { REGION_LABELS } from "../../data/regions";
 import { useStore } from "../../state/store";
 import CopyLink from "../shared/CopyLink";
@@ -51,9 +52,11 @@ export default function DetailPanel({ describe, onToast }: Props) {
           <X size={16} />
         </button>
       </div>
-      <h2 className="detail-title">{part.name}</h2>
+      <h2 className="detail-title">{displayName(part, state.names)}</h2>
       <p className="latin">
-        {part.group ?? (part.type === "muscle" ? `${part.layer} layer (approximate)` : "")}
+        {secondaryName(part, state.names) ??
+          part.group ??
+          (part.type === "muscle" ? `${part.layer} layer (approximate)` : "")}
       </p>
       <div className="detail-actions">
         <button className="outline-button" onClick={() => dispatch({ type: "toggleIsolate" })}>

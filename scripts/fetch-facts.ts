@@ -29,6 +29,8 @@ type Entry = {
   antagonist?: string;
   articulations?: string;
   blood?: string;
+  /** Latin (Terminologia-style) label from Wikidata, CC0. */
+  latin?: string;
   revision: number;
   retrieved: string;
 };
@@ -82,6 +84,49 @@ for (const [i, title] of titles.entries()) {
   if ((i + 1) % 25 === 0) console.log(`  ${i + 1}/${titles.length}`);
   await new Promise((r) => setTimeout(r, DELAY_MS));
 }
+
+// Latin labels from Wikidata (CC0), matched through each article's site link.
+const latinByTitle = new Map<string, string>();
+const allTitles = [...new Set([...titles, ...Object.values(out).map((e) => e.title)])];
+for (let i = 0; i < allTitles.length; i += 50) {
+  const batch = allTitles.slice(i, i + 50);
+  const params = new URLSearchParams({
+    action: "wbgetentities",
+    sites: "enwiki",
+    titles: batch.join("|"),
+    props: "labels|sitelinks",
+    languages: "la",
+    format: "json",
+  });
+  const res = await fetch(`https://www.wikidata.org/w/api.php?${params}`, {
+    headers: { "User-Agent": UA },
+  });
+  if (!res.ok) {
+    console.log(`Wikidata HTTP ${res.status} for batch starting at ${i}`);
+    continue;
+  }
+  const json = (await res.json()) as {
+    entities?: Record<
+      string,
+      { labels?: { la?: { value: string } }; sitelinks?: { enwiki?: { title: string } } }
+    >;
+  };
+  for (const e of Object.values(json.entities ?? {})) {
+    const t = e.sitelinks?.enwiki?.title;
+    const l = e.labels?.la?.value;
+    if (t && l) latinByTitle.set(t.toLowerCase(), l);
+  }
+  await new Promise((r) => setTimeout(r, DELAY_MS));
+}
+let latinCount = 0;
+for (const [title, entry] of Object.entries(out)) {
+  const latin = latinByTitle.get(title.toLowerCase()) ?? latinByTitle.get(entry.title.toLowerCase());
+  if (latin) {
+    entry.latin = latin;
+    latinCount++;
+  }
+}
+console.log(`Latin labels from Wikidata: ${latinCount} of ${Object.keys(out).length}`);
 
 writeFileSync(outPath, JSON.stringify(out, null, 1) + "\n");
 console.log(`Wrote ${Object.keys(out).length} entries to ${outPath}`);

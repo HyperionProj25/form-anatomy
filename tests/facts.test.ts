@@ -28,6 +28,16 @@ describe("facts.json", () => {
     expect(covered.length / muscleTitles.length).toBeGreaterThan(0.7);
   });
 
+  test("most entries carry a clean Latin label from Wikidata", () => {
+    const withLatin = Object.values(facts).filter((e) => e.latin);
+    expect(withLatin.length).toBeGreaterThan(150);
+    for (const e of withLatin) {
+      expect(e.latin, e.title).not.toMatch(/\[\[|\{\{|</);
+      expect(e.latin!.length).toBeGreaterThan(2);
+    }
+    expect(facts["Gastrocnemius muscle"]?.latin).toBe("Musculus gastrocnemius");
+  });
+
   test("lookup by catalog wiki url", () => {
     const gastro = parts.find((p) => p.name === "Lateral Head Of Gastrocnemius");
     expect(factsForWiki(gastro?.wiki)?.origin).toContain("condyle");

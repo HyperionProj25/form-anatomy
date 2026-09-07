@@ -8,7 +8,8 @@
   "action": "Flexion of the torso and contralateral rotation of torso",
   "nerve": "Thoraco-abdominal nerves (T7-11) and subcostal nerve (T12)",
   "revision": 1360606362,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus obliquus externus abdominis"
  },
  "Abdominal internal oblique muscle": {
   "title": "Abdominal internal oblique muscle",
@@ -20,7 +21,8 @@
   "nerve": "Thoracoabdominal nn. (T7-T11), subcostal n. (T12), iliohypogastric n. (L1) and ilioinguinal n. (L1)",
   "blood": "Subcostal arteries",
   "revision": 1335108303,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus obliquus internus abdominis"
  },
  "Abductor digiti minimi muscle of hand": {
   "title": "Abductor digiti minimi muscle of the hand",
@@ -32,7 +34,8 @@
   "nerve": "Deep branch of ulnar nerve",
   "blood": "Ulnar artery",
   "revision": 1343857777,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus abductor digiti minimi manus"
  },
  "Abductor pollicis brevis muscle": {
   "title": "Abductor pollicis brevis muscle",
@@ -45,7 +48,8 @@
   "antagonist": "Adductor pollicis muscle",
   "blood": "Superficial palmar arch",
   "revision": 1360606364,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus abductor pollicis brevis"
  },
  "Abductor pollicis longus muscle": {
   "title": "Abductor pollicis longus muscle",
@@ -58,7 +62,8 @@
   "antagonist": "Adductor pollicis muscle",
   "blood": "Posterior interosseous artery",
   "revision": 1360606370,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus abductor pollicis longus"
  },
  "Adductor brevis muscle": {
   "title": "Adductor brevis muscle",
@@ -70,7 +75,8 @@
   "nerve": "Obturator nerve",
   "blood": "Deep femoral artery",
   "revision": 1355350325,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus adductor brevis"
  },
  "Adductor longus muscle": {
   "title": "Adductor longus muscle",
@@ -82,7 +88,8 @@
   "nerve": "Anterior branch of obturator nerve",
   "blood": "Deep femoral artery",
   "revision": 1366565862,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus adductor longus"
  },
  "Adductor magnus muscle": {
   "title": "Adductor magnus muscle",
@@ -94,7 +101,8 @@
   "nerve": "Posterior branch of obturator nerve (adductor) and sciatic nerve (hamstring)",
   "blood": "Deep femoral artery",
   "revision": 1355356624,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus adductor magnus"
  },
  "Adductor pollicis muscle": {
   "title": "Adductor pollicis muscle",
@@ -107,7 +115,8 @@
   "antagonist": "Abductor pollicis longus muscle, abductor pollicis brevis muscle",
   "blood": "Deep palmar arch",
   "revision": 1339422079,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus adductor pollicis"
  },
  "Anconeus muscle": {
   "title": "Anconeus muscle",
@@ -119,7 +128,8 @@
   "nerve": "Radial nerve (C5, C6, C7, C8, and T1)",
   "blood": "Deep brachial artery, recurrent interosseous artery",
   "revision": 1345459781,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus anconeus"
  },
  "Anserine bursa": {
   "title": "Anserine bursa",
@@ -133,21 +143,24 @@
   "url": "https://en.wikipedia.org/wiki/Arytenoid_cartilage",
   "template": "other",
   "revision": 1365646419,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Cartilagines arytaenoideae"
  },
  "Atlas (anatomy)": {
   "title": "Atlas (anatomy)",
   "url": "https://en.wikipedia.org/wiki/Atlas_(anatomy)",
   "template": "bone",
   "revision": 1373214818,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Atlas, vertebra cervicalis I"
  },
  "Axis (anatomy)": {
   "title": "Axis (anatomy)",
   "url": "https://en.wikipedia.org/wiki/Axis_(anatomy)",
   "template": "bone",
   "revision": 1373214751,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Axis, vertebra cervicalis II"
  },
  "Biceps": {
   "title": "Biceps",
@@ -160,7 +173,8 @@
   "antagonist": "Triceps brachii muscle",
   "blood": "Brachial artery",
   "revision": 1370336153,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "musculus biceps brachii"
  },
  "Biceps femoris muscle": {
   "title": "Biceps femoris muscle",
@@ -173,7 +187,8 @@
   "antagonist": "Quadriceps muscle",
   "blood": "Deep femoral artery, perforating arteries; long head of biceps femoris: perforating branches from profunda femoris artery",
   "revision": 1334560434,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus biceps femoris"
  },
  "Bicipitoradial bursa": {
   "title": "Bicipitoradial bursa",
@@ -192,7 +207,8 @@
   "nerve": "Musculocutaneous nerve (C5-C7) and radial nerve (C5, C6)",
   "blood": "Radial recurrent artery, brachial artery",
   "revision": 1369774255,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus brachialis"
  },
  "Brachioradialis": {
   "title": "Brachioradialis",
@@ -204,7 +220,8 @@
   "nerve": "Radial nerve (C5-C8 & T1)",
   "blood": "Radial recurrent artery",
   "revision": 1360621944,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus brachioradialis"
  },
  "Buccinator muscle": {
   "title": "Bucinator muscle",
@@ -216,14 +233,16 @@
   "nerve": "Buccal branch of the facial nerve (VII cranial nerve)",
   "blood": "Buccal artery",
   "revision": 1354805370,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus buccinator"
  },
  "Calcaneus": {
   "title": "Calcaneus",
   "url": "https://en.wikipedia.org/wiki/Calcaneus",
   "template": "bone",
   "revision": 1372908718,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Calcaneus"
  },
  "Canine tooth": {
   "title": "Canine tooth",
@@ -237,28 +256,32 @@
   "url": "https://en.wikipedia.org/wiki/Capitate_bone",
   "template": "bone",
   "revision": 1373211802,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os capitatum"
  },
  "Cervical vertebrae": {
   "title": "Cervical vertebrae",
   "url": "https://en.wikipedia.org/wiki/Cervical_vertebrae",
   "template": "bone",
   "revision": 1373214649,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Vertebrae cervicales"
  },
  "Clavicle": {
   "title": "Clavicle",
   "url": "https://en.wikipedia.org/wiki/Clavicle",
   "template": "bone",
   "revision": 1373213990,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Clavicula"
  },
  "Coccyx": {
   "title": "Coccyx",
   "url": "https://en.wikipedia.org/wiki/Coccyx",
   "template": "bone",
   "revision": 1373214291,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os coccygis"
  },
  "Common tendinous ring": {
   "title": "Common tendinous ring",
@@ -277,7 +300,8 @@
   "nerve": "Musculocutaneous nerve (C5, C6, and C7)",
   "blood": "Brachial artery",
   "revision": 1360636823,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus coracobrachialis"
  },
  "Corniculate cartilages": {
   "title": "Corniculate cartilages",
@@ -296,7 +320,8 @@
   "nerve": "Facial nerve",
   "blood": "Ophthalmic artery",
   "revision": 1292342825,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus corrugator supercilii"
  },
  "Cricoid cartilage": {
   "title": "Cricoid cartilage",
@@ -311,7 +336,8 @@
   "template": "bone",
   "articulations": "Calcaneocuboid, cuboideonavicular and cuneocuboid articulation",
   "revision": 1372908385,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os cuboideum"
  },
  "Cuneiform bones": {
   "title": "Cuneiform bones",
@@ -331,7 +357,8 @@
   "antagonist": "Latissimus dorsi",
   "blood": "Thoracoacromial artery, anterior and posterior humeral circumflex artery",
   "revision": 1365106263,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus deltoideus"
  },
  "Depressor anguli oris muscle": {
   "title": "Depressor anguli oris muscle",
@@ -343,7 +370,8 @@
   "nerve": "Marginal mandibular branch of the facial nerve",
   "blood": "Facial artery",
   "revision": 1291865209,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus depressor anguli oris"
  },
  "Depressor labii inferioris muscle": {
   "title": "Depressor labii inferioris muscle",
@@ -355,7 +383,8 @@
   "nerve": "Marginal mandibular branch of the facial nerve",
   "antagonist": "Orbicularis oris muscle",
   "revision": 1353353797,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus depressor labii inferioris"
  },
  "Depressor septi nasi muscle": {
   "title": "Depressor septi nasi muscle",
@@ -366,7 +395,8 @@
   "action": "Depresses nasal septum, constricts nostril, moves apex of nose during movement of upper lip (e.g. talking)",
   "nerve": "Buccal branch of the facial nerve",
   "revision": 1292092954,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus depressor septi nasi"
  },
  "Digastric muscle": {
   "title": "Digastric muscle",
@@ -378,7 +408,8 @@
   "nerve": "Anterior belly - mandibular division (V3) of the trigeminal (CN V) via the mylohyoid nerve; posterior belly - facial nerve (CN VII)",
   "blood": "Anterior belly - Submental branch of facial artery; posterior belly - occipital artery",
   "revision": 1360648728,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus digastricus"
  },
  "Dorsal interossei of the hand": {
   "title": "Dorsal interossei of the hand",
@@ -391,7 +422,8 @@
   "antagonist": "Palmar interossei",
   "blood": "Dorsal and palmar metacarpal artery",
   "revision": 1368456595,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculi interossei dorsales manus"
  },
  "Epicranial aponeurosis": {
   "title": "Epicranial aponeurosis",
@@ -405,7 +437,8 @@
   "url": "https://en.wikipedia.org/wiki/Ethmoid_bone",
   "template": "bone",
   "revision": 1367449804,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os ethmoidale"
  },
  "Extensor carpi radialis brevis muscle": {
   "title": "Extensor carpi radialis brevis muscle",
@@ -418,7 +451,8 @@
   "antagonist": "Flexor carpi ulnaris muscle",
   "blood": "Radial artery",
   "revision": 1355535817,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor carpi radialis brevis"
  },
  "Extensor carpi radialis longus muscle": {
   "title": "Extensor carpi radialis longus muscle",
@@ -431,7 +465,8 @@
   "antagonist": "Flexor carpi ulnaris muscle",
   "blood": "Radial artery",
   "revision": 1360657171,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor carpi radialis longus"
  },
  "Extensor digiti minimi muscle": {
   "title": "Extensor digiti minimi muscle",
@@ -444,7 +479,8 @@
   "antagonist": "Flexor digiti minimi brevis",
   "blood": "Posterior interosseous artery",
   "revision": 1365975936,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor digiti minimi"
  },
  "Extensor digitorum longus muscle": {
   "title": "Extensor digitorum longus muscle",
@@ -457,7 +493,8 @@
   "antagonist": "Flexor digitorum longus, flexor digitorum brevis",
   "blood": "Anterior tibial artery",
   "revision": 1365004953,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor digitorum longus"
  },
  "Extensor digitorum muscle": {
   "title": "Extensor digitorum muscle",
@@ -470,7 +507,8 @@
   "antagonist": "Flexor digitorum superficialis muscle, flexor digitorum profundus muscle",
   "blood": "Posterior interosseous artery",
   "revision": 1360657173,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor digitorum"
  },
  "Extensor hallucis longus muscle": {
   "title": "Extensor hallucis longus muscle",
@@ -483,7 +521,8 @@
   "antagonist": "Flexor hallucis longus, flexor hallucis brevis",
   "blood": "Anterior tibial artery",
   "revision": 1331860227,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor hallucis longus"
  },
  "Extensor indicis muscle": {
   "title": "Extensor indicis muscle",
@@ -495,7 +534,8 @@
   "nerve": "Posterior interosseous nerve",
   "blood": "Posterior interosseous artery",
   "revision": 1347188960,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor indicis"
  },
  "Extensor pollicis brevis muscle": {
   "title": "Extensor pollicis brevis muscle",
@@ -508,7 +548,8 @@
   "antagonist": "Flexor pollicis longus muscle, flexor pollicis brevis muscle",
   "blood": "Posterior interosseous artery",
   "revision": 1352367762,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor pollicis brevis"
  },
  "Extensor pollicis longus muscle": {
   "title": "Extensor pollicis longus muscle",
@@ -521,7 +562,8 @@
   "antagonist": "Flexor pollicis longus muscle, flexor pollicis brevis muscle",
   "blood": "Posterior interosseous artery",
   "revision": 1358900921,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus extensor pollicis longus"
  },
  "External intercostal muscles": {
   "title": "External intercostal muscles",
@@ -534,7 +576,8 @@
   "antagonist": "Intercostales interni muscles",
   "blood": "Intercostal arteries",
   "revision": 1318027493,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculi intercostales externi"
  },
  "External obturator muscle": {
   "title": "External obturator muscle",
@@ -546,7 +589,8 @@
   "nerve": "Posterior branch of obturator nerve (third and fourth lumbar nerves)",
   "blood": "Obturator artery",
   "revision": 1303877904,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus obturatorius externus"
  },
  "Femur": {
   "title": "Femur",
@@ -554,7 +598,8 @@
   "template": "bone",
   "articulations": "Hip: acetabulum of pelvis superiorly, knee: with the tibia and patella inferiorly",
   "revision": 1373395363,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os femoris"
  },
  "Fibula": {
   "title": "Fibula",
@@ -562,7 +607,8 @@
   "template": "bone",
   "articulations": "Superior and inferior tibiofibular joint, Ankle",
   "revision": 1372908841,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Fibula"
  },
  "Fibularis tertius": {
   "title": "Fibularis tertius",
@@ -574,7 +620,8 @@
   "nerve": "Deep fibular nerve",
   "blood": "Anterior tibial artery",
   "revision": 1361862506,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus fibularis tertius"
  },
  "Flexor carpi radialis muscle": {
   "title": "Flexor carpi radialis muscle",
@@ -587,7 +634,8 @@
   "antagonist": "Extensor carpi ulnaris muscle",
   "blood": "Ulnar artery",
   "revision": 1344437114,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor carpi radialis"
  },
  "Flexor digiti minimi brevis muscle (hand)": {
   "title": "Flexor digiti minimi brevis muscle of hand",
@@ -600,7 +648,8 @@
   "antagonist": "Extensor digiti minimi muscle",
   "blood": "Ulnar artery",
   "revision": 1355367355,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor digiti minimi brevis manus"
  },
  "Flexor digitorum longus muscle": {
   "title": "Flexor digitorum longus muscle",
@@ -613,7 +662,8 @@
   "antagonist": "Extensor digitorum longus, extensor digitorum brevis",
   "blood": "Posterior tibial artery",
   "revision": 1360659618,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor digitorum longus"
  },
  "Flexor digitorum profundus muscle": {
   "title": "Flexor digitorum profundus muscle",
@@ -626,7 +676,8 @@
   "antagonist": "Extensor digitorum muscle",
   "blood": "Anterior interosseous artery",
   "revision": 1360993083,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor digitorum profundus"
  },
  "Flexor digitorum superficialis muscle": {
   "title": "Flexor digitorum superficialis muscle",
@@ -639,7 +690,8 @@
   "antagonist": "Extensor digitorum muscle",
   "blood": "Radial artery",
   "revision": 1361709869,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor digitorum superficialis"
  },
  "Flexor hallucis longus muscle": {
   "title": "Flexor hallucis longus muscle",
@@ -652,7 +704,8 @@
   "antagonist": "Extensor hallucis longus muscle",
   "blood": "(Muscular branch of peroneal artery (peroneal branch of the posterior tibial artery)",
   "revision": 1352348221,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor hallucis longus"
  },
  "Flexor pollicis brevis muscle": {
   "title": "Flexor pollicis brevis muscle",
@@ -665,7 +718,8 @@
   "antagonist": "Extensor pollicis longus and brevis",
   "blood": "Superficial palmar arch",
   "revision": 1360659630,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor pollicis brevis"
  },
  "Flexor pollicis longus muscle": {
   "title": "Flexor pollicis longus muscle",
@@ -678,7 +732,8 @@
   "antagonist": "Extensor pollicis longus muscle, extensor pollicis brevis muscle",
   "blood": "Anterior interosseous artery",
   "revision": 1344838149,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus flexor pollicis longus"
  },
  "Frontal bone": {
   "title": "Frontal bone",
@@ -686,7 +741,8 @@
   "template": "bone",
   "articulations": "Twelve bones: the sphenoid, the ethmoid, the two parietals, the two nasals, the two maxillae, the two lacrimals, and the two zygomatics",
   "revision": 1362835377,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os frontale"
  },
  "Frontalis muscle": {
   "title": "Frontalis muscle",
@@ -698,7 +754,8 @@
   "nerve": "Facial nerve, Temporal branch",
   "blood": "Supraorbital and supratrochlear arteries",
   "revision": 1259582090,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Venter frontalis musculi occipitofrontalis"
  },
  "Gastrocnemius muscle": {
   "title": "Gastrocnemius muscle",
@@ -711,7 +768,8 @@
   "antagonist": "Tibialis anterior muscle",
   "blood": "Sural arteries",
   "revision": 1356099795,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus gastrocnemius"
  },
  "Gemelli muscles": {
   "title": "Gemelli muscles",
@@ -731,7 +789,8 @@
   "nerve": "Hypoglossal nerve",
   "blood": "Lingual artery",
   "revision": 1319544872,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus genioglossus"
  },
  "Geniohyoid muscle": {
   "title": "Geniohyoid muscle",
@@ -743,7 +802,8 @@
   "nerve": "C1 via the hypoglossal nerve",
   "blood": "Branches of the lingual artery.",
   "revision": 1300955080,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus geniohyoideus"
  },
  "Gluteus maximus": {
   "title": "Gluteus maximus",
@@ -756,7 +816,8 @@
   "antagonist": "Iliacus, psoas major and psoas minor",
   "blood": "Superior and inferior gluteal arteries",
   "revision": 1359877966,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus glutaeus maximus"
  },
  "Gluteus medius": {
   "title": "Gluteus medius",
@@ -769,7 +830,8 @@
   "antagonist": "Adductors",
   "blood": "Superior gluteal artery",
   "revision": 1360678958,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus glutaeus medius"
  },
  "Gluteus minimus": {
   "title": "Gluteus minimus",
@@ -782,7 +844,8 @@
   "antagonist": "Lateral rotator group",
   "blood": "Superior gluteal artery",
   "revision": 1302611428,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus glutaeus minimus"
  },
  "Gracilis muscle": {
   "title": "Gracilis muscle",
@@ -794,7 +857,8 @@
   "nerve": "Anterior branch of obturator nerve",
   "blood": "Medial circumflex femoral artery",
   "revision": 1356865261,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus gracilis"
  },
  "Hamate bone": {
   "title": "Hamate bone",
@@ -802,21 +866,24 @@
   "template": "bone",
   "articulations": "Articulates with five bones:, the lunate proximally, the fourth and fifth metacarpals distally, the triquetrum medially, the capitate laterally",
   "revision": 1373211707,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os hamatum"
  },
  "Hip bone": {
   "title": "Hip bone",
   "url": "https://en.wikipedia.org/wiki/Hip_bone",
   "template": "bone",
   "revision": 1358025730,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os coxae"
  },
  "Humerus": {
   "title": "Humerus",
   "url": "https://en.wikipedia.org/wiki/Humerus",
   "template": "bone",
   "revision": 1362607692,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Humerus"
  },
  "Hyoglossus": {
   "title": "Hyoglossus",
@@ -827,14 +894,16 @@
   "action": "Depresses and retracts the tongue",
   "nerve": "Hypoglossal (CN XII)",
   "revision": 1251936632,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus hyoglossus"
  },
  "Hyoid bone": {
   "title": "Hyoid bone",
   "url": "https://en.wikipedia.org/wiki/Hyoid_bone",
   "template": "bone",
   "revision": 1365357229,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os hyoideum"
  },
  "Iliacus muscle": {
   "title": "Iliacus muscle",
@@ -847,7 +916,8 @@
   "antagonist": "Gluteus maximus",
   "blood": "Medial femoral circumflex artery, iliac branch of iliolumbar artery",
   "revision": 1360690546,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus iliacus"
  },
  "Iliocostalis": {
   "title": "Iliocostalis",
@@ -860,7 +930,8 @@
   "antagonist": "Rectus abdominis muscle",
   "blood": "Intercostal and lumbar arteries",
   "revision": 1349919788,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus iliocostalis"
  },
  "Incisor": {
   "title": "Incisor",
@@ -875,7 +946,8 @@
   "template": "bone",
   "articulations": "Incudomalleolar and incudostapedial joint",
   "revision": 1360506839,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Incus"
  },
  "Inferior nasal concha": {
   "title": "Inferior nasal concha",
@@ -883,7 +955,8 @@
   "template": "bone",
   "articulations": "Ethmoid, maxilla, lacrimal and palatine bone",
   "revision": 1353690565,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Concha nasalis inferior"
  },
  "Inferior oblique muscle": {
   "title": "Inferior oblique muscle",
@@ -895,7 +968,8 @@
   "nerve": "Oculomotor nerve",
   "blood": "Ophthalmic artery",
   "revision": 1251331357,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus obliquus inferior bulbi"
  },
  "Inferior pharyngeal constrictor muscle": {
   "title": "Inferior pharyngeal constrictor muscle",
@@ -906,7 +980,8 @@
   "action": "Swallowing",
   "nerve": "Pharyngeal plexus of vagus nerve, recurrent laryngeal nerve and superior laryngeal nerve",
   "revision": 1314016153,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus constrictor pharyngis inferior"
  },
  "Inferior rectus muscle": {
   "title": "Inferior rectus muscle",
@@ -918,7 +993,8 @@
   "nerve": "Inferior branch of oculomotor nerve",
   "blood": "Inferior muscular branch of the ophthalmic artery, infraorbital artery",
   "revision": 1310200812,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rectus inferior bulbi"
  },
  "Infraspinatus muscle": {
   "title": "Infraspinatus muscle",
@@ -930,7 +1006,8 @@
   "nerve": "Suprascapular nerve",
   "blood": "Suprascapular and circumflex scapular arteries",
   "revision": 1300467547,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus infraspinatus"
  },
  "Innermost intercostal muscle": {
   "title": "Innermost intercostal muscle",
@@ -942,7 +1019,8 @@
   "nerve": "Intercostal nerves",
   "blood": "Intercostal arteries",
   "revision": 1360691668,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus intercostalis intimus"
  },
  "Internal intercostal muscles": {
   "title": "Internal intercostal muscles",
@@ -955,7 +1033,8 @@
   "antagonist": "External intercostal muscles",
   "blood": "Intercostal arteries",
   "revision": 1224155235,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculi intercostales interni"
  },
  "Internal obturator muscle": {
   "title": "Internal obturator muscle",
@@ -967,7 +1046,8 @@
   "nerve": "Nerve to obturator internus (L5, S1, S2)",
   "blood": "Inferior gluteal artery",
   "revision": 1360692136,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus obturatorius internus"
  },
  "Interspinales muscles": {
   "title": "Interspinales muscles",
@@ -978,14 +1058,16 @@
   "action": "Proprioception of vertebral column",
   "nerve": "Posterior rami of spinal nerves",
   "revision": 1222225477,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculi interspinales"
  },
  "Lacrimal bone": {
   "title": "Lacrimal bone",
   "url": "https://en.wikipedia.org/wiki/Lacrimal_bone",
   "template": "bone",
   "revision": 1362835757,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os lacrimale"
  },
  "Lateral nasal cartilage": {
   "title": "Lateral nasal cartilage",
@@ -1004,7 +1086,8 @@
   "nerve": "Lateral pterygoid nerve from mandibular nerve",
   "blood": "Pterygoid branches of maxillary artery",
   "revision": 1291880834,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus pterygoideus lateralis"
  },
  "Lateral rectus muscle": {
   "title": "Lateral rectus muscle",
@@ -1015,7 +1098,8 @@
   "action": "Abducts the eyeball (makes it move outwards)",
   "nerve": "Abducens nerve",
   "revision": 1354453891,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus pterygoideus externus\""
  },
  "Latissimus dorsi muscle": {
   "title": "Latissimus dorsi muscle",
@@ -1028,7 +1112,8 @@
   "antagonist": "Deltoid and trapezius muscle",
   "blood": "Thoracodorsal branch of the subscapular artery",
   "revision": 1349365271,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus latissimus dorsi"
  },
  "Levator labii superioris": {
   "title": "Levator labii superioris",
@@ -1040,7 +1125,8 @@
   "nerve": "Buccal branch of the facial nerve (C.N. VII)",
   "blood": "Facial artery",
   "revision": 1258120423,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus levator labii superioris"
  },
  "Levator labii superioris alaeque nasi muscle": {
   "title": "Levator labii superioris alaeque nasi muscle",
@@ -1051,7 +1137,8 @@
   "action": "Dilates the nostril; elevates the upper lip and wing of the nose",
   "nerve": "Buccal branch of facial nerve",
   "revision": 1326888343,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus levator labii superioris alaequae nasi"
  },
  "Levator palpebrae superioris muscle": {
   "title": "Levator palpebrae superioris muscle",
@@ -1064,7 +1151,8 @@
   "antagonist": "Palpebral part of orbicularis oculi muscle",
   "blood": "Muscular branches of ophthalmic artery and supraorbital artery",
   "revision": 1360702546,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus levator palpebrae superioris"
  },
  "Levator scapulae muscle": {
   "title": "Levator scapulae muscle",
@@ -1076,7 +1164,8 @@
   "nerve": "Cervical nerve (C3, C4) and dorsal scapular nerve (C5)",
   "blood": "Dorsal scapular artery",
   "revision": 1301106037,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus levator scapulae"
  },
  "Levatores costarum muscles": {
   "title": "Levatores costarum muscles",
@@ -1087,7 +1176,8 @@
   "action": "Assists in elevation of the thoracic rib cage",
   "nerve": "Dorsal rami C8-T11 (Intercostal nerves)",
   "revision": 1353005564,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculi levatores costarum"
  },
  "Linea alba (abdomen)": {
   "title": "Linea alba (abdomen)",
@@ -1107,7 +1197,8 @@
   "antagonist": "Rectus abdominis muscle",
   "blood": "Lateral sacral artery",
   "revision": 1350050293,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus longissimus"
  },
  "Longus capitis muscle": {
   "title": "Longus capitis muscle",
@@ -1119,7 +1210,8 @@
   "nerve": "C1-C3",
   "blood": "Added blood supply to infobox from Gray's Anatomy via Elsevier Complete Anatomy",
   "revision": 1350525516,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus longus capitis"
  },
  "Longus colli muscle": {
   "title": "Longus colli muscle",
@@ -1131,7 +1223,8 @@
   "nerve": "C2–C6",
   "blood": "Ascending pharyngeal artery and vertebral arteries",
   "revision": 1221883297,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus longus colli"
  },
  "Lumbar vertebrae": {
   "title": "Lumbar vertebrae",
@@ -1139,7 +1232,8 @@
   "template": "bone",
   "nerve": "Lumbar nerves",
   "revision": 1360005564,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Vertebrae lumbales"
  },
  "Lumbricals of the hand": {
   "title": "Lumbricals of the hand",
@@ -1151,7 +1245,8 @@
   "nerve": "Third and fourth deep branch of ulnar nerve, first and second median nerve",
   "blood": "Superficial palmar arch, common palmar digital arteries, deep palmar arch, dorsal digital artery",
   "revision": 1368936862,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculi lumbricales manus"
  },
  "Lunate bone": {
   "title": "Lunate bone",
@@ -1159,21 +1254,24 @@
   "template": "bone",
   "articulations": "Radius proximally, capitate and hamate distally, scaphoid laterally, triquetrum medially, triangular fibrocartilage",
   "revision": 1369788388,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os lunatum"
  },
  "Malleus": {
   "title": "Malleus",
   "url": "https://en.wikipedia.org/wiki/Malleus",
   "template": "bone",
   "revision": 1370469393,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Malleus"
  },
  "Mandible": {
   "title": "Mandible",
   "url": "https://en.wikipedia.org/wiki/Mandible",
   "template": "bone",
   "revision": 1368668773,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Mandibula"
  },
  "Masseter muscle": {
   "title": "Masseter muscle",
@@ -1185,14 +1283,16 @@
   "nerve": "Mandibular nerve (V3)",
   "blood": "Masseteric artery",
   "revision": 1314488567,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus masseter"
  },
  "Maxilla": {
   "title": "Maxilla",
   "url": "https://en.wikipedia.org/wiki/Maxilla",
   "template": "bone",
   "revision": 1363255668,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Maxilla"
  },
  "Medial pterygoid muscle": {
   "title": "Medial pterygoid muscle",
@@ -1204,7 +1304,8 @@
   "nerve": "Mandibular nerve via nerve to medial pterygoid",
   "blood": "Pterygoid branches of maxillary artery",
   "revision": 1292248156,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus pterygoideus medialis"
  },
  "Medial rectus muscle": {
   "title": "Medial rectus muscle",
@@ -1215,7 +1316,8 @@
   "action": "Adducts the eyeball (makes it move inwards)",
   "nerve": "Inferior division of the oculomotor nerve",
   "revision": 1330999454,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rectus medialis bulbi"
  },
  "Mentalis": {
   "title": "Mentalis",
@@ -1226,7 +1328,8 @@
   "action": "Elevates and wrinkles skin of chin, protrudes lower lip",
   "nerve": "Mandibular branch of facial nerve",
   "revision": 1301133906,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus mentalis"
  },
  "Metacarpal bones": {
   "title": "Metacarpal bones",
@@ -1234,7 +1337,8 @@
   "template": "bone",
   "articulations": "Carpometacarpal, intermetacarpal, metacarpophalangeal",
   "revision": 1342266310,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Metacarpus"
  },
  "Metatarsal bones": {
   "title": "Metatarsal bones",
@@ -1242,7 +1346,8 @@
   "template": "bone",
   "articulations": "Proximal phalanges, medial cuneiform, intermediate cuneiform, lateral cuneiform and the cuboid bone.",
   "revision": 1372908307,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Metatarsus"
  },
  "Middle pharyngeal constrictor muscle": {
   "title": "Middle pharyngeal constrictor muscle",
@@ -1254,7 +1359,8 @@
   "nerve": "Pharyngeal plexus of vagus nerve",
   "blood": "Ascending pharyngeal artery",
   "revision": 1313572522,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus constrictor pharyngis medius"
  },
  "Molar (tooth)": {
   "title": "Molar (tooth)",
@@ -1273,7 +1379,8 @@
   "action": "Provides proprioceptive feedback and input due to high muscle spindle density; Bilateral backward extension, unilateral ipsilateral side-bending and contralateral rotation.",
   "nerve": "Posterior branches",
   "revision": 1349962618,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus multifidus"
  },
  "Mylohyoid muscle": {
   "title": "Mylohyoid muscle",
@@ -1285,14 +1392,16 @@
   "nerve": "Mylohyoid nerve, from inferior alveolar branch of mandibular nerve",
   "blood": "Mylohyoid branch of inferior alveolar artery and submental artery of facial artery",
   "revision": 1362328556,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus mylohyoideus"
  },
  "Nasal bone": {
   "title": "Nasal bone",
   "url": "https://en.wikipedia.org/wiki/Nasal_bone",
   "template": "bone",
   "revision": 1364171906,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os nasale"
  },
  "Nasal cartilages": {
   "title": "Nasal cartilages",
@@ -1311,14 +1420,16 @@
   "nerve": "Buccal branch of the facial nerve",
   "blood": "Superior labial artery",
   "revision": 1313468684,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus nasalis"
  },
  "Navicular bone": {
   "title": "Navicular bone",
   "url": "https://en.wikipedia.org/wiki/Navicular_bone",
   "template": "bone",
   "revision": 1372908464,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os naviculare"
  },
  "Obliquus capitis inferior muscle": {
   "title": "Obliquus capitis inferior muscle",
@@ -1329,7 +1440,8 @@
   "action": "Rotation of head and neck",
   "nerve": "Suboccipital nerve",
   "revision": 1354035125,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus obliquus capitis inferior"
  },
  "Obliquus capitis superior muscle": {
   "title": "Obliquus capitis superior muscle",
@@ -1340,7 +1452,8 @@
   "action": "Extends head and flex head to the ipsilateral side",
   "nerve": "Suboccipital nerve",
   "revision": 1354035018,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus obliquus capitis superior"
  },
  "Occipital bone": {
   "title": "Occipital bone",
@@ -1348,7 +1461,8 @@
   "template": "bone",
   "articulations": "The two parietals, the two temporals, the sphenoid, and the atlas",
   "revision": 1364280307,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os occipitale"
  },
  "Occipitalis muscle": {
   "title": "Occipitalis muscle",
@@ -1360,7 +1474,8 @@
   "nerve": "Posterior auricular nerve (a branch of the facial nerve)",
   "blood": "Occipital artery",
   "revision": 1263737633,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "venter occipitalis Musculi occipitofrontalis"
  },
  "Omohyoid muscle": {
   "title": "Omohyoid muscle",
@@ -1372,7 +1487,8 @@
   "nerve": "Ansa cervicalis (C1-C3)",
   "blood": "Branches from the inferior thyroid artery (ITA)",
   "revision": 1360714654,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus omohyoideus"
  },
  "Opponens digiti minimi muscle of hand": {
   "title": "Opponens digiti minimi muscle of hand",
@@ -1384,7 +1500,8 @@
   "nerve": "Deep branch of ulnar nerve (C8 and T1)",
   "blood": "Ulnar artery",
   "revision": 1353446721,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus opponens digiti minimi manus"
  },
  "Opponens pollicis muscle": {
   "title": "Opponens pollicis muscle",
@@ -1396,7 +1513,8 @@
   "nerve": "Recurrent branch of the median nerve",
   "blood": "Superficial palmar arch",
   "revision": 1360715023,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus opponens pollicis"
  },
  "Orbicularis oculi muscle": {
   "title": "Orbicularis oculi muscle",
@@ -1409,7 +1527,8 @@
   "antagonist": "Levator palpebrae superioris",
   "blood": "Ophthalmic, zygomatico-orbital, angular",
   "revision": 1357503437,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus orbicularis oculi"
  },
  "Orbicularis oris muscle": {
   "title": "Orbicularis oris muscle",
@@ -1421,14 +1540,16 @@
   "nerve": "Cranial nerve VII, buccal branch",
   "blood": "Inferior labial artery and superior labial artery.",
   "revision": 1311495846,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus orbicularis oris"
  },
  "Palatine bone": {
   "title": "Palatine bone",
   "url": "https://en.wikipedia.org/wiki/Palatine_bone",
   "template": "bone",
   "revision": 1365328787,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os palatinum"
  },
  "Palatopharyngeus muscle": {
   "title": "Palatopharyngeus muscle",
@@ -1440,7 +1561,8 @@
   "nerve": "Pharyngeal branch of vagus nerve",
   "blood": "Facial artery",
   "revision": 1263737926,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus palatopharyngeus"
  },
  "Palmar interossei muscles": {
   "title": "Palmar interossei muscles",
@@ -1453,7 +1575,8 @@
   "antagonist": "Dorsal interossei",
   "blood": "Palmar metacarpal artery of deep palmar arch",
   "revision": 1368456966,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculi interossei palmares"
  },
  "Palmaris longus muscle": {
   "title": "Palmaris longus muscle",
@@ -1466,7 +1589,8 @@
   "antagonist": "Extensor carpi radialis brevis, extensor carpi radialis longus, extensor carpi ulnaris",
   "blood": "Ulnar artery",
   "revision": 1371604403,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus palmaris longus"
  },
  "Parietal bone": {
   "title": "Parietal bone",
@@ -1474,14 +1598,16 @@
   "template": "bone",
   "articulations": "Five bones: the opposite parietal, the occipital, the frontal, the temporal, and the sphenoid",
   "revision": 1364171996,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os parietale"
  },
  "Patella": {
   "title": "Patella",
   "url": "https://en.wikipedia.org/wiki/Patella",
   "template": "bone",
   "revision": 1372909672,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Patella"
  },
  "Pectineus muscle": {
   "title": "Pectineus muscle",
@@ -1493,7 +1619,8 @@
   "nerve": "Femoral nerve, sometimes obturator nerve",
   "blood": "Obturator artery",
   "revision": 1368156766,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus pectineus"
  },
  "Pectoralis major": {
   "title": "Pectoralis major",
@@ -1506,7 +1633,8 @@
   "antagonist": "Deltoid muscle, trapezius",
   "blood": "Pectoral branch of the thoracoacromial trunk",
   "revision": 1338083993,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus pectoralis major"
  },
  "Pectoralis minor": {
   "title": "Pectoralis minor",
@@ -1518,7 +1646,8 @@
   "nerve": "Medial pectoral nerve (C8)",
   "blood": "Pectoral branch of the thoracoacromial trunk",
   "revision": 1338082390,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus pectoralis minor"
  },
  "Peroneus brevis": {
   "title": "Fibularis brevis",
@@ -1530,7 +1659,8 @@
   "nerve": "Superficial fibular nerve",
   "blood": "Fibular (peroneal) artery",
   "revision": 1360658998,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus fibularis brevis"
  },
  "Peroneus longus": {
   "title": "Fibularis longus",
@@ -1543,7 +1673,8 @@
   "antagonist": "Tibialis anterior muscle",
   "blood": "Fibular (peroneal) artery",
   "revision": 1360659007,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus fibularis longus"
  },
  "Piriformis muscle": {
   "title": "Piriformis muscle",
@@ -1555,7 +1686,8 @@
   "nerve": "Nerve to the piriformis (L5, S1, and S2)",
   "blood": "Inferior gluteal, lateral sacral and superior gluteal artery",
   "revision": 1364823962,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus piriformis"
  },
  "Pisiform bone": {
   "title": "Pisiform bone",
@@ -1563,7 +1695,8 @@
   "template": "bone",
   "articulations": "Triangular",
   "revision": 1373212050,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os pisiforme"
  },
  "Plantaris muscle": {
   "title": "Plantaris muscle",
@@ -1576,7 +1709,8 @@
   "antagonist": "Tibialis anterior muscle",
   "blood": "Sural arteries",
   "revision": 1352100989,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus plantaris"
  },
  "Platysma muscle": {
   "title": "Platysma muscle",
@@ -1589,7 +1723,8 @@
   "antagonist": "Masseter muscle, temporalis muscle",
   "blood": "Branches of the submental artery and suprascapular artery",
   "revision": 1360728928,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Platysma"
  },
  "Popliteus muscle": {
   "title": "Popliteus muscle",
@@ -1601,7 +1736,8 @@
   "nerve": "Tibial nerve",
   "blood": "Popliteal artery",
   "revision": 1360729487,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus popliteus"
  },
  "Premolar": {
   "title": "Premolar",
@@ -1620,7 +1756,8 @@
   "nerve": "Temporal branch of the facial nerve",
   "blood": "Facial artery",
   "revision": 1279617870,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus procerus"
  },
  "Pronator quadratus muscle": {
   "title": "Pronator quadratus muscle",
@@ -1633,7 +1770,8 @@
   "antagonist": "Supinator muscle",
   "blood": "Anterior interosseous artery",
   "revision": 1360730200,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus pronator quadratus"
  },
  "Psoas major muscle": {
   "title": "Psoas major muscle",
@@ -1646,7 +1784,8 @@
   "antagonist": "Gluteus maximus",
   "blood": "lumbar branch of iliolumbar artery",
   "revision": 1361299012,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus psoas major"
  },
  "Pyramidalis muscle": {
   "title": "Pyramidalis muscle",
@@ -1658,7 +1797,8 @@
   "nerve": "Subcostal nerve (T12)",
   "blood": "Inferior and superior epigastric arteries",
   "revision": 1366568387,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus pyramidalis"
  },
  "Quadratus femoris muscle": {
   "title": "Quadratus femoris muscle",
@@ -1670,7 +1810,8 @@
   "nerve": "Nerve to quadratus femoris (L4-S1)",
   "blood": "Inferior gluteal artery, medial circumflex femoral artery",
   "revision": 1292340648,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus quadratus femoris"
  },
  "Quadratus lumborum muscle": {
   "title": "Quadratus lumborum muscle",
@@ -1682,7 +1823,8 @@
   "nerve": "The twelfth thoracic and first through fourth ventral rami of lumbar nerves (T12, L1-L4)",
   "blood": "Lumbar arteries, lumbar branch of iliolumbar artery",
   "revision": 1340238342,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus quadratus lumborum"
  },
  "Quadriceps femoris muscle": {
   "title": "Quadriceps",
@@ -1694,14 +1836,16 @@
   "nerve": "Femoral nerve",
   "blood": "Femoral artery",
   "revision": 1365075025,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus quadriceps femoris"
  },
  "Radius (bone)": {
   "title": "Radius (bone)",
   "url": "https://en.wikipedia.org/wiki/Radius_(bone)",
   "template": "bone",
   "revision": 1373353791,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Radius"
  },
  "Rectus abdominis muscle": {
   "title": "Rectus abdominis muscle",
@@ -1714,7 +1858,8 @@
   "antagonist": "Erector spinae",
   "blood": "Inferior epigastric artery",
   "revision": 1368402259,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rectus abdominis"
  },
  "Rectus capitis posterior major muscle": {
   "title": "Rectus capitis posterior major muscle",
@@ -1726,7 +1871,8 @@
   "nerve": "Dorsal ramus of C1 (suboccipital nerve), sub-occipital nerve",
   "blood": "Occipital artery",
   "revision": 1354034674,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rectus capitis posterior major"
  },
  "Rectus capitis posterior minor muscle": {
   "title": "Rectus capitis posterior minor muscle",
@@ -1737,7 +1883,8 @@
   "action": "Extends the head at the neck, but is now considered to be more of a sensory organ than a muscle",
   "nerve": "Branch of the dorsal primary division of the suboccipital nerve",
   "revision": 1354034848,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rectus capitis posterior minor"
  },
  "Rhomboid major muscle": {
   "title": "Rhomboid major muscle",
@@ -1750,7 +1897,8 @@
   "antagonist": "Serratus anterior muscle",
   "blood": "Dorsal scapular artery",
   "revision": 1349920065,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "musculus rhomboideus major"
  },
  "Rhomboid minor muscle": {
   "title": "Rhomboid minor muscle",
@@ -1763,7 +1911,8 @@
   "antagonist": "Serratus anterior",
   "blood": "Deep branch of transverse cervical artery",
   "revision": 1314302516,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rhomboideus minor"
  },
  "Rib cage": {
   "title": "Rib cage",
@@ -1782,7 +1931,8 @@
   "nerve": "Buccal branch of the facial nerve",
   "blood": "Facial artery",
   "revision": 1335297580,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus risorius"
  },
  "Rotatores muscles": {
   "title": "Rotatores muscles",
@@ -1792,14 +1942,16 @@
   "insertion": "Junction of transverse process and lamina, spinous process",
   "nerve": "Posterior rami of spinal nerves",
   "revision": 1323867112,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculi rotatores"
  },
  "Sacrum": {
   "title": "Sacrum",
   "url": "https://en.wikipedia.org/wiki/Sacrum",
   "template": "bone",
   "revision": 1373214456,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os sacrum"
  },
  "Sartorius muscle": {
   "title": "Sartorius muscle",
@@ -1811,7 +1963,8 @@
   "nerve": "Femoral nerve (sometimes from the intermediate cutaneous nerve of thigh)",
   "blood": "Femoral artery",
   "revision": 1360734491,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus sartorius"
  },
  "Scalene muscles": {
   "title": "Scalene muscles",
@@ -1823,7 +1976,8 @@
   "nerve": "Cervical nerves (C3-C8)",
   "blood": "Ascending cervical artery, (branch of Inferior thyroid artery)",
   "revision": 1326382532,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculi scaleni"
  },
  "Scaphoid bone": {
   "title": "Scaphoid bone",
@@ -1831,14 +1985,16 @@
   "template": "bone",
   "articulations": "Articulates with five bones, radius proximally, trapezoid bone and trapezium bone distally, capitate and lunate medially",
   "revision": 1369788418,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os scaphoideum"
  },
  "Scapula": {
   "title": "Scapula",
   "url": "https://en.wikipedia.org/wiki/Scapula",
   "template": "bone",
   "revision": 1373594355,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Scapula"
  },
  "Semimembranosus muscle": {
   "title": "Semimembranosus muscle",
@@ -1851,7 +2007,8 @@
   "antagonist": "Quadriceps muscle and tensor fasciae latae",
   "blood": "Profunda femoris and gluteal arteries",
   "revision": 1360735194,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus semimembranosus"
  },
  "Semispinalis muscles": {
   "title": "Semispinalis muscles",
@@ -1859,7 +2016,8 @@
   "template": "muscle",
   "nerve": "Greater occipital nerve",
   "revision": 1350243730,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus semispinalis"
  },
  "Semitendinosus muscle": {
   "title": "Semitendinosus muscle",
@@ -1872,7 +2030,8 @@
   "antagonist": "Quadriceps muscle",
   "blood": "Inferior gluteal artery, perforating arteries",
   "revision": 1306233203,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus semitendinosus"
  },
  "Serratus anterior muscle": {
   "title": "Serratus anterior muscle",
@@ -1885,7 +2044,8 @@
   "antagonist": "Rhomboid major, rhomboid minor, trapezius",
   "blood": "Lateral thoracic artery, superior thoracic artery (upper part), thoracodorsal artery (lower part)",
   "revision": 1369788427,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus serratus anterior"
  },
  "Serratus posterior inferior muscle": {
   "title": "Serratus posterior inferior muscle",
@@ -1897,7 +2057,8 @@
   "nerve": "Intercostal nerves T9 through T12",
   "blood": "Intercostal arteries",
   "revision": 1360735373,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus serratus posterior inferior"
  },
  "Serratus posterior superior muscle": {
   "title": "Serratus posterior superior muscle",
@@ -1909,7 +2070,8 @@
   "nerve": "2nd through 5th intercostal nerves",
   "blood": "Intercostal arteries",
   "revision": 1350051520,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus serratus posterior superior"
  },
  "Sesamoid bone": {
   "title": "Sesamoid bone",
@@ -1929,14 +2091,16 @@
   "antagonist": "Tibialis anterior",
   "blood": "Popliteal artery, posterior tibial artery, peroneal artery",
   "revision": 1367173748,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus soleus"
  },
  "Sphenoid bone": {
   "title": "Sphenoid bone",
   "url": "https://en.wikipedia.org/wiki/Sphenoid_bone",
   "template": "bone",
   "revision": 1366700704,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os sphenoidale"
  },
  "Spinalis": {
   "title": "Spinalis",
@@ -1949,7 +2113,8 @@
   "antagonist": "Rectus abdominis muscle",
   "blood": "Lateral sacral artery",
   "revision": 1349912549,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus spinalis"
  },
  "Splenius capitis muscle": {
   "title": "Splenius capitis muscle",
@@ -1961,7 +2126,8 @@
   "nerve": "Posterior ramus of spinal nerves C3 and C4",
   "blood": "Muscular branches of the aorta",
   "revision": 1350024993,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus splenius capitis"
  },
  "Splenius cervicis muscle": {
   "title": "Splenius cervicis muscle",
@@ -1973,7 +2139,8 @@
   "nerve": "Posterior rami of the lower Cervical spinal nerves",
   "blood": "Transverse cervical artery and occipital artery",
   "revision": 1350050737,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus splenius cervicis"
  },
  "Stapes": {
   "title": "Stapes",
@@ -1981,7 +2148,8 @@
   "template": "bone",
   "articulations": "Incudostapedial joint",
   "revision": 1366380174,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Stapes"
  },
  "Sternocleidomastoid muscle": {
   "title": "Sternocleidomastoid muscle",
@@ -1993,7 +2161,8 @@
   "nerve": "Motor: spinal accessory nerve, sensory: cervical plexus, Proprioceptive: ventral primary rami of C2 and C3",
   "blood": "Occipital artery and the superior thyroid artery",
   "revision": 1360739152,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus sternocleidomastoideus"
  },
  "Sternohyoid muscle": {
   "title": "Sternohyoid muscle",
@@ -2005,7 +2174,8 @@
   "nerve": "C1-C3 by a branch of ansa cervicalis",
   "blood": "Superior thyroid artery",
   "revision": 1360739155,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus sternohyoideus"
  },
  "Sternothyroid muscle": {
   "title": "Sternothyroid muscle",
@@ -2017,7 +2187,8 @@
   "nerve": "Ansa cervicalis",
   "blood": "Superior thyroid artery",
   "revision": 1301222751,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus sternothyreoideus"
  },
  "Stylohyoid muscle": {
   "title": "Stylohyoid muscle",
@@ -2028,7 +2199,8 @@
   "action": "Elevate the hyoid during swallowing",
   "nerve": "Facial nerve (CN VII)",
   "revision": 1360739417,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus stylohyoideus"
  },
  "Stylopharyngeus muscle": {
   "title": "Stylopharyngeus muscle",
@@ -2039,7 +2211,8 @@
   "action": "Elevates the larynx, elevates the pharynx, dilates the pharynx; facilitates swallowing",
   "nerve": "Glossopharyngeal nerve (CN IX)",
   "revision": 1302607408,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus stylopharyngeus"
  },
  "Subacromial bursa": {
   "title": "Subacromial bursa",
@@ -2058,7 +2231,8 @@
   "nerve": "Subclavian nerve",
   "blood": "Thoracoacromial trunk, clavicular branch",
   "revision": 1292233586,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus subclavius"
  },
  "Subscapularis muscle": {
   "title": "Subscapularis muscle",
@@ -2070,7 +2244,8 @@
   "nerve": "Upper subscapular nerve, lower subscapular nerve (C5, C6)",
   "blood": "Subscapular artery",
   "revision": 1278131164,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus subscapularis"
  },
  "Superior oblique muscle": {
   "title": "Superior oblique muscle",
@@ -2082,7 +2257,8 @@
   "nerve": "Trochlear nerve",
   "blood": "Lateral muscular branch of the ophthalmic artery",
   "revision": 1293269913,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus obliquus superior bulbi"
  },
  "Superior pharyngeal constrictor muscle": {
   "title": "Superior pharyngeal constrictor muscle",
@@ -2094,7 +2270,8 @@
   "nerve": "Pharyngeal plexus of vagus nerve",
   "blood": "Ascending pharyngeal artery and tonsillar branch of facial artery",
   "revision": 1313572545,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus constrictor pharyngis superior"
  },
  "Superior rectus muscle": {
   "title": "Superior rectus muscle",
@@ -2105,7 +2282,8 @@
   "action": "Elevation, adduction, intorsion",
   "nerve": "Oculomotor nerve",
   "revision": 1353400916,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus rectus superior bulbi"
  },
  "Supinator muscle": {
   "title": "Supinator muscle",
@@ -2118,7 +2296,8 @@
   "antagonist": "Pronator teres, pronator quadratus",
   "blood": "Radial recurrent artery",
   "revision": 1360739757,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus supinator"
  },
  "Supraspinatus muscle": {
   "title": "Supraspinatus muscle",
@@ -2130,21 +2309,24 @@
   "nerve": "Suprascapular nerve",
   "blood": "Suprascapular artery",
   "revision": 1314926490,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus supraspinatus"
  },
  "Talus bone": {
   "title": "Talus bone",
   "url": "https://en.wikipedia.org/wiki/Talus_bone",
   "template": "bone",
   "revision": 1369787639,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "astragalus"
  },
  "Tarsus (eyelids)": {
   "title": "Tarsus (eyelids)",
   "url": "https://en.wikipedia.org/wiki/Tarsus_(eyelids)",
   "template": "other",
   "revision": 1317219987,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "tarsus"
  },
  "Temporal bone": {
   "title": "Temporal bone",
@@ -2152,7 +2334,8 @@
   "template": "bone",
   "articulations": "Occipital, parietal, sphenoid, mandible and zygomatic",
   "revision": 1363102419,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Ossa temporalia"
  },
  "Temporal muscle": {
   "title": "Temporalis muscle",
@@ -2165,7 +2348,8 @@
   "antagonist": "Platysma muscle",
   "blood": "Deep temporal arteries",
   "revision": 1355791407,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus temporalis"
  },
  "Temporoparietalis muscle": {
   "title": "Temporoparietalis muscle",
@@ -2175,7 +2359,8 @@
   "insertion": "Galea aponeurotica",
   "nerve": "Temporal branches of the facial nerve",
   "revision": 1352707536,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus temporoparietalis"
  },
  "Teres major muscle": {
   "title": "Teres major muscle",
@@ -2187,7 +2372,8 @@
   "nerve": "Lower subscapular nerve (segmental levels C5 and C6)",
   "blood": "Subscapular and circumflex scapular arteries",
   "revision": 1360741033,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus teres major"
  },
  "Teres minor muscle": {
   "title": "Teres minor muscle",
@@ -2199,7 +2385,8 @@
   "nerve": "Axillary nerve (C5-C6)",
   "blood": "Posterior circumflex humeral artery and the circumflex scapular artery",
   "revision": 1313769663,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus teres minor"
  },
  "Thoracic diaphragm": {
   "title": "Thoracic diaphragm",
@@ -2211,14 +2398,16 @@
   "nerve": "Phrenic and lower intercostal nerves",
   "blood": "Pericardiacophrenic artery, musculophrenic artery, inferior phrenic arteries",
   "revision": 1364536731,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Diaphragma"
  },
  "Thoracic vertebrae": {
   "title": "Thoracic vertebrae",
   "url": "https://en.wikipedia.org/wiki/Thoracic_vertebrae",
   "template": "bone",
   "revision": 1373214546,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "vertebrae thoracicae"
  },
  "Thyrohyoid muscle": {
   "title": "Thyrohyoid muscle",
@@ -2230,7 +2419,8 @@
   "nerve": "First cervical nerve (C1) via hypoglossal nerve",
   "blood": "Superior thyroid artery",
   "revision": 1334305815,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus thyreohyoideus"
  },
  "Thyroid cartilage": {
   "title": "Thyroid cartilage",
@@ -2245,7 +2435,8 @@
   "template": "bone",
   "articulations": "Knee, ankle, superior and, inferior tibiofibular joint",
   "revision": 1372908895,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Tibia"
  },
  "Tibialis anterior muscle": {
   "title": "Tibialis anterior muscle",
@@ -2258,7 +2449,8 @@
   "antagonist": "Fibularis longus, gastrocnemius, soleus, plantaris, tibialis posterior",
   "blood": "Anterior tibial artery",
   "revision": 1360742313,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus tibialis anterior"
  },
  "Tibialis posterior muscle": {
   "title": "Tibialis posterior muscle",
@@ -2271,7 +2463,8 @@
   "antagonist": "Fibularis brevis and longus, antagonist to the inversion",
   "blood": "Posterior tibial artery",
   "revision": 1360742315,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus tibialis posterior"
  },
  "Transverse abdominal muscle": {
   "title": "Transverse abdominal muscle",
@@ -2283,7 +2476,8 @@
   "nerve": "Thoracoabdominal nn. (T6-T11), Subcostal n. (T12), iliohypogastric nerve (L1), and ilioinguinal nerve (L1)",
   "blood": "Subcostal arteries",
   "revision": 1358682737,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus transversus abdominis"
  },
  "Transversus thoracis muscle": {
   "title": "Transversus thoracis muscle",
@@ -2295,7 +2489,8 @@
   "nerve": "Intercostal nerves",
   "blood": "Intercostal arteries",
   "revision": 1350732707,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus transversus thoracis"
  },
  "Trapezium (bone)": {
   "title": "Trapezium (bone)",
@@ -2303,7 +2498,8 @@
   "template": "bone",
   "articulations": "1st metacarpal distally, scaphoid proximally, trapezoid medially, 2nd metacarpal medially",
   "revision": 1373211955,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Os trapezium"
  },
  "Trapezius": {
   "title": "Trapezius",
@@ -2316,7 +2512,8 @@
   "antagonist": "Serratus anterior muscle, latissimus dorsi, pectoralis major",
   "blood": "Superficial branch of transverse cervical artery or superficial cervical artery",
   "revision": 1370931440,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus trapezius"
  },
  "Trapezoid bone": {
   "title": "Trapezoid bone",
@@ -2324,7 +2521,8 @@
   "template": "bone",
   "articulations": "Articulates with four bones:, scaphoid proximally, second metacarpal distally, trapezium bone laterally, capitate medially",
   "revision": 1373211899,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "os trapezoideum"
  },
  "Triceps": {
   "title": "Triceps",
@@ -2337,7 +2535,8 @@
   "antagonist": "Biceps brachii muscle",
   "blood": "Deep brachial artery, posterior circumflex humeral artery (long head only)",
   "revision": 1369364363,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus triceps brachii"
  },
  "Triquetral bone": {
   "title": "Triquetral bone",
@@ -2345,21 +2544,24 @@
   "template": "bone",
   "articulations": "Articulates with three bones:, lunate laterally, pisiform in front, hamate distally, triangular articular disk which separates it from the lower end of the ulna.",
   "revision": 1373212187,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "os triquetrum"
  },
  "Ulna": {
   "title": "Ulna",
   "url": "https://en.wikipedia.org/wiki/Ulna",
   "template": "bone",
   "revision": 1344018575,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Ulna"
  },
  "Vomer": {
   "title": "Vomer",
   "url": "https://en.wikipedia.org/wiki/Vomer",
   "template": "bone",
   "revision": 1347459993,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Vomer (anatomia)"
  },
  "Zygomatic bone": {
   "title": "Zygomatic bone",
@@ -2367,7 +2569,8 @@
   "template": "bone",
   "articulations": "Maxilla, temporal bone, sphenoid bone and frontal bone",
   "revision": 1362835494,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "os zygomaticum"
  },
  "Zygomaticus major muscle": {
   "title": "Zygomaticus major muscle",
@@ -2379,7 +2582,8 @@
   "nerve": "Zygomatic and buccal branches of the facial nerve",
   "blood": "Facial artery",
   "revision": 1345448933,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus zygomaticus major"
  },
  "Zygomaticus minor muscle": {
   "title": "Zygomaticus minor muscle",
@@ -2391,6 +2595,7 @@
   "nerve": "Buccal branch",
   "blood": "Facial artery",
   "revision": 1303064717,
-  "retrieved": "2026-09-07"
+  "retrieved": "2026-09-07",
+  "latin": "Musculus zygomaticus minor"
  }
 }

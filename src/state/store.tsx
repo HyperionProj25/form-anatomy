@@ -3,6 +3,7 @@ import type { CameraPose, ViewPreset } from "../viewer/engine";
 import type { Region, Vec3 } from "../data/types";
 import { partById, partForSide, partsByKey } from "../data/catalog";
 import { lineById, stopPartId, stopSides, type LineId } from "../data/lines";
+import { loadNamePref, type NameLang } from "../data/names";
 import type { Question, QuizSetId } from "../features/quiz/generators";
 
 export type Mode = "muscles" | "bones" | "fascia";
@@ -47,6 +48,8 @@ export type AppState = {
   quiz: QuizSession | null;
   /** A set requested by the URL; App starts it once the model is ready. */
   quizRequest: QuizSetId | null;
+  /** Primary language for structure names; a browser preference, not part of the URL. */
+  names: NameLang;
   filters: Filters;
   modal: ModalId;
 };
@@ -67,6 +70,7 @@ export const initialState: AppState = {
   pinned: [],
   quiz: null,
   quizRequest: null,
+  names: loadNamePref(),
   filters: { region: "all", layer: "all", side: "both", search: "" },
   modal: null,
 };
@@ -101,6 +105,7 @@ export type Action =
   | { type: "quizResume" }
   | { type: "quizNext" }
   | { type: "endQuiz" }
+  | { type: "setNames"; names: NameLang }
   | { type: "reset" }
   | { type: "hydrate"; state: Partial<AppState> };
 
@@ -320,6 +325,8 @@ export function reducer(s: AppState, a: Action): AppState {
     }
     case "endQuiz":
       return { ...s, quiz: null, focus: null };
+    case "setNames":
+      return { ...s, names: a.names };
     case "reset":
       return {
         ...s,

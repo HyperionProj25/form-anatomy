@@ -14,6 +14,7 @@ import { useMemo } from "react";
 import { parts, partForSide, partById } from "../../data/catalog";
 import { filterParts, groupParts } from "../../data/groups";
 import { LINE_GROUPS, lines } from "../../data/lines";
+import { displayName, secondaryName, type NameLang } from "../../data/names";
 import { REGION_LABELS, REGION_ORDER } from "../../data/regions";
 import { useStore, type LayerFilter, type Mode, type SideFilter } from "../../state/store";
 
@@ -27,7 +28,7 @@ const SYSTEMS: { id: Mode; label: string; icon: typeof Activity }[] = [
 
 export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
   const { state, dispatch } = useStore();
-  const { mode, filters, selected, hidden, isolated, opacity, line } = state;
+  const { mode, filters, selected, hidden, isolated, opacity, line, names } = state;
   const selectedPart = selected ? partById(selected) : undefined;
   const groups = useMemo(() => groupParts(filterParts(parts, mode, filters)), [mode, filters]);
   const showLines = mode === "fascia" && !filters.search;
@@ -71,6 +72,18 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
           </button>
         )}
       </label>
+      <div className="segmented names-toggle" role="group" aria-label="Structure names">
+        {(["english", "latin"] as NameLang[]).map((l) => (
+          <button
+            key={l}
+            aria-pressed={names === l}
+            className={names === l ? "active" : ""}
+            onClick={() => dispatch({ type: "setNames", names: l })}
+          >
+            {l === "english" ? "English names" : "Latin names"}
+          </button>
+        ))}
+      </div>
 
       {showLines ? (
         <>
@@ -172,7 +185,12 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
                         if (p) dispatch({ type: "select", id: p.id });
                       }}
                     >
-                      <span>{g.name}</span>
+                      <span>
+                        {displayName(g.parts[0], names)}
+                        {names === "latin" && secondaryName(g.parts[0], names) && (
+                          <small>{secondaryName(g.parts[0], names)}</small>
+                        )}
+                      </span>
                       {!g.bilateral && <ChevronRight size={13} />}
                     </button>
                     {g.bilateral && (

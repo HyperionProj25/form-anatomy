@@ -1,4 +1,5 @@
 import { partMatches } from "./catalog";
+import { latinName } from "./names";
 import type { CatalogPart, Layer, PartType, Region } from "./types";
 import type { Filters, Mode } from "../state/store";
 
@@ -50,6 +51,10 @@ export function filterParts(all: CatalogPart[], mode: Mode, filters: Filters): C
       (filters.region === "all" || p.region === filters.region) &&
       (mode === "bones" || filters.layer === "all" || p.layer === filters.layer) &&
       (filters.side === "both" || p.side === "midline" || p.side === filters.side) &&
-      (!needle || partMatches(p, needle)),
+      (!needle || partMatches(p, needle) || matchesLatin(p, needle)),
   );
+}
+
+function matchesLatin(p: CatalogPart, needle: string): boolean {
+  return latinName(p)?.toLowerCase().includes(needle.toLowerCase()) ?? false;
 }

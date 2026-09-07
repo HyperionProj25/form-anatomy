@@ -1870,3 +1870,13 @@ footer button {
   border-color: #c9bfdd;
   color: #4f3f70;
 }
+
+.names-toggle {
+  margin: 8px 0 2px;
+}
+.group-row .group-name small {
+  display: block;
+  font-size: 10.5px;
+  color: var(--muted);
+  font-weight: 400;
+}

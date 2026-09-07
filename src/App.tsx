@@ -12,6 +12,8 @@ import {
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { parts } from "./data/catalog";
 import { lineById, lineKeys, lines } from "./data/lines";
+import { displayName, saveNamePref } from "./data/names";
+import { partById } from "./data/catalog";
 import { StoreProvider, useStore } from "./state/store";
 import { useUrlSync } from "./state/useUrlSync";
 import { computeStyles } from "./viewer/appearance";
@@ -67,6 +69,16 @@ function Shell() {
   useEffect(() => {
     if (state.quizRequest && !state.quiz && ready) startQuiz(state.quizRequest);
   }, [state.quizRequest, state.quiz, ready, startQuiz]);
+  useEffect(() => {
+    saveNamePref(state.names);
+  }, [state.names]);
+  const nameOf = useCallback(
+    (id: string) => {
+      const part = partById(id);
+      return part ? displayName(part, state.names) : id;
+    },
+    [state.names],
+  );
   useEffect(() => {
     if (!ready) return;
     void ensureModelCached(`${import.meta.env.BASE_URL}body.glb`).then((ok) => {
@@ -208,6 +220,7 @@ function Shell() {
             styles={styles}
             cameraCommand={cameraCommand}
             paths={paths}
+            nameOf={nameOf}
             onSelect={(id) => dispatch({ type: "select", id })}
             onReady={() => setReady(true)}
             onCameraChange={(pose) => dispatch({ type: "cameraMoved", pose })}

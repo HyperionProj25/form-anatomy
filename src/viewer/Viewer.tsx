@@ -21,6 +21,8 @@ type Props = {
   styles: Map<string, PartStyle>;
   cameraCommand: CameraCommand;
   paths: DrawnPath[];
+  /** Label for the hover tooltip; defaults to the catalog name. */
+  nameOf?: (id: string) => string;
   onSelect(id: string): void;
   onReady(ids: string[]): void;
   onCameraChange(pose: CameraPose): void;
@@ -72,7 +74,10 @@ export default function Viewer(props: Props) {
           setError(true);
           setStatus(message);
         },
-        onHover: (id, x, y) => setHover(id ? { name: partById(id)?.name ?? id, x, y } : null),
+        onHover: (id, x, y) =>
+          setHover(
+            id ? { name: latest.current.nameOf?.(id) ?? partById(id)?.name ?? id, x, y } : null,
+          ),
         onSelect: (id) => latest.current.onSelect(id),
         onCameraChange: (pose) => latest.current.onCameraChange(pose),
       });

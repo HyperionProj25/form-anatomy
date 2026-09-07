@@ -11,6 +11,8 @@ export type FactEntry = {
   antagonist?: string;
   articulations?: string;
   blood?: string;
+  /** Latin (Terminologia-style) label from Wikidata, CC0. */
+  latin?: string;
   revision: number;
   retrieved: string;
 };
