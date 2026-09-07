@@ -44,6 +44,7 @@ export function encodeState(s: AppState): string {
     if (title) q.set("plt", title);
   }
   if (s.quiz) q.set("q", s.quiz.setId);
+  if (s.attach) q.set("a", "1");
   if (s.filters.region !== "all") q.set("r", s.filters.region);
   if (s.filters.layer !== "all") q.set("d", s.filters.layer);
   if (s.filters.side !== "both") q.set("side", s.filters.side);
@@ -101,6 +102,7 @@ export function decodeSearch(search: string): Partial<AppState> {
   const qs = q.get("q");
   const setId = qs ? parseSetId(qs) : null;
   if (setId) out.quizRequest = setId;
+  if (q.get("a") === "1") out.attach = true;
   const r = q.get("r");
   const d = q.get("d");
   const side = q.get("side");

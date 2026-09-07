@@ -11,7 +11,7 @@ export type ViewState = ViewPreset | "custom";
 export type LayerFilter = "all" | "superficial" | "deep";
 export type SideFilter = "both" | "left" | "right";
 export type RegionFilter = Region | "all";
-export type ModalId = "about" | "guide" | "quiz" | "research" | null;
+export type ModalId = "about" | "guide" | "quiz" | "research" | "handout" | null;
 
 export type Filters = { region: RegionFilter; layer: LayerFilter; side: SideFilter; search: string };
 export type Tour = { step: number; playing: boolean };
@@ -55,6 +55,8 @@ export type AppState = {
   /** Primary language for structure names; a browser preference, not part of the URL. */
   names: NameLang;
   playlist: Playlist | null;
+  /** Light the selected muscle's origin and insertion bones (URL `a`). Sticky across selections. */
+  attach: boolean;
   filters: Filters;
   modal: ModalId;
 };
@@ -77,6 +79,7 @@ export const initialState: AppState = {
   quizRequest: null,
   names: loadNamePref(),
   playlist: null,
+  attach: false,
   filters: { region: "all", layer: "all", side: "both", search: "" },
   modal: null,
 };
@@ -120,6 +123,8 @@ export type Action =
   | { type: "playlistPrev" }
   | { type: "playlistStop" }
   | { type: "playlistClear" }
+  | { type: "playlistLoad"; title: string; ids: string[] }
+  | { type: "toggleAttach" }
   | { type: "reset" }
   | { type: "hydrate"; state: Partial<AppState> };
 
@@ -415,6 +420,14 @@ export function reducer(s: AppState, a: Action): AppState {
         : { ...s, playlist: idlePlaylist(s), focus: null };
     case "playlistClear":
       return { ...s, playlist: null, focus: s.playlist?.step === null ? s.focus : null };
+    case "playlistLoad": {
+      const ids = [...new Set(a.ids.filter((id) => partById(id)))].slice(0, MAX_PLAYLIST);
+      if (!ids.length) return s;
+      const title = a.title.slice(0, MAX_PLAYLIST_TITLE);
+      return withPlaylistStep({ ...s, playlist: { title, ids, step: null } }, 0);
+    }
+    case "toggleAttach":
+      return { ...s, attach: !s.attach };
     case "reset":
       return {
         ...s,
@@ -425,6 +438,7 @@ export function reducer(s: AppState, a: Action): AppState {
         view: "front",
         camera: null,
         quiz: null,
+        attach: false,
         playlist: idlePlaylist(s),
         ...noTour,
         cameraNonce: s.cameraNonce + 1,

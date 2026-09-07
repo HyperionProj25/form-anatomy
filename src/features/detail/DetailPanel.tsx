@@ -1,5 +1,6 @@
 import {
   ArrowRight,
+  Bone,
   ChevronDown,
   EyeOff,
   Focus,
@@ -10,13 +11,15 @@ import {
   X,
 } from "lucide-react";
 import { useState } from "react";
-import { partById } from "../../data/catalog";
+import { partById, partForSide, partsByKey } from "../../data/catalog";
+import { attachmentsFor } from "../../data/attachments";
 import { factsForWiki } from "../../data/facts";
 import { lessons } from "../../data/lessons";
 import { lineKeys, lines } from "../../data/lines";
 import { displayName, secondaryName } from "../../data/names";
 import { REGION_LABELS } from "../../data/regions";
 import { useStore } from "../../state/store";
+import { ATTACH_COLORS } from "../../viewer/appearance";
 import CopyLink from "../shared/CopyLink";
 
 type Props = { describe: (id: string) => string | undefined; onToast: (m: string) => void };
@@ -47,6 +50,9 @@ export default function DetailPanel({ describe, onToast }: Props) {
   ];
   const hasFacts = factRows.some(([, v]) => v);
   const inPlaylist = state.playlist?.ids.includes(part.id) ?? false;
+  const attachments = attachmentsFor(part);
+  const boneFor = (key: string) =>
+    partForSide(key, part.side === "left" ? "left" : "right") ?? partsByKey(key)[0];
   const attributionUrl = facts?.url ?? part.wiki;
 
   return (
@@ -145,6 +151,43 @@ export default function DetailPanel({ describe, onToast }: Props) {
                     </div>
                   ),
               )}
+            </div>
+          )}
+          {attachments && (
+            <div className="attachments">
+              <div className="section-label">ATTACHMENTS ON THE SKELETON</div>
+              {(["origin", "insertion"] as const).map(
+                (end) =>
+                  attachments[end].length > 0 && (
+                    <div className="attachment-row" key={end}>
+                      <span className="line-dot" style={{ background: ATTACH_COLORS[end] }} />
+                      <span className="attachment-label">{end === "origin" ? "Origin" : "Insertion"}</span>
+                      {attachments[end].map((key) => {
+                        const bone = boneFor(key);
+                        return (
+                          bone && (
+                            <button
+                              key={key}
+                              className="attachment-chip"
+                              title={`Select the ${bone.name}`}
+                              onClick={() => dispatch({ type: "select", id: bone.id })}
+                            >
+                              {bone.name}
+                            </button>
+                          )
+                        );
+                      })}
+                    </div>
+                  ),
+              )}
+              <button
+                className="outline-button"
+                aria-pressed={state.attach}
+                onClick={() => dispatch({ type: "toggleAttach" })}
+              >
+                <Bone size={15} /> {state.attach ? "Hide on model" : "Show on model"}
+              </button>
+              <p className="subtle">Matched from the attachment text by bone name. Approximate.</p>
             </div>
           )}
           {description && (

@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { computeStyles, PIN_COLORS, type StyleInput } from "../src/viewer/appearance";
+import { ATTACH_COLORS, computeStyles, PIN_COLORS, type StyleInput } from "../src/viewer/appearance";
 import type { CatalogPart } from "../src/data/types";
 
 const part = (id: string, type: CatalogPart["type"], name = id): CatalogPart => ({
@@ -111,5 +111,34 @@ describe("computeStyles", () => {
     });
     expect(s.get("soleus")).toMatchObject({ emissiveIntensity: 0.45, opacity: 1 });
     expect(s.get("gastro")?.opacity).toBe(0.55);
+  });
+});
+
+describe("attachments", () => {
+  test("attachment bones take their end color and everything else dims", () => {
+    const s = computeStyles({
+      ...base,
+      selected: "gastro",
+      attachments: { origin: new Set(["femur"]), insertion: new Set() },
+    });
+    expect(s.get("femur")!.color).toBe(ATTACH_COLORS.origin);
+    expect(s.get("femur")!.opacity).toBe(1);
+    expect(s.get("soleus")!.opacity).toBeLessThanOrEqual(0.28);
+    expect(s.get("gastro")!.opacity).toBe(1);
+    const iso = computeStyles({
+      ...base,
+      selected: "gastro",
+      isolated: true,
+      attachments: { origin: new Set(), insertion: new Set(["femur"]) },
+    });
+    expect(iso.get("femur")!.visible).toBe(true);
+    expect(iso.get("femur")!.color).toBe(ATTACH_COLORS.insertion);
+    expect(iso.get("soleus")!.visible).toBe(false);
+    const both = computeStyles({
+      ...base,
+      selected: "gastro",
+      attachments: { origin: new Set(["femur"]), insertion: new Set(["femur"]) },
+    });
+    expect(both.get("femur")!.color).toBe(ATTACH_COLORS.origin);
   });
 });

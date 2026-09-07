@@ -10,10 +10,10 @@ import {
   ZoomOut,
 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { parts } from "./data/catalog";
+import { partById, parts } from "./data/catalog";
+import { attachmentIds } from "./data/attachments";
 import { lineById, lineKeys, lines } from "./data/lines";
 import { displayName, saveNamePref } from "./data/names";
-import { partById } from "./data/catalog";
 import { StoreProvider, useStore } from "./state/store";
 import { useUrlSync } from "./state/useUrlSync";
 import { computeStyles } from "./viewer/appearance";
@@ -89,6 +89,13 @@ function Shell() {
   }, [ready, showToast]);
 
   const activeLine = lineById(state.line) ?? lines[0];
+  const attachments = useMemo(() => {
+    if (!state.attach || state.mode === "fascia" || !state.selected) return undefined;
+    const part = partById(state.selected);
+    if (!part || part.type !== "muscle") return undefined;
+    const ids = attachmentIds(part);
+    return ids ? { origin: new Set(ids.origin), insertion: new Set(ids.insertion) } : undefined;
+  }, [state.attach, state.mode, state.selected]);
   const styles = useMemo(
     () =>
       computeStyles({
@@ -102,6 +109,7 @@ function Shell() {
         lineKeys: lineKeys(activeLine),
         focusIds: state.focus ? new Set(state.focus.ids) : undefined,
         pinned: state.pinned,
+        attachments,
       }),
     [
       state.mode,
@@ -112,6 +120,7 @@ function Shell() {
       state.focus,
       state.pinned,
       activeLine,
+      attachments,
     ],
   );
   const cameraCommand = useMemo<CameraCommand>(() => {
@@ -308,6 +317,13 @@ function Shell() {
         </span>
         <div>
           <span>Open anatomy. Open access.</span>
+          <a
+            href="https://github.com/HyperionProj25/form-anatomy/issues"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Report a problem <ArrowRight size={12} />
+          </a>
           <button onClick={() => dispatch({ type: "setModal", modal: "about" })}>
             Sources & credits <ArrowRight size={12} />
           </button>

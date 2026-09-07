@@ -133,3 +133,12 @@ describe("playlists in the URL", () => {
     expect(encodeState({ ...initialState, playlist: { title: "t", ids: [], step: null } })).toBe("");
   });
 });
+
+describe("attachments flag", () => {
+  test("a=1 round-trips and anything else is ignored", () => {
+    const s: AppState = { ...initialState, attach: true, selected: "soleus-muscle-l" };
+    expect(encodeState(s)).toBe("?s=soleus-muscle-l&a=1");
+    expect(decodeSearch("?s=soleus-muscle-l&a=1").attach).toBe(true);
+    expect(decodeSearch("?a=yes").attach).toBeUndefined();
+  });
+});

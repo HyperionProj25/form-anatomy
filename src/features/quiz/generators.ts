@@ -21,6 +21,8 @@ export type Question =
     }
   | {
       kind: "fact";
+      /** Which fact is asked: the primary action or the supplying nerve. */
+      field: "action" | "nerve";
       key: string;
       prompt: string;
       options: string[];
@@ -40,6 +42,20 @@ export type Question =
 const SET_SIZE = 10;
 const EVIDENCE_PER_SET = 3;
 const ACTION_MAX = 110;
+const NERVE_MAX = 70;
+
+/**
+ * The first clause of a nerve entry, so answer options stay short:
+ * "Tibial nerve from the sciatic, specifically, nerve roots S1–S2" becomes "Tibial nerve from the sciatic".
+ */
+export function clipNerve(s: string): string {
+  const first = s
+    .split(/[;(]/)[0]
+    .split(/,\s*specifically\b/)[0]
+    .trim()
+    .replace(/[.,]+$/, "");
+  return first.length > NERVE_MAX ? first.slice(0, NERVE_MAX - 1).trimEnd() + "…" : first;
+}
 
 /** Small seeded PRNG so sets are reproducible in tests. */
 export function mulberry32(seed: number): () => number {
@@ -166,11 +182,36 @@ function factQuestion(key: string, rng: () => number, actionPool: string[]): Que
   const { options, correct } = withCorrect(correctText, others, rng);
   return {
     kind: "fact",
+    field: "action",
     key,
     prompt: `Which is the primary action of the ${name}?`,
     options,
     correct,
     explanation: `${name}: ${clip(f.action)}${f.origin ? ` Origin: ${clip(f.origin)}` : ""}`,
+  };
+}
+
+function nerveQuestion(key: string, rng: () => number, nervePool: string[]): Question | null {
+  const f = factsOf(key);
+  if (!f?.nerve) return null;
+  const name = nameOf(key);
+  const correctText = clipNerve(f.nerve);
+  if (!correctText) return null;
+  const others = shuffle(
+    nervePool.filter((n) => n.toLowerCase() !== correctText.toLowerCase()),
+    rng,
+  ).slice(0, 3);
+  if (others.length < 3) return null;
+  const { options, correct } = withCorrect(correctText, others, rng);
+  const full = f.nerve.trim().replace(/\.$/, "");
+  return {
+    kind: "fact",
+    field: "nerve",
+    key,
+    prompt: `Which nerve supplies the ${name}?`,
+    options,
+    correct,
+    explanation: `${name}: innervated by ${full}.${f.action ? ` Action: ${clip(f.action)}` : ""}`,
   };
 }
 
@@ -190,14 +231,25 @@ export function buildSet(
         .map(clip),
     ),
   ];
-  const kinds: Array<"find" | "identify" | "fact"> = webgl ? ["find", "identify", "fact"] : ["fact"];
+  const nervePool = [
+    ...new Set(
+      QUIZ_MUSCLES.map((k) => factsOf(k)?.nerve)
+        .filter((n): n is string => !!n)
+        .map(clipNerve)
+        .filter(Boolean),
+    ),
+  ];
+  const kinds: Array<"find" | "identify" | "action" | "nerve"> = webgl
+    ? ["find", "identify", "action", "nerve"]
+    : ["action", "nerve"];
   const questions: Question[] = [];
   let i = 0;
   for (const key of shuffle(pool, rng)) {
     if (questions.length >= structuralTarget) break;
     const preferred = kinds[i % kinds.length];
     let q: Question | null = null;
-    if (preferred === "fact") q = factQuestion(key, rng, actionPool);
+    if (preferred === "nerve") q = nerveQuestion(key, rng, nervePool);
+    if (!q && (preferred === "nerve" || preferred === "action")) q = factQuestion(key, rng, actionPool);
     if (!q && webgl) q = preferred === "identify" ? identifyQuestion(key, rng) : findQuestion(key);
     if (!q) continue;
     questions.push(q);

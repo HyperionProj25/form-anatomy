@@ -2,6 +2,7 @@ import { ArrowRight, BookOpen, Layers, Move, Network, Search, X } from "lucide-r
 import { useEffect } from "react";
 import { useStore } from "../../state/store";
 import type { QuizSetId } from "../quiz/generators";
+import Handout from "../playlist/Handout";
 import QuizStart from "../quiz/QuizStart";
 import ResearchDigest from "../research/ResearchDigest";
 
@@ -14,7 +15,7 @@ const GUIDE_STEPS = [
   {
     icon: Layers,
     title: "Explore one layer at a time",
-    text: "Switch between muscles and bones. Filter by body region, approximate layer and side, and choose English or Latin names. Select a structure, then isolate it, hide it, or pin it to compare with others.",
+    text: "Switch between muscles and bones. Filter by body region, approximate layer and side, and choose English or Latin names. Select a structure, then isolate it, hide it, pin it to compare with others, or show its origin and insertion bones on the skeleton.",
   },
   {
     icon: Network,
@@ -24,12 +25,12 @@ const GUIDE_STEPS = [
   {
     icon: Search,
     title: "Share what you see",
-    text: "Every view has a link. Copy it from the detail or fascia panel and it will reopen the same structure, filters, line and camera for anyone. Teaching a lesson? Add structures to a playlist, name it, and share one link that plays through them in order.",
+    text: "Every view has a link. Copy it from the detail or fascia panel and it will reopen the same structure, filters, line and camera for anyone. Teaching a lesson? Add structures to a playlist, name it, and share one link that plays through them in order. Study sets on the start panel are ready-made playlists, and any playlist prints as a handout.",
   },
   {
     icon: BookOpen,
     title: "Practice and keep score",
-    text: "Test your knowledge by region or by line: click structures on the model, name highlighted ones, recall actions, and read the evidence. Missed items become weak spots you can drill. Everything works offline after the first visit.",
+    text: "Test your knowledge by region or by line: click structures on the model, name highlighted ones, recall actions and innervation, and read the evidence. Missed items become weak spots you can drill. Everything works offline after the first visit.",
   },
 ];
 
@@ -78,7 +79,12 @@ export default function Modals({ ready, onStartQuiz }: Props) {
         if (e.target === e.currentTarget) close();
       }}
     >
-      <section className="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title">
+      <section
+        className={modal === "handout" ? "modal modal-wide" : "modal"}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modal-title"
+      >
         <button className="modal-close icon-button" aria-label="Close dialog" onClick={close}>
           <X size={21} />
         </button>
@@ -88,6 +94,8 @@ export default function Modals({ ready, onStartQuiz }: Props) {
           <Guide onClose={close} />
         ) : modal === "research" ? (
           <ResearchDigest />
+        ) : modal === "handout" ? (
+          <Handout />
         ) : (
           <QuizStart ready={ready} onStart={onStartQuiz} />
         )}

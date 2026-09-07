@@ -75,6 +75,16 @@ checks without deploying.
 - Teacher playlists: add structures from their detail panel, name the list,
   and copy one link. Opening it restores the list; Play steps through each
   structure with its facts, using the arrow keys.
+- Study sets: eighteen curated groups at undergraduate scope (rotator cuff,
+  forearm flexors, gluteal region, axial skeleton and more) that open as
+  playlists from the start panel.
+- Printable handouts: any playlist prints as a study sheet with origin,
+  insertion, action and innervation for every structure.
+- Attachment highlighting: select a muscle and light its origin bones in blue
+  and insertion bones in orange on the skeleton. Bones are matched from the
+  reference text by name, so the panel labels it approximate.
+- Innervation questions: quizzes ask which nerve supplies a muscle alongside
+  action recall, drawn from the same reference facts.
 - A research digest of 19 verified papers and references, grouped by
   question, each with a plain-language summary and a note on what it means
   for the model. A build-time check resolves every PMID, DOI and URL.

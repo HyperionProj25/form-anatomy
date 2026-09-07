@@ -1,9 +1,11 @@
 import { describe, expect, test } from "vitest";
 import { partsByKey } from "../src/data/catalog";
+import { factsForWiki } from "../src/data/facts";
 import { lineById, lineKeys } from "../src/data/lines";
 import { QUIZ_BONES, QUIZ_MUSCLES } from "../src/data/quiz-pool";
 import {
   buildSet,
+  clipNerve,
   mulberry32,
   parseSetId,
   setLabel,
@@ -98,5 +100,34 @@ describe("buildSet", () => {
     const fact = set.find((q) => q.kind === "fact");
     expect(fact).toBeDefined();
     if (fact?.kind === "fact") expect(fact.options[fact.correct].length).toBeGreaterThan(5);
+  });
+});
+
+describe("innervation questions", () => {
+  test("clipNerve keeps the first clause and drops root lists", () => {
+    expect(clipNerve("Tibial nerve from the sciatic, specifically, nerve roots S1–S2")).toBe(
+      "Tibial nerve from the sciatic",
+    );
+    expect(clipNerve("Accessory nerve (motor), cervical spinal nerves C3 and C4 (motor and sensation)")).toBe(
+      "Accessory nerve",
+    );
+    expect(clipNerve("Thoracodorsal nerve (C6, C7, C8)")).toBe("Thoracodorsal nerve");
+    expect(clipNerve("Axillary nerve.")).toBe("Axillary nerve");
+  });
+
+  test("nerve questions ask for the supplying nerve with four distinct options", () => {
+    const set = buildSet("mixed", { rng: mulberry32(13), webgl: false });
+    const nerve = set.find((q) => q.kind === "fact" && q.field === "nerve");
+    expect(nerve).toBeDefined();
+    if (nerve?.kind === "fact") {
+      expect(nerve.prompt).toMatch(/^Which nerve supplies the /);
+      const f = factsForWiki(partsByKey(nerve.key)[0].wiki);
+      expect(nerve.options[nerve.correct]).toBe(clipNerve(f!.nerve!));
+      expect(new Set(nerve.options.map((o) => o.toLowerCase())).size).toBe(4);
+      expect(nerve.explanation).toContain("innervated by");
+    }
+    expect(set.some((q) => q.kind === "fact" && q.field === "action")).toBe(true);
+    const withGl = buildSet("mixed", { rng: mulberry32(13), webgl: true });
+    expect(withGl.length).toBe(10);
   });
 });

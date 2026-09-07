@@ -1,4 +1,4 @@
-import { ChevronLeft, ChevronRight, ListMusic, Play, Square, X } from "lucide-react";
+import { ChevronLeft, ChevronRight, ListMusic, Play, Printer, Square, X } from "lucide-react";
 import { useEffect } from "react";
 import { partById } from "../../data/catalog";
 import { displayName } from "../../data/names";
@@ -111,6 +111,13 @@ export default function PlaylistCard({ onToast }: Props) {
           </>
         )}
         <CopyLink onCopied={onToast} label="Copy playlist link" />
+        <button
+          className="text-button"
+          title="A printable study sheet with the facts for every structure in this list"
+          onClick={() => dispatch({ type: "setModal", modal: "handout" })}
+        >
+          <Printer size={14} /> Handout
+        </button>
       </div>
       <p className="subtle">
         {count >= MAX_PLAYLIST

@@ -23,9 +23,12 @@ export type StyleInput = {
   focusIds?: Set<string>;
   /** Compare-mode pins, in pin order; each takes a fixed color and stays visible. */
   pinned?: string[];
+  /** Origin and insertion bone ids of the selected muscle; they light up and everything else dims. */
+  attachments?: { origin: Set<string>; insertion: Set<string> };
 };
 
 export const PIN_COLORS = ["#d9822b", "#2b7bd9", "#b03a8f", "#3aa76d"] as const;
+export const ATTACH_COLORS = { origin: "#2b7bd9", insertion: "#d9822b" } as const;
 
 export const COLORS = {
   selected: "#477965",
@@ -40,6 +43,7 @@ export const COLORS = {
 export function computeStyles(input: StyleInput): Map<string, PartStyle> {
   const out = new Map<string, PartStyle>();
   const focusing = !!input.focusIds?.size;
+  const attaching = !!(input.attachments?.origin.size || input.attachments?.insertion.size);
   for (const p of input.parts) {
     const selected = p.id === input.selected;
     const pinIndex = input.pinned?.indexOf(p.id) ?? -1;
@@ -48,13 +52,27 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
       out.set(p.id, { visible: true, color: c, emissive: c, emissiveIntensity: 0.22, opacity: 1 });
       continue;
     }
+    const attachOrigin = !!input.attachments?.origin.has(p.id);
+    const attachInsertion = !attachOrigin && !!input.attachments?.insertion.has(p.id);
+    if ((attachOrigin || attachInsertion) && !selected) {
+      const c = attachOrigin ? ATTACH_COLORS.origin : ATTACH_COLORS.insertion;
+      out.set(p.id, {
+        visible: !input.hidden.has(p.id),
+        color: c,
+        emissive: c,
+        emissiveIntensity: 0.3,
+        opacity: 1,
+      });
+      continue;
+    }
     const bone = p.type === "bone";
     const connective = p.type === "connective";
     const chain = input.mode === "fascia" && p.type === "muscle" && input.lineKeys.has(p.key);
     const focused = !!input.focusIds?.has(p.id);
     const dimmedChain = chain && focusing && !focused;
-    // Outside fascia mode a focus (quiz target, "show me") fades everything else so deep parts show.
-    const revealed = focusing && input.mode !== "fascia" && !focused && !selected;
+    // Outside fascia mode a focus (quiz target, "show me") or lit attachments fade everything else
+    // so deep parts and bones show through.
+    const revealed = (focusing || attaching) && input.mode !== "fascia" && !focused && !selected;
     const visible =
       !input.hidden.has(p.id) &&
       (!input.isolated || selected) &&
