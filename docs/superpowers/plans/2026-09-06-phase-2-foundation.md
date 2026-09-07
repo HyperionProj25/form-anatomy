@@ -47,7 +47,7 @@ Delete:
 **Interfaces:**
 - Produces: `CatalogPart`, `Catalog`, `Region`, `Layer`, `Side`, `PartType`, `Vec3` types; `classifyRegion(name, group, centroid, extents)`, `classifyLayer(name, type)`, `REGION_LABELS`, `REGION_ORDER`; `catalog`, `parts`, `partById(id)`, `partsByKey(key)`, `nodeToId` from `src/data/catalog.ts`; `npm run catalog` regenerates the JSON.
 
-- [ ] **Step 1: Add tsx and the script entry**
+- [x] **Step 1: Add tsx and the script entry**
 
 ```bash
 npm install -D tsx@4.23.13 2>&1 | tail -2
@@ -59,7 +59,7 @@ Add to `package.json` scripts:
     "catalog": "tsx scripts/build-catalog.ts",
 ```
 
-- [ ] **Step 2: Write `src/data/types.ts`**
+- [x] **Step 2: Write `src/data/types.ts`**
 
 ```ts
 export type Region =
@@ -111,7 +111,7 @@ export type Catalog = {
 };
 ```
 
-- [ ] **Step 3: Write the failing region tests**
+- [x] **Step 3: Write the failing region tests**
 
 `tests/regions.test.ts`:
 
@@ -173,7 +173,7 @@ test("REGION_ORDER lists all eight regions once", () => {
 });
 ```
 
-- [ ] **Step 4: Run to verify it fails**
+- [x] **Step 4: Run to verify it fails**
 
 ```bash
 npx vitest run tests/regions.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|failed" | head -3
@@ -181,7 +181,7 @@ npx vitest run tests/regions.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|fai
 
 Expected: FAIL, cannot find module `../src/data/regions`.
 
-- [ ] **Step 5: Write `src/data/regions.ts`**
+- [x] **Step 5: Write `src/data/regions.ts`**
 
 ```ts
 import type { Layer, PartType, Region, Vec3 } from "./types";
@@ -300,7 +300,7 @@ export function slugify(name: string): string {
 }
 ```
 
-- [ ] **Step 6: Run the region tests**
+- [x] **Step 6: Run the region tests**
 
 ```bash
 npx vitest run tests/regions.test.ts 2>&1 | grep -E "✓|✗|×|passed|failed" | head -12
@@ -308,7 +308,7 @@ npx vitest run tests/regions.test.ts 2>&1 | grep -E "✓|✗|×|passed|failed" |
 
 Expected: `Tests  6 passed (6)`. If a keyword case fails, adjust the rule order (more specific rules first) rather than the test.
 
-- [ ] **Step 7: Write `scripts/build-catalog.ts`**
+- [x] **Step 7: Write `scripts/build-catalog.ts`**
 
 ```ts
 /**
@@ -443,7 +443,7 @@ console.log(`deep muscles: ${count((p) => p.layer === "deep")}, with wiki: ${cou
 console.log("midline parts:", parts.filter((p) => p.side === "midline").map((p) => p.name).join(", "));
 ```
 
-- [ ] **Step 8: Generate the catalog and read the report**
+- [x] **Step 8: Generate the catalog and read the report**
 
 ```bash
 npm run catalog 2>&1 | tail -16
@@ -451,7 +451,7 @@ npm run catalog 2>&1 | tail -16
 
 Expected: `Wrote 826 parts`, left and right counts within a few of each other, midline under 60 and made of true midline structures (sternum parts, vertebrae, sacrum, coccyx, diaphragm, linea alba, hyoid, mandible, cartilages, teeth pairs are bilateral so they should not be here). If a bilateral structure appears in the midline list, lower `SIDE_THRESHOLD` to `0.004` and rerun. Skim the region counts: each region should be non-empty and head-neck should be the largest muscle region.
 
-- [ ] **Step 9: Spot check region assignments**
+- [x] **Step 9: Spot check region assignments**
 
 ```bash
 node -e '
@@ -464,7 +464,7 @@ console.log("--- unmatched-by-keyword sanity: parts per region that came from ge
 
 Expected lines include `Soleus Muscle -> leg-foot/deep/left` and `.../right`, `Latissimus Dorsi Muscle -> back/superficial/...`, `Femur -> hip-thigh/superficial/...`, `Diaphragm -> thorax/deep/midline`, `Vertebra L3 -> back/superficial/midline`, `Extensor Digitorum -> forearm-hand`, `Extensor Digitorum Longus -> leg-foot`. Fix any wrong ones by editing `REGION_RULES` (or `REGION_OVERRIDES` for one-offs), rerun `npm run catalog`, and re-check.
 
-- [ ] **Step 10: Write `src/data/catalog.ts`**
+- [x] **Step 10: Write `src/data/catalog.ts`**
 
 ```ts
 import raw from "./catalog.json";
@@ -514,7 +514,7 @@ export function partMatches(p: CatalogPart, needle: string): boolean {
 }
 ```
 
-- [ ] **Step 11: Write `tests/catalog.test.ts`**
+- [x] **Step 11: Write `tests/catalog.test.ts`**
 
 ```ts
 import { describe, expect, test } from "vitest";
@@ -603,7 +603,7 @@ describe("catalog.json", () => {
 });
 ```
 
-- [ ] **Step 12: Run all tests, lint, typecheck**
+- [x] **Step 12: Run all tests, lint, typecheck**
 
 ```bash
 npm test 2>&1 | grep -E "Test Files|Tests |FAIL|×" ; npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm run typecheck 2>&1 | grep -i error; echo typecheck done
@@ -611,7 +611,7 @@ npm test 2>&1 | grep -E "Test Files|Tests |FAIL|×" ; npm run lint 2>&1 | grep -
 
 Expected: all passing, lint and typecheck silent. `scripts/` is not in `tsconfig.include`; add `"scripts"` to the include array so `typecheck` covers it.
 
-- [ ] **Step 13: Commit**
+- [x] **Step 13: Commit**
 
 ```bash
 git add -A && git commit -q -m "Generate a part catalog with sides, regions and layers from the model
@@ -630,7 +630,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `extractInfobox(wikitext)`, `cleanWikitext(s)` from `scripts/wikitext.ts`; `Facts`, `FactEntry` types and `factsForWiki(url)` from `src/data/facts.ts`.
 
-- [ ] **Step 1: Write the failing wikitext tests**
+- [x] **Step 1: Write the failing wikitext tests**
 
 `tests/wikitext.test.ts`:
 
@@ -684,7 +684,7 @@ The '''gastrocnemius''' is...`;
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 ```bash
 npx vitest run tests/wikitext.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|failed" | head -3
@@ -692,7 +692,7 @@ npx vitest run tests/wikitext.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|fa
 
 Expected: FAIL, cannot find module `../scripts/wikitext`.
 
-- [ ] **Step 3: Write `scripts/wikitext.ts`**
+- [x] **Step 3: Write `scripts/wikitext.ts`**
 
 ```ts
 /** Minimal wikitext helpers for infobox extraction. Pure functions, unit tested. */
@@ -806,7 +806,7 @@ export function extractInfobox(wikitext: string): Infobox | null {
 }
 ```
 
-- [ ] **Step 4: Run the wikitext tests**
+- [x] **Step 4: Run the wikitext tests**
 
 ```bash
 npx vitest run tests/wikitext.test.ts 2>&1 | grep -E "passed|failed|×|AssertionError" | head -8
@@ -814,7 +814,7 @@ npx vitest run tests/wikitext.test.ts 2>&1 | grep -E "passed|failed|×|Assertion
 
 Expected: `Tests  4 passed (4)`. Adjust `cleanWikitext` ordering if a spacing assertion fails; keep the expected strings.
 
-- [ ] **Step 5: Write `src/data/facts.ts` (types + lookup; JSON arrives in step 7)**
+- [x] **Step 5: Write `src/data/facts.ts` (types + lookup; JSON arrives in step 7)**
 
 ```ts
 import raw from "./facts.json";
@@ -848,7 +848,7 @@ export function factsForWiki(url: string | undefined): FactEntry | undefined {
 }
 ```
 
-- [ ] **Step 6: Write `scripts/fetch-facts.ts`**
+- [x] **Step 6: Write `scripts/fetch-facts.ts`**
 
 ```ts
 /**
@@ -945,7 +945,7 @@ Add to `package.json` scripts:
     "facts": "tsx scripts/fetch-facts.ts",
 ```
 
-- [ ] **Step 7: Run it (about 70 seconds) and inspect**
+- [x] **Step 7: Run it (about 70 seconds) and inspect**
 
 ```bash
 npm run facts 2>&1 | tail -30
@@ -959,7 +959,7 @@ node -e 'const f=require("./src/data/facts.json");for(const t of ["Gastrocnemius
 
 Expected: gastrocnemius shows origin, insertion, nerve, action, antagonist as plain sentences with no `[[`, `{{`, or `<`.
 
-- [ ] **Step 8: Write `tests/facts.test.ts`**
+- [x] **Step 8: Write `tests/facts.test.ts`**
 
 ```ts
 import { describe, expect, test } from "vitest";
@@ -1000,7 +1000,7 @@ describe("facts.json", () => {
 });
 ```
 
-- [ ] **Step 9: Run tests, lint, typecheck, commit**
+- [x] **Step 9: Run tests, lint, typecheck, commit**
 
 ```bash
 npm test 2>&1 | grep -E "Test Files|Tests |FAIL|×"; npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm run typecheck 2>&1 | grep -i error; echo typecheck done
@@ -1023,7 +1023,7 @@ Expected: all green. If the coverage assertion (0.7) fails, print the uncovered 
 - Produces: `AnatomyEngine` with `load`, `ids`, `descriptions`, `applyAppearance`, `setView`, `setCamera`, `getCamera`, `flyTo`, `zoom`, `dispose`; `CameraPose`, `ViewPreset`, `PartStyle`; `computeStyles(input)`; `<Viewer>` React component with props `{ styles, cameraCommand, onSelect, onReady, onCameraChange }`.
 - Consumes: `nodeToId`, `catalog.meta.modelCenter` from Task 1.
 
-- [ ] **Step 1: Write the failing appearance test**
+- [x] **Step 1: Write the failing appearance test**
 
 `tests/appearance.test.ts`:
 
@@ -1101,7 +1101,7 @@ describe("computeStyles", () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails**
+- [x] **Step 2: Run to verify it fails**
 
 ```bash
 npx vitest run tests/appearance.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|failed" | head -3
@@ -1109,7 +1109,7 @@ npx vitest run tests/appearance.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|
 
 Expected: FAIL, cannot find module `../src/viewer/appearance`.
 
-- [ ] **Step 3: Write `src/viewer/appearance.ts`**
+- [x] **Step 3: Write `src/viewer/appearance.ts`**
 
 ```ts
 import type { CatalogPart } from "../data/types";
@@ -1174,7 +1174,7 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
 }
 ```
 
-- [ ] **Step 4: Run the appearance tests**
+- [x] **Step 4: Run the appearance tests**
 
 ```bash
 npx vitest run tests/appearance.test.ts 2>&1 | grep -E "passed|failed|×" | head -8
@@ -1182,7 +1182,7 @@ npx vitest run tests/appearance.test.ts 2>&1 | grep -E "passed|failed|×" | head
 
 Expected: `Tests  6 passed (6)`.
 
-- [ ] **Step 5: Write `src/viewer/engine.ts`**
+- [x] **Step 5: Write `src/viewer/engine.ts`**
 
 ```ts
 import * as THREE from "three";
@@ -1529,7 +1529,7 @@ function disposeObject(root: THREE.Object3D) {
 }
 ```
 
-- [ ] **Step 6: Write `src/viewer/Viewer.tsx`**
+- [x] **Step 6: Write `src/viewer/Viewer.tsx`**
 
 ```tsx
 import { useEffect, useRef, useState } from "react";
@@ -1667,7 +1667,7 @@ export default function Viewer(props: Props) {
 }
 ```
 
-- [ ] **Step 7: Bridge the old App to the new Viewer (temporary, replaced in Task 5)**
+- [x] **Step 7: Bridge the old App to the new Viewer (temporary, replaced in Task 5)**
 
 Rewrite `src/structures.ts` so the existing UI keeps working against catalog ids:
 
@@ -1760,7 +1760,7 @@ and compute `styles` above the return:
 
 Delete `src/viewer.tsx`.
 
-- [ ] **Step 8: Lint, typecheck, test, build, and check in Chrome**
+- [x] **Step 8: Lint, typecheck, test, build, and check in Chrome**
 
 ```bash
 npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm run typecheck 2>&1 | grep -i error; npm test 2>&1 | grep -E "Test Files|Tests |FAIL"; npm run build 2>&1 | tail -1
@@ -1768,7 +1768,7 @@ npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm
 
 Expected: clean. Then `npm run dev -- --port 3131` and in Chrome at `http://localhost:3131/form-anatomy/`: the model renders centered (the catalog's `modelCenter` positions it), clicking the chest selects a pectoralis part, the Posterior button animates the camera around the body (not a jump), fascia mode highlights the superficial back line, and the console shows no "Mesh not in catalog" warnings.
 
-- [ ] **Step 9: Commit**
+- [x] **Step 9: Commit**
 
 ```bash
 git add -A && git commit -q -m "Extract the Three.js viewer into an AnatomyEngine class with a pure appearance function
@@ -1787,7 +1787,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 **Interfaces:**
 - Produces: `lines` (with `id: LineId`), `lineById`, `LineId`, `FascialLine` from `src/data/lines.ts`; `lessons` from `lessons.ts`; `questions` from `questions.ts`; `AppState`, `Action`, `initialState`, `reducer`, `StoreProvider`, `useStore()` from `store.tsx`; `encodeState(state)`, `decodeSearch(search)` from `urlCodec.ts`; `useUrlSync(state, dispatch)`.
 
-- [ ] **Step 1: Split `src/study-data.ts` into three data files**
+- [x] **Step 1: Split `src/study-data.ts` into three data files**
 
 `src/data/lines.ts`: copy the `lines` array from `src/study-data.ts` verbatim and add an `id` to each entry in order: `"sbl"`, `"sfl"`, `"ll"`, `"bfl"`, `"ffl"`. Prepend/append:
 
@@ -1827,7 +1827,7 @@ and add inside the "fascial line data" describe:
 
 Also update `src/App.tsx` imports (`./study-data` -> the three files) so it still compiles; `line` state stays an index for now.
 
-- [ ] **Step 2: Write the failing store test**
+- [x] **Step 2: Write the failing store test**
 
 `tests/store.test.ts`:
 
@@ -1891,7 +1891,7 @@ describe("store reducer", () => {
 });
 ```
 
-- [ ] **Step 3: Run to verify it fails**
+- [x] **Step 3: Run to verify it fails**
 
 ```bash
 npx vitest run tests/store.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|failed" | head -3
@@ -1899,7 +1899,7 @@ npx vitest run tests/store.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|faile
 
 Expected: FAIL, cannot find module `../src/state/store`.
 
-- [ ] **Step 4: Write `src/state/store.tsx`**
+- [x] **Step 4: Write `src/state/store.tsx`**
 
 ```tsx
 import { createContext, useContext, useReducer, type Dispatch, type ReactNode } from "react";
@@ -2015,7 +2015,7 @@ export function useStore() {
 }
 ```
 
-- [ ] **Step 5: Run the store test**
+- [x] **Step 5: Run the store test**
 
 ```bash
 npx vitest run tests/store.test.ts 2>&1 | grep -E "passed|failed|×" | head -8
@@ -2023,7 +2023,7 @@ npx vitest run tests/store.test.ts 2>&1 | grep -E "passed|failed|×" | head -8
 
 Expected: `Tests  6 passed (6)`.
 
-- [ ] **Step 6: Write the failing URL codec test**
+- [x] **Step 6: Write the failing URL codec test**
 
 `tests/urlCodec.test.ts`:
 
@@ -2100,7 +2100,7 @@ describe("decodeSearch", () => {
 });
 ```
 
-- [ ] **Step 7: Run to verify it fails**
+- [x] **Step 7: Run to verify it fails**
 
 ```bash
 npx vitest run tests/urlCodec.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|failed" | head -3
@@ -2108,7 +2108,7 @@ npx vitest run tests/urlCodec.test.ts 2>&1 | grep -E "FAIL|Cannot find|passed|fa
 
 Expected: FAIL, cannot find module `../src/state/urlCodec`.
 
-- [ ] **Step 8: Write `src/state/urlCodec.ts`**
+- [x] **Step 8: Write `src/state/urlCodec.ts`**
 
 ```ts
 import { isPartId } from "../data/catalog";
@@ -2185,7 +2185,7 @@ export function decodeSearch(search: string): Partial<AppState> {
 }
 ```
 
-- [ ] **Step 9: Run the codec tests**
+- [x] **Step 9: Run the codec tests**
 
 ```bash
 npx vitest run tests/urlCodec.test.ts 2>&1 | grep -E "passed|failed|×|Expected|Received" | head -12
@@ -2193,7 +2193,7 @@ npx vitest run tests/urlCodec.test.ts 2>&1 | grep -E "passed|failed|×|Expected|
 
 Expected: `Tests  7 passed (7)`. The catalog ids used in the test (`lateral-head-of-gastrocnemius-l`, `soleus-muscle-l`, `femur-r`, `femur-l`) must exist; check with `node -e 'const c=require("./src/data/catalog.json");console.log(["lateral-head-of-gastrocnemius-l","soleus-muscle-l","femur-r","femur-l"].map(i=>i+" "+c.parts.some(p=>p.id===i)))'` and adjust the ids in the test to real ones if the slugs differ.
 
-- [ ] **Step 10: Write `src/state/useUrlSync.ts`**
+- [x] **Step 10: Write `src/state/useUrlSync.ts`**
 
 ```ts
 import { useEffect, useRef, type Dispatch } from "react";
@@ -2223,7 +2223,7 @@ export function useUrlSync(state: AppState, dispatch: Dispatch<Action>) {
 }
 ```
 
-- [ ] **Step 11: Full check and commit**
+- [x] **Step 11: Full check and commit**
 
 ```bash
 npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm run typecheck 2>&1 | grep -i error; npm test 2>&1 | grep -E "Test Files|Tests |FAIL"; npm run build 2>&1 | tail -1
@@ -2246,7 +2246,7 @@ Expected: all green (the store and codec are not wired into the UI yet; App stil
 - Consumes: store (`useStore`, `Action`), `useUrlSync`, `computeStyles`, `Viewer`, catalog helpers, `facts`, `lines`, `lessons`, `questions`.
 - Produces: `groupParts(list)`, `filterParts(all, mode, filters)`, `PartGroup` from `groups.ts`; the panels as default exports.
 
-- [ ] **Step 1: Write the failing groups test**
+- [x] **Step 1: Write the failing groups test**
 
 `tests/groups.test.ts`:
 
@@ -2297,7 +2297,7 @@ describe("filterParts", () => {
 });
 ```
 
-- [ ] **Step 2: Run to verify it fails, then write `src/data/groups.ts`**
+- [x] **Step 2: Run to verify it fails, then write `src/data/groups.ts`**
 
 ```bash
 npx vitest run tests/groups.test.ts 2>&1 | grep -E "FAIL|Cannot find" | head -2
@@ -2358,7 +2358,7 @@ npx vitest run tests/groups.test.ts 2>&1 | grep -E "passed|failed|×" | head -6
 
 Expected: `Tests  5 passed (5)`.
 
-- [ ] **Step 3: Shared pieces: `CopyLink.tsx` and `Toast.tsx`**
+- [x] **Step 3: Shared pieces: `CopyLink.tsx` and `Toast.tsx`**
 
 `src/features/shared/CopyLink.tsx`:
 
@@ -2403,7 +2403,7 @@ export default function Toast({ message }: Props) {
 }
 ```
 
-- [ ] **Step 4: `src/features/library/LibraryPanel.tsx`**
+- [x] **Step 4: `src/features/library/LibraryPanel.tsx`**
 
 ```tsx
 import { Activity, Bone, ChevronRight, CircleHelp, ArrowRight, Eye, Layers, Network, Search, X } from "lucide-react";
@@ -2587,7 +2587,7 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
 }
 ```
 
-- [ ] **Step 5: `src/features/detail/DetailPanel.tsx` and `StartPanel.tsx`**
+- [x] **Step 5: `src/features/detail/DetailPanel.tsx` and `StartPanel.tsx`**
 
 `DetailPanel.tsx`:
 
@@ -2749,7 +2749,7 @@ export default function DetailPanel({ describe, onToast }: Props) {
 
 `StartPanel.tsx` (the "Every structure. Part of a whole." block, verbatim from the old App, with `changeMode("fascia")` replaced by `dispatch({ type: "setMode", mode: "fascia" })` and `mode` read from the store).
 
-- [ ] **Step 6: `src/features/fascia/FasciaPanel.tsx`**
+- [x] **Step 6: `src/features/fascia/FasciaPanel.tsx`**
 
 Port the old right-panel fascia block. Differences: read `line` from the store via `lineById(state.line)`, index label from `lines.indexOf`, path buttons pick the first catalog part whose `name group` text includes `p.match` (via `parts.find`) and dispatch `select`; add `<CopyLink onCopied={onToast} />` under the description.
 
@@ -2821,11 +2821,11 @@ export default function FasciaPanel({ onToast }: { onToast: (m: string) => void 
 }
 ```
 
-- [ ] **Step 7: `src/features/guide/Modals.tsx`**
+- [x] **Step 7: `src/features/guide/Modals.tsx`**
 
 Port the whole `{modal && (<div className="modal-backdrop" …>` block from the old App into a component that reads `state.modal` and dispatches `setModal`. The quiz `q`/`answers` state lives inside this component with `useState`, reset whenever the modal opens as `"quiz"` (use a `key={state.modal}` on the inner section so state resets). Keep the focus-trap `useEffect` (Escape closes, Tab cycles) exactly as before, keyed on `state.modal`. Keep the `role="presentation"` backdrop with the `e.target === e.currentTarget` guard. Replace `href="/body.glb"` with `` `${import.meta.env.BASE_URL}body.glb` `` (already done in phase 1; keep it).
 
-- [ ] **Step 8: Nonce guard in `src/viewer/Viewer.tsx`**
+- [x] **Step 8: Nonce guard in `src/viewer/Viewer.tsx`**
 
 Replace the camera-command effect with:
 
@@ -2845,7 +2845,7 @@ Replace the camera-command effect with:
 
 and reset `appliedNonce.current = -1` inside the mount effect's cleanup so a retry re-applies the current command.
 
-- [ ] **Step 9: Rewrite `src/App.tsx` as the shell**
+- [x] **Step 9: Rewrite `src/App.tsx` as the shell**
 
 ```tsx
 import { Activity, ArrowRight, BookOpen, Layers, Maximize2, Move, RotateCcw, ZoomIn, ZoomOut } from "lucide-react";
@@ -3054,7 +3054,7 @@ function Shell() {
 
 Delete `src/structures.ts` and `tests/structures.test.ts`.
 
-- [ ] **Step 10: Move the stylesheet and add the new styles**
+- [x] **Step 10: Move the stylesheet and add the new styles**
 
 ```bash
 mkdir -p src/styles && git mv src/globals.css src/styles/globals.css
@@ -3202,7 +3202,7 @@ Update `src/main.tsx` to `import "./styles/globals.css";`. Append to the end of 
 }
 ```
 
-- [ ] **Step 11: Lint, typecheck, test, build**
+- [x] **Step 11: Lint, typecheck, test, build**
 
 ```bash
 npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm run typecheck 2>&1 | grep -i error; npm test 2>&1 | grep -E "Test Files|Tests |FAIL"; npm run build 2>&1 | tail -1
@@ -3210,7 +3210,7 @@ npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm
 
 Expected: clean. Fix any unused-import lint errors from the port.
 
-- [ ] **Step 12: Browser verification in Chrome (dev server on 3131)**
+- [x] **Step 12: Browser verification in Chrome (dev server on 3131)**
 
 1. Load `http://localhost:3131/form-anatomy/`. Library shows region chips, layer and side controls, and grouped rows with L/R toggles; count is about 221.
 2. Click "Hip & thigh": list shrinks to hip and thigh muscles; click "Deep": shows piriformis, obturators, vastus intermedius and similar.
@@ -3221,7 +3221,7 @@ Expected: clean. Fix any unused-import lint errors from the port.
 7. Bones mode hides the layer control; side filter "Left" keeps midline bones (sternum, vertebrae) in the list.
 8. Console shows no errors or "Mesh not in catalog" warnings.
 
-- [ ] **Step 13: Commit**
+- [x] **Step 13: Commit**
 
 ```bash
 git add -A && git commit -q -m "Restructure the UI into feature panels with region, layer and side browsing, Wikipedia facts and deep links
@@ -3236,7 +3236,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 **Files:**
 - Modify: `README.md`, `docs/superpowers/plans/2026-09-06-phase-2-foundation.md` (tick boxes)
 
-- [ ] **Step 1: Update the README "What is included" and add a "Data" section**
+- [x] **Step 1: Update the README "What is included" and add a "Data" section**
 
 Replace the "What is included" bullets with:
 
@@ -3271,7 +3271,7 @@ polite rate limiting). Both files are committed so builds are offline and
 deterministic.
 ```
 
-- [ ] **Step 2: Tick every step in this plan, commit, push, watch CI**
+- [x] **Step 2: Tick every step in this plan, commit, push, watch CI**
 
 ```bash
 sed -i 's/^- \[ \] \*\*Step/- [x] **Step/' docs/superpowers/plans/2026-09-06-phase-2-foundation.md
@@ -3284,7 +3284,7 @@ sleep 20; gh run watch --exit-status $(gh run list --limit 1 --json databaseId -
 
 Expected: `✓ build` and `✓ deploy`.
 
-- [ ] **Step 3: Verify the live deep links**
+- [x] **Step 3: Verify the live deep links**
 
 ```bash
 U=https://hyperionproj25.github.io/form-anatomy/
