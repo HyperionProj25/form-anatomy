@@ -106,6 +106,9 @@ function Shell() {
           >
             Fascial lines
           </button>
+          <button onClick={() => dispatch({ type: "setModal", modal: "research" })}>
+            Research
+          </button>
           <button onClick={() => dispatch({ type: "setModal", modal: "guide" })}>
             Learning guide <ArrowRight size={14} />
           </button>

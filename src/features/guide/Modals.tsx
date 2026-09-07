@@ -2,6 +2,7 @@ import { ArrowRight, Check, Layers, Move, Network, RotateCcw, Search, X } from "
 import { useEffect, useState } from "react";
 import { questions } from "../../data/questions";
 import { useStore } from "../../state/store";
+import ResearchDigest from "../research/ResearchDigest";
 
 const GUIDE_STEPS = [
   {
@@ -73,13 +74,21 @@ export default function Modals() {
         <button className="modal-close icon-button" aria-label="Close dialog" onClick={close}>
           <X size={21} />
         </button>
-        {modal === "about" ? <About /> : modal === "guide" ? <Guide onClose={close} /> : <Quiz />}
+        {modal === "about" ? (
+          <About onResearch={() => dispatch({ type: "setModal", modal: "research" })} />
+        ) : modal === "guide" ? (
+          <Guide onClose={close} />
+        ) : modal === "research" ? (
+          <ResearchDigest />
+        ) : (
+          <Quiz />
+        )}
       </section>
     </div>
   );
 }
 
-function About() {
+function About({ onResearch }: { onResearch: () => void }) {
   return (
     <>
       <div className="eyebrow">BUILT ON OPEN KNOWLEDGE</div>
@@ -123,6 +132,9 @@ function About() {
       <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC5341578/" target="_blank" rel="noreferrer">
         Krause et al. · Intermuscular force transmission ↗
       </a>
+      <button className="text-button" onClick={onResearch}>
+        Open the full research digest →
+      </button>
       <p className="subtle">
         Fascial lines are teaching models with varying anatomical support. Tissue continuity alone
         does not establish a predictable whole-body effect or treatment benefit. This atlas does not

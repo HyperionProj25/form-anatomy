@@ -8,7 +8,7 @@ export type ViewState = ViewPreset | "custom";
 export type LayerFilter = "all" | "superficial" | "deep";
 export type SideFilter = "both" | "left" | "right";
 export type RegionFilter = Region | "all";
-export type ModalId = "about" | "guide" | "quiz" | null;
+export type ModalId = "about" | "guide" | "quiz" | "research" | null;
 
 export type Filters = { region: RegionFilter; layer: LayerFilter; side: SideFilter; search: string };
 

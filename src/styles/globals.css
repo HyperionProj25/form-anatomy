@@ -1515,3 +1515,194 @@ footer button {
   box-shadow: 0 10px 30px rgba(39, 58, 49, 0.25);
   z-index: 50;
 }
+
+/* Phase 3: evidence badges, research digest, cable legend, tours */
+.grade-pill,
+.evidence-pill,
+.kind-pill {
+  display: inline-block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 3px 8px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fffefb;
+  color: var(--muted);
+}
+.grade-pill {
+  margin: 6px 0 10px;
+}
+.grade-strong,
+.evidence-verified .evidence-pill {
+  background: #dfe9dc;
+  border-color: #b7cbb3;
+  color: #2f5a3f;
+}
+.grade-moderate {
+  background: #f3e7cf;
+  border-color: #e1cc9a;
+  color: #7a5a17;
+}
+.grade-none,
+.evidence-not-verified .evidence-pill {
+  background: #f4e1dc;
+  border-color: #e3b9ad;
+  color: #8a3f2e;
+}
+.evidence-mechanical .evidence-pill,
+.evidence-not-assessed .evidence-pill {
+  background: #ecebe5;
+  color: #6b6f66;
+}
+.evidence {
+  margin: 6px 0 4px 34px;
+  padding: 8px 10px;
+  border-left: 2px solid var(--border);
+  font-size: 11px;
+  color: var(--muted);
+  line-height: 1.5;
+}
+.evidence-verified {
+  border-left-color: #8fb098;
+}
+.evidence-not-verified {
+  border-left-color: #d9a294;
+}
+.evidence-detail {
+  margin-left: 8px;
+  font-size: 10.5px;
+}
+.evidence p {
+  margin-top: 5px;
+}
+.evidence-via {
+  font-style: italic;
+}
+.evidence a {
+  display: inline-block;
+  margin-top: 4px;
+  text-decoration: underline;
+  font-size: 10.5px;
+}
+.evidence-summary {
+  margin-top: 16px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.evidence-summary h3 {
+  font-size: 12px;
+  font-weight: 600;
+  margin: 8px 0 4px;
+}
+.evidence-summary p {
+  font-size: 12px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+.evidence-summary a {
+  display: inline-block;
+  font-size: 11px;
+  text-decoration: underline;
+  margin: 4px 0 8px;
+}
+.evidence-summary .text-button {
+  margin-top: 8px;
+}
+.digest-group {
+  margin-top: 22px;
+}
+.digest-group h3 {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--green);
+  margin-bottom: 8px;
+}
+.digest-entry {
+  padding: 12px 0;
+  border-top: 1px solid var(--border);
+}
+.digest-head {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+.digest-year {
+  font-size: 11px;
+  color: var(--muted);
+}
+.digest-entry h4 {
+  font-size: 14px;
+  font-weight: 600;
+  margin: 2px 0 4px;
+}
+.digest-authors {
+  font-size: 11px;
+  color: var(--muted);
+  margin-bottom: 6px;
+}
+.digest-entry p {
+  font-size: 12.5px;
+  line-height: 1.6;
+}
+.digest-model {
+  margin-top: 6px;
+  background: #f3f5ee;
+  padding: 8px 10px;
+  border-radius: 8px;
+}
+.digest-entry a {
+  display: inline-block;
+  margin-top: 6px;
+  font-size: 11px;
+  text-decoration: underline;
+}
+.line-legend small {
+  display: block;
+  max-width: 230px;
+}
+.line-legend button {
+  margin-top: 4px;
+  font-size: 11px;
+  padding: 0;
+}
+.tour {
+  margin: 12px 0 8px;
+  padding: 12px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: #fffefb;
+}
+.tour-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.tour h3 {
+  font-size: 16px;
+  margin: 6px 0 4px;
+}
+.tour > p {
+  font-size: 12px;
+  color: var(--muted);
+}
+.tour .evidence {
+  margin-left: 0;
+}
+.tour-controls {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+.tour-controls button {
+  flex: 1;
+  justify-content: center;
+}
+.tour-start {
+  width: 100%;
+  justify-content: center;
+  margin: 10px 0;
+}
