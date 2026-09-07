@@ -12,7 +12,9 @@
     "preview": "vite preview",
     "test": "vitest run",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "catalog": "tsx scripts/build-catalog.ts",
+    "facts": "tsx scripts/fetch-facts.ts"
   },
   "dependencies": {
     "lucide-react": "^1.41.0",
@@ -34,6 +36,7 @@
     "eslint-plugin-react-hooks": "7.1.1",
     "globals": "16.4.0",
     "tailwindcss": "4.3.3",
+    "tsx": "^4.23.13",
     "typescript": "5.9.3",
     "typescript-eslint": "8.59.3",
     "vite": "8.2.2",
