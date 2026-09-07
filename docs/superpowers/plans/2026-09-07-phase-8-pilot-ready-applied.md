@@ -56,8 +56,33 @@ Mobile preset, simulated throttling, against the live site.
 | Run | Performance | Accessibility | Best practices | SEO | FCP | LCP | TBT |
 | --- | --- | --- | --- | --- | --- | --- | --- |
 | Before (2026-09-07, commit aca458a) | 55 | 95 | 100 | 100 | 2.7 s | 16.8 s | 540 ms |
-| After | see below | | | | | | |
+| After (commit 1e35338), run 1 | 43 | 100 | 100 | 100 | 2.7 s | 17.0 s | 1,680 ms |
+| After, run 2 | 43 | 100 | | | 2.6 s | 16.8 s | 1,290 ms |
+| After, run 3 | 44 | 100 | | | 2.6 s | 17.1 s | 1,810 ms |
 
 The accessibility deduction was colour contrast on muted text (39 nodes); the
-greys were darkened to meet 4.5:1. LCP is dominated by the 8 MB model on a
-simulated slow connection; the app shell paints at 2.7 s.
+greys were darkened to meet 4.5:1 and the after runs report no failing audit.
+
+The performance score fell between the before run and the after runs, so the
+previous commit (aca458a) and the current one were built and served locally and
+measured alternately under identical conditions:
+
+| Local build | Performance | TBT | Index chunk script time |
+| --- | --- | --- | --- |
+| aca458a (before phase 8) | 41 | 2,490 ms | 6,569 ms |
+| 1e35338 (phase 8) | 41 | 2,530 ms | 7,109 ms |
+| aca458a, repeat | 41 | 2,530 ms | 7,156 ms |
+| 1e35338, repeat | 41 | 2,400 ms | 6,683 ms |
+
+The two builds are indistinguishable; the live-site swing is run-to-run
+variance (blocking time varied threefold between identical runs on this
+machine). Local numbers are worse than live because the local server does not
+gzip the 8 MB model.
+
+What the profile says: first paint is 2.6 to 2.9 s; LCP and interactivity wait
+on the model download and decode; blocking time is main-thread work in the app
+chunk while the 826 meshes and their materials are built. `json.stringify` in
+Vite 8 did not change the build hash, and a micro-benchmark showed JSON.parse
+and literal evaluation within 0.5 ms of each other for the catalog, so that
+idea was dropped. A real reduction would come from batching mesh creation or
+applying appearance lazily, which is out of scope for this phase.
