@@ -2251,3 +2251,76 @@ footer a:hover {
   text-decoration: underline;
   padding: 0;
 }
+
+/* Cinematic tours: a caption band over the stage and a soft vignette while playing. */
+.tour-caption {
+  position: absolute;
+  left: 50%;
+  bottom: 96px;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  max-width: min(520px, calc(100% - 32px));
+  padding: 10px 18px;
+  border-radius: 12px;
+  background: rgba(20, 30, 24, 0.72);
+  color: #fffefb;
+  text-align: center;
+  z-index: 6;
+  pointer-events: none;
+  backdrop-filter: blur(4px);
+  animation: caption-in 500ms ease-out both;
+}
+.tour-caption-kicker {
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.8;
+}
+.tour-caption strong {
+  font-size: 17px;
+  font-weight: 600;
+}
+.tour-caption-next {
+  font-size: 11.5px;
+  opacity: 0.9;
+}
+@keyframes caption-in {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 8px);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, 0);
+  }
+}
+.stage.cinematic::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 4;
+  background: radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 55%, rgba(30, 40, 30, 0.28) 100%);
+  transition: opacity 600ms ease;
+}
+@media (prefers-reduced-motion: reduce) {
+  .tour-caption {
+    animation: none;
+  }
+}
+@media (max-width: 600px) {
+  .tour-caption {
+    bottom: 110px;
+    padding: 8px 12px;
+  }
+  .tour-caption strong {
+    font-size: 14px;
+  }
+}
+.stage.cinematic .line-legend {
+  opacity: 0;
+  transition: opacity 300ms ease;
+}

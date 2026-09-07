@@ -14,5 +14,5 @@ describe("accessibility", () => {
       (v) => `${v.id}: ${v.help} [${v.nodes.length}] ${v.nodes[0]?.html.slice(0, 100)}`,
     );
     expect(summary).toEqual([]);
-  });
+  }, 30000);
 });

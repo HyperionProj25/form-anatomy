@@ -23,6 +23,10 @@ type Props = {
   paths: DrawnPath[];
   /** Label for the hover tooltip; defaults to the catalog name. */
   nameOf?: (id: string) => string;
+  /** Part that gets the selection halo. */
+  selectedId?: string | null;
+  /** Slow camera drift, used while a tour plays. */
+  autoRotate?: boolean;
   onSelect(id: string): void;
   onReady(ids: string[]): void;
   onCameraChange(pose: CameraPose): void;
@@ -107,6 +111,14 @@ export default function Viewer(props: Props) {
   useEffect(() => {
     if (ready) engine.current?.drawPaths(props.paths);
   }, [ready, props.paths]);
+
+  useEffect(() => {
+    if (ready) engine.current?.setSelected(props.selectedId ?? null);
+  }, [ready, props.selectedId]);
+
+  useEffect(() => {
+    engine.current?.setAutoRotate(!!props.autoRotate);
+  }, [ready, props.autoRotate]);
 
   useEffect(() => {
     const e = engine.current;

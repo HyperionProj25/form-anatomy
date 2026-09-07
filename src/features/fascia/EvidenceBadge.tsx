@@ -1,7 +1,7 @@
 import type { Transition } from "../../data/lines";
 import { citationById, citationUrl } from "../../data/research";
 
-const STATUS_LABEL: Record<Transition["status"], string> = {
+export const STATUS_LABEL: Record<Transition["status"], string> = {
   verified: "Verified",
   "not-verified": "Not verified",
   mechanical: "Mechanical only",

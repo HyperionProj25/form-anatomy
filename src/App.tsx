@@ -25,6 +25,7 @@ import LibraryPanel from "./features/library/LibraryPanel";
 import DetailPanel from "./features/detail/DetailPanel";
 import StartPanel from "./features/detail/StartPanel";
 import FasciaPanel from "./features/fascia/FasciaPanel";
+import { STATUS_LABEL } from "./features/fascia/EvidenceBadge";
 import Modals from "./features/guide/Modals";
 import QuizOverlay from "./features/quiz/QuizOverlay";
 import { buildSet, mulberry32, type QuizSetId } from "./features/quiz/generators";
@@ -143,6 +144,9 @@ function Shell() {
   );
   const orientation =
     state.view === "back" ? "P" : state.view === "side" ? "L" : state.view === "custom" ? "·" : "A";
+  const tourStop = state.mode === "fascia" && state.tour ? activeLine.path[state.tour.step] : null;
+  const tourNext = tourStop && state.tour ? activeLine.path[state.tour.step + 1] : undefined;
+  const cinematic = !!tourStop && !!state.tour?.playing;
 
   return (
     <div className="app-shell">
@@ -200,7 +204,11 @@ function Shell() {
       </div>
       <main className="workspace">
         <LibraryPanel mobileOpen={mobilePanel} onCloseMobile={() => setMobilePanel(false)} />
-        <section className="stage" ref={stage} aria-label="Interactive 3D anatomy explorer">
+        <section
+          className={cinematic ? "stage cinematic" : "stage"}
+          ref={stage}
+          aria-label="Interactive 3D anatomy explorer"
+        >
           <div className="stage-top">
             <div className="stage-title">
               <span className="live-dot" />{" "}
@@ -234,6 +242,8 @@ function Shell() {
             cameraCommand={cameraCommand}
             paths={paths}
             nameOf={nameOf}
+            selectedId={state.selected}
+            autoRotate={state.mode === "fascia" && !!state.tour?.playing}
             onSelect={(id) => dispatch({ type: "select", id })}
             onReady={() => setReady(true)}
             onCameraChange={(pose) => dispatch({ type: "cameraMoved", pose })}
@@ -267,6 +277,21 @@ function Shell() {
               <RotateCcw size={18} />
             </button>
           </div>
+          {tourStop && state.tour && (
+            <div className="tour-caption" key={state.tour.step} aria-hidden="true">
+              <span className="tour-caption-kicker">
+                {activeLine.name} · stop {state.tour.step + 1} of {activeLine.path.length}
+              </span>
+              <strong>{tourStop.name}</strong>
+              {tourNext && tourStop.transition ? (
+                <span className="tour-caption-next">
+                  Next: {tourNext.name} · {STATUS_LABEL[tourStop.transition.status]}
+                </span>
+              ) : (
+                <span className="tour-caption-next">End of the line</span>
+              )}
+            </div>
+          )}
           {state.mode === "fascia" && (
             <div className="line-legend">
               <span className="line-dot" style={{ background: activeLine.color }} />
