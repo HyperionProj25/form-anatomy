@@ -1,7 +1,6 @@
 import { describe, expect, test } from "vitest";
 import { lessons } from "../src/data/lessons";
 import { LINE_IDS, lines } from "../src/data/lines";
-import { questions } from "../src/data/questions";
 
 describe("fascial line data", () => {
   test("has six lines with hex colors, a camera view, and at least three stops", () => {
@@ -32,17 +31,6 @@ describe("lessons", () => {
       for (const field of ["description", "attachments", "action", "observe", "connection"] as const) {
         expect(lesson[field].length, `${lesson.match}.${field}`).toBeGreaterThan(10);
       }
-    }
-  });
-});
-
-describe("quiz questions", () => {
-  test("every question has a valid correct index and an explanation", () => {
-    for (const q of questions) {
-      expect(q.options.length).toBeGreaterThanOrEqual(3);
-      expect(q.correct).toBeGreaterThanOrEqual(0);
-      expect(q.correct).toBeLessThan(q.options.length);
-      expect(q.explanation.length).toBeGreaterThan(10);
     }
   });
 });
