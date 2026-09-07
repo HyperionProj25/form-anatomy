@@ -48,7 +48,7 @@ export default function AnatomyViewer(props: Props) {
   useLayoutEffect(() => {
     current.current = props;
   });
-  const [webgl] = useState(supportsWebGL);
+  const [webgl, setWebgl] = useState(supportsWebGL);
   const [status, setStatus] = useState(webgl ? LOADING_MESSAGE : WEBGL_MESSAGE),
     [error, setError] = useState(!webgl),
     [retry, setRetry] = useState(0),
@@ -367,8 +367,10 @@ export default function AnatomyViewer(props: Props) {
             <button
               className="outline-button"
               onClick={() => {
-                setError(false);
-                setStatus(LOADING_MESSAGE);
+                const ok = supportsWebGL();
+                setWebgl(ok);
+                setError(!ok);
+                setStatus(ok ? LOADING_MESSAGE : WEBGL_MESSAGE);
                 setRetry(retry + 1);
               }}
             >
