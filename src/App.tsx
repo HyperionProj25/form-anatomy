@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo } from "react";
 import {
   Activity,
   ArrowRight,
@@ -22,13 +22,23 @@ import {
   ZoomIn,
   ZoomOut,
 } from "lucide-react";
-import AnatomyViewer, { type ViewerAPI, type Structure } from "./viewer";
+import Viewer, { type CameraCommand, type ViewerHandle } from "./viewer/Viewer";
+import { computeStyles } from "./viewer/appearance";
+import { parts } from "./data/catalog";
 import { lines, lessons, questions } from "./study-data";
-import { uniqueByName } from "./structures";
+import { toStructure, uniqueByName, type Structure } from "./structures";
 
 export default function App() {
-  const api = useRef<ViewerAPI | null>(null),
+  const handle = useRef<ViewerHandle | null>(null),
     stage = useRef<HTMLElement>(null);
+  const [cameraCommand, setCameraCommand] = useState<CameraCommand>({ kind: "preset", preset: "front", nonce: 0 });
+  const [cameraNonce, setCameraNonce] = useState(0);
+  const goView = (v: string) => {
+    const preset = v === "back" ? "back" : v === "side" ? "side" : "front";
+    const nonce = cameraNonce + 1;
+    setCameraNonce(nonce);
+    setCameraCommand({ kind: "preset", preset, nonce });
+  };
   const [mode, setMode] = useState("muscles"),
     [line, setLine] = useState(0),
     [structures, setStructures] = useState<Structure[]>([]),
@@ -54,6 +64,20 @@ export default function App() {
       `${s.name} ${s.detail}`.toLowerCase().includes(search.toLowerCase()),
   );
   const unique = uniqueByName(results);
+  const styles = useMemo(
+    () =>
+      computeStyles({
+        parts,
+        mode: mode as "muscles" | "bones" | "fascia",
+        selected: selected?.id ?? null,
+        hidden: new Set(hidden),
+        isolated,
+        opacity: opacity / 100,
+        lineColor: activeLine.color,
+        lineMatches: activeLine.matches,
+      }),
+    [mode, selected, hidden, isolated, opacity, activeLine],
+  );
   useEffect(() => {
     if (!modal) return;
     const previous = document.activeElement as HTMLElement | null;
@@ -94,14 +118,14 @@ export default function App() {
     setHidden([]);
     if (m === "fascia") {
       setView(lines[line].view);
-      api.current?.view(lines[line].view);
+      goView(lines[line].view);
     }
   }
   function chooseLine(i: number) {
     setLine(i);
     setSelected(null);
     setView(lines[i].view);
-    api.current?.view(lines[i].view);
+    goView(lines[i].view);
   }
   function reset() {
     setHidden([]);
@@ -109,7 +133,7 @@ export default function App() {
     setSelected(null);
     setOpacity(100);
     setView("front");
-    api.current?.view("front");
+    goView("front");
   }
   return (
     <div className="app-shell">
@@ -340,18 +364,20 @@ export default function App() {
           >
             <Layers size={15} /> Layers & search
           </button>
-          <AnatomyViewer
-            onApi={(a) => {
-              api.current = a;
+          <Viewer
+            styles={styles}
+            cameraCommand={cameraCommand}
+            onSelect={(id) => {
+              const p = parts.find((x) => x.id === id);
+              if (p) choose(toStructure(p));
             }}
-            mode={mode}
-            line={activeLine}
-            opacity={opacity / 100}
-            selected={selected?.id ?? null}
-            hidden={hidden}
-            isolated={isolated}
-            onSelect={choose}
-            onReady={setStructures}
+            onReady={() =>
+              setStructures(parts.map(toStructure).sort((a, b) => a.name.localeCompare(b.name)))
+            }
+            onCameraChange={() => {}}
+            onHandle={(h) => {
+              handle.current = h;
+            }}
           />
           <div className="orientation">
             <span>S</span>
@@ -367,14 +393,14 @@ export default function App() {
           <div className="view-tools">
             <button
               className="icon-button"
-              onClick={() => api.current?.zoom(0.8)}
+              onClick={() => handle.current?.zoom(0.8)}
               aria-label="Zoom in"
             >
               <ZoomIn size={19} />
             </button>
             <button
               className="icon-button"
-              onClick={() => api.current?.zoom(1.25)}
+              onClick={() => handle.current?.zoom(1.25)}
               aria-label="Zoom out"
             >
               <ZoomOut size={19} />
@@ -410,7 +436,7 @@ export default function App() {
                   aria-pressed={view === v}
                   onClick={() => {
                     setView(v);
-                    api.current?.view(v);
+                    goView(v);
                   }}
                   key={v}
                 >

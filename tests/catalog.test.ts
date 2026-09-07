@@ -1,3 +1,4 @@
+import { PropertyBinding } from "three";
 import { describe, expect, test } from "vitest";
 import { catalog, parts, partById, partForSide, partsByKey } from "../src/data/catalog";
 import { REGION_ORDER } from "../src/data/regions";
@@ -76,6 +77,12 @@ describe("catalog.json", () => {
     expect(partForSide("lateral-head-of-gastrocnemius", "left")?.side).toBe("left");
     expect(partById("lateral-head-of-gastrocnemius-l")?.name).toBe("Lateral Head Of Gastrocnemius");
     expect(partById("nope")).toBeUndefined();
+  });
+
+  test("node names stay unique after Three's glTF name sanitizing", () => {
+    // GLTFLoader turns "Parietal bone.001" into "Parietal_bone001"; the engine matches on that form.
+    const sanitized = parts.map((p) => PropertyBinding.sanitizeNodeName(p.node));
+    expect(new Set(sanitized).size).toBe(826);
   });
 
   test("wiki links are english wikipedia without anchors", () => {
