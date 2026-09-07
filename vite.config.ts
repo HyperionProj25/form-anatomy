@@ -46,8 +46,13 @@ export default defineConfig({
     }),
   ],
   build: {
-    // three.js alone is ~700 kB minified; splitting it is a later concern.
-    chunkSizeWarningLimit: 1500,
+    chunkSizeWarningLimit: 900,
+    rolldownOptions: {
+      output: {
+        // three.js is ~700 kB minified and changes rarely; keep it in its own long-lived chunk.
+        advancedChunks: { groups: [{ name: "three", test: /node_modules[\/]three[\/]/ }] },
+      },
+    },
   },
   test: {
     include: ["tests/**/*.test.ts"],

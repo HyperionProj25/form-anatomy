@@ -60,17 +60,27 @@ checks without deploying.
 - Rotate, zoom, pan, camera presets, hide, restore, isolate and opacity
   controls. Every view has a shareable link that restores mode, selection,
   filters, fascial line and camera.
-- Six fascial-line teaching models, including the spiral line. Every hop shows
-  whether human dissection studies verified the tissue link, with study counts
-  and specimen shares transcribed from Wilke et al. 2016, plus force-transfer
-  notes from Krause et al. 2016. Guided tours fly the camera stop by stop, and
-  a drawn teaching cable traces each line through the structure centers.
+- Six body-wide fascial-line teaching models, including the spiral line. Every
+  hop shows whether human dissection studies verified the tissue link, with
+  study counts and specimen shares transcribed from Wilke et al. 2016, plus
+  force-transfer notes from Krause et al. 2016. Guided tours fly the camera
+  stop by stop, and a drawn teaching cable traces each line through the
+  structure centers.
+- Three upper-limb chains (ventral, lateral, dorsal) from the Wilke and Krause
+  2019 systematic review, badged at chain level because the review reports how
+  many dissection studies found each chain rather than each hop.
+- Latin or English names. A toggle in the library switches every name in the
+  list, the detail panel and the hover tooltip; search matches both. Latin
+  labels come from Wikidata (CC0) for 205 of the 224 linked articles.
+- Teacher playlists: add structures from their detail panel, name the list,
+  and copy one link. Opening it restores the list; Play steps through each
+  structure with its facts, using the arrow keys.
 - A research digest of 19 verified papers and references, grouped by
   question, each with a plain-language summary and a note on what it means
   for the model. A build-time check resolves every PMID, DOI and URL.
 - Quizzes by region, by fascial line, or mixed: find a structure on the
   model, name the highlighted one, recall its action, or read the evidence.
-  Ten questions per set from a pool of 82 muscles and 44 bones plus 15
+  Ten questions per set from a pool of 82 muscles and 44 bones plus 18
   evidence questions. Progress and weak spots stay in your browser.
 - Compare mode: pin up to four structures in contrasting colors, visible
   through any mode, filter or hidden layer.
