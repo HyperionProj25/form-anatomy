@@ -664,3 +664,60 @@ and attachment highlighting so a muscle's pull on the skeleton is visible.
 - The handout gains "Download for Anki" (Blob download, filename
   `form-<title>.txt`) and a one-line import hint. Structures without facts
   still get a card with the atlas link so the deck matches the list.
+
+## 10. Phase 8 addendum: pilot-ready and applied research (2026-09-07)
+
+### 10.1 Latin sub-part names
+
+- When several catalog groups share one Wikipedia article, they share one
+  Latin label. `latinName` now appends an English qualifier in parentheses
+  for those groups only: "Musculus gastrocnemius (lateral head)", "Musculus
+  trapezius (descending part)", "Vertebrae thoracicae (T5)", "Costae (fifth
+  rib)". The qualifier is the part of the English name before "of" when the
+  name has that shape, the vertebra token for vertebrae, otherwise the whole
+  English name in lower case. Groups with an unshared label are unchanged.
+
+### 10.2 Performance
+
+- Measure the live site with Lighthouse (mobile preset, simulated
+  throttling) and record the scores in the plan. Ship the wins that are
+  cheap and safe: lazy-load the research digest, handout and quiz picker
+  modals with `React.lazy`, so their text leaves the startup chunk. The
+  catalog and facts stay in the startup chunk because every panel reads them
+  synchronously.
+
+### 10.3 Accessibility
+
+- A jsdom test renders the app shell (WebGL absent, so the viewer shows its
+  fallback) with axe-core and fails on any violation except colour contrast,
+  which jsdom cannot compute. Fix what it finds. The 3D canvas has the
+  library as its text alternative; that stays.
+
+### 10.4 Pilot guide
+
+- `docs/pilot-guide.md`: five tasks of about twenty minutes total (find a
+  structure, run a study set, take a region quiz, open a fascial-line tour,
+  print or export a handout) and four questions for students. README links
+  it.
+
+### 10.5 Applied research: overhead throwing
+
+- A new citation group `applied`, labelled "Applied: overhead throwing",
+  with the throwing studies that resolve on PubMed (Tsurukami 2024, Shitara
+  2025, Mukohara 2024, Leong 2016, plus Itoigawa 2021 and Wilcox 2023 if
+  their records are found). It renders before the recent-findings group with
+  an intro that frames it as the first applied case study: load changes
+  tissue, measured by shear-wave elastography.
+- `src/data/applied.ts` holds short notes keyed to catalog keys (posterior
+  shoulder muscles, the flexor-pronator group, the upper trapezius). The
+  detail panel shows an "Applied" block with the note and its citation links
+  when the selected part matches. Notes stay within the abstracts.
+- Mechanistic additions to existing groups: Carvalhais 2013 and Wilke 2018
+  under force transmission; Benias 2018 under what fascia is; a new group
+  `adaptation`, "How fascia responds to load", with Stecco 2022
+  (densification), Pratt 2021 (hyaluronan), Hyldahl 2015 (matrix
+  remodelling after lengthening contractions), Berrueta 2016 and Langevin
+  2013 (stretching, inflammation resolution and fibroblast signalling;
+  animal and ex-vivo work, labelled as such).
+- Only the public papers are used; nothing from the ACIS document's own text
+  appears in the atlas.
