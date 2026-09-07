@@ -17,8 +17,10 @@ export type StyleInput = {
   /** 0..1 */
   opacity: number;
   lineColor: string;
-  /** Lowercase substrings; a muscle whose name or group contains one is a line component. */
-  lineMatches: string[];
+  /** Catalog keys that belong to the active line. */
+  lineKeys: Set<string>;
+  /** Ids to emphasise during a tour step; other line parts dim. */
+  focusIds?: Set<string>;
 };
 
 export const COLORS = {
@@ -30,16 +32,17 @@ export const COLORS = {
   none: "#000000",
 } as const;
 
-/** Pure mapping from app state to a style for every catalog part. Ported from the Codex viewer's refresh(). */
+/** Pure mapping from app state to a style for every catalog part. */
 export function computeStyles(input: StyleInput): Map<string, PartStyle> {
   const out = new Map<string, PartStyle>();
+  const focusing = !!input.focusIds?.size;
   for (const p of input.parts) {
     const selected = p.id === input.selected;
     const bone = p.type === "bone";
     const connective = p.type === "connective";
-    const text = `${p.name} ${p.group ?? ""}`.toLowerCase();
-    const chain =
-      input.mode === "fascia" && p.type === "muscle" && input.lineMatches.some((m) => text.includes(m));
+    const chain = input.mode === "fascia" && p.type === "muscle" && input.lineKeys.has(p.key);
+    const focused = !!input.focusIds?.has(p.id);
+    const dimmedChain = chain && focusing && !focused;
     const visible =
       !input.hidden.has(p.id) &&
       (!input.isolated || selected) &&
@@ -54,17 +57,21 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
             ? COLORS.connective
             : COLORS.muscle;
     const emissive = selected ? COLORS.selectedEmissive : chain ? input.lineColor : COLORS.none;
-    const emissiveIntensity = selected ? 0.26 : chain ? 0.08 : 0;
+    const emissiveIntensity = selected ? 0.26 : focused ? 0.45 : chain ? 0.08 : 0;
     const opacity =
-      selected || chain
+      selected || focused
         ? 1
-        : bone
-          ? input.mode === "bones"
-            ? input.opacity
+        : chain
+          ? dimmedChain
+            ? 0.55
             : 1
-          : input.mode === "fascia"
-            ? 0.1
-            : input.opacity;
+          : bone
+            ? input.mode === "bones"
+              ? input.opacity
+              : 1
+            : input.mode === "fascia"
+              ? 0.1
+              : input.opacity;
     out.set(p.id, { visible, color, emissive, emissiveIntensity, opacity });
   }
   return out;

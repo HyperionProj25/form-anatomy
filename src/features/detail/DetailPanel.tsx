@@ -3,7 +3,7 @@ import { useState } from "react";
 import { partById } from "../../data/catalog";
 import { factsForWiki } from "../../data/facts";
 import { lessons } from "../../data/lessons";
-import { lines } from "../../data/lines";
+import { lineKeys, lines } from "../../data/lines";
 import { REGION_LABELS } from "../../data/regions";
 import { useStore } from "../../state/store";
 import CopyLink from "../shared/CopyLink";
@@ -24,7 +24,7 @@ export default function DetailPanel({ describe, onToast }: Props) {
   const description = describe(part.id)
     ?.replace(/\s*https?:\/\/\S+\s*$/, "")
     .trim();
-  const related = lines.filter((l) => l.matches.some((m) => text.includes(m)));
+  const related = lines.filter((l) => lineKeys(l).has(part.key));
   const sideLabel = part.side === "left" ? "Left" : part.side === "right" ? "Right" : "Midline";
   const factRows: [string, string | undefined][] = [
     ["ORIGIN", facts?.origin],

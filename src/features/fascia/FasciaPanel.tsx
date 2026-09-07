@@ -1,16 +1,13 @@
 import { Activity, ChevronDown, ChevronRight } from "lucide-react";
-import { parts } from "../../data/catalog";
-import { lineById, lines } from "../../data/lines";
+import { lineById, lines, stopPartId, stopSides } from "../../data/lines";
 import { useStore } from "../../state/store";
 import CopyLink from "../shared/CopyLink";
-
-const matchPart = (needle: string) =>
-  parts.find((p) => `${p.name} ${p.group ?? ""}`.toLowerCase().includes(needle));
 
 export default function FasciaPanel({ onToast }: { onToast: (m: string) => void }) {
   const { state, dispatch } = useStore();
   const line = lineById(state.line) ?? lines[0];
   const index = lines.indexOf(line);
+  const sides = stopSides(line);
   return (
     <>
       <div className="detail-kicker">
@@ -26,19 +23,16 @@ export default function FasciaPanel({ onToast }: { onToast: (m: string) => void 
       <div className="section-label">FOLLOW THE CONNECTION</div>
       <ol className="connection-path">
         {line.path.map((p, i) => {
-          const part = matchPart(p.match);
+          const id = p.key ? stopPartId(p, sides[i]) : null;
           return (
             <li key={p.name}>
-              <button onClick={() => part && dispatch({ type: "select", id: part.id })} disabled={!part}>
+              <button onClick={() => id && dispatch({ type: "select", id })} disabled={!id}>
                 <span className="path-point">{i + 1}</span>
                 <span>
                   {p.name}
-                  <small>
-                    {p.note}
-                    {!part ? " · not separately modeled" : ""}
-                  </small>
+                  <small>{p.note}</small>
                 </span>
-                {part && <ChevronRight size={13} />}
+                {id && <ChevronRight size={13} />}
               </button>
             </li>
           );
@@ -54,8 +48,8 @@ export default function FasciaPanel({ onToast }: { onToast: (m: string) => void 
           What does the evidence say? <ChevronDown size={14} />
         </summary>
         <p>
-          {line.evidence} Highlights show selected components, not a segmented fascia layer or a
-          simulation of force.
+          {line.evidence.summary} Highlights show selected components, not a segmented fascia layer
+          or a simulation of force.
         </p>
         <a href="https://pubmed.ncbi.nlm.nih.gov/26281953/" target="_blank" rel="noreferrer">
           Anatomical evidence review ↗

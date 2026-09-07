@@ -11,7 +11,7 @@ import {
 } from "lucide-react";
 import { useMemo, useRef, useState } from "react";
 import { parts } from "./data/catalog";
-import { lineById, lines } from "./data/lines";
+import { lineById, lineKeys, lines } from "./data/lines";
 import { StoreProvider, useStore } from "./state/store";
 import { useUrlSync } from "./state/useUrlSync";
 import { computeStyles } from "./viewer/appearance";
@@ -57,7 +57,7 @@ function Shell() {
         isolated: state.isolated,
         opacity: state.opacity / 100,
         lineColor: activeLine.color,
-        lineMatches: activeLine.matches,
+        lineKeys: lineKeys(activeLine),
       }),
     [state.mode, state.selected, state.hidden, state.isolated, state.opacity, activeLine],
   );

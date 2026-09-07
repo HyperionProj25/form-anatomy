@@ -4,22 +4,20 @@ import { LINE_IDS, lines } from "../src/data/lines";
 import { questions } from "../src/data/questions";
 
 describe("fascial line data", () => {
-  test("has five lines with hex colors, a camera view, and at least three stops", () => {
-    expect(lines.length).toBe(5);
+  test("has six lines with hex colors, a camera view, and at least three stops", () => {
+    expect(lines.length).toBe(6);
     for (const line of lines) {
       expect(line.color).toMatch(/^#[0-9a-f]{6}$/i);
       expect(["front", "back", "side"]).toContain(line.view);
       expect(line.path.length).toBeGreaterThanOrEqual(3);
-      expect(line.matches.length).toBeGreaterThan(0);
-      for (const stop of line.path) {
-        expect(stop.match.length).toBeGreaterThan(0);
-        expect(stop.match).toBe(stop.match.toLowerCase());
-      }
+      expect(line.description.length).toBeGreaterThan(30);
+      expect(line.movement.length).toBeGreaterThan(30);
+      expect(line.evidence.summary.length).toBeGreaterThan(30);
     }
   });
 
   test("line ids are unique short slugs", () => {
-    expect(LINE_IDS).toEqual(["sbl", "sfl", "ll", "bfl", "ffl"]);
+    expect(LINE_IDS).toEqual(["sbl", "sfl", "ll", "sl", "bfl", "ffl"]);
   });
 
   test("line names are unique", () => {

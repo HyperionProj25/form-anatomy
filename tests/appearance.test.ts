@@ -18,23 +18,30 @@ const part = (id: string, type: CatalogPart["type"], name = id): CatalogPart => 
   ],
 });
 const gastro = part("gastro", "muscle", "Lateral Head Of Gastrocnemius");
+const soleus = part("soleus", "muscle", "Soleus Muscle");
 const femur = part("femur", "bone", "Femur");
 const bursa = part("bursa", "connective", "Anserine Bursa");
 const base: StyleInput = {
-  parts: [gastro, femur, bursa],
+  parts: [gastro, soleus, femur, bursa],
   mode: "muscles",
   selected: null,
   hidden: new Set(),
   isolated: false,
   opacity: 1,
   lineColor: "#bd914b",
-  lineMatches: ["gastrocnemius"],
+  lineKeys: new Set(["gastro"]),
 };
 
 describe("computeStyles", () => {
   test("muscles mode shows everything at full opacity with default colors", () => {
     const s = computeStyles(base);
-    expect(s.get("gastro")).toEqual({ visible: true, color: "#a35b4c", emissive: "#000000", emissiveIntensity: 0, opacity: 1 });
+    expect(s.get("gastro")).toEqual({
+      visible: true,
+      color: "#a35b4c",
+      emissive: "#000000",
+      emissiveIntensity: 0,
+      opacity: 1,
+    });
     expect(s.get("femur")?.color).toBe("#e0d3b7");
     expect(s.get("bursa")?.color).toBe("#dbd4bb");
   });
@@ -58,17 +65,30 @@ describe("computeStyles", () => {
     expect(computeStyles({ ...base, mode: "bones", selected: "gastro" }).get("gastro")?.visible).toBe(true);
   });
 
-  test("fascia mode colors matching muscles with the line color and fades others", () => {
+  test("fascia mode colors line muscles by catalog key and fades others", () => {
     const s = computeStyles({ ...base, mode: "fascia" });
     expect(s.get("gastro")).toMatchObject({ color: "#bd914b", emissive: "#bd914b", opacity: 1 });
     expect(s.get("femur")?.opacity).toBe(1);
-    const other = computeStyles({ ...base, mode: "fascia", lineMatches: ["soleus"] });
+    expect(s.get("soleus")?.opacity).toBe(0.1);
+    const other = computeStyles({ ...base, mode: "fascia", lineKeys: new Set(["soleus"]) });
     expect(other.get("gastro")?.opacity).toBe(0.1);
+    expect(other.get("soleus")?.opacity).toBe(1);
   });
 
   test("muscle opacity applies to muscles in muscles mode but not to bones", () => {
     const s = computeStyles({ ...base, opacity: 0.4 });
     expect(s.get("gastro")?.opacity).toBe(0.4);
     expect(s.get("femur")?.opacity).toBe(1);
+  });
+
+  test("a focused tour part glows and the rest of the chain dims", () => {
+    const s = computeStyles({
+      ...base,
+      mode: "fascia",
+      lineKeys: new Set(["gastro", "soleus"]),
+      focusIds: new Set(["soleus"]),
+    });
+    expect(s.get("soleus")).toMatchObject({ emissiveIntensity: 0.45, opacity: 1 });
+    expect(s.get("gastro")?.opacity).toBe(0.55);
   });
 });
