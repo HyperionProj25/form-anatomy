@@ -14,6 +14,7 @@ import { useState } from "react";
 import { partById, partForSide, partsByKey } from "../../data/catalog";
 import { attachmentsFor } from "../../data/attachments";
 import { factsForWiki } from "../../data/facts";
+import { JOINT_LABELS, jointsCrossed } from "../../data/joints";
 import { lessons } from "../../data/lessons";
 import { lineKeys, lines } from "../../data/lines";
 import { displayName, secondaryName } from "../../data/names";
@@ -51,6 +52,7 @@ export default function DetailPanel({ describe, onToast }: Props) {
   const hasFacts = factRows.some(([, v]) => v);
   const inPlaylist = state.playlist?.ids.includes(part.id) ?? false;
   const attachments = attachmentsFor(part);
+  const crossed = attachments ? jointsCrossed(part) : [];
   const boneFor = (key: string) =>
     partForSide(key, part.side === "left" ? "left" : "right") ?? partsByKey(key)[0];
   const attributionUrl = facts?.url ?? part.wiki;
@@ -179,6 +181,22 @@ export default function DetailPanel({ describe, onToast }: Props) {
                       })}
                     </div>
                   ),
+              )}
+              {crossed.length > 0 && (
+                <div className="attachment-row">
+                  <span className="line-dot" style={{ background: "var(--border)" }} />
+                  <span className="attachment-label">Crosses</span>
+                  {crossed.map((j) => (
+                    <button
+                      key={j}
+                      className="attachment-chip"
+                      title={`List every muscle crossing the ${JOINT_LABELS[j].toLowerCase()}`}
+                      onClick={() => dispatch({ type: "setFilters", filters: { joint: j, search: "" } })}
+                    >
+                      {JOINT_LABELS[j]}
+                    </button>
+                  ))}
+                </div>
               )}
               <button
                 className="outline-button"

@@ -3,6 +3,7 @@ import type { CameraPose, ViewPreset } from "../viewer/engine";
 import type { Region, Vec3 } from "../data/types";
 import { partById, partForSide, partsByKey } from "../data/catalog";
 import { lineById, stopPartId, stopSides, type LineId } from "../data/lines";
+import type { JointId } from "../data/joints";
 import { loadNamePref, type NameLang } from "../data/names";
 import type { Question, QuizSetId } from "../features/quiz/generators";
 
@@ -13,7 +14,14 @@ export type SideFilter = "both" | "left" | "right";
 export type RegionFilter = Region | "all";
 export type ModalId = "about" | "guide" | "quiz" | "research" | "handout" | null;
 
-export type Filters = { region: RegionFilter; layer: LayerFilter; side: SideFilter; search: string };
+export type Filters = {
+  region: RegionFilter;
+  layer: LayerFilter;
+  side: SideFilter;
+  /** Only muscles that attach on both sides of this joint (URL `j`). */
+  joint: JointId | "all";
+  search: string;
+};
 export type Tour = { step: number; playing: boolean };
 /** What a tour step or quiz question emphasises: ids to glow, the part to frame, and the camera direction. */
 export type Focus = { ids: string[]; flyId: string | null; direction: Vec3 };
@@ -80,7 +88,7 @@ export const initialState: AppState = {
   names: loadNamePref(),
   playlist: null,
   attach: false,
-  filters: { region: "all", layer: "all", side: "both", search: "" },
+  filters: { region: "all", layer: "all", side: "both", joint: "all", search: "" },
   modal: null,
 };
 

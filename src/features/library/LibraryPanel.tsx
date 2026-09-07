@@ -13,6 +13,7 @@ import {
 import { useMemo } from "react";
 import { parts, partForSide, partById } from "../../data/catalog";
 import { filterParts, groupParts } from "../../data/groups";
+import { JOINT_IDS, JOINT_LABELS } from "../../data/joints";
 import { LINE_GROUPS, lines } from "../../data/lines";
 import { displayName, secondaryName, type NameLang } from "../../data/names";
 import { REGION_LABELS, REGION_ORDER } from "../../data/regions";
@@ -139,6 +140,34 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
               </button>
             ))}
           </div>
+          {mode === "muscles" && (
+            <>
+              <div className="filter-chips joint-chips" role="group" aria-label="Crosses joint">
+                <button
+                  className={filters.joint === "all" ? "active" : ""}
+                  onClick={() => dispatch({ type: "setFilters", filters: { joint: "all" } })}
+                >
+                  Any joint
+                </button>
+                {JOINT_IDS.map((j) => (
+                  <button
+                    key={j}
+                    className={filters.joint === j ? "active" : ""}
+                    onClick={() => dispatch({ type: "setFilters", filters: { joint: j } })}
+                  >
+                    {JOINT_LABELS[j]}
+                  </button>
+                ))}
+              </div>
+              {filters.joint !== "all" && (
+                <p className="subtle joint-note">
+                  Muscles attached on both sides of the {JOINT_LABELS[filters.joint].toLowerCase()},
+                  derived from the attachment text. Connective attachments such as aponeuroses and
+                  the iliotibial tract are not seen.
+                </p>
+              )}
+            </>
+          )}
           <div className="filter-rows">
             {mode !== "bones" && (
               <div className="segmented" role="group" aria-label="Layer (approximate)">

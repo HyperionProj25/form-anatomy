@@ -89,9 +89,16 @@ checks without deploying.
   reference text by name, so the panel labels it approximate.
 - Innervation questions: quizzes ask which nerve supplies a muscle alongside
   action recall, drawn from the same reference facts.
-- A research digest of 19 verified papers and references, grouped by
+- Muscles by joint: filter the library to muscles that attach on both sides
+  of the jaw, shoulder, elbow, wrist, hip, knee or ankle, derived from the
+  same attachment matching; a muscle's detail panel lists the joints it
+  crosses.
+- Anki export: any playlist or study set downloads as a tab-separated deck,
+  one card per structure with its facts and a link back to the atlas.
+- A research digest of 33 verified papers and references, grouped by
   question, each with a plain-language summary and a note on what it means
-  for the model. A build-time check resolves every PMID, DOI and URL.
+  for the model, including a section of 2023 to 2026 findings. A build-time
+  check resolves every PMID, DOI and URL.
 - Quizzes by region, by fascial line, or mixed: find a structure on the
   model, name the highlighted one, recall its action, or read the evidence.
   Ten questions per set from a pool of 82 muscles and 44 bones plus 18

@@ -1,4 +1,5 @@
 import { partMatches } from "./catalog";
+import { crossesJoint } from "./joints";
 import { latinName } from "./names";
 import type { CatalogPart, Layer, PartType, Region } from "./types";
 import type { Filters, Mode } from "../state/store";
@@ -51,6 +52,7 @@ export function filterParts(all: CatalogPart[], mode: Mode, filters: Filters): C
       (filters.region === "all" || p.region === filters.region) &&
       (mode === "bones" || filters.layer === "all" || p.layer === filters.layer) &&
       (filters.side === "both" || p.side === "midline" || p.side === filters.side) &&
+      (filters.joint === "all" || p.type !== "muscle" || crossesJoint(p, filters.joint)) &&
       (!needle || partMatches(p, needle) || matchesLatin(p, needle)),
   );
 }

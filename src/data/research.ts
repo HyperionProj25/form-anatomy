@@ -17,7 +17,21 @@ export type CitationId =
   | "schleip2019"
   | "wilke2017"
   | "lin2026"
-  | "huang2026";
+  | "huang2026"
+  | "caldeira2024"
+  | "procopio2025"
+  | "kawabuchi2024"
+  | "pirri2024junction"
+  | "pirri2024tlf"
+  | "tomita2025"
+  | "fede2025"
+  | "tereshenko2026"
+  | "kretschmerWilke2026"
+  | "warneke2024"
+  | "isaji2025"
+  | "neumann2026"
+  | "dellaPosta2025"
+  | "ficarra2024";
 
 export type CitationKind =
   | "systematic-review"
@@ -28,6 +42,7 @@ export type CitationKind =
   | "in-vivo"
   | "narrative-review"
   | "consensus"
+  | "modelling"
   | "reference";
 
 export type CitationGroup =
@@ -35,7 +50,8 @@ export type CitationGroup =
   | "continuity"
   | "force-transmission"
   | "sensory"
-  | "clinical";
+  | "clinical"
+  | "recent";
 
 export type Citation = {
   id: CitationId;
@@ -55,6 +71,7 @@ export type Citation = {
 };
 
 export const GROUP_LABELS: Record<CitationGroup, string> = {
+  recent: "Recent findings, 2023 to 2026",
   "what-fascia-is": "What fascia is",
   continuity: "Anatomical continuity",
   "force-transmission": "Force transmission",
@@ -63,6 +80,7 @@ export const GROUP_LABELS: Record<CitationGroup, string> = {
 };
 
 export const KIND_LABELS: Record<CitationKind, string> = {
+  modelling: "Computational model",
   "systematic-review": "Systematic review",
   "scoping-review": "Scoping review",
   "meta-analysis": "Meta-analysis",
@@ -362,6 +380,228 @@ export const citations: Citation[] = [
       "A broad 2026 review that treats fascia as a system that senses, transmits and regulates mechanical, sensory and metabolic signals. It compiles assessment methods (palpation, ultrasound, elastography, tissue mechanics, omics, modelling) and lists interventions from manual therapy to injections, proposing an assessment-guided decision framework.",
     modelNote:
       "Useful as a map of the field and its measurement tools. It is a synthesis, not new evidence for any specific line.",
+  },
+
+  // Recent findings, 2023 to 2026. Added 2026-09-07; summaries stay within each abstract.
+  {
+    id: "caldeira2024",
+    authors: "Caldeira PF, Resende RA, Murta BJ, et al.",
+    year: 2024,
+    title:
+      "Myofascial force transmission between latissimus dorsi and contralateral gluteus maximus in runners: a cross-sectional study",
+    journal: "Journal of Biomechanics",
+    pmid: "39556920",
+    doi: "10.1016/j.jbiomech.2024.112431",
+    kind: "in-vivo",
+    group: "recent",
+    summary:
+      "Fifty-four adults, runners and sedentary, had lumbar stiffness and the passive properties of the opposite hip measured with the latissimus dorsi relaxed and then contracted. Contracting the latissimus increased lumbar stiffness, rotated the resting hip outward and raised passive hip torque and stiffness in both groups. Runners showed higher lumbar stiffness during the contraction, but the shoulder-to-hip transmission itself was similar in both groups.",
+    modelNote:
+      "Direct in-vivo support for the back functional line drawn here: latissimus dorsi, thoracolumbar fascia, opposite gluteus maximus. The fascia is not a mesh in this model, so the cable crosses the midline through the lumbar region.",
+  },
+  {
+    id: "procopio2025",
+    authors: "Procópio PRS, Pinto RZ, Murta BAJ, et al.",
+    year: 2025,
+    title:
+      "Individuals with chronic low back pain have reduced myofascial force transmission between latissimus dorsi and contralateral gluteus maximus muscles",
+    journal: "Journal of Biomechanics",
+    pmid: "40616971",
+    doi: "10.1016/j.jbiomech.2025.112850",
+    kind: "in-vivo",
+    group: "recent",
+    summary:
+      "Forty-eight people, half with chronic low back pain, were tested with the latissimus dorsi relaxed and contracted while lumbar stiffness, the passive properties of the opposite hip and muscle activity were recorded. Contraction stiffened the lumbar region in both groups, but only the pain-free group showed the hip change: a shift toward lateral rotation and higher passive torque. The authors conclude transmission along this path is reduced in chronic low back pain, reaching adjacent tissue but not the distant hip.",
+    modelNote:
+      "A clinical counterpart to the runners study on the same back functional line. The pathway behaves differently between people, which is why this atlas grades hops rather than treating lines as fixed.",
+  },
+  {
+    id: "kawabuchi2024",
+    authors: "Kawabuchi K, Yamane K, Maniwa S, et al.",
+    year: 2024,
+    title:
+      "Epimuscular myofascial force transmission between the levator scapulae muscle and the upper fiber of the serratus anterior or rhomboid minor muscles",
+    journal: "Clinical Biomechanics",
+    pmid: "38335837",
+    doi: "10.1016/j.clinbiomech.2024.106194",
+    kind: "in-vivo",
+    group: "recent",
+    summary:
+      "In twenty shoulders of ten healthy men, shear-wave elastography measured muscle stiffness at rest and with the levator scapulae stretched. Stretching the levator raised its own shear modulus and that of the upper serratus anterior, and the two changes correlated, while the rhomboid minor did not change. The authors read this as force transmission between neighbouring muscles with different insertions.",
+    modelNote:
+      "Levator scapulae, serratus anterior and rhomboid minor are all in the shoulder girdle study set. No chain drawn here includes this pairing, a reminder that the lines are teaching selections, not the only connections.",
+  },
+  {
+    id: "pirri2024junction",
+    authors: "Pirri C, Petrelli L, Guidolin D, et al.",
+    year: 2024,
+    title:
+      "Myofascial junction: Emerging insights into the connection between deep/muscular fascia and muscle",
+    journal: "Clinical Anatomy",
+    pmid: "38476005",
+    doi: "10.1002/ca.24148",
+    kind: "cadaveric",
+    group: "recent",
+    summary:
+      "Human cadaver regions and mouse tissue were examined for the physical link between muscle and its deep fascia. The authors describe discrete collagen-rich myofascial junctions at the muscle-fascia interface, containing collagen III, hyaluronan and elastic fibres, at a measured density and inclination. The junction can be visualised, giving a structural basis for muscle-to-fascia connection.",
+    modelNote:
+      "This is the tissue-level link the fascial-line concept relies on. The model shows muscles as separate meshes; the junctions described here are far below its resolution.",
+  },
+  {
+    id: "pirri2024tlf",
+    authors: "Pirri C, Pirri N, Macchi V, et al.",
+    year: 2024,
+    title: "Ultrasound Imaging of Thoracolumbar Fascia: A Systematic Review",
+    journal: "Medicina (Kaunas)",
+    pmid: "39064519",
+    doi: "10.3390/medicina60071090",
+    kind: "systematic-review",
+    group: "recent",
+    summary:
+      "A systematic search to April 2024 collected studies using ultrasound to examine the thoracolumbar fascia in health and disease. Studies measured thickness, echogenicity, stiffness, deformation, shear strain and displacement, for diagnosis, treatment monitoring and movement analysis. The review concludes ultrasound is promising as a reliable tool while noting the literature is still sparse.",
+    modelNote:
+      "The thoracolumbar fascia is not a mesh in this model, yet it sits on the back functional line, the spiral line and the superficial back line. These imaging measures are how researchers study it in living people.",
+  },
+  {
+    id: "tomita2025",
+    authors: "Tomita N, Roy-Cardinal MH, Chayer B, et al.",
+    year: 2025,
+    title:
+      "Thoracolumbar fascia ultrasound shear strain differs between low back pain and asymptomatic individuals: expanding the evidence",
+    journal: "Insights into Imaging",
+    pmid: "39812963",
+    doi: "10.1186/s13244-024-01895-2",
+    kind: "in-vivo",
+    group: "recent",
+    summary:
+      "Thirty-two people with nonspecific low back pain and thirty-two controls had thoracolumbar fascia shear strain measured by ultrasound elastography, before and after a standardised massage. Shear strain was higher in the pain group while fascia thickness was similar, and shear strain correlated with pain and disability scores. The brief massage did not change the elastography measures.",
+    modelNote:
+      "Supports the idea that the thoracolumbar fascia's mechanical behaviour, not just its thickness, matters in back pain. Registered trial NCT04716101.",
+  },
+  {
+    id: "fede2025",
+    authors: "Fede C, Clair C, Pirri C, et al.",
+    year: 2025,
+    title: "The Human Superficial Fascia: A Narrative Review",
+    journal: "International Journal of Molecular Sciences",
+    pmid: "39941057",
+    doi: "10.3390/ijms26031289",
+    kind: "narrative-review",
+    group: "recent",
+    summary:
+      "A review cataloguing what is known about the human superficial fascia: its thickness, cells and extracellular matrix, innervation and blood supply. The authors argue that superficial, deep, visceral and neural fasciae differ anatomically and in the pathways they take part in, so they need separate description and agreed terminology.",
+    modelNote:
+      "Everything drawn as a line in this atlas runs through deep (muscular) fascia. The superficial fascia under the skin is a different layer and is not represented.",
+  },
+  {
+    id: "tereshenko2026",
+    authors: "Tereshenko V, Hazewinkel MHJ, Hussey MR, et al.",
+    year: 2026,
+    title:
+      "Trapezius fascia reveals mechanosensory capacity and predominance of nociceptive axons in occipital neuralgia",
+    journal: "Scientific Reports",
+    pmid: "41807486",
+    doi: "10.1038/s41598-026-42746-y",
+    kind: "in-vivo",
+    group: "recent",
+    summary:
+      "Trapezius fascia from eighteen patients with occipital neuralgia and ten controls was stained for nerve and mechanosensory markers. The fascia held myelinated and unmyelinated axons and Pacinian- and Ruffini-like corpuscles; the neuralgia group showed 71 percent more nociceptive axons plus sympathetic fibres absent in controls, with raised CGRP. The authors conclude the fascia is mechanosensitive and can take part in pain sensitisation.",
+    modelNote:
+      "Fascia is innervated tissue, not inert wrapping. The trapezius is the first stop of the lateral arm chain drawn here; its fascia is not a mesh in this model.",
+  },
+  {
+    id: "kretschmerWilke2026",
+    authors: "Kretschmer L, Wilke J.",
+    year: 2026,
+    title:
+      "Remote Changes of Mechanical Stiffness Following Local Stretching or Contraction: A Systematic Review with Meta-Analysis",
+    journal: "Sports Medicine - Open",
+    pmid: "42228239",
+    doi: "10.1186/s40798-026-01030-z",
+    kind: "meta-analysis",
+    group: "recent",
+    summary:
+      "Fifteen controlled trials of mostly high quality tested whether stretching or contracting one muscle changes stiffness in a distant structure of the same myofascial chain. Pooled results showed a moderate remote stiffness change after local lengthening (very low certainty, twelve studies) and a large remote increase after local contraction (moderate certainty, seven studies). Heterogeneity was high and reporting bias possible, and the authors call for more research, especially on lengthening.",
+    modelNote:
+      "The strongest pooled evidence so far that tension travels along the connections these lines depict. Certainty is moderate for contraction and very low for stretching, so the caveat on every hop stays.",
+  },
+  {
+    id: "warneke2024",
+    authors: "Warneke K, Rabitsch T, Dobert P, et al.",
+    year: 2024,
+    title:
+      "The effects of static and dynamic stretching on deep fascia stiffness: a randomized, controlled cross-over study",
+    journal: "European Journal of Applied Physiology",
+    pmid: "38689040",
+    doi: "10.1007/s00421-024-05495-2",
+    kind: "rct",
+    group: "recent",
+    summary:
+      "Forty recreationally active adults performed five minutes of static or dynamic plantar-flexor stretching or a control condition in random order, with muscle and fascia stiffness measured by ultrasound strain elastography. Static stretching reduced both muscle and deep fascia stiffness, dynamic stretching did not, and both improved the knee-to-wall test. Falls in fascia stiffness, not muscle stiffness, correlated weakly with range-of-motion gains.",
+    modelNote:
+      "The stretched tissue is the calf: gastrocnemius and soleus, the lower stops of the superficial back line. The deep fascia measured is the crural fascia around them, not a mesh in this model.",
+  },
+  {
+    id: "isaji2025",
+    authors: "Isaji Y, Sasaki D, Okuyama K, et al.",
+    year: 2025,
+    title: "Therapeutic mechanisms of fascia manipulation: A scoping review",
+    journal: "Journal of Back and Musculoskeletal Rehabilitation",
+    pmid: "40368128",
+    doi: "10.1177/10538127251341828",
+    kind: "scoping-review",
+    group: "recent",
+    summary:
+      "A scoping review of eleven studies, eight in humans and three in animals, on how manual fascia manipulation works. Human studies reported a transient local inflammatory response with raised temperature, less unbound water in the deep fascia, pain relief from densification and better proprioception; animal work showed anti-inflammatory cytokine changes and adenosine-receptor involvement. The authors propose combined anti-inflammatory, mechanoreceptor and gliding mechanisms and ask for standardised protocols.",
+    modelNote:
+      "Belongs with the clinical section rather than any drawn line. Eleven studies is a small base, and the animal findings do not transfer directly.",
+  },
+  {
+    id: "neumann2026",
+    authors: "Neumann PE, Labib H, Lhuaire M, et al.",
+    year: 2026,
+    title: "Fascia, Eh. What Is It? What Is It Good for?",
+    journal: "Clinical Anatomy",
+    pmid: "41277747",
+    doi: "10.1002/ca.70047",
+    kind: "narrative-review",
+    group: "recent",
+    summary:
+      "Anatomists review how the meaning of fascia has diverged since 1998, when official nomenclature dropped fascia superficialis while fascia researchers broadened the term into a whole fascial system. The authors endorse the traditional view: fasciae are fibrous membranes of dense irregular connective tissue that compartmentalise and connect parts of the body and are not parts of well-defined organs. Whether skeletal and nervous-system membranes count as fascia is left for further discussion.",
+    modelNote:
+      "Read alongside the 2025 comprehensive-definition paper in the first section: two expert groups still disagree on what the word covers. This atlas uses fascial line in the teaching sense and labels every hop's evidence.",
+  },
+  {
+    id: "dellaPosta2025",
+    authors: "Della Posta D, Belviso I, Branca JJV, et al.",
+    year: 2025,
+    title:
+      "From Myofascial Chains to the Polyconnective Network: A Novel Approach to Biomechanics and Rehabilitation Based on Graph Theory",
+    journal: "Life (Basel)",
+    pmid: "40868851",
+    doi: "10.3390/life15081200",
+    kind: "modelling",
+    group: "recent",
+    summary:
+      "The authors model the osteo-myofascial system as a network of 2,208 anatomical nodes and 7,377 biomechanical relationships drawn from the aNETomy model and the BIOMECH 3.4 database, then rank nodes by graph centrality. The sacrum and thoracolumbar fascia come out as highly connected hubs. They propose a polyconnective skeleton of such hubs as a framework for treatment planning, while noting the results are theoretical.",
+    modelNote:
+      "A network view rather than a line view: every connection counts and some structures are hubs. The sacrum is selectable here; the thoracolumbar fascia is not a mesh.",
+  },
+  {
+    id: "ficarra2024",
+    authors: "Ficarra S, Scardina A, Nakamura M, et al.",
+    year: 2024,
+    title:
+      "Acute effects of static stretching and proprioceptive neuromuscular facilitation on non-local range of movement",
+    journal: "Research in Sports Medicine",
+    pmid: "38459925",
+    doi: "10.1080/15438627.2024.2326520",
+    kind: "rct",
+    group: "recent",
+    summary:
+      "Twenty-nine participants completed a control week and then static stretching and PNF of the hamstrings in random order, with local hamstring extensibility and remote shoulder extension measured before, immediately after and fifteen minutes later. Both methods increased local range of motion. Remote shoulder range showed no interaction with treatment, with only a small immediate rise in the dominant arm after static stretching in post-hoc tests, so the authors report no clear non-local effect.",
+    modelNote:
+      "A negative finding to weigh against the remote-effects meta-analysis above. The hamstrings are a stop on the superficial back line; the shoulder is not, which makes this a fair but indirect test of the chain idea.",
   },
 ];
 

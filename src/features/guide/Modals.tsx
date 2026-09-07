@@ -15,7 +15,7 @@ const GUIDE_STEPS = [
   {
     icon: Layers,
     title: "Explore one layer at a time",
-    text: "Switch between muscles and bones. Filter by body region, approximate layer and side, and choose English or Latin names. Select a structure, then isolate it, hide it, pin it to compare with others, or show its origin and insertion bones on the skeleton.",
+    text: "Switch between muscles and bones. Filter by body region, approximate layer and side, and choose English or Latin names. Select a structure, then isolate it, hide it, pin it to compare with others, or show its origin and insertion bones on the skeleton. The joint chips list every muscle that crosses a joint.",
   },
   {
     icon: Network,
@@ -25,7 +25,7 @@ const GUIDE_STEPS = [
   {
     icon: Search,
     title: "Share what you see",
-    text: "Every view has a link. Copy it from the detail or fascia panel and it will reopen the same structure, filters, line and camera for anyone. Teaching a lesson? Add structures to a playlist, name it, and share one link that plays through them in order. Study sets on the start panel are ready-made playlists, and any playlist prints as a handout.",
+    text: "Every view has a link. Copy it from the detail or fascia panel and it will reopen the same structure, filters, line and camera for anyone. Teaching a lesson? Add structures to a playlist, name it, and share one link that plays through them in order. Study sets on the start panel are ready-made playlists, and any playlist prints as a handout or downloads as an Anki deck.",
   },
   {
     icon: BookOpen,

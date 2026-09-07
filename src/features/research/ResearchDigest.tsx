@@ -12,7 +12,13 @@ const ORDER: CitationGroup[] = [
   "force-transmission",
   "sensory",
   "clinical",
+  "recent",
 ];
+
+const GROUP_INTRO: Partial<Record<CitationGroup, string>> = {
+  recent:
+    "Papers published since the lines above were built, added September 2026. They extend, qualify or contradict the older evidence; none changes a hop's grade on its own.",
+};
 
 export default function ResearchDigest() {
   return (
@@ -26,6 +32,7 @@ export default function ResearchDigest() {
       {ORDER.map((group) => (
         <section className="digest-group" key={group}>
           <h3>{GROUP_LABELS[group]}</h3>
+          {GROUP_INTRO[group] && <p className="subtle">{GROUP_INTRO[group]}</p>}
           {citations
             .filter((c) => c.group === group)
             .sort((a, b) => a.year - b.year)

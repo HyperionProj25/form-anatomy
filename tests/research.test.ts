@@ -25,6 +25,19 @@ describe("research citations", () => {
     const groups = new Map<string, number>();
     for (const c of citations) groups.set(c.group, (groups.get(c.group) ?? 0) + 1);
     for (const [g, n] of groups) expect(n, g).toBeGreaterThanOrEqual(2);
-    expect(groups.size).toBe(5);
+    expect(groups.size).toBe(6);
+  });
+});
+
+describe("recent findings", () => {
+  test("the recent group holds at least twelve papers from 2023 onward, each with a PMID and DOI", () => {
+    const recent = citations.filter((c) => c.group === "recent");
+    expect(recent.length).toBeGreaterThanOrEqual(12);
+    for (const c of recent) {
+      expect(c.year, c.id).toBeGreaterThanOrEqual(2023);
+      expect(c.pmid, c.id).toMatch(/^\d+$/);
+      expect(c.doi, c.id).toMatch(/^10\./);
+    }
+    expect(citationById("kretschmerWilke2026")?.kind).toBe("meta-analysis");
   });
 });

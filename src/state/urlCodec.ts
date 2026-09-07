@@ -1,4 +1,5 @@
 import { isPartId } from "../data/catalog";
+import { JOINT_IDS, type JointId } from "../data/joints";
 import { LINE_IDS, lineById, type LineId } from "../data/lines";
 import { REGION_ORDER } from "../data/regions";
 import type { Region } from "../data/types";
@@ -48,6 +49,7 @@ export function encodeState(s: AppState): string {
   if (s.filters.region !== "all") q.set("r", s.filters.region);
   if (s.filters.layer !== "all") q.set("d", s.filters.layer);
   if (s.filters.side !== "both") q.set("side", s.filters.side);
+  if (s.filters.joint !== "all") q.set("j", s.filters.joint);
   // Commas and colons are safe in a query string; keep them readable instead of %2C and %3A.
   const str = q.toString().replace(/%2C/g, ",").replace(/%3A/g, ":");
   return str ? `?${str}` : "";
@@ -109,12 +111,15 @@ export function decodeSearch(search: string): Partial<AppState> {
   const region = r && (REGION_ORDER as string[]).includes(r) ? (r as Region) : null;
   const layer = d && (LAYERS as string[]).includes(d) ? (d as LayerFilter) : null;
   const sideF = side && (SIDES as string[]).includes(side) ? (side as SideFilter) : null;
-  if (region || layer || sideF)
+  const j = q.get("j");
+  const joint = j && (JOINT_IDS as string[]).includes(j) ? (j as JointId) : null;
+  if (region || layer || sideF || joint)
     out.filters = {
       ...initialState.filters,
       ...(region ? { region } : {}),
       ...(layer ? { layer } : {}),
       ...(sideF ? { side: sideF } : {}),
+      ...(joint ? { joint } : {}),
     };
   return out;
 }

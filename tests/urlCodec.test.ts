@@ -15,7 +15,7 @@ describe("encodeState", () => {
       view: "back",
       line: "bfl",
       hidden: ["soleus-muscle-l"],
-      filters: { region: "leg-foot", layer: "deep", side: "left", search: "" },
+      filters: { region: "leg-foot", layer: "deep", side: "left", joint: "all", search: "" },
     };
     expect(encodeState(s)).toBe(
       "?m=fascia&s=lateral-head-of-gastrocnemius-l&v=back&l=bfl&h=soleus-muscle-l&r=leg-foot&d=deep&side=left",
@@ -71,7 +71,7 @@ describe("decodeSearch", () => {
       view: "side",
       line: "ll",
       hidden: ["femur-l"],
-      filters: { region: "hip-thigh", layer: "all", side: "right", search: "" },
+      filters: { region: "hip-thigh", layer: "all", side: "right", joint: "all", search: "" },
     };
     const decoded = decodeSearch(encodeState(s));
     expect(decoded).toEqual({
@@ -80,7 +80,7 @@ describe("decodeSearch", () => {
       view: "side",
       line: "ll",
       hidden: ["femur-l"],
-      filters: { region: "hip-thigh", layer: "all", side: "right", search: "" },
+      filters: { region: "hip-thigh", layer: "all", side: "right", joint: "all", search: "" },
     });
   });
 
@@ -140,5 +140,14 @@ describe("attachments flag", () => {
     expect(encodeState(s)).toBe("?s=soleus-muscle-l&a=1");
     expect(decodeSearch("?s=soleus-muscle-l&a=1").attach).toBe(true);
     expect(decodeSearch("?a=yes").attach).toBeUndefined();
+  });
+});
+
+describe("joint filter", () => {
+  test("j round-trips for known joints and is dropped otherwise", () => {
+    const s: AppState = { ...initialState, filters: { ...initialState.filters, joint: "knee" } };
+    expect(encodeState(s)).toBe("?j=knee");
+    expect(decodeSearch("?j=knee").filters?.joint).toBe("knee");
+    expect(decodeSearch("?j=neck").filters).toBeUndefined();
   });
 });

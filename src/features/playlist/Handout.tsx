@@ -1,10 +1,23 @@
-import { Printer } from "lucide-react";
+import { Download, Printer } from "lucide-react";
 import { partById } from "../../data/catalog";
 import { factsForWiki } from "../../data/facts";
 import { latinName } from "../../data/names";
-import { REGION_LABELS } from "../../data/regions";
+import { REGION_LABELS, slugify } from "../../data/regions";
 import { useStore } from "../../state/store";
 import type { CatalogPart } from "../../data/types";
+import { ankiTsv } from "./anki";
+
+/** Hands the browser a text file to save. */
+function downloadText(filename: string, text: string) {
+  const url = URL.createObjectURL(new Blob([text], { type: "text/plain;charset=utf-8" }));
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = filename;
+  document.body.appendChild(a);
+  a.click();
+  a.remove();
+  setTimeout(() => URL.revokeObjectURL(url), 1000);
+}
 
 /** The current playlist as a study sheet: one block per structure with its reference facts. Prints cleanly. */
 export default function Handout() {
@@ -42,9 +55,23 @@ export default function Handout() {
             {items.length} structures · {date} · hyperionproj25.github.io/form-anatomy
           </p>
         </div>
-        <button className="primary-button no-print" onClick={() => window.print()}>
-          <Printer size={15} /> Print
-        </button>
+        <div className="handout-actions no-print">
+          <button className="primary-button" onClick={() => window.print()}>
+            <Printer size={15} /> Print
+          </button>
+          <button
+            className="outline-button"
+            title="A tab-separated file Anki imports as one card per structure"
+            onClick={() =>
+              downloadText(`form-${slugify(title) || "study-sheet"}.txt`, ankiTsv(items, state.names))
+            }
+          >
+            <Download size={15} /> Download for Anki
+          </button>
+          <p className="subtle">
+            In Anki choose File, then Import, and pick the file. Fields are tab-separated with HTML on.
+          </p>
+        </div>
       </div>
       <ol className="handout-list">
         {items.map((part, i) => {
