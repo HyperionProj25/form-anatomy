@@ -208,7 +208,11 @@ export default function DetailPanel({ describe, onToast }: Props) {
               >
                 <Bone size={15} /> {state.attach ? "Hide on model" : "Show on model"}
               </button>
-              <p className="subtle">Matched from the attachment text by bone name. Approximate.</p>
+              <p className="subtle">
+                Matched from the attachment text by bone name. Approximate.
+                {state.attach &&
+                  " The arrow shows the conventional direction of pull, insertion toward origin, between estimated contact points."}
+              </p>
             </div>
           )}
           {applied.map((note) => (

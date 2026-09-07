@@ -22,6 +22,18 @@ export type EngineHandlers = {
 type PartMesh = THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
 type Target = { style: PartStyle; color: THREE.Color; emissive: THREE.Color };
 
+/** A line of action to animate: from the moving end, through the muscle, to the fixed end. */
+export type PullDrawing = {
+  paths: { from: Vec3; via: Vec3; to: Vec3 }[];
+  origin: Vec3[];
+  insertion: Vec3[];
+};
+
+const PULL_PARTICLES = 4;
+const PULL_PERIOD_MS = 2200;
+const ORIGIN_COLOR = "#2b7bd9";
+const INSERTION_COLOR = "#d9822b";
+
 const PRESET_DIRECTIONS: Record<ViewPreset, Vec3> = {
   front: [0, 0, 1],
   back: [0, 0, -1],
@@ -79,6 +91,9 @@ export class AnatomyEngine {
   private cameraTimer = 0;
   private pathGroup = new THREE.Group();
   private pulses: { curve: THREE.CatmullRomCurve3; mesh: THREE.Mesh; phase: number }[] = [];
+  private pullGroup = new THREE.Group();
+  private pullFlows: { curve: THREE.CatmullRomCurve3; particles: THREE.Mesh[] }[] = [];
+  private labels: { el: HTMLDivElement; position: THREE.Vector3 }[] = [];
   private targets = new Map<string, Target>();
   private pending = new Set<string>();
   private hoverId: string | null = null;
@@ -133,7 +148,7 @@ export class AnatomyEngine {
     const rim = new THREE.DirectionalLight(0xffffff, 1.1);
     rim.position.set(-2, 2, -3);
     this.scene.add(key, fill, rim);
-    this.scene.add(this.pathGroup);
+    this.scene.add(this.pathGroup, this.pullGroup);
 
     this.observer = new ResizeObserver(this.resize);
     this.observer.observe(host);
@@ -371,6 +386,101 @@ export class AnatomyEngine {
     this.pulses = [];
   }
 
+  /**
+   * Animate a muscle's direction of pull: a cable from the insertion through the muscle to the
+   * origin, particles flowing toward the origin, an arrowhead there, and a label at each end.
+   * Points are in model space. Pass null to clear.
+   */
+  drawPull(pull: PullDrawing | null): void {
+    this.clearPull();
+    if (!pull) return;
+    const up = new THREE.Vector3(0, 1, 0);
+    for (const p of pull.paths) {
+      const curve = new THREE.CatmullRomCurve3(
+        [new THREE.Vector3(...p.from), new THREE.Vector3(...p.via), new THREE.Vector3(...p.to)],
+        false,
+        "centripetal",
+        0.5,
+      );
+      const core = new THREE.Mesh(
+        new THREE.TubeGeometry(curve, 64, 0.0065, 8, false),
+        new THREE.MeshBasicMaterial({ color: "#2f2a24", transparent: true, opacity: 0.85, depthTest: false }),
+      );
+      core.renderOrder = 20;
+      const strand = new THREE.Mesh(
+        new THREE.TubeGeometry(curve, 64, 0.003, 6, false),
+        new THREE.MeshBasicMaterial({ color: "#fff2d6", depthTest: false }),
+      );
+      strand.renderOrder = 21;
+      const tip = curve.getPointAt(0.985);
+      const tangent = curve.getTangentAt(0.985).normalize();
+      const arrow = new THREE.Mesh(
+        new THREE.ConeGeometry(0.013, 0.034, 14),
+        new THREE.MeshBasicMaterial({ color: ORIGIN_COLOR, depthTest: false }),
+      );
+      arrow.position.copy(tip);
+      arrow.quaternion.setFromUnitVectors(up, tangent);
+      arrow.renderOrder = 23;
+      const start = new THREE.Mesh(
+        new THREE.SphereGeometry(0.011, 14, 12),
+        new THREE.MeshBasicMaterial({ color: INSERTION_COLOR, depthTest: false }),
+      );
+      start.position.copy(curve.getPointAt(0));
+      start.renderOrder = 23;
+      this.pullGroup.add(start);
+      const particles: THREE.Mesh[] = [];
+      for (let i = 0; i < PULL_PARTICLES; i++) {
+        const dot = new THREE.Mesh(
+          new THREE.SphereGeometry(0.0085, 12, 10),
+          new THREE.MeshBasicMaterial({ color: "#ffe6a8", depthTest: false }),
+        );
+        dot.renderOrder = 22;
+        particles.push(dot);
+      }
+      this.pullGroup.add(core, strand, arrow, ...particles);
+      this.pullFlows.push({ curve, particles });
+    }
+    if (pull.origin[0]) this.addLabel("Origin · fixed end", pull.origin[0], "origin");
+    if (pull.insertion[0]) this.addLabel("Insertion · moving end", pull.insertion[0], "insertion");
+  }
+
+  clearPull(): void {
+    for (const child of [...this.pullGroup.children]) {
+      this.pullGroup.remove(child);
+      if (child instanceof THREE.Mesh) {
+        child.geometry.dispose();
+        (child.material as THREE.Material).dispose();
+      }
+    }
+    this.pullFlows = [];
+    for (const l of this.labels) l.el.remove();
+    this.labels = [];
+  }
+
+  private addLabel(text: string, position: Vec3, kind: "origin" | "insertion"): void {
+    const el = document.createElement("div");
+    el.className = `model-label model-label-${kind}`;
+    el.textContent = text;
+    el.setAttribute("aria-hidden", "true");
+    this.host.appendChild(el);
+    this.labels.push({ el, position: new THREE.Vector3(...position) });
+  }
+
+  private placeLabels(): void {
+    if (!this.labels.length) return;
+    const w = this.host.clientWidth;
+    const h = this.host.clientHeight;
+    const v = new THREE.Vector3();
+    for (const l of this.labels) {
+      v.copy(l.position).project(this.camera);
+      const visible = v.z < 1 && v.x > -1.1 && v.x < 1.1 && v.y > -1.1 && v.y < 1.1;
+      l.el.style.display = visible ? "block" : "none";
+      if (!visible) continue;
+      l.el.style.left = `${((v.x + 1) / 2) * w}px`;
+      l.el.style.top = `${((1 - v.y) / 2) * h}px`;
+    }
+  }
+
   zoom(factor: number): void {
     this.cancelAnimation();
     const offset = this.camera.position.clone().sub(this.controls.target).multiplyScalar(factor);
@@ -394,6 +504,7 @@ export class AnatomyEngine {
     this.controls.dispose();
     this.draco.dispose();
     this.clearPaths();
+    this.clearPull();
     this.setSelected(null);
     if (this.ground) {
       this.scene.remove(this.ground);
@@ -553,6 +664,14 @@ export class AnatomyEngine {
       const t = this.reduced ? 0.5 : (now % 4000) / 4000;
       for (const p of this.pulses) p.curve.getPointAt((t + p.phase) % 1, p.mesh.position);
     }
+    if (this.pullFlows.length) {
+      const t = this.reduced ? 0 : (now % PULL_PERIOD_MS) / PULL_PERIOD_MS;
+      for (const flow of this.pullFlows)
+        flow.particles.forEach((dot, i) =>
+          flow.curve.getPointAt((t + i / PULL_PARTICLES) % 1, dot.position),
+        );
+    }
+    this.placeLabels();
     this.renderer.render(this.scene, this.camera);
   };
 

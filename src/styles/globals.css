@@ -2324,3 +2324,25 @@ footer a:hover {
   opacity: 0;
   transition: opacity 300ms ease;
 }
+
+/* Labels the engine projects onto the stage for the ends of a line of action. */
+.model-label {
+  position: absolute;
+  transform: translate(10px, -50%);
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: #fffefb;
+  white-space: nowrap;
+  pointer-events: none;
+  z-index: 5;
+  box-shadow: 0 2px 8px rgba(20, 30, 20, 0.18);
+}
+.model-label-origin {
+  background: #2b7bd9;
+}
+.model-label-insertion {
+  background: #d9822b;
+}

@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-import { AnatomyEngine, type CameraPose, type ViewPreset } from "./engine";
+import { AnatomyEngine, type CameraPose, type PullDrawing, type ViewPreset } from "./engine";
 import type { PartStyle } from "./appearance";
 import { catalog, nodeToId, partById } from "../data/catalog";
 import type { Vec3 } from "../data/types";
@@ -27,6 +27,8 @@ type Props = {
   selectedId?: string | null;
   /** Slow camera drift, used while a tour plays. */
   autoRotate?: boolean;
+  /** Animated direction of pull for the selected muscle. */
+  pull?: PullDrawing | null;
   onSelect(id: string): void;
   onReady(ids: string[]): void;
   onCameraChange(pose: CameraPose): void;
@@ -119,6 +121,10 @@ export default function Viewer(props: Props) {
   useEffect(() => {
     engine.current?.setAutoRotate(!!props.autoRotate);
   }, [ready, props.autoRotate]);
+
+  useEffect(() => {
+    if (ready) engine.current?.drawPull(props.pull ?? null);
+  }, [ready, props.pull]);
 
   useEffect(() => {
     const e = engine.current;

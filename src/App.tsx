@@ -14,6 +14,7 @@ import { partById, parts } from "./data/catalog";
 import { attachmentIds } from "./data/attachments";
 import { lineById, lineKeys, lines } from "./data/lines";
 import { displayName, saveNamePref } from "./data/names";
+import { pullFor } from "./data/pull";
 import { StoreProvider, useStore } from "./state/store";
 import { useUrlSync } from "./state/useUrlSync";
 import { computeStyles } from "./viewer/appearance";
@@ -97,6 +98,11 @@ function Shell() {
     const ids = attachmentIds(part);
     return ids ? { origin: new Set(ids.origin), insertion: new Set(ids.insertion) } : undefined;
   }, [state.attach, state.mode, state.selected]);
+  const pull = useMemo(() => {
+    if (!attachments || !state.selected) return null;
+    const part = partById(state.selected);
+    return part ? (pullFor(part) ?? null) : null;
+  }, [attachments, state.selected]);
   const styles = useMemo(
     () =>
       computeStyles({
@@ -244,6 +250,7 @@ function Shell() {
             nameOf={nameOf}
             selectedId={state.selected}
             autoRotate={state.mode === "fascia" && !!state.tour?.playing}
+            pull={pull}
             onSelect={(id) => dispatch({ type: "select", id })}
             onReady={() => setReady(true)}
             onCameraChange={(pose) => dispatch({ type: "cameraMoved", pose })}
