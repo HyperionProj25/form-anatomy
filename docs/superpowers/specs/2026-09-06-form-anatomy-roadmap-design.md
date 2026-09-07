@@ -721,3 +721,58 @@ and attachment highlighting so a muscle's pull on the skeleton is visible.
   animal and ex-vivo work, labelled as such).
 - Only the public papers are used; nothing from the ACIS document's own text
   appears in the atlas.
+
+## 11. Phase 9 addendum: motion and beauty (2026-09-07)
+
+The model has no rig, so muscles cannot contract as meshes. Everything
+below is either rendering quality, camera choreography, or rigid motion of
+the skeleton with muscle lines of action drawn as cables. Each animated
+element states what it approximates.
+
+### 11.1 Rendering polish
+
+- Image-based lighting from a room environment (PMREM) with reduced direct
+  lights; materials keep their colours but gain soft reflections.
+- A soft contact shadow under the feet grounds the figure.
+- Every appearance change tweens: colour, emissive and opacity ease over
+  about 250 ms; hiding fades out before the mesh is removed, showing fades
+  in. Hover adds a gentle emissive lift. The selected part gets a thin
+  back-face halo.
+- Reduced motion: when `prefers-reduced-motion` is set, tweens snap, auto
+  rotation and particle flow are off.
+
+### 11.2 Cinematic line tours
+
+- While a tour is playing, the camera drifts slowly around the current stop
+  (OrbitControls auto-rotate), a caption band at the bottom of the stage
+  names the stop, the next hop and its evidence badge, and the stage shows a
+  soft vignette. Pausing or interacting stops the drift.
+
+### 11.3 Pull direction
+
+- When attachments are shown for a selected muscle, the engine draws a
+  line of action from the insertion bone through the muscle to the origin
+  bone, with particles flowing insertion to origin and an arrowhead at the
+  origin, plus two labels: "Origin, fixed end" and "Insertion, moving end".
+  Endpoints are the bone-mesh vertices nearest the muscle, so they are
+  approximate; the panel says so.
+
+### 11.4 Joint motion
+
+- `src/data/motion.ts` derives, for a joint and side: the pivot (an
+  extreme of the proximal bone's bounding box facing the distal bone), the
+  flexion axis (mediolateral), the range, the moving set (distal bones plus
+  muscles whose attachments are all distal, or whose centroid lies distal to
+  the pivot plane when unmatched), and the crossing muscles with their cable
+  endpoints.
+- The engine rotates the moving set rigidly about the pivot. Crossing
+  muscles are hidden and replaced by cables from origin to insertion; the
+  insertion end moves with the segment. A cable that shortens through the
+  motion is red, one that lengthens is blue, so agonists and antagonists
+  read at a glance and the list appears in a motion card with a scrubber,
+  play and pause, and a side toggle.
+- Tests pin the elbow (biceps and brachialis shorten, triceps lengthens),
+  the knee (hamstrings shorten, quadriceps lengthen) and the ankle.
+- Caveat in the card: "Rigid rotation about an estimated joint centre;
+  attachment points are approximate; real joints roll and glide."
+- Store `motion: { joint; side; phase; playing } | null`; not in the URL.
