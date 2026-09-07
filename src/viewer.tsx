@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type MutableRefObject } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
@@ -16,7 +16,7 @@ export type ViewerAPI = {
   zoom: (factor: number) => void;
 };
 type Props = {
-  api: MutableRefObject<ViewerAPI | null>;
+  onApi: (api: ViewerAPI | null) => void;
   mode: string;
   line: FascialLine;
   opacity: number;
@@ -27,26 +27,44 @@ type Props = {
   onReady: (s: Structure[]) => void;
 };
 type Part = THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
+const LOADING_MESSAGE = "Loading detailed anatomy…";
+const WEBGL_MESSAGE =
+  "The 3D view needs WebGL. Try a browser with hardware acceleration enabled. The fascial-line lessons and learning guide remain available.";
+
+function supportsWebGL(): boolean {
+  try {
+    const probe = document.createElement("canvas");
+    return !!(probe.getContext("webgl2") || probe.getContext("webgl"));
+  } catch {
+    return false;
+  }
+}
+
 export default function AnatomyViewer(props: Props) {
   const mount = useRef<HTMLDivElement>(null),
     current = useRef(props),
     parts = useRef<Part[]>([]),
     refresh = useRef<() => void>(() => {});
-  current.current = props;
-  const [status, setStatus] = useState("Loading detailed anatomy…"),
-    [error, setError] = useState(false),
+  useLayoutEffect(() => {
+    current.current = props;
+  });
+  const [webgl] = useState(supportsWebGL);
+  const [status, setStatus] = useState(webgl ? LOADING_MESSAGE : WEBGL_MESSAGE),
+    [error, setError] = useState(!webgl),
     [retry, setRetry] = useState(0),
     [hover, setHover] = useState<{ name: string; x: number; y: number } | null>(
       null,
     );
   useEffect(() => {
     const host = mount.current;
-    if (!host) return;
-    let disposed = false,
-      frame = 0;
+    if (!host || !webgl) return;
+    const s = {
+      disposed: false,
+      frame: 0,
+      fitDistance: 3.7,
+      model: null as THREE.Group | null,
+    };
     let renderer: THREE.WebGLRenderer;
-    setError(false);
-    setStatus("Loading detailed anatomy…");
     try {
       renderer = new THREE.WebGLRenderer({
         antialias: true,
@@ -54,10 +72,10 @@ export default function AnatomyViewer(props: Props) {
         powerPreference: "high-performance",
       });
     } catch {
-      setError(true);
-      setStatus(
-        "The 3D view needs WebGL. Try a browser with hardware acceleration enabled. The fascial-line lessons and learning guide remain available.",
-      );
+      queueMicrotask(() => {
+        setError(true);
+        setStatus(WEBGL_MESSAGE);
+      });
       return;
     }
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
@@ -89,8 +107,6 @@ export default function AnatomyViewer(props: Props) {
     const rim = new THREE.DirectionalLight(0xffffff, 2);
     rim.position.set(-2, 2, -3);
     scene.add(rim);
-    let fitDistance = 3.7,
-      model: THREE.Group | null = null;
     const resize = () => {
       const w = host.clientWidth,
         h = host.clientHeight;
@@ -101,13 +117,13 @@ export default function AnatomyViewer(props: Props) {
     const observer = new ResizeObserver(resize);
     observer.observe(host);
     resize();
-    props.api.current = {
+    const api: ViewerAPI = {
       view: (v) => {
         controls.target.set(0, 0, 0);
         camera.position.set(
-          v === "side" ? fitDistance : 0,
+          v === "side" ? s.fitDistance : 0,
           0,
-          v === "back" ? -fitDistance : v === "side" ? 0 : fitDistance,
+          v === "back" ? -s.fitDistance : v === "side" ? 0 : s.fitDistance,
         );
         controls.update();
       },
@@ -119,6 +135,7 @@ export default function AnatomyViewer(props: Props) {
         controls.update();
       },
     };
+    current.current.onApi(api);
     const describe = (m: Part): Structure => ({
       id: m.uuid,
       name:
@@ -196,17 +213,17 @@ export default function AnatomyViewer(props: Props) {
     loader.load(
       `${import.meta.env.BASE_URL}body.glb`,
       (gltf) => {
-        if (disposed) {
+        if (s.disposed) {
           disposeModel(gltf.scene);
           return;
         }
-        model = gltf.scene;
-        const bounds = new THREE.Box3().setFromObject(model),
+        s.model = gltf.scene;
+        const bounds = new THREE.Box3().setFromObject(s.model),
           size = bounds.getSize(new THREE.Vector3()),
           center = bounds.getCenter(new THREE.Vector3());
-        model.position.sub(center);
-        scene.add(model);
-        fitDistance =
+        s.model.position.sub(center);
+        scene.add(s.model);
+        s.fitDistance =
           Math.max(
             size.y / (2 * Math.tan(THREE.MathUtils.degToRad(camera.fov / 2))),
             size.x /
@@ -215,7 +232,7 @@ export default function AnatomyViewer(props: Props) {
                 camera.aspect),
           ) * 1.15;
         parts.current = [];
-        model.traverse((o) => {
+        s.model.traverse((o) => {
           if (o instanceof THREE.Mesh) {
             const original = Array.isArray(o.material)
               ? o.material[0]
@@ -236,7 +253,7 @@ export default function AnatomyViewer(props: Props) {
             .map(describe)
             .sort((a, b) => a.name.localeCompare(b.name)),
         );
-        current.current.api.current?.view(
+        api.view(
           current.current.mode === "fascia"
             ? current.current.line.view
             : "front",
@@ -245,7 +262,7 @@ export default function AnatomyViewer(props: Props) {
         setStatus("");
       },
       (event) => {
-        if (!disposed)
+        if (!s.disposed)
           setStatus(
             event.total
               ? "Loading anatomy · " +
@@ -255,7 +272,7 @@ export default function AnatomyViewer(props: Props) {
           );
       },
       () => {
-        if (!disposed) {
+        if (!s.disposed) {
           setError(true);
           setStatus(
             "The anatomy model could not load. Check your connection and try again.",
@@ -312,24 +329,24 @@ export default function AnatomyViewer(props: Props) {
     renderer.domElement.addEventListener("pointermove", move);
     renderer.domElement.addEventListener("pointerleave", leave);
     const render = () => {
-      frame = requestAnimationFrame(render);
+      s.frame = requestAnimationFrame(render);
       controls.update();
       renderer.render(scene, camera);
     };
     render();
     return () => {
-      disposed = true;
-      cancelAnimationFrame(frame);
+      s.disposed = true;
+      cancelAnimationFrame(s.frame);
       observer.disconnect();
       controls.dispose();
       draco.dispose();
-      if (model) disposeModel(model);
+      if (s.model) disposeModel(s.model);
       renderer.dispose();
       renderer.domElement.remove();
       parts.current = [];
-      current.current.api.current = null;
+      current.current.onApi(null);
     };
-  }, [retry]);
+  }, [retry, webgl]);
   useEffect(() => {
     refresh.current();
   }, [
@@ -349,7 +366,11 @@ export default function AnatomyViewer(props: Props) {
           {error && (
             <button
               className="outline-button"
-              onClick={() => setRetry(retry + 1)}
+              onClick={() => {
+                setError(false);
+                setStatus(LOADING_MESSAGE);
+                setRetry(retry + 1);
+              }}
             >
               Retry 3D view
             </button>
