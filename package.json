@@ -15,7 +15,8 @@
     "typecheck": "tsc --noEmit",
     "catalog": "tsx scripts/build-catalog.ts",
     "facts": "tsx scripts/fetch-facts.ts",
-    "verify:citations": "tsx scripts/verify-citations.ts"
+    "verify:citations": "tsx scripts/verify-citations.ts",
+    "icons": "tsx scripts/make-icons.ts"
   },
   "dependencies": {
     "lucide-react": "^1.41.0",
@@ -41,6 +42,7 @@
     "typescript": "5.9.3",
     "typescript-eslint": "8.59.3",
     "vite": "8.2.2",
+    "vite-plugin-pwa": "^1.3.0",
     "vitest": "5.0.0"
   }
 }

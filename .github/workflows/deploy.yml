@@ -30,6 +30,7 @@ jobs:
       - run: npm run verify:citations
       - run: npm test
       - run: npm run build
+      - run: test -f dist/sw.js && test -f dist/manifest.webmanifest && grep -q form-model dist/sw.js
       - uses: actions/configure-pages@v5
         if: github.event_name != 'pull_request'
         with:

@@ -27,6 +27,7 @@ import QuizOverlay from "./features/quiz/QuizOverlay";
 import { buildSet, mulberry32, type QuizSetId } from "./features/quiz/generators";
 import { loadProgress, weakSpots } from "./features/quiz/progress";
 import Toast from "./features/shared/Toast";
+import { ensureModelCached, shouldAnnounceOffline } from "./offline";
 
 export default function App() {
   return (
@@ -66,6 +67,13 @@ function Shell() {
   useEffect(() => {
     if (state.quizRequest && !state.quiz && ready) startQuiz(state.quizRequest);
   }, [state.quizRequest, state.quiz, ready, startQuiz]);
+  useEffect(() => {
+    if (!ready) return;
+    void ensureModelCached(`${import.meta.env.BASE_URL}body.glb`).then((ok) => {
+      if (ok && shouldAnnounceOffline())
+        showToast("Available offline. This atlas and its model are now stored on this device.");
+    });
+  }, [ready, showToast]);
 
   const activeLine = lineById(state.line) ?? lines[0];
   const styles = useMemo(
