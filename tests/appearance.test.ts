@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { computeStyles, type StyleInput } from "../src/viewer/appearance";
+import { computeStyles, PIN_COLORS, type StyleInput } from "../src/viewer/appearance";
 import type { CatalogPart } from "../src/data/types";
 
 const part = (id: string, type: CatalogPart["type"], name = id): CatalogPart => ({
@@ -79,6 +79,20 @@ describe("computeStyles", () => {
     const s = computeStyles({ ...base, opacity: 0.4 });
     expect(s.get("gastro")?.opacity).toBe(0.4);
     expect(s.get("femur")?.opacity).toBe(1);
+  });
+
+  test("pinned parts keep their pin color and stay visible through hiding, isolation and bones mode", () => {
+    const s = computeStyles({
+      ...base,
+      mode: "bones",
+      hidden: new Set(["gastro"]),
+      isolated: true,
+      selected: "femur",
+      pinned: ["gastro", "soleus"],
+    });
+    expect(s.get("gastro")).toMatchObject({ visible: true, color: PIN_COLORS[0], opacity: 1 });
+    expect(s.get("soleus")).toMatchObject({ visible: true, color: PIN_COLORS[1] });
+    expect(s.get("femur")?.color).toBe("#477965"); // selection wins over pins
   });
 
   test("outside fascia mode a focus fades everything else so a deep target shows", () => {

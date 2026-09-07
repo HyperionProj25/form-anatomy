@@ -17,6 +17,7 @@ import { useUrlSync } from "./state/useUrlSync";
 import { computeStyles } from "./viewer/appearance";
 import { linePaths } from "./viewer/paths";
 import Viewer, { type CameraCommand, type DrawnPath, type ViewerHandle } from "./viewer/Viewer";
+import PinLegend from "./features/compare/PinLegend";
 import LibraryPanel from "./features/library/LibraryPanel";
 import DetailPanel from "./features/detail/DetailPanel";
 import StartPanel from "./features/detail/StartPanel";
@@ -79,8 +80,18 @@ function Shell() {
         lineColor: activeLine.color,
         lineKeys: lineKeys(activeLine),
         focusIds: state.focus ? new Set(state.focus.ids) : undefined,
+        pinned: state.pinned,
       }),
-    [state.mode, state.selected, state.hidden, state.isolated, state.opacity, state.focus, activeLine],
+    [
+      state.mode,
+      state.selected,
+      state.hidden,
+      state.isolated,
+      state.opacity,
+      state.focus,
+      state.pinned,
+      activeLine,
+    ],
   );
   const cameraCommand = useMemo<CameraCommand>(() => {
     if (state.focus?.flyId)
@@ -184,6 +195,7 @@ function Shell() {
           <button className="mobile-layers outline-button" onClick={() => setMobilePanel(true)}>
             <Layers size={15} /> Layers & search
           </button>
+          <PinLegend />
           <Viewer
             styles={styles}
             cameraCommand={cameraCommand}

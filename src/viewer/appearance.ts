@@ -21,7 +21,11 @@ export type StyleInput = {
   lineKeys: Set<string>;
   /** Ids to emphasise during a tour step; other line parts dim. */
   focusIds?: Set<string>;
+  /** Compare-mode pins, in pin order; each takes a fixed color and stays visible. */
+  pinned?: string[];
 };
+
+export const PIN_COLORS = ["#d9822b", "#2b7bd9", "#b03a8f", "#3aa76d"] as const;
 
 export const COLORS = {
   selected: "#477965",
@@ -38,6 +42,12 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
   const focusing = !!input.focusIds?.size;
   for (const p of input.parts) {
     const selected = p.id === input.selected;
+    const pinIndex = input.pinned?.indexOf(p.id) ?? -1;
+    if (pinIndex >= 0 && !selected) {
+      const c = PIN_COLORS[pinIndex % PIN_COLORS.length];
+      out.set(p.id, { visible: true, color: c, emissive: c, emissiveIntensity: 0.22, opacity: 1 });
+      continue;
+    }
     const bone = p.type === "bone";
     const connective = p.type === "connective";
     const chain = input.mode === "fascia" && p.type === "muscle" && input.lineKeys.has(p.key);

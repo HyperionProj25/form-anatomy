@@ -1,4 +1,4 @@
-import { ArrowRight, ChevronDown, EyeOff, Focus, X } from "lucide-react";
+import { ArrowRight, ChevronDown, EyeOff, Focus, Pin, PinOff, X } from "lucide-react";
 import { useState } from "react";
 import { partById } from "../../data/catalog";
 import { factsForWiki } from "../../data/facts";
@@ -62,6 +62,14 @@ export default function DetailPanel({ describe, onToast }: Props) {
         </button>
         <button className="outline-button" onClick={() => dispatch({ type: "hide", id: part.id })}>
           <EyeOff size={15} /> Hide
+        </button>
+        <button
+          className="outline-button"
+          onClick={() => dispatch({ type: "togglePin", id: part.id })}
+          title="Pin up to four structures in contrasting colors to compare them"
+        >
+          {state.pinned.includes(part.id) ? <PinOff size={15} /> : <Pin size={15} />}
+          {state.pinned.includes(part.id) ? "Unpin" : "Pin"}
         </button>
       </div>
       <CopyLink onCopied={onToast} />
