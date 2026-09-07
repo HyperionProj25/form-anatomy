@@ -1,4 +1,4 @@
-import { ArrowRight, Layers, Move, Network, Search, X } from "lucide-react";
+import { ArrowRight, BookOpen, Layers, Move, Network, Search, X } from "lucide-react";
 import { useEffect } from "react";
 import { useStore } from "../../state/store";
 import type { QuizSetId } from "../quiz/generators";
@@ -25,6 +25,11 @@ const GUIDE_STEPS = [
     icon: Search,
     title: "Share what you see",
     text: "Every view has a link. Copy it from the detail or fascia panel and it will reopen the same structure, filters, line and camera for anyone.",
+  },
+  {
+    icon: BookOpen,
+    title: "Practice and keep score",
+    text: "Test your knowledge by region or by line: click structures on the model, name highlighted ones, recall actions, and read the evidence. Missed items become weak spots you can drill. Everything works offline after the first visit.",
   },
 ];
 

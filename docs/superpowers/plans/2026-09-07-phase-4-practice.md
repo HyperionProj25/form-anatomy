@@ -40,7 +40,7 @@ Delete: `src/data/questions.ts`
 - `QuizSetId`, `Question`, `mulberry32(seed)`, `shuffle(list, rng)`, `parseSetId(s)`, `setLabel(id)`, `buildSet(id, opts)` from `generators.ts`.
 - `Progress`, `loadProgress(storage?)`, `saveProgress(p, storage?)`, `recordAnswer(p, key, correct, now?)`, `weakSpots(p)`, `overallAccuracy(p)` from `progress.ts`.
 
-- [ ] **Step 1: `src/data/quiz-pool.ts`**
+- [x] **Step 1: `src/data/quiz-pool.ts`**
 
 ```ts
 import type { CitationId } from "./research";
@@ -280,7 +280,7 @@ export const EVIDENCE_BANK: EvidenceQuestion[] = [
 ];
 ```
 
-- [ ] **Step 2: Failing tests for the pool, generators and progress**
+- [x] **Step 2: Failing tests for the pool, generators and progress**
 
 `tests/quiz-pool.test.ts`:
 
@@ -468,7 +468,7 @@ describe("progress", () => {
 });
 ```
 
-- [ ] **Step 3: `src/features/quiz/generators.ts`**
+- [x] **Step 3: `src/features/quiz/generators.ts`**
 
 ```ts
 import { partForSide, parts, partsByKey } from "../../data/catalog";
@@ -660,7 +660,7 @@ export function buildSet(
 
 Note the evidence count check in the mixed test expects exactly 3; the bank has 15 entries so that holds. For `line:` sets with fewer than 3 tagged questions, fewer evidence questions appear and the structural share fills the rest; the line test only requires at least one.
 
-- [ ] **Step 4: `src/features/quiz/progress.ts`**
+- [x] **Step 4: `src/features/quiz/progress.ts`**
 
 ```ts
 export type Attempt = { n: number; correct: number; last: string };
@@ -736,7 +736,7 @@ export function weakSpots(p: Progress): string[] {
 }
 ```
 
-- [ ] **Step 5: Run the three test files, fix, and commit**
+- [x] **Step 5: Run the three test files, fix, and commit**
 
 ```bash
 npx vitest run tests/quiz-pool.test.ts tests/generators.test.ts tests/progress.test.ts 2>&1 | grep -E "×|passed|failed|AssertionError|Expected|Received" | head -20
@@ -763,7 +763,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 - URL: `q=<setId>` written while a session exists; decoded into `quizRequest`.
 - `<QuizStart ready onStart(setId) />` (inside the modal shell), `<QuizOverlay onStart(setId) />` (floating card over the stage).
 
-- [ ] **Step 1: Store additions**
+- [x] **Step 1: Store additions**
 
 Add imports `import { partById, partForSide, partsByKey } from "../data/catalog";` (extend the existing catalog import) and `import type { Question, QuizSetId } from "../features/quiz/generators";`.
 
@@ -876,7 +876,7 @@ Reducer cases (and `select`):
 
 `setMode` and `reset` also clear `quiz: null` (a quiz belongs to one view of the model). `hydrate` keeps `quizRequest` from the decoded state (it is part of `a.state`).
 
-- [ ] **Step 2: URL codec**
+- [x] **Step 2: URL codec**
 
 Encode after `t`: `if (s.quiz) q.set("q", s.quiz.setId);`. Decode: `const qs = q.get("q"); const setId = qs ? parseSetId(qs) : null; if (setId) out.quizRequest = setId;` (import `parseSetId` from `../features/quiz/generators`).
 
@@ -933,7 +933,7 @@ describe("quiz session", () => {
 
 (import `buildSet`, `mulberry32` from the generators and `partForSide` from the catalog at the top of the test file).
 
-- [ ] **Step 3: `QuizStart.tsx`**
+- [x] **Step 3: `QuizStart.tsx`**
 
 ```tsx
 import { BookOpen, RotateCcw } from "lucide-react";
@@ -1012,7 +1012,7 @@ export default function QuizStart({ ready, onStart }: Props) {
 }
 ```
 
-- [ ] **Step 4: `QuizOverlay.tsx`** (floating card over the stage; the model stays visible and clickable)
+- [x] **Step 4: `QuizOverlay.tsx`** (floating card over the stage; the model stays visible and clickable)
 
 ```tsx
 import { ArrowRight, Check, Eye, X } from "lucide-react";
@@ -1169,7 +1169,7 @@ export default function QuizOverlay({ onStart }: Props) {
 
 Note on the wrong-structure text: `answer.pickedId` is a catalog id; look it up with `partById` (import it) and use `partById(answer.pickedId)?.name` instead of the double `partsByKey` lookup written above.
 
-- [ ] **Step 5: Wire App and Modals**
+- [x] **Step 5: Wire App and Modals**
 
 `App.tsx`:
 - imports: `QuizOverlay`, `buildSet, mulberry32, type QuizSetId` from `./features/quiz/generators`, `loadProgress, weakSpots` from `./features/quiz/progress`.
@@ -1223,7 +1223,7 @@ CSS additions:
 
 Check that `.stage` is `position: relative` in the existing CSS (it hosts the absolutely positioned legend and tools, so it is).
 
-- [ ] **Step 6: Verify and commit**
+- [x] **Step 6: Verify and commit**
 
 ```bash
 npm test 2>&1 | grep -E "Test Files|Tests |FAIL|×"; npm run lint 2>&1 | grep -E "error|✖"; echo "LINT EXIT: ${PIPESTATUS[0]}"; npm run typecheck 2>&1 | grep -i error; npm run build 2>&1 | tail -1
@@ -1249,7 +1249,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 - Store: `pinned: string[]` (max 4); actions `togglePin(id)`, `unpin(id)`, `clearPins`.
 - `PIN_COLORS` exported from `appearance.ts`; `StyleInput.pinned?: string[]`.
 
-- [ ] **Step 1: Tests**
+- [x] **Step 1: Tests**
 
 `tests/appearance.test.ts` append:
 
@@ -1289,7 +1289,7 @@ describe("pins", () => {
   });
 ```
 
-- [ ] **Step 2: Implementation**
+- [x] **Step 2: Implementation**
 
 `appearance.ts`: `export const PIN_COLORS = ["#d9822b", "#2b7bd9", "#b03a8f", "#3aa76d"] as const;` add `pinned?: string[]` to `StyleInput`; inside the loop, before computing `visible`: `const pinIndex = input.pinned?.indexOf(p.id) ?? -1;` then
 
@@ -1362,7 +1362,7 @@ CSS:
 .pin-legend .text-button { font-size: 11px; }
 ```
 
-- [ ] **Step 3: Verify and commit**
+- [x] **Step 3: Verify and commit**
 
 Full check, then Chrome: pin gluteus maximus and rectus femoris from the detail panel; both stay colored orange and blue on the model; switch to Bones and they remain visible; hide one, still visible; the legend lists both and the URL carries `p=`; "Clear pins" empties it.
 
@@ -1380,7 +1380,7 @@ Co-Authored-By: Claude Fable 5.1 <noreply@anthropic.com>"
 - Create: `scripts/make-icons.ts`, `public/icons/icon-192.png`, `public/icons/icon-512.png`, `src/offline.ts`, `tests/icons.test.ts`, `tests/pwa.test.ts`
 - Modify: `vite.config.ts`, `tsconfig.json`, `src/main.tsx`, `src/App.tsx`, `index.html`, `package.json`, `.github/workflows/deploy.yml`
 
-- [ ] **Step 1: Icons without a rasterizer**
+- [x] **Step 1: Icons without a rasterizer**
 
 `scripts/make-icons.ts` draws the favicon (sage rounded square, ivory pulse line) into RGBA buffers and writes PNGs with `node:zlib`:
 
@@ -1472,7 +1472,7 @@ for (const size of [192, 512]) {
 
 Add `"icons": "tsx scripts/make-icons.ts"` to package scripts and run `npm run icons`. `tests/icons.test.ts` reads both files, checks the PNG signature and IHDR width/height (`readUInt32BE(16)` and `(20)`).
 
-- [ ] **Step 2: Plugin, manifest, registration**
+- [x] **Step 2: Plugin, manifest, registration**
 
 ```bash
 npm install -D vite-plugin-pwa@1.3.0
@@ -1534,7 +1534,7 @@ export default defineConfig({
 
 `tsconfig.json` types: `["vite/client", "node", "vite-plugin-pwa/client"]`. `src/main.tsx`: `import { registerSW } from "virtual:pwa-register"; registerSW({ immediate: true });` before `createRoot`. `index.html` head: `<link rel="apple-touch-icon" href="%BASE_URL%icons/icon-192.png" />`.
 
-- [ ] **Step 3: Offline toast**
+- [x] **Step 3: Offline toast**
 
 `src/offline.ts`:
 
@@ -1572,7 +1572,7 @@ export function shouldAnnounceOffline(): boolean {
 
 `App.tsx`: `useEffect(() => { if (!ready) return; void ensureModelCached(`${import.meta.env.BASE_URL}body.glb`).then((ok) => { if (ok && shouldAnnounceOffline()) showToast("Available offline. This atlas and its model are now stored on this device."); }); }, [ready]);` (`showToast` must be stable: wrap it in `useCallback`).
 
-- [ ] **Step 4: Tests, CI check, verify, commit**
+- [x] **Step 4: Tests, CI check, verify, commit**
 
 `tests/pwa.test.ts` reads `vite.config.ts` and asserts it contains `VitePWA(`, `cacheName: "form-model"`, `body.glb` inside `globIgnores`, and that `index.html` contains `apple-touch-icon`; reads `public/manifest`? (the manifest is generated at build, so check `dist/manifest.webmanifest` only in CI). Workflow: after `npm run build` add `- run: test -f dist/sw.js && test -f dist/manifest.webmanifest && grep -q form-model dist/sw.js`.
 

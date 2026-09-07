@@ -23,9 +23,12 @@ Open the Local URL the server prints (it includes the `/form-anatomy/` path).
     npm run build
     npm run verify:citations
 
-`npm run preview` serves the production build locally. The citation check
-needs network access; it resolves every reference in `src/data/research.ts`
-against PubMed and doi.org and fails if any cannot be found.
+`npm run preview` serves the production build locally, including the service
+worker (the dev server does not register it). The citation check needs
+network access; it resolves every reference in `src/data/research.ts`
+against PubMed and doi.org and fails if any cannot be found. `npm run icons`
+regenerates the PWA icons from the favicon geometry without any image
+library.
 
 ## Data files
 
@@ -65,7 +68,15 @@ checks without deploying.
 - A research digest of 19 verified papers and references, grouped by
   question, each with a plain-language summary and a note on what it means
   for the model. A build-time check resolves every PMID, DOI and URL.
-- A short study check, responsive layout and keyboard-accessible controls.
+- Quizzes by region, by fascial line, or mixed: find a structure on the
+  model, name the highlighted one, recall its action, or read the evidence.
+  Ten questions per set from a pool of 82 muscles and 44 bones plus 15
+  evidence questions. Progress and weak spots stay in your browser.
+- Compare mode: pin up to four structures in contrasting colors, visible
+  through any mode, filter or hidden layer.
+- Works offline after the first visit and installs as an app. The 8 MB model
+  is cached on first use so later visits open instantly.
+- Responsive layout and keyboard-accessible controls.
 
 Fascial highlights identify model components. They are not segmented fascial
 sheets, measurements of force transmission or animated movement simulations.
