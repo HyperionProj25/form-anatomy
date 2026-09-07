@@ -71,6 +71,13 @@ function str(v: unknown): string | undefined {
   return typeof v === "string" && v.trim() ? v.trim() : undefined;
 }
 
+/** Some model links are cut off after an opening parenthesis, e.g. ".../Atlas_(anatomy". */
+function repairParens(url: string): string {
+  const open = (url.match(/\(/g) ?? []).length;
+  const close = (url.match(/\)/g) ?? []).length;
+  return open > close ? url + ")".repeat(open - close) : url;
+}
+
 function displayName(node: GltfNode): string {
   const extras = node.extras ?? {};
   const rawName = str(extras.nameDetail) ?? str(extras.name) ?? node.name.replaceAll("_", " ");
@@ -109,7 +116,7 @@ const parts: CatalogPart[] = raws.map(({ node, min, max }) => {
   ];
   const side: Side = sideOf(name, centroid[0]);
   const wikiRaw = str(extras.wikiLink);
-  const wiki = wikiRaw?.startsWith("https://en.wikipedia.org/wiki/") ? wikiRaw.split("#")[0] : undefined;
+  const wiki = wikiRaw?.startsWith("https://en.wikipedia.org/wiki/") ? repairParens(wikiRaw.split("#")[0]) : undefined;
   const key = slugify(name);
   return {
     id: key + (side === "left" ? "-l" : side === "right" ? "-r" : ""),
