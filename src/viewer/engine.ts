@@ -27,7 +27,7 @@ export type MotionDrawing = {
   axis: Vec3;
   range: [number, number];
   movingIds: string[];
-  cables: { id: string; from: Vec3; via: Vec3; to: Vec3; moveVia: boolean; color: string }[];
+  cables: { id: string; from: Vec3; via: Vec3; to: Vec3; viaWeight: number; color: string }[];
 };
 
 /** Seconds for a full sweep of a joint motion in one direction. */
@@ -116,7 +116,7 @@ export class AnatomyEngine {
     from: THREE.Vector3;
     via: THREE.Vector3;
     to: THREE.Vector3;
-    moveVia: boolean;
+    viaWeight: number;
   }[] = [];
   private motion: MotionDrawing | null = null;
   private motionPhase = 0;
@@ -362,7 +362,7 @@ export class AnatomyEngine {
         from: new THREE.Vector3(...c.from),
         via: new THREE.Vector3(...c.via),
         to: new THREE.Vector3(...c.to),
-        moveVia: c.moveVia,
+        viaWeight: c.viaWeight,
       });
     }
     this.applyMotion();
@@ -412,9 +412,19 @@ export class AnatomyEngine {
       this.posed.add(id);
     }
     const pivotWorld = new THREE.Vector3(...m.pivot);
-    const turn = (p: THREE.Vector3) => p.clone().sub(pivotWorld).applyQuaternion(q).add(pivotWorld);
+    const axisUnit = new THREE.Vector3(...m.axis).normalize();
+    const turn = (p: THREE.Vector3, weight = 1) =>
+      p
+        .clone()
+        .sub(pivotWorld)
+        .applyQuaternion(
+          weight === 1
+            ? q
+            : new THREE.Quaternion().setFromAxisAngle(axisUnit, ((deg * Math.PI) / 180) * weight),
+        )
+        .add(pivotWorld);
     for (const c of this.cables) {
-      const via = c.moveVia ? turn(c.via) : c.via;
+      const via = turn(c.via, c.viaWeight);
       const to = turn(c.to);
       AnatomyEngine.placeSegment(c.first, c.from, via);
       AnatomyEngine.placeSegment(c.second, via, to);

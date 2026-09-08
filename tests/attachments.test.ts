@@ -73,10 +73,13 @@ describe("attachmentsFor", () => {
     expect(a.insertion).toEqual(expect.arrayContaining(["clavicle", "scapula"]));
   });
 
-  test("deltoid: clavicle and scapula onto the humerus", () => {
-    const a = attachmentsFor(first("acromial-part-of-deltoid-muscle"))!;
-    expect(a.origin).toEqual(expect.arrayContaining(["clavicle", "scapula"]));
-    expect(a.insertion).toEqual(["humerus"]);
+  test("deltoid parts start on their own bone and insert on the humerus", () => {
+    const acromial = attachmentsFor(first("acromial-part-of-deltoid-muscle"))!;
+    expect(acromial.origin).toEqual(["scapula"]);
+    expect(acromial.insertion).toEqual(["humerus"]);
+    const clavicular = attachmentsFor(first("clavicular-part-of-deltoid-muscle"))!;
+    expect(clavicular.origin).toEqual(["clavicle"]);
+    expect(clavicular.insertion).toEqual(["humerus"]);
   });
 
   test("bones and muscles without facts have no attachments", () => {

@@ -28,6 +28,9 @@ describe("joint motion geometry", () => {
     );
     expect(keys(lengthens)).toContain("long-head-of-triceps-brachii");
     expect(angleAt(s, 1)).toBeCloseTo((120 * Math.PI) / 180);
+    // The ulnar head of pronator teres runs ulna to radius, so it rides with the forearm.
+    expect(s.movingIds).toContain("deep-head-of-pronator-teres-r");
+    expect(s.hiddenIds).not.toContain("deep-head-of-pronator-teres-r");
   });
 
   test("knee: hamstrings and gastrocnemius shorten, quadriceps lengthen, soleus rides with the leg", () => {
@@ -57,6 +60,9 @@ describe("joint motion geometry", () => {
     expect(keys(lengthens)).toContain("gluteus-maximus-muscle");
     expect(s.movingIds).toContain("femur-r");
     expect(s.movingIds).not.toContain("hip-bone-r");
+    // The short head of biceps femoris starts on the femur, so it does not cross the hip.
+    expect(s.movingIds).toContain("short-head-of-biceps-femoris-r");
+    expect(keys(lengthens)).toContain("long-head-of-biceps-femoris");
   });
 
   test("jaw: masseter and temporalis become cables and the mandible with its teeth moves", () => {

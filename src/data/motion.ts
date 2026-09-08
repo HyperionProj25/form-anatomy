@@ -1,5 +1,6 @@
 import { attachmentIds } from "./attachments";
 import { partById, partForSide, parts, partsByKey } from "./catalog";
+import { contact, jointPivot, reaches } from "./geometry";
 import { JOINTS, type JointId } from "./joints";
 import { contactPoint } from "./pull";
 import type { CatalogPart, Region, Vec3 } from "./types";
@@ -21,11 +22,12 @@ export type Cable = {
   to: Vec3;
   role: CableRole;
   /**
-   * True when the belly sits on the moving segment (gastrocnemius at the knee, brachioradialis at
-   * the elbow): then the belly moves too and the origin-to-belly segment is the one that stretches.
+   * How much of the joint rotation the belly follows, 0 (fixed) to 1 (rides with the segment). A
+   * smooth band across the joint plane, biased by which bones the muscle sits on, so a belly that
+   * straddles the joint moves part way. Vertex weights in the deformed mesh use the same band.
    */
-  moveVia: boolean;
-  /** Fractional length change of the segment that crosses the joint, over the full range; negative shortens. */
+  viaWeight: number;
+  /** Path length change over the full range as a fraction of the muscle's extent; negative shortens. */
   change: number;
 };
 
@@ -35,6 +37,10 @@ export type MotionSetup = {
   label: string;
   /** Joint centre estimate, model space. */
   pivot: Vec3;
+  /** Proximal-to-distal direction of the limb at this joint, unit length. */
+  dir: Vec3;
+  /** Half-width of the blend band across the joint plane, model units. */
+  band: number;
   /** Unit axis; positive rotation moves the segment through the motion named in label. */
   axis: Vec3;
   /** Degrees at phase 0 and phase 1. */
@@ -80,7 +86,14 @@ const CONFIG: Record<JointId, Config> = {
   ankle: { proximal: "tibia", distal: "talus", motion: "Ankle plantarflexion", range: [0, 35], sign: 1, regions: ["leg-foot"] },
 };
 
+/** Path length change, as a fraction of the muscle's extent, below which a cable reads as neutral. */
 const ROLE_THRESHOLD = 0.03;
+
+/** Smooth 0..1 ramp of a signed distance from the joint plane across a band of half-width `band`. */
+export function bandWeight(signedDistance: number, band: number): number {
+  const x = Math.min(1, Math.max(0, (signedDistance + band) / (2 * band)));
+  return x * x * (3 - 2 * x);
+}
 
 /** Rodrigues rotation of a point about an axis through a pivot. */
 export function rotatePoint(p: Vec3, pivot: Vec3, axis: Vec3, angle: number): Vec3 {
@@ -169,8 +182,13 @@ export function motionSetup(joint: JointId, side: MotionSide): MotionSetup | und
   const proximal = boneFor(cfg.proximal, side);
   const distal = boneFor(cfg.distal, side);
   if (!proximal || !distal) return undefined;
-  const pivot: Vec3 =
-    joint === "tmj"
+  // Joint centre from decoded mesh landmarks when the geometry build has it, else from boxes.
+  const measured = jointPivot(joint, side);
+  const pivot: Vec3 = measured
+    ? joint === "tmj"
+      ? [0, measured[1], measured[2]]
+      : measured
+    : joint === "tmj"
       ? [0, distal.bbox[1][1] - 0.006, distal.bbox[0][2] + 0.012]
       : clampToBox(proximal.bbox, [distal.centroid[0], distal.bbox[1][1], distal.centroid[2]]);
   const axis: Vec3 = [cfg.sign, 0, 0];
@@ -187,6 +205,7 @@ export function motionSetup(joint: JointId, side: MotionSide): MotionSetup | und
   const proximalSet = new Set(JOINTS[joint].proximal);
   const distalSet = new Set(JOINTS[joint].distal);
   const onSide = (p: CatalogPart) => joint === "tmj" || p.side === side || p.side === "midline";
+  const band = Math.min(0.06, Math.max(0.025, (distal.bbox[1][1] - distal.bbox[0][1]) * 0.12));
 
   const movingIds: string[] = [];
   const hiddenIds: string[] = [];
@@ -203,7 +222,12 @@ export function motionSetup(joint: JointId, side: MotionSide): MotionSetup | und
   for (const p of parts) {
     if (!onSide(p) || p.type === "bone") continue;
     if (p.type !== "muscle") continue;
-    const a = attachmentIds(p);
+    const all = attachmentIds(p);
+    // Keep only the bones this mesh actually reaches; the article covers every head of the muscle.
+    const a = all && {
+      origin: all.origin.filter((id) => reaches(p.id, id, "origin")),
+      insertion: all.insertion.filter((id) => reaches(p.id, id, "insertion")),
+    };
     const keys = new Set<string>();
     if (a) for (const id of [...a.origin, ...a.insertion]) keys.add(partById(id)?.key ?? "");
     keys.delete("");
@@ -217,20 +241,32 @@ export function motionSetup(joint: JointId, side: MotionSide): MotionSetup | und
         const insertionBone =
           nearestBone(a.insertion, distalSet, p.centroid) ?? nearestBone(all, distalSet, p.centroid);
         if (!originBone || !insertionBone) continue;
-        const from = contactPoint(originBone, endPoint(p, dir, false));
+        const from =
+          contact(p.id, originBone.id, "origin") ?? contactPoint(originBone, endPoint(p, dir, false));
         const via = p.centroid;
-        const to = contactPoint(insertionBone, endPoint(p, dir, true));
-        const moveVia = bellyMoves(p, movingBones, fixedBones);
-        // The segment that crosses the joint decides the role: belly to insertion when the belly is
-        // proximal, origin to belly when the belly rides on the moving segment.
-        const len0 = moveVia ? dist(from, via) : dist(via, to);
-        const len1 = moveVia
-          ? dist(from, rotatePoint(via, pivot, axis, endAngle))
-          : dist(via, rotatePoint(to, pivot, axis, endAngle));
-        const change = len0 > 0 ? (len1 - len0) / len0 : 0;
+        const to =
+          contact(p.id, insertionBone.id, "insertion") ?? contactPoint(insertionBone, endPoint(p, dir, true));
+        // The belly follows the segment by a smooth weight across the joint plane, biased by which
+        // bones the muscle sits on. The path origin -> belly -> insertion is then measured at both
+        // ends of the range, against the muscle's own size, so a short muscle with a tiny lever arm
+        // reads as neutral rather than as a huge percentage of a few millimetres.
+        const plane = (via[0] - pivot[0]) * dir[0] + (via[1] - pivot[1]) * dir[1] + (via[2] - pivot[2]) * dir[2];
+        const raw = bandWeight(plane, band);
+        const viaWeight = bellyMoves(p, movingBones, fixedBones) ? Math.max(raw, 0.7) : Math.min(raw, 0.3);
+        const via1 = rotatePoint(via, pivot, axis, endAngle * viaWeight);
+        const to1 = rotatePoint(to, pivot, axis, endAngle);
+        const len0 = dist(from, via) + dist(via, to);
+        const len1 = dist(from, via1) + dist(via1, to1);
+        const extent = Math.max(
+          p.bbox[1][0] - p.bbox[0][0],
+          p.bbox[1][1] - p.bbox[0][1],
+          p.bbox[1][2] - p.bbox[0][2],
+          0.02,
+        );
+        const change = (len1 - len0) / extent;
         const role: CableRole =
           change < -ROLE_THRESHOLD ? "shortens" : change > ROLE_THRESHOLD ? "lengthens" : "neutral";
-        cables.push({ key: p.key, id: p.id, name: p.name, from, via, to, role, moveVia, change });
+        cables.push({ key: p.key, id: p.id, name: p.name, from, via, to, role, viaWeight, change });
         hiddenIds.push(p.id);
       } else if (touchesDistal) movingIds.push(p.id);
       continue;
@@ -251,7 +287,21 @@ export function motionSetup(joint: JointId, side: MotionSide): MotionSetup | und
       .filter((p): p is CatalogPart => !!p && p.type === "bone")
       .reduce((r, p) => Math.max(r, dist(p.centroid, pivot)), 0) * 0.75,
   );
-  return { joint, side, label: cfg.motion, pivot, axis, range, movingIds, hiddenIds, cables, view, radius };
+  return {
+    joint,
+    side,
+    label: cfg.motion,
+    pivot,
+    dir,
+    band,
+    axis,
+    range,
+    movingIds,
+    hiddenIds,
+    cables,
+    view,
+    radius,
+  };
 }
 
 export function cableRoles(setup: MotionSetup): { shortens: Cable[]; lengthens: Cable[]; neutral: Cable[] } {

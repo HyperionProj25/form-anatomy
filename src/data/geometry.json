@@ -1,0 +1,9128 @@
+{
+ "generated": "2026-09-08",
+ "source": "public/body.glb decoded with draco3d; catalog-space coordinates",
+ "pivots": {
+  "elbow": {
+   "left": [
+    0.2159,
+    0.2487,
+    -0.0358
+   ],
+   "right": [
+    -0.2159,
+    0.2487,
+    -0.0358
+   ]
+  },
+  "knee": {
+   "left": [
+    0.0754,
+    -0.4063,
+    -0.0338
+   ],
+   "right": [
+    -0.0755,
+    -0.4063,
+    -0.0338
+   ]
+  },
+  "hip": {
+   "left": [
+    0.0861,
+    0.0103,
+    -0.0098
+   ],
+   "right": [
+    -0.0861,
+    0.0103,
+    -0.0098
+   ]
+  },
+  "shoulder": {
+   "left": [
+    0.1737,
+    0.5379,
+    -0.0269
+   ],
+   "right": [
+    -0.1737,
+    0.5379,
+    -0.0269
+   ]
+  },
+  "ankle": {
+   "left": [
+    0.0852,
+    -0.7823,
+    -0.0474
+   ],
+   "right": [
+    -0.0852,
+    -0.7823,
+    -0.0474
+   ]
+  },
+  "wrist": {
+   "left": [
+    0.26,
+    0.004,
+    0.0114
+   ],
+   "right": [
+    -0.26,
+    0.004,
+    0.0114
+   ]
+  },
+  "tmj": {
+   "left": [
+    0.0406,
+    0.7187,
+    0.0031
+   ],
+   "right": [
+    -0.0406,
+    0.7187,
+    0.0031
+   ]
+  }
+ },
+ "contacts": {
+  "abdominal-part-of-pectoralis-major-muscle-l": {
+   "o:clavicle-l": [
+    0.0643,
+    0.5408,
+    0.0281,
+    0.2081
+   ],
+   "o:body-of-sternum": [
+    0.0168,
+    0.3861,
+    0.1016,
+    0.0869
+   ],
+   "i:humerus-l": [
+    0.1923,
+    0.3981,
+    -0.0319,
+    0.1269
+   ]
+  },
+  "abdominal-part-of-pectoralis-major-muscle-r": {
+   "o:clavicle-r": [
+    -0.0643,
+    0.5408,
+    0.0281,
+    0.1586
+   ],
+   "o:body-of-sternum": [
+    -0.0168,
+    0.3861,
+    0.1016,
+    0.06
+   ],
+   "i:humerus-r": [
+    -0.1766,
+    0.4724,
+    -0.0224,
+    0.0047
+   ]
+  },
+  "abductor-digiti-minimi-of-hand-l": {
+   "o:pisiform-bone-l": [
+    0.2415,
+    -0.0174,
+    0.0285,
+    0.0583
+   ],
+   "i:ulna-l": [
+    0.2447,
+    -0.0027,
+    0.0088,
+    0.0232
+   ],
+   "i:proximal-phalanx-of-fifth-finger-of-hand-l": [
+    0.2375,
+    -0.0734,
+    0.0423,
+    0.0477
+   ]
+  },
+  "abductor-digiti-minimi-of-hand-r": {
+   "o:pisiform-bone-r": [
+    -0.2415,
+    -0.0174,
+    0.0285,
+    0.0583
+   ],
+   "i:ulna-r": [
+    -0.2447,
+    -0.0027,
+    0.0088,
+    0.0232
+   ],
+   "i:proximal-phalanx-of-fifth-finger-of-hand-r": [
+    -0.2375,
+    -0.0734,
+    0.0423,
+    0.0477
+   ]
+  },
+  "abductor-pollicis-brevis-l": {
+   "o:scaphoid-bone-l": [
+    0.2768,
+    -0.0016,
+    0.0223,
+    0.001
+   ],
+   "o:trapezium-bone-l": [
+    0.2771,
+    -0.0029,
+    0.0292,
+    0.0008
+   ],
+   "i:proximal-phalanx-of-first-finger-of-hand-l": [
+    0.3118,
+    -0.0449,
+    0.049,
+    0.0067
+   ]
+  },
+  "abductor-pollicis-brevis-r": {
+   "o:scaphoid-bone-r": [
+    -0.2768,
+    -0.0016,
+    0.0223,
+    0.001
+   ],
+   "o:trapezium-bone-r": [
+    -0.2771,
+    -0.0029,
+    0.0292,
+    0.0008
+   ],
+   "i:proximal-phalanx-of-first-finger-of-hand-r": [
+    -0.3118,
+    -0.0449,
+    0.049,
+    0.0067
+   ]
+  },
+  "abductor-pollicis-longus-l": {
+   "o:radius-l": [
+    0.245,
+    0.1349,
+    -0.0181,
+    0.0044
+   ],
+   "o:ulna-l": [
+    0.2376,
+    0.1738,
+    -0.0358,
+    0.0049
+   ],
+   "i:first-metacarpal-bone-l": [
+    0.2951,
+    -0.0128,
+    0.0244,
+    0.0017
+   ]
+  },
+  "abductor-pollicis-longus-r": {
+   "o:radius-r": [
+    -0.245,
+    0.1349,
+    -0.0181,
+    0.0044
+   ],
+   "o:ulna-r": [
+    -0.2376,
+    0.1738,
+    -0.0358,
+    0.0049
+   ],
+   "i:first-metacarpal-bone-r": [
+    -0.2951,
+    -0.0128,
+    0.0244,
+    0.0017
+   ]
+  },
+  "acromial-part-of-deltoid-muscle-l": {
+   "o:scapula-l": [
+    0.1716,
+    0.5518,
+    -0.0428,
+    0.0006
+   ],
+   "i:humerus-l": [
+    0.21,
+    0.4146,
+    -0.0274,
+    0.002
+   ]
+  },
+  "acromial-part-of-deltoid-muscle-r": {
+   "o:scapula-r": [
+    -0.1716,
+    0.5518,
+    -0.0428,
+    0.0006
+   ],
+   "i:humerus-r": [
+    -0.21,
+    0.4146,
+    -0.0274,
+    0.002
+   ]
+  },
+  "adductor-brevis-l": {
+   "o:hip-bone-l": [
+    0.0305,
+    -0.0183,
+    0.0205,
+    0.0074
+   ],
+   "i:femur-l": [
+    0.0877,
+    -0.1822,
+    -0.0004,
+    0.0027
+   ]
+  },
+  "adductor-brevis-r": {
+   "o:hip-bone-r": [
+    -0.0305,
+    -0.0183,
+    0.0205,
+    0.0074
+   ],
+   "i:femur-r": [
+    -0.0877,
+    -0.1822,
+    -0.0004,
+    0.0027
+   ]
+  },
+  "adductor-longus-l": {
+   "o:hip-bone-l": [
+    0.012,
+    -0.0225,
+    0.041,
+    0.001
+   ],
+   "i:femur-l": [
+    0.0823,
+    -0.2342,
+    -0.0073,
+    0.0031
+   ]
+  },
+  "adductor-longus-r": {
+   "o:hip-bone-r": [
+    -0.012,
+    -0.0225,
+    0.041,
+    0.001
+   ],
+   "i:femur-r": [
+    -0.0822,
+    -0.2342,
+    -0.0073,
+    0.0031
+   ]
+  },
+  "adductor-magnus-l": {
+   "o:hip-bone-l": [
+    0.0307,
+    -0.0555,
+    -0.0211,
+    0.0014
+   ],
+   "i:femur-l": [
+    0.057,
+    -0.3846,
+    -0.0405,
+    0.0031
+   ]
+  },
+  "adductor-magnus-r": {
+   "o:hip-bone-r": [
+    -0.0307,
+    -0.0555,
+    -0.0211,
+    0.0014
+   ],
+   "i:femur-r": [
+    -0.057,
+    -0.3846,
+    -0.0405,
+    0.0031
+   ]
+  },
+  "anconeus-muscle-l": {
+   "o:humerus-l": [
+    0.2319,
+    0.2468,
+    -0.0529,
+    0.0034
+   ],
+   "i:ulna-l": [
+    0.2219,
+    0.1883,
+    -0.0508,
+    0.003
+   ]
+  },
+  "anconeus-muscle-r": {
+   "o:humerus-r": [
+    -0.2319,
+    0.2468,
+    -0.0529,
+    0.0034
+   ],
+   "i:ulna-r": [
+    -0.2219,
+    0.1883,
+    -0.0508,
+    0.003
+   ]
+  },
+  "anterior-belly-of-digastric-muscle-l": {
+   "o:mandible": [
+    0.0054,
+    0.6447,
+    0.0649,
+    0.0004
+   ],
+   "i:hyoid-bone": [
+    0.0147,
+    0.6472,
+    0.0295,
+    0.0012
+   ]
+  },
+  "anterior-belly-of-digastric-muscle-r": {
+   "o:mandible": [
+    -0.0133,
+    0.6457,
+    0.0583,
+    0.0005
+   ],
+   "i:hyoid-bone": [
+    -0.0147,
+    0.6472,
+    0.0295,
+    0.0012
+   ]
+  },
+  "ary-epiglottic-part-of-oblique-arytenoid-muscle-l": {
+   "o:arytenoid-cartilage-l": [
+    0.0039,
+    0.6229,
+    0.0025,
+    0.0222
+   ]
+  },
+  "ary-epiglottic-part-of-oblique-arytenoid-muscle-r": {
+   "o:arytenoid-cartilage-r": [
+    -0.0039,
+    0.6229,
+    0.0025,
+    0.0222
+   ]
+  },
+  "ascending-part-of-trapezius-muscle-l": {
+   "o:occipital-bone": [
+    -0.0089,
+    0.6958,
+    -0.0474,
+    0.0389
+   ],
+   "o:vertebra-c7": [
+    -0.0013,
+    0.5933,
+    -0.0764,
+    0.0036
+   ],
+   "o:vertebra-t1": [
+    0,
+    0.57,
+    -0.0864,
+    0.0073
+   ],
+   "o:vertebra-t2": [
+    -0.0006,
+    0.5584,
+    -0.086,
+    0.018
+   ],
+   "o:vertebra-t3": [
+    0.0324,
+    0.5552,
+    -0.0714,
+    0.0226
+   ],
+   "o:vertebra-t4": [
+    0.0298,
+    0.5357,
+    -0.073,
+    0.0405
+   ],
+   "o:vertebra-t5": [
+    0.013,
+    0.5166,
+    -0.0699,
+    0.0614
+   ],
+   "o:vertebra-t6": [
+    0.0107,
+    0.4876,
+    -0.0767,
+    0.0879
+   ],
+   "o:vertebra-t7": [
+    0.0138,
+    0.4593,
+    -0.0807,
+    0.1153
+   ],
+   "o:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.1582
+   ],
+   "o:vertebra-t9": [
+    0.0175,
+    0.3987,
+    -0.0752,
+    0.1761
+   ],
+   "o:vertebra-t10": [
+    0.0112,
+    0.3694,
+    -0.0722,
+    0.2056
+   ],
+   "o:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.2364
+   ],
+   "o:vertebra-t12": [
+    0.0114,
+    0.305,
+    -0.0577,
+    0.2712
+   ],
+   "i:scapula-l": [
+    0.1169,
+    0.5454,
+    -0.0405,
+    0.0175
+   ],
+   "i:clavicle-l": [
+    0.102,
+    0.5648,
+    -0.0276,
+    0.0013
+   ]
+  },
+  "ascending-part-of-trapezius-muscle-r": {
+   "o:occipital-bone": [
+    0.0089,
+    0.6958,
+    -0.0474,
+    0.0389
+   ],
+   "o:vertebra-c7": [
+    0.0013,
+    0.5934,
+    -0.0754,
+    0.0036
+   ],
+   "o:vertebra-t1": [
+    0,
+    0.57,
+    -0.0864,
+    0.0073
+   ],
+   "o:vertebra-t2": [
+    -0.0006,
+    0.5584,
+    -0.086,
+    0.0181
+   ],
+   "o:vertebra-t3": [
+    -0.0324,
+    0.5552,
+    -0.0714,
+    0.0226
+   ],
+   "o:vertebra-t4": [
+    -0.0298,
+    0.5357,
+    -0.073,
+    0.0405
+   ],
+   "o:vertebra-t5": [
+    -0.013,
+    0.5166,
+    -0.0699,
+    0.0614
+   ],
+   "o:vertebra-t6": [
+    -0.0107,
+    0.4876,
+    -0.0767,
+    0.0879
+   ],
+   "o:vertebra-t7": [
+    -0.0138,
+    0.4593,
+    -0.0807,
+    0.1153
+   ],
+   "o:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.1563
+   ],
+   "o:vertebra-t9": [
+    -0.0175,
+    0.3987,
+    -0.0752,
+    0.1761
+   ],
+   "o:vertebra-t10": [
+    -0.0111,
+    0.3694,
+    -0.0722,
+    0.2056
+   ],
+   "o:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.2364
+   ],
+   "o:vertebra-t12": [
+    -0.0114,
+    0.305,
+    -0.0577,
+    0.2712
+   ],
+   "i:scapula-r": [
+    -0.1169,
+    0.5454,
+    -0.0405,
+    0.0175
+   ],
+   "i:clavicle-r": [
+    -0.102,
+    0.5648,
+    -0.0276,
+    0.0013
+   ]
+  },
+  "brachialis-muscle-l": {
+   "o:humerus-l": [
+    0.21,
+    0.4146,
+    -0.0274,
+    0.0011
+   ],
+   "i:ulna-l": [
+    0.2108,
+    0.2257,
+    -0.0274,
+    0.0028
+   ]
+  },
+  "brachialis-muscle-r": {
+   "o:humerus-r": [
+    -0.21,
+    0.4146,
+    -0.0274,
+    0.0011
+   ],
+   "i:ulna-r": [
+    -0.2108,
+    0.2257,
+    -0.0274,
+    0.0028
+   ]
+  },
+  "brachioradialis-muscle-l": {
+   "o:humerus-l": [
+    0.2165,
+    0.3383,
+    -0.0435,
+    0.0024
+   ],
+   "o:radius-l": [
+    0.2396,
+    0.2335,
+    -0.0238,
+    0.0105
+   ],
+   "i:radius-l": [
+    0.2873,
+    0.0026,
+    0.0158,
+    0.002
+   ]
+  },
+  "brachioradialis-muscle-r": {
+   "o:humerus-r": [
+    -0.2165,
+    0.3383,
+    -0.0435,
+    0.0024
+   ],
+   "o:radius-r": [
+    -0.2396,
+    0.2335,
+    -0.0238,
+    0.0105
+   ],
+   "i:radius-r": [
+    -0.2873,
+    0.0026,
+    0.0158,
+    0.002
+   ]
+  },
+  "bucinator-l": {
+   "o:mandible": [
+    0.0397,
+    0.6878,
+    0.0421,
+    0.0054
+   ],
+   "o:maxilla-l": [
+    0.0285,
+    0.6921,
+    0.0375,
+    0.0026
+   ]
+  },
+  "bucinator-r": {
+   "o:mandible": [
+    -0.0397,
+    0.6878,
+    0.0421,
+    0.0054
+   ],
+   "o:maxilla-r": [
+    -0.0285,
+    0.6921,
+    0.0375,
+    0.0026
+   ]
+  },
+  "clavicular-head-of-pectoralis-major-muscle-l": {
+   "o:clavicle-l": [
+    0.027,
+    0.5374,
+    0.039,
+    0.0027
+   ],
+   "i:humerus-l": [
+    0.1979,
+    0.4448,
+    -0.0192,
+    0.0027
+   ]
+  },
+  "clavicular-head-of-pectoralis-major-muscle-r": {
+   "o:clavicle-r": [
+    -0.027,
+    0.5374,
+    0.039,
+    0.0027
+   ],
+   "i:humerus-r": [
+    -0.1979,
+    0.4448,
+    -0.0192,
+    0.0027
+   ]
+  },
+  "clavicular-part-of-deltoid-muscle-l": {
+   "o:clavicle-l": [
+    0.1033,
+    0.5575,
+    -0.0081,
+    0.0021
+   ],
+   "i:humerus-l": [
+    0.2038,
+    0.4236,
+    -0.0222,
+    0.0028
+   ]
+  },
+  "clavicular-part-of-deltoid-muscle-r": {
+   "o:clavicle-r": [
+    -0.1033,
+    0.5575,
+    -0.0081,
+    0.0021
+   ],
+   "i:humerus-r": [
+    -0.2038,
+    0.4236,
+    -0.0222,
+    0.0028
+   ]
+  },
+  "coracobrachialis-muscle-l": {
+   "o:scapula-l": [
+    0.1419,
+    0.5337,
+    -0.0059,
+    0.0009
+   ],
+   "i:humerus-l": [
+    0.1931,
+    0.3788,
+    -0.0386,
+    0.001
+   ]
+  },
+  "coracobrachialis-muscle-r": {
+   "o:scapula-r": [
+    -0.1419,
+    0.5337,
+    -0.0059,
+    0.0009
+   ],
+   "i:humerus-r": [
+    -0.1931,
+    0.3788,
+    -0.0386,
+    0.001
+   ]
+  },
+  "corrugator-supercilii-l": {
+   "o:frontal-bone": [
+    0.0274,
+    0.7584,
+    0.077,
+    0.002
+   ]
+  },
+  "corrugator-supercilii-r": {
+   "o:frontal-bone": [
+    -0.0274,
+    0.7584,
+    0.077,
+    0.002
+   ]
+  },
+  "deep-head-of-flexor-pollicis-brevis-l": {
+   "o:trapezoid-bone-l": [
+    0.2761,
+    -0.0153,
+    0.0245,
+    0.0095
+   ],
+   "o:capitate-bone-l": [
+    0.2694,
+    -0.0093,
+    0.0218,
+    0.0115
+   ]
+  },
+  "deep-head-of-flexor-pollicis-brevis-r": {
+   "o:trapezoid-bone-r": [
+    -0.2761,
+    -0.0153,
+    0.0245,
+    0.0095
+   ],
+   "o:capitate-bone-r": [
+    -0.2694,
+    -0.0093,
+    0.0218,
+    0.0115
+   ]
+  },
+  "deep-head-of-pronator-teres-l": {
+   "o:ulna-l": [
+    0.2108,
+    0.2257,
+    -0.0274,
+    0.0032
+   ],
+   "i:radius-l": [
+    0.2627,
+    0.1361,
+    -0.0206,
+    0.0028
+   ]
+  },
+  "deep-head-of-pronator-teres-r": {
+   "o:ulna-r": [
+    -0.2108,
+    0.2257,
+    -0.0274,
+    0.0032
+   ],
+   "i:radius-r": [
+    -0.2627,
+    0.1361,
+    -0.0206,
+    0.0028
+   ]
+  },
+  "deep-part-of-masseter-l": {
+   "o:maxilla-l": [
+    0.0441,
+    0.7071,
+    0.0504,
+    0.0268
+   ],
+   "o:zygomatic-bone-l": [
+    0.0588,
+    0.7129,
+    0.0295,
+    0.0008
+   ],
+   "i:mandible": [
+    0.0414,
+    0.6641,
+    0.0204,
+    0.0015
+   ]
+  },
+  "deep-part-of-masseter-r": {
+   "o:maxilla-r": [
+    -0.0441,
+    0.7071,
+    0.0504,
+    0.0268
+   ],
+   "o:zygomatic-bone-r": [
+    -0.0588,
+    0.7129,
+    0.0295,
+    0.0008
+   ],
+   "i:mandible": [
+    -0.0414,
+    0.6641,
+    0.0204,
+    0.0015
+   ]
+  },
+  "depressor-anguli-oris-l": {
+   "o:mandible": [
+    0.0225,
+    0.6547,
+    0.0649,
+    0.0036
+   ]
+  },
+  "depressor-anguli-oris-r": {
+   "o:mandible": [
+    -0.0225,
+    0.6547,
+    0.0649,
+    0.0036
+   ]
+  },
+  "depressor-labii-inferioris-l": {
+   "o:mandible": [
+    0.0245,
+    0.6657,
+    0.061,
+    0.0039
+   ]
+  },
+  "depressor-labii-inferioris-r": {
+   "o:mandible": [
+    -0.0245,
+    0.6657,
+    0.061,
+    0.0039
+   ]
+  },
+  "depressor-septi-nasi-l": {
+   "o:maxilla-l": [
+    0,
+    0.6943,
+    0.0848,
+    0.0016
+   ]
+  },
+  "depressor-septi-nasi-r": {
+   "o:maxilla-r": [
+    0,
+    0.6943,
+    0.0848,
+    0.0016
+   ]
+  },
+  "descending-part-of-trapezius-muscle-l": {
+   "o:occipital-bone": [
+    0.0089,
+    0.6958,
+    -0.0474,
+    0.2522
+   ],
+   "o:vertebra-c7": [
+    0.0044,
+    0.5841,
+    -0.0797,
+    0.1359
+   ],
+   "o:vertebra-t1": [
+    0.0026,
+    0.5666,
+    -0.0861,
+    0.1174
+   ],
+   "o:vertebra-t2": [
+    0.0023,
+    0.5467,
+    -0.0926,
+    0.0967
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5203,
+    -0.1013,
+    0.0693
+   ],
+   "o:vertebra-t4": [
+    -0.0008,
+    0.4961,
+    -0.1032,
+    0.0451
+   ],
+   "o:vertebra-t5": [
+    0.0012,
+    0.4628,
+    -0.1008,
+    0.0142
+   ],
+   "o:vertebra-t6": [
+    0,
+    0.4275,
+    -0.1036,
+    0.0077
+   ],
+   "o:vertebra-t7": [
+    0.0008,
+    0.409,
+    -0.1014,
+    0.0118
+   ],
+   "o:vertebra-t8": [
+    0,
+    0.3713,
+    -0.1013,
+    0.0056
+   ],
+   "o:vertebra-t9": [
+    0,
+    0.3548,
+    -0.1,
+    0.0044
+   ],
+   "o:vertebra-t10": [
+    0.0014,
+    0.3179,
+    -0.0956,
+    0.0044
+   ],
+   "o:vertebra-t11": [
+    0,
+    0.2836,
+    -0.0852,
+    0.0048
+   ],
+   "o:vertebra-t12": [
+    0,
+    0.2661,
+    -0.0802,
+    0.0052
+   ],
+   "i:scapula-l": [
+    0.1347,
+    0.5455,
+    -0.0798,
+    0.0004
+   ],
+   "i:clavicle-l": [
+    0.1344,
+    0.5561,
+    -0.0562,
+    0.022
+   ]
+  },
+  "descending-part-of-trapezius-muscle-r": {
+   "o:occipital-bone": [
+    -0.0089,
+    0.6958,
+    -0.0474,
+    0.2522
+   ],
+   "o:vertebra-c7": [
+    -0.0044,
+    0.5841,
+    -0.0797,
+    0.1359
+   ],
+   "o:vertebra-t1": [
+    -0.0025,
+    0.5665,
+    -0.0861,
+    0.1174
+   ],
+   "o:vertebra-t2": [
+    0.0023,
+    0.5467,
+    -0.0926,
+    0.0968
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5203,
+    -0.1013,
+    0.0693
+   ],
+   "o:vertebra-t4": [
+    -0.0008,
+    0.4961,
+    -0.1032,
+    0.045
+   ],
+   "o:vertebra-t5": [
+    0.0012,
+    0.4628,
+    -0.1008,
+    0.0145
+   ],
+   "o:vertebra-t6": [
+    0,
+    0.4275,
+    -0.1036,
+    0.0077
+   ],
+   "o:vertebra-t7": [
+    -0.0008,
+    0.409,
+    -0.1014,
+    0.0118
+   ],
+   "o:vertebra-t8": [
+    0,
+    0.3713,
+    -0.1013,
+    0.0056
+   ],
+   "o:vertebra-t9": [
+    0,
+    0.3548,
+    -0.1,
+    0.0044
+   ],
+   "o:vertebra-t10": [
+    -0.0009,
+    0.3179,
+    -0.0956,
+    0.0045
+   ],
+   "o:vertebra-t11": [
+    0,
+    0.2836,
+    -0.0852,
+    0.0048
+   ],
+   "o:vertebra-t12": [
+    0,
+    0.2661,
+    -0.0802,
+    0.0052
+   ],
+   "i:scapula-r": [
+    -0.1347,
+    0.5455,
+    -0.0798,
+    0.0003
+   ],
+   "i:clavicle-r": [
+    -0.1344,
+    0.5561,
+    -0.0562,
+    0.022
+   ]
+  },
+  "diaphragm": {
+   "o:xiphoid-process": [
+    -0.0062,
+    0.3727,
+    0.0977,
+    0.0036
+   ],
+   "o:vertebra-l1": [
+    0.0012,
+    0.2755,
+    0.004,
+    0.0888
+   ],
+   "o:vertebra-l2": [
+    0.0119,
+    0.2417,
+    0.0085,
+    0.1225
+   ],
+   "o:vertebra-l3": [
+    -0.0164,
+    0.2078,
+    -0.034,
+    0.1562
+   ],
+   "o:sixth-rib-l": [
+    0.1041,
+    0.3677,
+    0.0722,
+    0.0083
+   ],
+   "o:sixth-rib-r": [
+    -0.1037,
+    0.3709,
+    0.0729,
+    0.0066
+   ],
+   "o:seventh-rib-l": [
+    0.1324,
+    0.3622,
+    0.0158,
+    0.0228
+   ],
+   "o:seventh-rib-r": [
+    -0.1324,
+    0.367,
+    -0.0025,
+    0.0129
+   ],
+   "o:eighth-rib-l": [
+    0.1212,
+    0.3538,
+    -0.0324,
+    0.0222
+   ],
+   "o:eighth-rib-r": [
+    -0.1176,
+    0.3566,
+    -0.0405,
+    0.0141
+   ],
+   "o:ninth-rib-l": [
+    0.0253,
+    0.3851,
+    -0.0563,
+    0.0287
+   ],
+   "o:ninth-rib-r": [
+    -0.0224,
+    0.3871,
+    -0.0524,
+    0.0243
+   ],
+   "o:tenth-rib-l": [
+    0.0216,
+    0.3624,
+    -0.0443,
+    0.0134
+   ],
+   "o:tenth-rib-r": [
+    -0.0216,
+    0.3624,
+    -0.0443,
+    0.0133
+   ],
+   "o:eleventh-rib-l": [
+    0.0237,
+    0.3333,
+    -0.0452,
+    0.0336
+   ],
+   "o:eleventh-rib-r": [
+    -0.023,
+    0.3325,
+    -0.0426,
+    0.0346
+   ],
+   "o:twelfth-rib-l": [
+    0.024,
+    0.2966,
+    -0.0334,
+    0.0681
+   ],
+   "o:twelfth-rib-r": [
+    -0.024,
+    0.2966,
+    -0.0334,
+    0.0675
+   ]
+  },
+  "extensor-carpi-radialis-brevis-l": {
+   "o:humerus-l": [
+    0.2441,
+    0.2651,
+    -0.0496,
+    0.0005
+   ],
+   "i:third-metacarpal-bone-l": [
+    0.2719,
+    -0.0224,
+    0.0103,
+    0.0017
+   ]
+  },
+  "extensor-carpi-radialis-brevis-r": {
+   "o:humerus-r": [
+    -0.2441,
+    0.2651,
+    -0.0496,
+    0.0005
+   ],
+   "i:third-metacarpal-bone-r": [
+    -0.2719,
+    -0.0224,
+    0.0103,
+    0.0017
+   ]
+  },
+  "extensor-carpi-radialis-longus-l": {
+   "o:humerus-l": [
+    0.232,
+    0.2941,
+    -0.0536,
+    0.0016
+   ],
+   "i:second-metacarpal-bone-l": [
+    0.2862,
+    -0.0268,
+    0.0151,
+    0.0009
+   ]
+  },
+  "extensor-carpi-radialis-longus-r": {
+   "o:humerus-r": [
+    -0.232,
+    0.2941,
+    -0.0536,
+    0.0016
+   ],
+   "i:second-metacarpal-bone-r": [
+    -0.2862,
+    -0.0268,
+    0.0151,
+    0.0009
+   ]
+  },
+  "extensor-digiti-minimi-l": {
+   "o:humerus-l": [
+    0.2319,
+    0.2468,
+    -0.0529,
+    0.0032
+   ]
+  },
+  "extensor-digiti-minimi-r": {
+   "o:humerus-r": [
+    -0.2319,
+    0.2468,
+    -0.0529,
+    0.0032
+   ]
+  },
+  "extensor-digitorum-l": {
+   "o:humerus-l": [
+    0.2425,
+    0.2632,
+    -0.0534,
+    0.0039
+   ],
+   "i:middle-phalanx-of-second-finger-of-hand-l": [
+    0.3123,
+    -0.1252,
+    0.0482,
+    0.0011
+   ],
+   "i:middle-phalanx-of-third-finger-of-hand-l": [
+    0.2787,
+    -0.1274,
+    0.0546,
+    0.0015
+   ],
+   "i:middle-phalanx-of-fourth-finger-of-hand-l": [
+    0.255,
+    -0.1278,
+    0.0588,
+    0.0003
+   ],
+   "i:distal-phalanx-of-second-finger-of-hand-l": [
+    0.3146,
+    -0.1359,
+    0.0699,
+    0.0165
+   ],
+   "i:distal-phalanx-of-third-finger-of-hand-l": [
+    0.2851,
+    -0.1449,
+    0.0787,
+    0.0238
+   ],
+   "i:distal-phalanx-of-fourth-finger-of-hand-l": [
+    0.2562,
+    -0.1421,
+    0.076,
+    0.0214
+   ]
+  },
+  "extensor-digitorum-r": {
+   "o:humerus-r": [
+    -0.2425,
+    0.2632,
+    -0.0534,
+    0.0039
+   ],
+   "i:middle-phalanx-of-second-finger-of-hand-r": [
+    -0.3123,
+    -0.1252,
+    0.0482,
+    0.0011
+   ],
+   "i:middle-phalanx-of-third-finger-of-hand-r": [
+    -0.2787,
+    -0.1274,
+    0.0546,
+    0.0015
+   ],
+   "i:middle-phalanx-of-fourth-finger-of-hand-r": [
+    -0.255,
+    -0.1278,
+    0.0588,
+    0.0003
+   ],
+   "i:distal-phalanx-of-second-finger-of-hand-r": [
+    -0.3146,
+    -0.1359,
+    0.0699,
+    0.0165
+   ],
+   "i:distal-phalanx-of-third-finger-of-hand-r": [
+    -0.2851,
+    -0.1449,
+    0.0787,
+    0.0238
+   ],
+   "i:distal-phalanx-of-fourth-finger-of-hand-r": [
+    -0.2562,
+    -0.1421,
+    0.076,
+    0.0214
+   ]
+  },
+  "extensor-digitorum-longus-l": {
+   "o:tibia-l": [
+    0.0874,
+    -0.7471,
+    -0.028,
+    0.0029
+   ],
+   "o:fibula-l": [
+    0.0964,
+    -0.7089,
+    -0.0474,
+    0.0053
+   ],
+   "i:middle-phalanx-of-second-finger-of-hand-l": [
+    0.3126,
+    -0.1412,
+    0.0677,
+    0.3698
+   ],
+   "i:middle-phalanx-of-third-finger-of-hand-l": [
+    0.2805,
+    -0.1484,
+    0.0741,
+    0.3489
+   ],
+   "i:middle-phalanx-of-fourth-finger-of-hand-l": [
+    0.2541,
+    -0.1413,
+    0.076,
+    0.3435
+   ],
+   "i:middle-phalanx-of-fifth-finger-of-hand-l": [
+    0.2261,
+    -0.1228,
+    0.0675,
+    0.3473
+   ],
+   "i:distal-phalanx-of-second-finger-of-hand-l": [
+    0.3167,
+    -0.1502,
+    0.0817,
+    0.3684
+   ],
+   "i:distal-phalanx-of-third-finger-of-hand-l": [
+    0.2868,
+    -0.1594,
+    0.0917,
+    0.348
+   ],
+   "i:distal-phalanx-of-fourth-finger-of-hand-l": [
+    0.2562,
+    -0.1421,
+    0.076,
+    0.3437
+   ],
+   "i:distal-phalanx-of-fifth-finger-of-hand-l": [
+    0.2299,
+    -0.1351,
+    0.078,
+    0.3401
+   ]
+  },
+  "extensor-digitorum-longus-r": {
+   "o:tibia-r": [
+    -0.0874,
+    -0.7471,
+    -0.028,
+    0.0029
+   ],
+   "o:fibula-r": [
+    -0.0964,
+    -0.7089,
+    -0.0474,
+    0.0054
+   ],
+   "i:middle-phalanx-of-second-finger-of-hand-r": [
+    -0.3126,
+    -0.1412,
+    0.0677,
+    0.3698
+   ],
+   "i:middle-phalanx-of-third-finger-of-hand-r": [
+    -0.2805,
+    -0.1484,
+    0.0741,
+    0.3489
+   ],
+   "i:middle-phalanx-of-fourth-finger-of-hand-r": [
+    -0.2541,
+    -0.1413,
+    0.076,
+    0.3435
+   ],
+   "i:middle-phalanx-of-fifth-finger-of-hand-r": [
+    -0.2261,
+    -0.1228,
+    0.0675,
+    0.3473
+   ],
+   "i:distal-phalanx-of-second-finger-of-hand-r": [
+    -0.3167,
+    -0.1502,
+    0.0817,
+    0.3684
+   ],
+   "i:distal-phalanx-of-third-finger-of-hand-r": [
+    -0.2868,
+    -0.1594,
+    0.0917,
+    0.348
+   ],
+   "i:distal-phalanx-of-fourth-finger-of-hand-r": [
+    -0.2562,
+    -0.1421,
+    0.076,
+    0.3437
+   ],
+   "i:distal-phalanx-of-fifth-finger-of-hand-r": [
+    -0.2299,
+    -0.1351,
+    0.078,
+    0.3401
+   ]
+  },
+  "extensor-hallucis-longus-l": {
+   "o:fibula-l": [
+    0.1042,
+    -0.6455,
+    -0.044,
+    0.0013
+   ],
+   "i:distal-phalanx-of-first-finger-of-foot-l": [
+    0.0827,
+    -0.8369,
+    0.1076,
+    0.0139
+   ]
+  },
+  "extensor-hallucis-longus-r": {
+   "o:fibula-r": [
+    -0.1042,
+    -0.6455,
+    -0.044,
+    0.0013
+   ],
+   "i:distal-phalanx-of-first-finger-of-foot-r": [
+    -0.0827,
+    -0.8369,
+    0.1076,
+    0.0139
+   ]
+  },
+  "extensor-indicis-l": {
+   "o:ulna-l": [
+    0.2374,
+    0.0369,
+    -0.0034,
+    0.0044
+   ]
+  },
+  "extensor-indicis-r": {
+   "o:ulna-r": [
+    -0.2374,
+    0.0369,
+    -0.0034,
+    0.0044
+   ]
+  },
+  "extensor-pollicis-brevis-l": {
+   "o:radius-l": [
+    0.2539,
+    0.0862,
+    -0.0102,
+    0.0055
+   ]
+  },
+  "extensor-pollicis-brevis-r": {
+   "o:radius-r": [
+    -0.2539,
+    0.0862,
+    -0.0102,
+    0.0055
+   ]
+  },
+  "extensor-pollicis-longus-l": {
+   "o:ulna-l": [
+    0.2406,
+    0.063,
+    0.0009,
+    0.0038
+   ]
+  },
+  "extensor-pollicis-longus-r": {
+   "o:ulna-r": [
+    -0.2406,
+    0.063,
+    0.0009,
+    0.0038
+   ]
+  },
+  "external-abdominal-oblique-muscle-l": {
+   "o:fifth-rib-l": [
+    0.1234,
+    0.41,
+    0.0391,
+    0.0012
+   ],
+   "o:sixth-rib-l": [
+    0.1372,
+    0.3873,
+    0.0162,
+    0.0016
+   ],
+   "o:seventh-rib-l": [
+    0.1286,
+    0.3449,
+    0.0603,
+    0.0012
+   ],
+   "o:eighth-rib-l": [
+    0.1316,
+    0.3012,
+    0.0379,
+    0.0009
+   ],
+   "o:ninth-rib-l": [
+    0.1195,
+    0.3071,
+    -0.0468,
+    0.0022
+   ],
+   "o:tenth-rib-l": [
+    0.1174,
+    0.2618,
+    -0.0372,
+    0.0013
+   ],
+   "o:eleventh-rib-l": [
+    0.1138,
+    0.2323,
+    -0.0236,
+    0.0016
+   ],
+   "o:twelfth-rib-l": [
+    0.0766,
+    0.2307,
+    -0.0555,
+    0.0034
+   ],
+   "i:hip-bone-l": [
+    0.1206,
+    0.0937,
+    0.0529,
+    0.0036
+   ],
+   "i:xiphoid-process": [
+    0,
+    0.3629,
+    0.099,
+    0.1725
+   ]
+  },
+  "external-abdominal-oblique-muscle-r": {
+   "o:fifth-rib-r": [
+    -0.1234,
+    0.41,
+    0.0391,
+    0.0012
+   ],
+   "o:sixth-rib-r": [
+    -0.1372,
+    0.3873,
+    0.0162,
+    0.0016
+   ],
+   "o:seventh-rib-r": [
+    -0.1286,
+    0.3449,
+    0.0603,
+    0.0012
+   ],
+   "o:eighth-rib-r": [
+    -0.1316,
+    0.3012,
+    0.0379,
+    0.0009
+   ],
+   "o:ninth-rib-r": [
+    -0.1195,
+    0.3071,
+    -0.0468,
+    0.0022
+   ],
+   "o:tenth-rib-r": [
+    -0.1174,
+    0.2618,
+    -0.0372,
+    0.0013
+   ],
+   "o:eleventh-rib-r": [
+    -0.1138,
+    0.2323,
+    -0.0236,
+    0.0016
+   ],
+   "o:twelfth-rib-r": [
+    -0.0766,
+    0.2307,
+    -0.0555,
+    0.0034
+   ],
+   "i:hip-bone-r": [
+    -0.1206,
+    0.0937,
+    0.0529,
+    0.0036
+   ],
+   "i:xiphoid-process": [
+    0,
+    0.3629,
+    0.099,
+    0.1725
+   ]
+  },
+  "external-part-of-thyro-arytenoid-muscle-l": {
+   "o:thyroid-cartilage": [
+    0.0023,
+    0.6177,
+    0.021,
+    0.001
+   ],
+   "i:arytenoid-cartilage-l": [
+    0.0067,
+    0.6187,
+    0.0016,
+    0.0001
+   ]
+  },
+  "external-part-of-thyro-arytenoid-muscle-r": {
+   "o:thyroid-cartilage": [
+    -0.0023,
+    0.6177,
+    0.021,
+    0.001
+   ],
+   "i:arytenoid-cartilage-r": [
+    -0.0067,
+    0.6187,
+    0.0016,
+    0.0002
+   ]
+  },
+  "fibularis-brevis-muscle-l": {
+   "o:fibula-l": [
+    0.1135,
+    -0.5845,
+    -0.0536,
+    0.0018
+   ],
+   "i:fifth-metatarsal-bone-l": [
+    0.1134,
+    -0.8297,
+    -0.0176,
+    0.0009
+   ]
+  },
+  "fibularis-brevis-muscle-r": {
+   "o:fibula-r": [
+    -0.1135,
+    -0.5845,
+    -0.0536,
+    0.0018
+   ],
+   "i:fifth-metatarsal-bone-r": [
+    -0.1134,
+    -0.8297,
+    -0.0176,
+    0.001
+   ]
+  },
+  "fibularis-longus-muscle-l": {
+   "o:fibula-l": [
+    0.1259,
+    -0.457,
+    -0.0449,
+    0.0016
+   ],
+   "i:medial-cuneiform-bone-l": [
+    0.078,
+    -0.8192,
+    0.0172,
+    0.0007
+   ],
+   "i:first-metatarsal-bone-l": [
+    0.0794,
+    -0.8167,
+    0.0173,
+    0.0015
+   ]
+  },
+  "fibularis-longus-muscle-r": {
+   "o:fibula-r": [
+    -0.1259,
+    -0.457,
+    -0.0449,
+    0.0016
+   ],
+   "i:medial-cuneiform-bone-r": [
+    -0.0779,
+    -0.8192,
+    0.0172,
+    0.0007
+   ],
+   "i:first-metatarsal-bone-r": [
+    -0.0794,
+    -0.8167,
+    0.0173,
+    0.0015
+   ]
+  },
+  "fibularis-tertius-muscle-l": {
+   "o:fibula-l": [
+    0.0974,
+    -0.7364,
+    -0.0455,
+    0.003
+   ]
+  },
+  "fibularis-tertius-muscle-r": {
+   "o:fibula-r": [
+    -0.0974,
+    -0.7364,
+    -0.0455,
+    0.003
+   ]
+  },
+  "flexor-carpi-radialis-l": {
+   "o:humerus-l": [
+    0.1899,
+    0.2499,
+    -0.0325,
+    0.0024
+   ],
+   "i:second-metacarpal-bone-l": [
+    0.2771,
+    -0.0233,
+    0.0263,
+    0.0007
+   ],
+   "i:third-metacarpal-bone-l": [
+    0.2703,
+    -0.0286,
+    0.0223,
+    0.0075
+   ]
+  },
+  "flexor-carpi-radialis-r": {
+   "o:humerus-r": [
+    -0.1899,
+    0.2499,
+    -0.0325,
+    0.0024
+   ],
+   "i:second-metacarpal-bone-r": [
+    -0.2771,
+    -0.0233,
+    0.0263,
+    0.0007
+   ],
+   "i:third-metacarpal-bone-r": [
+    -0.2703,
+    -0.0286,
+    0.0223,
+    0.0075
+   ]
+  },
+  "flexor-digiti-minimi-of-hand-l": {
+   "o:hamate-bone-l": [
+    0.253,
+    -0.0146,
+    0.0295,
+    0.002
+   ],
+   "i:proximal-phalanx-of-fifth-finger-of-hand-l": [
+    0.2343,
+    -0.0742,
+    0.0433,
+    0.0011
+   ]
+  },
+  "flexor-digiti-minimi-of-hand-r": {
+   "o:hamate-bone-r": [
+    -0.253,
+    -0.0146,
+    0.0295,
+    0.002
+   ],
+   "i:proximal-phalanx-of-fifth-finger-of-hand-r": [
+    -0.2343,
+    -0.0742,
+    0.0433,
+    0.0011
+   ]
+  },
+  "flexor-digitorum-longus-l": {
+   "o:tibia-l": [
+    0.0761,
+    -0.5151,
+    -0.0396,
+    0.0037
+   ],
+   "i:distal-phalanx-of-second-finger-of-foot-l": [
+    0.1027,
+    -0.8466,
+    0.1202,
+    0.0013
+   ],
+   "i:distal-phalanx-of-third-finger-of-foot-l": [
+    0.1205,
+    -0.8479,
+    0.1174,
+    0.0005
+   ],
+   "i:distal-phalanx-of-fourth-finger-of-foot-l": [
+    0.1316,
+    -0.8483,
+    0.1039,
+    0.0013
+   ],
+   "i:distal-phalanx-of-fifth-finger-of-foot-l": [
+    0.1411,
+    -0.8479,
+    0.0846,
+    0.0004
+   ]
+  },
+  "flexor-digitorum-longus-r": {
+   "o:tibia-r": [
+    -0.0761,
+    -0.5151,
+    -0.0396,
+    0.0037
+   ],
+   "i:distal-phalanx-of-second-finger-of-foot-r": [
+    -0.1027,
+    -0.8466,
+    0.1202,
+    0.0013
+   ],
+   "i:distal-phalanx-of-third-finger-of-foot-r": [
+    -0.1205,
+    -0.8479,
+    0.1174,
+    0.0005
+   ],
+   "i:distal-phalanx-of-fourth-finger-of-foot-r": [
+    -0.1316,
+    -0.8483,
+    0.1039,
+    0.0013
+   ],
+   "i:distal-phalanx-of-fifth-finger-of-foot-r": [
+    -0.1411,
+    -0.8479,
+    0.0846,
+    0.0004
+   ]
+  },
+  "flexor-digitorum-profundus-l": {
+   "o:ulna-l": [
+    0.2396,
+    0.1318,
+    -0.0181,
+    0.0007
+   ],
+   "i:distal-phalanx-of-second-finger-of-hand-l": [
+    0.3159,
+    -0.1369,
+    0.073,
+    0.0008
+   ],
+   "i:distal-phalanx-of-third-finger-of-hand-l": [
+    0.2851,
+    -0.1449,
+    0.0787,
+    0.0014
+   ],
+   "i:distal-phalanx-of-fourth-finger-of-hand-l": [
+    0.2571,
+    -0.1392,
+    0.0828,
+    0.0016
+   ],
+   "i:distal-phalanx-of-fifth-finger-of-hand-l": [
+    0.2317,
+    -0.1218,
+    0.0695,
+    0.0004
+   ]
+  },
+  "flexor-digitorum-profundus-r": {
+   "o:ulna-r": [
+    -0.2396,
+    0.1318,
+    -0.0181,
+    0.0007
+   ],
+   "i:distal-phalanx-of-second-finger-of-hand-r": [
+    -0.3159,
+    -0.1369,
+    0.073,
+    0.0008
+   ],
+   "i:distal-phalanx-of-third-finger-of-hand-r": [
+    -0.2851,
+    -0.1449,
+    0.0787,
+    0.0014
+   ],
+   "i:distal-phalanx-of-fourth-finger-of-hand-r": [
+    -0.2571,
+    -0.1392,
+    0.0828,
+    0.0016
+   ],
+   "i:distal-phalanx-of-fifth-finger-of-hand-r": [
+    -0.2317,
+    -0.1218,
+    0.0695,
+    0.0004
+   ]
+  },
+  "flexor-hallucis-longus-l": {
+   "o:fibula-l": [
+    0.1004,
+    -0.6194,
+    -0.0529,
+    0.0011
+   ],
+   "i:distal-phalanx-of-first-finger-of-foot-l": [
+    0.0753,
+    -0.8476,
+    0.1159,
+    0.0019
+   ]
+  },
+  "flexor-hallucis-longus-r": {
+   "o:fibula-r": [
+    -0.1004,
+    -0.6194,
+    -0.0529,
+    0.0011
+   ],
+   "i:distal-phalanx-of-first-finger-of-foot-r": [
+    -0.0753,
+    -0.8476,
+    0.1159,
+    0.0019
+   ]
+  },
+  "flexor-pollicis-longus-l": {
+   "o:radius-l": [
+    0.2627,
+    0.1361,
+    -0.0206,
+    0.004
+   ],
+   "i:distal-phalanx-of-first-finger-of-hand-l": [
+    0.3221,
+    -0.0683,
+    0.0598,
+    0.0006
+   ]
+  },
+  "flexor-pollicis-longus-r": {
+   "o:radius-r": [
+    -0.2627,
+    0.1361,
+    -0.0206,
+    0.004
+   ],
+   "i:distal-phalanx-of-first-finger-of-hand-r": [
+    -0.3221,
+    -0.0683,
+    0.0598,
+    0.0006
+   ]
+  },
+  "genioglossus-muscle-l": {
+   "o:mandible": [
+    0.0034,
+    0.6609,
+    0.0712,
+    0.0019
+   ],
+   "i:hyoid-bone": [
+    0.0021,
+    0.6435,
+    0.0315,
+    0.0013
+   ]
+  },
+  "genioglossus-muscle-r": {
+   "o:mandible": [
+    -0.0036,
+    0.661,
+    0.0713,
+    0.0019
+   ],
+   "i:hyoid-bone": [
+    -0.0022,
+    0.6428,
+    0.0325,
+    0.0012
+   ]
+  },
+  "geniohyoid-muscle-l": {
+   "o:mandible": [
+    0.0017,
+    0.6453,
+    0.0672,
+    0.0019
+   ],
+   "i:hyoid-bone": [
+    0.0021,
+    0.6435,
+    0.0315,
+    0.002
+   ]
+  },
+  "geniohyoid-muscle-r": {
+   "o:mandible": [
+    -0.0017,
+    0.6453,
+    0.0672,
+    0.0019
+   ],
+   "i:hyoid-bone": [
+    -0.0021,
+    0.6439,
+    0.0308,
+    0.0016
+   ]
+  },
+  "gluteus-maximus-muscle-l": {
+   "o:hip-bone-l": [
+    0.0388,
+    0.0852,
+    -0.081,
+    0.0015
+   ],
+   "o:sacrum": [
+    0.034,
+    0.0302,
+    -0.0796,
+    0.0011
+   ],
+   "i:femur-l": [
+    0.1223,
+    -0.088,
+    -0.0246,
+    0.0031
+   ]
+  },
+  "gluteus-maximus-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0387,
+    0.0852,
+    -0.081,
+    0.0015
+   ],
+   "o:sacrum": [
+    -0.0349,
+    0.0309,
+    -0.0793,
+    0.0003
+   ],
+   "i:femur-r": [
+    -0.1223,
+    -0.088,
+    -0.0246,
+    0.0031
+   ]
+  },
+  "gluteus-medius-muscle-l": {
+   "o:hip-bone-l": [
+    0.1192,
+    0.1007,
+    0.0023,
+    0.002
+   ],
+   "i:femur-l": [
+    0.124,
+    -0.0063,
+    -0.0399,
+    0.002
+   ]
+  },
+  "gluteus-medius-muscle-r": {
+   "o:hip-bone-r": [
+    -0.1192,
+    0.1007,
+    0.0023,
+    0.002
+   ],
+   "i:femur-r": [
+    -0.124,
+    -0.0063,
+    -0.0399,
+    0.002
+   ]
+  },
+  "gluteus-minimus-muscle-l": {
+   "o:hip-bone-l": [
+    0.1192,
+    0.1007,
+    0.0023,
+    0.0019
+   ],
+   "i:femur-l": [
+    0.1308,
+    0.0017,
+    -0.0195,
+    0.0019
+   ]
+  },
+  "gluteus-minimus-muscle-r": {
+   "o:hip-bone-r": [
+    -0.1192,
+    0.1007,
+    0.0023,
+    0.0019
+   ],
+   "i:femur-r": [
+    -0.1308,
+    0.0017,
+    -0.0195,
+    0.0019
+   ]
+  },
+  "gracilis-muscle-l": {
+   "o:hip-bone-l": [
+    0.0122,
+    -0.0309,
+    0.0318,
+    0.0021
+   ],
+   "i:tibia-l": [
+    0.039,
+    -0.4339,
+    -0.0305,
+    0.003
+   ]
+  },
+  "gracilis-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0122,
+    -0.0309,
+    0.0318,
+    0.0021
+   ],
+   "i:tibia-r": [
+    -0.039,
+    -0.4339,
+    -0.0305,
+    0.003
+   ]
+  },
+  "humeral-head-of-extensor-carpi-ulnaris-l": {
+   "o:humerus-l": [
+    0.2335,
+    0.2659,
+    -0.0574,
+    0.0059
+   ],
+   "i:fifth-metacarpal-bone-l": [
+    0.2442,
+    -0.0209,
+    0.0201,
+    0.0088
+   ]
+  },
+  "humeral-head-of-extensor-carpi-ulnaris-r": {
+   "o:humerus-r": [
+    -0.2335,
+    0.2659,
+    -0.0574,
+    0.0059
+   ],
+   "i:fifth-metacarpal-bone-r": [
+    -0.2442,
+    -0.0209,
+    0.0201,
+    0.0088
+   ]
+  },
+  "humeral-head-of-flexor-carpi-ulnaris-l": {
+   "o:humerus-l": [
+    0.1876,
+    0.2395,
+    -0.0404,
+    0.0016
+   ],
+   "i:pisiform-bone-l": [
+    0.2459,
+    -0.0095,
+    0.0322,
+    0.0012
+   ],
+   "i:hamate-bone-l": [
+    0.2536,
+    -0.0164,
+    0.0244,
+    0.0014
+   ],
+   "i:fifth-metacarpal-bone-l": [
+    0.2416,
+    -0.0262,
+    0.0236,
+    0.001
+   ]
+  },
+  "humeral-head-of-flexor-carpi-ulnaris-r": {
+   "o:humerus-r": [
+    -0.1876,
+    0.2395,
+    -0.0404,
+    0.0016
+   ],
+   "i:pisiform-bone-r": [
+    -0.2459,
+    -0.0095,
+    0.0322,
+    0.0012
+   ],
+   "i:hamate-bone-r": [
+    -0.2536,
+    -0.0164,
+    0.0244,
+    0.0014
+   ],
+   "i:fifth-metacarpal-bone-r": [
+    -0.2416,
+    -0.0262,
+    0.0236,
+    0.001
+   ]
+  },
+  "humero-ulnar-head-of-flexor-digitorum-superficialis-l": {
+   "o:humerus-l": [
+    0.1915,
+    0.2406,
+    -0.0355,
+    0.0015
+   ],
+   "o:ulna-l": [
+    0.2108,
+    0.2257,
+    -0.0274,
+    0.0033
+   ],
+   "i:middle-phalanx-of-second-finger-of-hand-l": [
+    0.3151,
+    -0.1253,
+    0.0556,
+    0.0007
+   ],
+   "i:middle-phalanx-of-third-finger-of-hand-l": [
+    0.2833,
+    -0.1231,
+    0.063,
+    0.0009
+   ],
+   "i:middle-phalanx-of-fourth-finger-of-hand-l": [
+    0.2565,
+    -0.1176,
+    0.0616,
+    0.0012
+   ],
+   "i:middle-phalanx-of-fifth-finger-of-hand-l": [
+    0.2362,
+    -0.1043,
+    0.0587,
+    0.0013
+   ]
+  },
+  "humero-ulnar-head-of-flexor-digitorum-superficialis-r": {
+   "o:humerus-r": [
+    -0.1916,
+    0.2406,
+    -0.0355,
+    0.0015
+   ],
+   "o:ulna-r": [
+    -0.2108,
+    0.2257,
+    -0.0274,
+    0.0032
+   ],
+   "i:middle-phalanx-of-second-finger-of-hand-r": [
+    -0.3151,
+    -0.1253,
+    0.0556,
+    0.0007
+   ],
+   "i:middle-phalanx-of-third-finger-of-hand-r": [
+    -0.2833,
+    -0.1231,
+    0.063,
+    0.0009
+   ],
+   "i:middle-phalanx-of-fourth-finger-of-hand-r": [
+    -0.2565,
+    -0.1176,
+    0.0616,
+    0.0012
+   ],
+   "i:middle-phalanx-of-fifth-finger-of-hand-r": [
+    -0.2362,
+    -0.1043,
+    0.0587,
+    0.0013
+   ]
+  },
+  "hyoglossus-muscle-l": {
+   "o:hyoid-bone": [
+    0.0147,
+    0.6472,
+    0.0295,
+    0.0141
+   ]
+  },
+  "hyoglossus-muscle-r": {
+   "o:hyoid-bone": [
+    -0.0147,
+    0.6472,
+    0.0295,
+    0.0141
+   ]
+  },
+  "iliacus-muscle-l": {
+   "o:hip-bone-l": [
+    0.1121,
+    0.1424,
+    -0.0058,
+    0.0034
+   ],
+   "i:femur-l": [
+    0.0881,
+    -0.0087,
+    0.0128,
+    0.0019
+   ]
+  },
+  "iliacus-muscle-r": {
+   "o:hip-bone-r": [
+    -0.1121,
+    0.1424,
+    -0.0058,
+    0.0034
+   ],
+   "i:femur-r": [
+    -0.0881,
+    -0.0087,
+    0.0128,
+    0.0019
+   ]
+  },
+  "iliocostalis-colli-muscle-l": {
+   "o:hip-bone-l": [
+    0.0976,
+    0.1547,
+    -0.0303,
+    0.442
+   ],
+   "o:sacrum": [
+    0.0267,
+    0.1231,
+    -0.0459,
+    0.4702
+   ],
+   "o:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.2565
+   ],
+   "o:vertebra-t12": [
+    0.0171,
+    0.3049,
+    -0.0565,
+    0.2895
+   ],
+   "o:vertebra-l1": [
+    0.0138,
+    0.2748,
+    0,
+    0.3223
+   ],
+   "o:vertebra-l2": [
+    0.0134,
+    0.2411,
+    -0.0385,
+    0.3532
+   ],
+   "o:vertebra-l3": [
+    0.0164,
+    0.2078,
+    -0.034,
+    0.3862
+   ],
+   "o:vertebra-l4": [
+    0.0199,
+    0.1791,
+    -0.0357,
+    0.4147
+   ],
+   "o:vertebra-l5": [
+    0.0248,
+    0.1506,
+    -0.0386,
+    0.4428
+   ]
+  },
+  "iliocostalis-colli-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0976,
+    0.1547,
+    -0.0303,
+    0.442
+   ],
+   "o:sacrum": [
+    -0.0263,
+    0.1231,
+    -0.0454,
+    0.4702
+   ],
+   "o:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.2565
+   ],
+   "o:vertebra-t12": [
+    -0.0171,
+    0.3049,
+    -0.0565,
+    0.2895
+   ],
+   "o:vertebra-l1": [
+    -0.0138,
+    0.2748,
+    0,
+    0.3223
+   ],
+   "o:vertebra-l2": [
+    -0.0134,
+    0.2411,
+    -0.0385,
+    0.3532
+   ],
+   "o:vertebra-l3": [
+    -0.0164,
+    0.2078,
+    -0.034,
+    0.3862
+   ],
+   "o:vertebra-l4": [
+    -0.0199,
+    0.1791,
+    -0.0357,
+    0.4147
+   ],
+   "o:vertebra-l5": [
+    -0.0248,
+    0.1506,
+    -0.0386,
+    0.4428
+   ]
+  },
+  "iliocostalis-lumborum-muscle-l": {
+   "o:hip-bone-l": [
+    0.0858,
+    0.1512,
+    -0.0428,
+    0.1239
+   ],
+   "o:sacrum": [
+    0.0267,
+    0.1231,
+    -0.0459,
+    0.1576
+   ],
+   "o:vertebra-t11": [
+    0.0288,
+    0.3182,
+    -0.0658,
+    0.0427
+   ],
+   "o:vertebra-t12": [
+    0.0199,
+    0.2866,
+    -0.0649,
+    0.0351
+   ],
+   "o:vertebra-l1": [
+    0.0219,
+    0.2619,
+    -0.0579,
+    0.0407
+   ],
+   "o:vertebra-l2": [
+    0.04,
+    0.2278,
+    -0.0456,
+    0.0603
+   ],
+   "o:vertebra-l3": [
+    0.02,
+    0.2064,
+    -0.042,
+    0.0869
+   ],
+   "o:vertebra-l4": [
+    0.0233,
+    0.1762,
+    -0.0437,
+    0.11
+   ],
+   "o:vertebra-l5": [
+    0.0248,
+    0.1506,
+    -0.0386,
+    0.1342
+   ]
+  },
+  "iliocostalis-lumborum-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0858,
+    0.1512,
+    -0.0428,
+    0.1239
+   ],
+   "o:sacrum": [
+    -0.0263,
+    0.1231,
+    -0.0454,
+    0.1578
+   ],
+   "o:vertebra-t11": [
+    -0.0288,
+    0.3182,
+    -0.0658,
+    0.0427
+   ],
+   "o:vertebra-t12": [
+    -0.0199,
+    0.2866,
+    -0.0649,
+    0.035
+   ],
+   "o:vertebra-l1": [
+    -0.0219,
+    0.2619,
+    -0.0579,
+    0.0407
+   ],
+   "o:vertebra-l2": [
+    -0.04,
+    0.2278,
+    -0.0456,
+    0.0603
+   ],
+   "o:vertebra-l3": [
+    -0.0199,
+    0.2064,
+    -0.042,
+    0.0869
+   ],
+   "o:vertebra-l4": [
+    -0.0233,
+    0.1762,
+    -0.0437,
+    0.11
+   ],
+   "o:vertebra-l5": [
+    -0.0266,
+    0.1491,
+    -0.0421,
+    0.1341
+   ]
+  },
+  "iliocostalis-thoracis-muscle-l": {
+   "o:hip-bone-l": [
+    0.0976,
+    0.1547,
+    -0.0303,
+    0.3443
+   ],
+   "o:sacrum": [
+    0.0267,
+    0.1231,
+    -0.0459,
+    0.3781
+   ],
+   "o:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.1693
+   ],
+   "o:vertebra-t12": [
+    0.0171,
+    0.3049,
+    -0.0565,
+    0.2019
+   ],
+   "o:vertebra-l1": [
+    0.0136,
+    0.2681,
+    -0.0485,
+    0.2392
+   ],
+   "o:vertebra-l2": [
+    0.0134,
+    0.2411,
+    -0.0385,
+    0.2669
+   ],
+   "o:vertebra-l3": [
+    0.02,
+    0.2064,
+    -0.042,
+    0.2984
+   ],
+   "o:vertebra-l4": [
+    0.0199,
+    0.1791,
+    -0.0357,
+    0.3258
+   ],
+   "o:vertebra-l5": [
+    0.0248,
+    0.1506,
+    -0.0386,
+    0.3523
+   ]
+  },
+  "iliocostalis-thoracis-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0976,
+    0.1547,
+    -0.0303,
+    0.3443
+   ],
+   "o:sacrum": [
+    -0.0263,
+    0.1231,
+    -0.0454,
+    0.3782
+   ],
+   "o:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.1693
+   ],
+   "o:vertebra-t12": [
+    -0.0171,
+    0.3049,
+    -0.0565,
+    0.2019
+   ],
+   "o:vertebra-l1": [
+    -0.0136,
+    0.2681,
+    -0.0485,
+    0.2392
+   ],
+   "o:vertebra-l2": [
+    -0.0134,
+    0.2411,
+    -0.0385,
+    0.2669
+   ],
+   "o:vertebra-l3": [
+    -0.0199,
+    0.2064,
+    -0.042,
+    0.2984
+   ],
+   "o:vertebra-l4": [
+    -0.0199,
+    0.1791,
+    -0.0357,
+    0.3258
+   ],
+   "o:vertebra-l5": [
+    -0.0248,
+    0.1506,
+    -0.0386,
+    0.3523
+   ]
+  },
+  "inferior-gemellus-muscle-l": {
+   "o:hip-bone-l": [
+    0.0704,
+    -0.0083,
+    -0.0523,
+    0.0072
+   ]
+  },
+  "inferior-gemellus-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0704,
+    -0.0083,
+    -0.0523,
+    0.0072
+   ]
+  },
+  "inferior-head-of-lateral-pterygoid-muscle-l": {
+   "o:sphenoid-bone": [
+    0.0351,
+    0.7136,
+    0.0087,
+    0.0025
+   ],
+   "i:mandible": [
+    0.0367,
+    0.6906,
+    0.0239,
+    0.0112
+   ]
+  },
+  "inferior-head-of-lateral-pterygoid-muscle-r": {
+   "o:sphenoid-bone": [
+    -0.0351,
+    0.7136,
+    0.0087,
+    0.0025
+   ],
+   "i:mandible": [
+    -0.0367,
+    0.6906,
+    0.0239,
+    0.0112
+   ]
+  },
+  "inferior-oblique-muscle-l": {
+   "o:maxilla-l": [
+    0.038,
+    0.7182,
+    0.0531,
+    0.0088
+   ]
+  },
+  "inferior-oblique-muscle-r": {
+   "o:maxilla-r": [
+    -0.038,
+    0.7182,
+    0.0531,
+    0.0088
+   ]
+  },
+  "inferior-pharyngeal-constrictor-l": {
+   "o:thyroid-cartilage": [
+    0.0203,
+    0.634,
+    -0.0016,
+    0.0008
+   ],
+   "o:cricoid-cartilage": [
+    0.0025,
+    0.6151,
+    -0.0009,
+    0.0158
+   ]
+  },
+  "inferior-pharyngeal-constrictor-r": {
+   "o:thyroid-cartilage": [
+    -0.0203,
+    0.634,
+    -0.0016,
+    0.0008
+   ],
+   "o:cricoid-cartilage": [
+    -0.0032,
+    0.6153,
+    -0.0004,
+    0.0158
+   ]
+  },
+  "infraspinatus-muscle-l": {
+   "o:scapula-l": [
+    0.109,
+    0.5048,
+    -0.0786,
+    0.0003
+   ],
+   "i:humerus-l": [
+    0.1795,
+    0.5212,
+    -0.047,
+    0.0004
+   ]
+  },
+  "infraspinatus-muscle-r": {
+   "o:scapula-r": [
+    -0.109,
+    0.5048,
+    -0.0786,
+    0.0003
+   ],
+   "i:humerus-r": [
+    -0.1795,
+    0.5212,
+    -0.047,
+    0.0004
+   ]
+  },
+  "intermediate-tendon-of-digastric-muscle-l": {
+   "o:mandible": [
+    0.0184,
+    0.6534,
+    0.0486,
+    0.0165
+   ],
+   "o:temporal-bone-l": [
+    0.0389,
+    0.6906,
+    -0.002,
+    0.0574
+   ],
+   "i:hyoid-bone": [
+    0.0115,
+    0.643,
+    0.0302,
+    0.0003
+   ]
+  },
+  "intermediate-tendon-of-digastric-muscle-r": {
+   "o:mandible": [
+    -0.018,
+    0.6525,
+    0.0496,
+    0.017
+   ],
+   "o:temporal-bone-r": [
+    -0.0389,
+    0.6906,
+    -0.002,
+    0.0574
+   ],
+   "i:hyoid-bone": [
+    -0.0115,
+    0.643,
+    0.0302,
+    0.0003
+   ]
+  },
+  "internal-abdominal-oblique-muscle-l": {
+   "o:hip-bone-l": [
+    0.1265,
+    0.1181,
+    0.0329,
+    0.0007
+   ],
+   "i:hip-bone-l": [
+    0.0976,
+    0.1547,
+    -0.0303,
+    0.0669
+   ],
+   "i:tenth-rib-l": [
+    0.1254,
+    0.2405,
+    -0.0152,
+    0.024
+   ],
+   "i:eleventh-rib-l": [
+    0.1074,
+    0.2273,
+    -0.0375,
+    0.0009
+   ],
+   "i:twelfth-rib-l": [
+    0.0826,
+    0.2185,
+    -0.0519,
+    0.0013
+   ]
+  },
+  "internal-abdominal-oblique-muscle-r": {
+   "o:hip-bone-r": [
+    -0.1265,
+    0.1181,
+    0.0329,
+    0.0007
+   ],
+   "i:hip-bone-r": [
+    -0.0976,
+    0.1547,
+    -0.0303,
+    0.0669
+   ],
+   "i:tenth-rib-r": [
+    -0.1254,
+    0.2405,
+    -0.0152,
+    0.0239
+   ],
+   "i:eleventh-rib-r": [
+    -0.1074,
+    0.2273,
+    -0.0375,
+    0.0009
+   ],
+   "i:twelfth-rib-r": [
+    -0.0826,
+    0.2185,
+    -0.0519,
+    0.0013
+   ]
+  },
+  "lateral-crico-arytenoid-muscle-l": {
+   "o:cricoid-cartilage": [
+    0.0081,
+    0.6162,
+    0.0031,
+    0.0014
+   ],
+   "i:arytenoid-cartilage-l": [
+    0.0074,
+    0.6176,
+    0.001,
+    0.0036
+   ]
+  },
+  "lateral-crico-arytenoid-muscle-r": {
+   "o:cricoid-cartilage": [
+    -0.0081,
+    0.6162,
+    0.0031,
+    0.0014
+   ],
+   "i:arytenoid-cartilage-r": [
+    -0.0074,
+    0.6176,
+    0.001,
+    0.0036
+   ]
+  },
+  "lateral-head-of-flexor-hallucis-brevis-l": {
+   "i:proximal-phalanx-of-first-finger-of-foot-l": [
+    0.0778,
+    -0.8439,
+    0.0765,
+    0.0023
+   ]
+  },
+  "lateral-head-of-flexor-hallucis-brevis-r": {
+   "i:proximal-phalanx-of-first-finger-of-foot-r": [
+    -0.0778,
+    -0.8439,
+    0.0765,
+    0.0023
+   ]
+  },
+  "lateral-head-of-gastrocnemius-l": {
+   "o:femur-l": [
+    0.113,
+    -0.3868,
+    -0.0408,
+    0.0016
+   ],
+   "i:calcaneus-l": [
+    0.0876,
+    -0.7954,
+    -0.0618,
+    0.1596
+   ]
+  },
+  "lateral-head-of-gastrocnemius-r": {
+   "o:femur-r": [
+    -0.113,
+    -0.3868,
+    -0.0408,
+    0.0016
+   ],
+   "i:calcaneus-r": [
+    -0.0876,
+    -0.7954,
+    -0.0618,
+    0.1596
+   ]
+  },
+  "lateral-head-of-triceps-brachii-l": {
+   "o:humerus-l": [
+    0.1894,
+    0.4713,
+    -0.0415,
+    0.0011
+   ],
+   "i:ulna-l": [
+    0.2257,
+    0.2412,
+    -0.0558,
+    0.0028
+   ]
+  },
+  "lateral-head-of-triceps-brachii-r": {
+   "o:humerus-r": [
+    -0.1894,
+    0.4713,
+    -0.0415,
+    0.0011
+   ],
+   "i:ulna-r": [
+    -0.2257,
+    0.2412,
+    -0.0558,
+    0.0028
+   ]
+  },
+  "latissimus-dorsi-muscle-l": {
+   "o:hip-bone-l": [
+    0.0357,
+    0.0906,
+    -0.083,
+    0.0013
+   ],
+   "o:scapula-l": [
+    0.0894,
+    0.3988,
+    -0.1069,
+    0.1225
+   ],
+   "o:vertebra-t7": [
+    0.0007,
+    0.3973,
+    -0.097,
+    0.0827
+   ],
+   "o:vertebra-t8": [
+    0,
+    0.368,
+    -0.0998,
+    0.0538
+   ],
+   "o:vertebra-t9": [
+    0.0004,
+    0.3422,
+    -0.0969,
+    0.0278
+   ],
+   "o:vertebra-t10": [
+    0.0014,
+    0.3101,
+    -0.0939,
+    0.002
+   ],
+   "o:vertebra-t11": [
+    0,
+    0.2836,
+    -0.0852,
+    0.0011
+   ],
+   "o:vertebra-t12": [
+    0,
+    0.2661,
+    -0.0802,
+    0.0037
+   ],
+   "o:vertebra-l1": [
+    0,
+    0.2308,
+    -0.0744,
+    0.009
+   ],
+   "o:vertebra-l2": [
+    0,
+    0.1977,
+    -0.0691,
+    0.0136
+   ],
+   "o:vertebra-l3": [
+    -0.0012,
+    0.1715,
+    -0.0693,
+    0.0125
+   ],
+   "o:vertebra-l4": [
+    0,
+    0.1525,
+    -0.0692,
+    0.0114
+   ],
+   "o:vertebra-l5": [
+    0.0007,
+    0.125,
+    -0.0741,
+    0.0075
+   ],
+   "o:sacrum": [
+    0,
+    0.0783,
+    -0.0815,
+    0.0053
+   ],
+   "i:humerus-l": [
+    0.1796,
+    0.4551,
+    -0.0279,
+    0.0006
+   ]
+  },
+  "latissimus-dorsi-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0357,
+    0.0906,
+    -0.083,
+    0.0013
+   ],
+   "o:scapula-r": [
+    -0.0894,
+    0.3988,
+    -0.1069,
+    0.1225
+   ],
+   "o:vertebra-t7": [
+    0.0007,
+    0.3973,
+    -0.097,
+    0.0827
+   ],
+   "o:vertebra-t8": [
+    0,
+    0.368,
+    -0.0998,
+    0.0538
+   ],
+   "o:vertebra-t9": [
+    0.0004,
+    0.3422,
+    -0.0969,
+    0.0279
+   ],
+   "o:vertebra-t10": [
+    -0.0014,
+    0.31,
+    -0.0935,
+    0.0018
+   ],
+   "o:vertebra-t11": [
+    0,
+    0.2836,
+    -0.0852,
+    0.0011
+   ],
+   "o:vertebra-t12": [
+    -0.0018,
+    0.2557,
+    -0.0782,
+    0.0034
+   ],
+   "o:vertebra-l1": [
+    0,
+    0.2308,
+    -0.0744,
+    0.009
+   ],
+   "o:vertebra-l2": [
+    0,
+    0.1977,
+    -0.0691,
+    0.0136
+   ],
+   "o:vertebra-l3": [
+    -0.0012,
+    0.1715,
+    -0.0693,
+    0.0123
+   ],
+   "o:vertebra-l4": [
+    0,
+    0.1525,
+    -0.0692,
+    0.0114
+   ],
+   "o:vertebra-l5": [
+    0.0007,
+    0.125,
+    -0.0741,
+    0.0076
+   ],
+   "o:sacrum": [
+    0,
+    0.0783,
+    -0.0815,
+    0.0053
+   ],
+   "i:humerus-r": [
+    -0.1796,
+    0.4551,
+    -0.0279,
+    0.0006
+   ]
+  },
+  "levator-anguli-oris-l": {
+   "o:maxilla-l": [
+    0.0173,
+    0.6993,
+    0.0744,
+    0.0033
+   ]
+  },
+  "levator-anguli-oris-r": {
+   "o:maxilla-r": [
+    -0.0173,
+    0.6993,
+    0.0744,
+    0.0033
+   ]
+  },
+  "levator-palpebrae-superioris-l": {
+   "o:sphenoid-bone": [
+    0.0263,
+    0.7503,
+    0.0381,
+    0.0073
+   ]
+  },
+  "levator-palpebrae-superioris-r": {
+   "o:sphenoid-bone": [
+    -0.0263,
+    0.7503,
+    0.0381,
+    0.0073
+   ]
+  },
+  "levator-scapulae-l": {
+   "o:atlas-c1": [
+    0.0431,
+    0.6817,
+    -0.0196,
+    0.0027
+   ],
+   "o:axis-c2": [
+    0.0229,
+    0.6642,
+    -0.0173,
+    0.0027
+   ],
+   "o:vertebra-c3": [
+    0.0272,
+    0.6454,
+    -0.015,
+    0.0007
+   ],
+   "o:vertebra-c4": [
+    0.0291,
+    0.6342,
+    -0.0154,
+    0.0006
+   ],
+   "i:scapula-l": [
+    0.0697,
+    0.539,
+    -0.0918,
+    0.0002
+   ]
+  },
+  "levator-scapulae-r": {
+   "o:atlas-c1": [
+    -0.0431,
+    0.6817,
+    -0.0196,
+    0.0027
+   ],
+   "o:axis-c2": [
+    -0.0271,
+    0.6617,
+    -0.0157,
+    0.0027
+   ],
+   "o:vertebra-c3": [
+    -0.0272,
+    0.6454,
+    -0.015,
+    0.0007
+   ],
+   "o:vertebra-c4": [
+    -0.0289,
+    0.6342,
+    -0.0154,
+    0.0006
+   ],
+   "i:scapula-r": [
+    -0.0697,
+    0.539,
+    -0.0918,
+    0.0002
+   ]
+  },
+  "levatores-breves-costarum-l": {
+   "o:vertebra-c7": [
+    0.0351,
+    0.5945,
+    -0.0301,
+    0.0006
+   ],
+   "o:vertebra-t1": [
+    0.0384,
+    0.5863,
+    -0.0427,
+    0.0007
+   ],
+   "o:vertebra-t2": [
+    0.0372,
+    0.5716,
+    -0.0575,
+    0.0012
+   ],
+   "o:vertebra-t3": [
+    0.0324,
+    0.5455,
+    -0.0708,
+    0.0017
+   ],
+   "o:vertebra-t4": [
+    0.0338,
+    0.5215,
+    -0.078,
+    0.002
+   ],
+   "o:vertebra-t5": [
+    0.035,
+    0.5067,
+    -0.0827,
+    0.0174
+   ],
+   "o:vertebra-t6": [
+    0.0161,
+    0.4861,
+    -0.0744,
+    0.0415
+   ],
+   "o:vertebra-t7": [
+    0.0179,
+    0.4581,
+    -0.0786,
+    0.0672
+   ],
+   "o:vertebra-t8": [
+    0.016,
+    0.4167,
+    -0.076,
+    0.1082
+   ],
+   "o:vertebra-t9": [
+    0.0175,
+    0.3987,
+    -0.0752,
+    0.1257
+   ],
+   "o:vertebra-t10": [
+    0.0112,
+    0.3694,
+    -0.0722,
+    0.1557
+   ],
+   "o:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.1857
+   ]
+  },
+  "levatores-breves-costarum-r": {
+   "o:vertebra-c7": [
+    -0.0351,
+    0.5945,
+    -0.0301,
+    0.0006
+   ],
+   "o:vertebra-t1": [
+    -0.0384,
+    0.5863,
+    -0.0427,
+    0.0007
+   ],
+   "o:vertebra-t2": [
+    -0.0372,
+    0.5716,
+    -0.0575,
+    0.0012
+   ],
+   "o:vertebra-t3": [
+    -0.0324,
+    0.5455,
+    -0.0708,
+    0.0017
+   ],
+   "o:vertebra-t4": [
+    -0.0338,
+    0.5215,
+    -0.078,
+    0.002
+   ],
+   "o:vertebra-t5": [
+    -0.035,
+    0.5067,
+    -0.0827,
+    0.0174
+   ],
+   "o:vertebra-t6": [
+    -0.0161,
+    0.4861,
+    -0.0744,
+    0.0415
+   ],
+   "o:vertebra-t7": [
+    -0.0179,
+    0.4581,
+    -0.0786,
+    0.0672
+   ],
+   "o:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.107
+   ],
+   "o:vertebra-t9": [
+    -0.0175,
+    0.3987,
+    -0.0752,
+    0.1257
+   ],
+   "o:vertebra-t10": [
+    -0.0111,
+    0.3694,
+    -0.0722,
+    0.1557
+   ],
+   "o:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.1857
+   ]
+  },
+  "levatores-longi-costarum-l": {
+   "o:vertebra-c7": [
+    0.0351,
+    0.5945,
+    -0.0301,
+    0.0005
+   ],
+   "o:vertebra-t1": [
+    0.0384,
+    0.5863,
+    -0.0427,
+    0.0015
+   ],
+   "o:vertebra-t2": [
+    0.0372,
+    0.5716,
+    -0.0575,
+    0.0011
+   ],
+   "o:vertebra-t3": [
+    0.0324,
+    0.5455,
+    -0.0708,
+    0.0015
+   ],
+   "o:vertebra-t4": [
+    0.0338,
+    0.5215,
+    -0.078,
+    0.001
+   ],
+   "o:vertebra-t5": [
+    0.0375,
+    0.5026,
+    -0.0854,
+    0.0033
+   ],
+   "o:vertebra-t6": [
+    0.0326,
+    0.4791,
+    -0.0854,
+    0.0234
+   ],
+   "o:vertebra-t7": [
+    0.0179,
+    0.4581,
+    -0.0786,
+    0.0491
+   ],
+   "o:vertebra-t8": [
+    0.016,
+    0.4167,
+    -0.076,
+    0.0886
+   ],
+   "o:vertebra-t9": [
+    0.0175,
+    0.3987,
+    -0.0752,
+    0.1055
+   ],
+   "o:vertebra-t10": [
+    0.0112,
+    0.3694,
+    -0.0722,
+    0.1357
+   ],
+   "o:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.1656
+   ]
+  },
+  "levatores-longi-costarum-r": {
+   "o:vertebra-c7": [
+    -0.0351,
+    0.5945,
+    -0.0301,
+    0.0005
+   ],
+   "o:vertebra-t1": [
+    -0.0384,
+    0.5863,
+    -0.0427,
+    0.0015
+   ],
+   "o:vertebra-t2": [
+    -0.0372,
+    0.5716,
+    -0.0575,
+    0.0011
+   ],
+   "o:vertebra-t3": [
+    -0.0324,
+    0.5455,
+    -0.0708,
+    0.0015
+   ],
+   "o:vertebra-t4": [
+    -0.0338,
+    0.5215,
+    -0.078,
+    0.001
+   ],
+   "o:vertebra-t5": [
+    -0.0375,
+    0.5026,
+    -0.0854,
+    0.0033
+   ],
+   "o:vertebra-t6": [
+    -0.0376,
+    0.4777,
+    -0.0905,
+    0.0239
+   ],
+   "o:vertebra-t7": [
+    -0.0179,
+    0.4581,
+    -0.0786,
+    0.0491
+   ],
+   "o:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.0875
+   ],
+   "o:vertebra-t9": [
+    -0.0175,
+    0.3987,
+    -0.0752,
+    0.1055
+   ],
+   "o:vertebra-t10": [
+    -0.0111,
+    0.3694,
+    -0.0722,
+    0.1357
+   ],
+   "o:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.1656
+   ]
+  },
+  "long-head-of-biceps-brachii-l": {
+   "o:scapula-l": [
+    0.1424,
+    0.5394,
+    -0.035,
+    0.0011
+   ],
+   "i:radius-l": [
+    0.2316,
+    0.1979,
+    -0.024,
+    0.0018
+   ]
+  },
+  "long-head-of-biceps-brachii-r": {
+   "o:scapula-r": [
+    -0.1424,
+    0.5394,
+    -0.035,
+    0.0011
+   ],
+   "i:radius-r": [
+    -0.2316,
+    0.1979,
+    -0.024,
+    0.0018
+   ]
+  },
+  "long-head-of-biceps-femoris-l": {
+   "o:hip-bone-l": [
+    0.0528,
+    -0.0486,
+    -0.0562,
+    0.0017
+   ],
+   "i:tibia-l": [
+    0.1152,
+    -0.4427,
+    -0.0399,
+    0.0067
+   ],
+   "i:fibula-l": [
+    0.1259,
+    -0.457,
+    -0.0449,
+    0.0015
+   ]
+  },
+  "long-head-of-biceps-femoris-r": {
+   "o:hip-bone-r": [
+    -0.0528,
+    -0.0486,
+    -0.0562,
+    0.0017
+   ],
+   "i:tibia-r": [
+    -0.1152,
+    -0.4427,
+    -0.0399,
+    0.0067
+   ],
+   "i:fibula-r": [
+    -0.1259,
+    -0.457,
+    -0.0449,
+    0.0015
+   ]
+  },
+  "long-head-of-triceps-brachii-l": {
+   "o:scapula-l": [
+    0.1374,
+    0.4908,
+    -0.0522,
+    0.0011
+   ],
+   "i:ulna-l": [
+    0.2033,
+    0.2401,
+    -0.0578,
+    0.002
+   ]
+  },
+  "long-head-of-triceps-brachii-r": {
+   "o:scapula-r": [
+    -0.1374,
+    0.4908,
+    -0.0522,
+    0.0011
+   ],
+   "i:ulna-r": [
+    -0.2033,
+    0.2401,
+    -0.0578,
+    0.002
+   ]
+  },
+  "longus-capitis-muscle-l": {
+   "i:occipital-bone": [
+    0.0178,
+    0.693,
+    -0.0264,
+    0.0607
+   ]
+  },
+  "longus-capitis-muscle-r": {
+   "i:occipital-bone": [
+    -0.0178,
+    0.693,
+    -0.0264,
+    0.0607
+   ]
+  },
+  "longus-colli-muscle-l": {
+   "o:vertebra-c5": [
+    0.0037,
+    0.6113,
+    -0.0066,
+    0.023
+   ],
+   "o:vertebra-c6": [
+    0.0064,
+    0.5959,
+    -0.0093,
+    0.0076
+   ],
+   "o:vertebra-c7": [
+    0.0085,
+    0.5882,
+    -0.0155,
+    0.0026
+   ],
+   "o:vertebra-t1": [
+    0.0095,
+    0.5648,
+    -0.0218,
+    0.001
+   ],
+   "o:vertebra-t2": [
+    0.0076,
+    0.5447,
+    -0.0275,
+    0.0032
+   ],
+   "o:vertebra-t3": [
+    0.0062,
+    0.5296,
+    -0.0316,
+    0.0012
+   ],
+   "i:atlas-c1": [
+    0.0077,
+    0.6808,
+    -0.0063,
+    0.0019
+   ]
+  },
+  "longus-colli-muscle-r": {
+   "o:vertebra-c5": [
+    -0.0032,
+    0.6112,
+    -0.0066,
+    0.023
+   ],
+   "o:vertebra-c6": [
+    -0.0089,
+    0.5963,
+    -0.0097,
+    0.008
+   ],
+   "o:vertebra-c7": [
+    -0.0085,
+    0.5882,
+    -0.0155,
+    0.0026
+   ],
+   "o:vertebra-t1": [
+    -0.0099,
+    0.5649,
+    -0.0221,
+    0.0013
+   ],
+   "o:vertebra-t2": [
+    -0.0078,
+    0.5448,
+    -0.0276,
+    0.0033
+   ],
+   "o:vertebra-t3": [
+    -0.0062,
+    0.5296,
+    -0.0316,
+    0.0012
+   ],
+   "i:atlas-c1": [
+    -0.006,
+    0.6811,
+    -0.0056,
+    0.0007
+   ]
+  },
+  "medial-head-of-flexor-hallucis-brevis-l": {
+   "i:proximal-phalanx-of-first-finger-of-foot-l": [
+    0.0631,
+    -0.8437,
+    0.0833,
+    0.0022
+   ]
+  },
+  "medial-head-of-flexor-hallucis-brevis-r": {
+   "i:proximal-phalanx-of-first-finger-of-foot-r": [
+    -0.0631,
+    -0.8437,
+    0.0833,
+    0.0022
+   ]
+  },
+  "medial-head-of-gastrocnemius-l": {
+   "o:femur-l": [
+    0.0586,
+    -0.3543,
+    -0.0235,
+    0.0012
+   ],
+   "i:calcaneus-l": [
+    0.0774,
+    -0.7964,
+    -0.0699,
+    0.1451
+   ]
+  },
+  "medial-head-of-gastrocnemius-r": {
+   "o:femur-r": [
+    -0.0586,
+    -0.3543,
+    -0.0235,
+    0.0013
+   ],
+   "i:calcaneus-r": [
+    -0.0774,
+    -0.7964,
+    -0.0699,
+    0.1451
+   ]
+  },
+  "medial-head-of-triceps-brachii-l": {
+   "o:humerus-l": [
+    0.1931,
+    0.3788,
+    -0.0386,
+    0.0014
+   ],
+   "i:ulna-l": [
+    0.2041,
+    0.2422,
+    -0.0507,
+    0.0024
+   ]
+  },
+  "medial-head-of-triceps-brachii-r": {
+   "o:humerus-r": [
+    -0.1931,
+    0.3788,
+    -0.0386,
+    0.0014
+   ],
+   "i:ulna-r": [
+    -0.2041,
+    0.2422,
+    -0.0507,
+    0.0024
+   ]
+  },
+  "medial-pterygoid-muscle-l": {
+   "o:maxilla-l": [
+    0.0234,
+    0.6993,
+    0.0371,
+    0.0021
+   ],
+   "o:sphenoid-bone": [
+    0.0159,
+    0.7116,
+    0.0263,
+    0.0012
+   ],
+   "i:mandible": [
+    0.0338,
+    0.6783,
+    0.0233,
+    0.0024
+   ]
+  },
+  "medial-pterygoid-muscle-r": {
+   "o:maxilla-r": [
+    -0.0234,
+    0.6993,
+    0.0371,
+    0.0021
+   ],
+   "o:sphenoid-bone": [
+    -0.0159,
+    0.7116,
+    0.0263,
+    0.0012
+   ],
+   "i:mandible": [
+    -0.0338,
+    0.6783,
+    0.0233,
+    0.0024
+   ]
+  },
+  "mentalis-muscle-l": {
+   "o:mandible": [
+    0.0108,
+    0.6555,
+    0.0741,
+    0.0018
+   ]
+  },
+  "mentalis-muscle-r": {
+   "o:mandible": [
+    -0.0108,
+    0.6555,
+    0.0741,
+    0.0018
+   ]
+  },
+  "middle-pharyngeal-constrictor-l": {
+   "o:hyoid-bone": [
+    0.0201,
+    0.6535,
+    0.0029,
+    0.0135
+   ]
+  },
+  "middle-pharyngeal-constrictor-r": {
+   "o:hyoid-bone": [
+    -0.0201,
+    0.6535,
+    0.0029,
+    0.0135
+   ]
+  },
+  "multifidus-colli-muscle-l": {
+   "o:hip-bone-l": [
+    0.0976,
+    0.1547,
+    -0.0303,
+    0.4989
+   ],
+   "o:sacrum": [
+    0.0199,
+    0.1231,
+    -0.0402,
+    0.5236
+   ]
+  },
+  "multifidus-colli-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0976,
+    0.1547,
+    -0.0303,
+    0.4989
+   ],
+   "o:sacrum": [
+    -0.0263,
+    0.1231,
+    -0.0454,
+    0.5238
+   ]
+  },
+  "multifidus-lumborum-muscle-l": {
+   "o:hip-bone-l": [
+    0.0711,
+    0.1471,
+    -0.0421,
+    0.0948
+   ],
+   "o:sacrum": [
+    0.0267,
+    0.1231,
+    -0.0459,
+    0.11
+   ]
+  },
+  "multifidus-lumborum-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0711,
+    0.1471,
+    -0.0421,
+    0.0948
+   ],
+   "o:sacrum": [
+    -0.0263,
+    0.1231,
+    -0.0454,
+    0.11
+   ]
+  },
+  "multifidus-thoracis-muscle-l": {
+   "o:hip-bone-l": [
+    0.0858,
+    0.1512,
+    -0.0428,
+    0.3682
+   ],
+   "o:sacrum": [
+    0.0267,
+    0.1231,
+    -0.0459,
+    0.3881
+   ]
+  },
+  "multifidus-thoracis-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0858,
+    0.1512,
+    -0.0428,
+    0.3682
+   ],
+   "o:sacrum": [
+    -0.0263,
+    0.1231,
+    -0.0454,
+    0.3881
+   ]
+  },
+  "mylohyoid-muscle-l": {
+   "o:mandible": [
+    0.0184,
+    0.6534,
+    0.0486,
+    0.0009
+   ],
+   "i:hyoid-bone": [
+    0.0027,
+    0.641,
+    0.0354,
+    0.0017
+   ]
+  },
+  "mylohyoid-muscle-r": {
+   "o:mandible": [
+    -0.0133,
+    0.6457,
+    0.0583,
+    0.0012
+   ],
+   "i:hyoid-bone": [
+    -0.0026,
+    0.641,
+    0.0354,
+    0.0017
+   ]
+  },
+  "nasalis-muscle-l": {
+   "o:maxilla-l": [
+    0.0061,
+    0.7295,
+    0.0843,
+    0.002
+   ]
+  },
+  "nasalis-muscle-r": {
+   "o:maxilla-r": [
+    -0.0061,
+    0.7295,
+    0.0843,
+    0.002
+   ]
+  },
+  "oblique-head-of-adductor-hallucis-l": {
+   "o:third-metatarsal-bone-l": [
+    0.0917,
+    -0.8173,
+    0.0103,
+    0.0005
+   ]
+  },
+  "oblique-head-of-adductor-hallucis-r": {
+   "o:third-metatarsal-bone-r": [
+    -0.0917,
+    -0.8173,
+    0.0103,
+    0.0005
+   ]
+  },
+  "oblique-head-of-adductor-pollicis-l": {
+   "o:capitate-bone-l": [
+    0.2703,
+    -0.0227,
+    0.0221,
+    0.0251
+   ],
+   "o:second-metacarpal-bone-l": [
+    0.2829,
+    -0.0272,
+    0.0265,
+    0.0111
+   ],
+   "o:third-metacarpal-bone-l": [
+    0.2703,
+    -0.0286,
+    0.0223,
+    0.0235
+   ],
+   "i:ulna-l": [
+    0.2557,
+    0.0051,
+    0.0094,
+    0.031
+   ],
+   "i:proximal-phalanx-of-first-finger-of-hand-l": [
+    0.3084,
+    -0.0475,
+    0.0438,
+    0.041
+   ]
+  },
+  "oblique-head-of-adductor-pollicis-r": {
+   "o:capitate-bone-r": [
+    -0.2703,
+    -0.0227,
+    0.0221,
+    0.0251
+   ],
+   "o:second-metacarpal-bone-r": [
+    -0.2829,
+    -0.0272,
+    0.0265,
+    0.0111
+   ],
+   "o:third-metacarpal-bone-r": [
+    -0.2703,
+    -0.0286,
+    0.0223,
+    0.0235
+   ],
+   "i:ulna-r": [
+    -0.2557,
+    0.0051,
+    0.0094,
+    0.031
+   ],
+   "i:proximal-phalanx-of-first-finger-of-hand-r": [
+    -0.3084,
+    -0.0475,
+    0.0438,
+    0.041
+   ]
+  },
+  "oblique-part-of-cricothyroid-muscle-l": {
+   "o:cricoid-cartilage": [
+    0.011,
+    0.606,
+    0.0021,
+    0.001
+   ],
+   "i:thyroid-cartilage": [
+    0.0123,
+    0.6073,
+    0.0088,
+    0.0005
+   ]
+  },
+  "oblique-part-of-cricothyroid-muscle-r": {
+   "o:cricoid-cartilage": [
+    -0.011,
+    0.606,
+    0.0021,
+    0.001
+   ],
+   "i:thyroid-cartilage": [
+    -0.0124,
+    0.6073,
+    0.008,
+    0.0004
+   ]
+  },
+  "obliquus-inferior-capitis-muscle-l": {
+   "i:atlas-c1": [
+    0.0186,
+    0.6781,
+    -0.0365,
+    0.0159
+   ]
+  },
+  "obliquus-inferior-capitis-muscle-r": {
+   "i:atlas-c1": [
+    -0.0186,
+    0.6781,
+    -0.0365,
+    0.0159
+   ]
+  },
+  "obliquus-superior-capitis-muscle-l": {
+   "o:atlas-c1": [
+    0.0408,
+    0.687,
+    -0.0221,
+    0.0014
+   ],
+   "i:occipital-bone": [
+    0.0228,
+    0.7021,
+    -0.0676,
+    0.0067
+   ]
+  },
+  "obliquus-superior-capitis-muscle-r": {
+   "o:atlas-c1": [
+    -0.0408,
+    0.687,
+    -0.0221,
+    0.0014
+   ],
+   "i:occipital-bone": [
+    -0.0228,
+    0.7021,
+    -0.0676,
+    0.0067
+   ]
+  },
+  "obturator-externus-l": {
+   "o:hip-bone-l": [
+    0.0263,
+    -0.0239,
+    0.0161,
+    0.002
+   ],
+   "i:femur-l": [
+    0.1079,
+    -0.0239,
+    -0.0274,
+    0.0104
+   ]
+  },
+  "obturator-externus-r": {
+   "o:hip-bone-r": [
+    -0.0263,
+    -0.0239,
+    0.0161,
+    0.002
+   ],
+   "i:femur-r": [
+    -0.1125,
+    -0.0276,
+    -0.0328,
+    0.0063
+   ]
+  },
+  "obturator-internus-l": {
+   "o:hip-bone-l": [
+    0.0475,
+    0.0033,
+    -0.0415,
+    0.0008
+   ],
+   "i:femur-l": [
+    0.1213,
+    -0.0099,
+    -0.0223,
+    0.0037
+   ]
+  },
+  "obturator-internus-r": {
+   "o:hip-bone-r": [
+    -0.0475,
+    0.0033,
+    -0.0415,
+    0.0008
+   ],
+   "i:femur-r": [
+    -0.1214,
+    -0.0099,
+    -0.0223,
+    0.0038
+   ]
+  },
+  "occipitalis-muscle-l": {
+   "o:temporal-bone-l": [
+    0.0607,
+    0.7317,
+    -0.0549,
+    0.0246
+   ],
+   "o:occipital-bone": [
+    0.046,
+    0.7614,
+    -0.0908,
+    0.0029
+   ]
+  },
+  "occipitalis-muscle-r": {
+   "o:temporal-bone-r": [
+    -0.0607,
+    0.7317,
+    -0.0549,
+    0.0246
+   ],
+   "o:occipital-bone": [
+    -0.0257,
+    0.7587,
+    -0.1051,
+    0.0022
+   ]
+  },
+  "omohyoid-muscle-l": {
+   "o:scapula-l": [
+    0.1004,
+    0.5377,
+    -0.0593,
+    0.0005
+   ],
+   "i:hyoid-bone": [
+    0.0154,
+    0.6378,
+    0.0219,
+    0.0012
+   ]
+  },
+  "omohyoid-muscle-r": {
+   "o:scapula-r": [
+    -0.1004,
+    0.5377,
+    -0.0593,
+    0.0005
+   ],
+   "i:hyoid-bone": [
+    -0.0144,
+    0.6367,
+    0.0246,
+    0.0022
+   ]
+  },
+  "opponens-digiti-minimi-muscle-of-hand-l": {
+   "o:hamate-bone-l": [
+    0.2535,
+    -0.0209,
+    0.0286,
+    0.0005
+   ],
+   "i:fifth-metacarpal-bone-l": [
+    0.2385,
+    -0.0635,
+    0.0362,
+    0.0014
+   ]
+  },
+  "opponens-digiti-minimi-muscle-of-hand-r": {
+   "o:hamate-bone-r": [
+    -0.2535,
+    -0.0209,
+    0.0286,
+    0.0005
+   ],
+   "i:fifth-metacarpal-bone-r": [
+    -0.2385,
+    -0.0635,
+    0.0362,
+    0.0014
+   ]
+  },
+  "opponens-pollicis-muscle-l": {
+   "o:trapezium-bone-l": [
+    0.2843,
+    -0.0223,
+    0.0229,
+    0.016
+   ],
+   "i:radius-l": [
+    0.2863,
+    -0.0019,
+    0.0141,
+    0.019
+   ],
+   "i:first-metacarpal-bone-l": [
+    0.2819,
+    -0.0157,
+    0.0313,
+    0.0055
+   ]
+  },
+  "opponens-pollicis-muscle-r": {
+   "o:trapezium-bone-r": [
+    -0.2843,
+    -0.0223,
+    0.0229,
+    0.016
+   ],
+   "i:radius-r": [
+    -0.2863,
+    -0.0019,
+    0.0141,
+    0.019
+   ],
+   "i:first-metacarpal-bone-r": [
+    -0.2819,
+    -0.0157,
+    0.0313,
+    0.0055
+   ]
+  },
+  "orbicularis-oris-muscle-l": {
+   "o:mandible": [
+    0.0245,
+    0.6657,
+    0.061,
+    0.019
+   ],
+   "o:maxilla-l": [
+    0.0019,
+    0.6896,
+    0.0834,
+    0.0004
+   ]
+  },
+  "orbicularis-oris-muscle-r": {
+   "o:mandible": [
+    -0.0245,
+    0.6657,
+    0.061,
+    0.019
+   ],
+   "o:maxilla-r": [
+    -0.0019,
+    0.6896,
+    0.0834,
+    0.0004
+   ]
+  },
+  "orbital-part-of-orbicularis-oculi-l": {
+   "o:frontal-bone": [
+    0.0456,
+    0.7518,
+    0.0679,
+    0.0009
+   ]
+  },
+  "orbital-part-of-orbicularis-oculi-r": {
+   "o:frontal-bone": [
+    -0.0456,
+    0.7518,
+    0.0679,
+    0.0009
+   ]
+  },
+  "palatopharyngeus-muscle-l": {
+   "i:thyroid-cartilage": [
+    0.0117,
+    0.6097,
+    0.002,
+    0.0003
+   ]
+  },
+  "palatopharyngeus-muscle-r": {
+   "i:thyroid-cartilage": [
+    -0.0117,
+    0.6098,
+    0.002,
+    0.0003
+   ]
+  },
+  "palmaris-longus-muscle-l": {
+   "o:humerus-l": [
+    0.1881,
+    0.2554,
+    -0.0355,
+    0.0024
+   ]
+  },
+  "palmaris-longus-muscle-r": {
+   "o:humerus-r": [
+    -0.1881,
+    0.2554,
+    -0.0355,
+    0.0024
+   ]
+  },
+  "palpebral-part-of-orbicularis-oculi-l": {
+   "o:frontal-bone": [
+    0.0125,
+    0.7413,
+    0.0683,
+    0.0056
+   ]
+  },
+  "palpebral-part-of-orbicularis-oculi-r": {
+   "o:frontal-bone": [
+    -0.0125,
+    0.7413,
+    0.0683,
+    0.0056
+   ]
+  },
+  "pectineus-muscle-l": {
+   "o:hip-bone-l": [
+    0.0552,
+    0.0043,
+    0.0264,
+    0.0014
+   ],
+   "i:femur-l": [
+    0.0972,
+    -0.0983,
+    -0.0035,
+    0.0036
+   ]
+  },
+  "pectineus-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0552,
+    0.0043,
+    0.0264,
+    0.0014
+   ],
+   "i:femur-r": [
+    -0.0972,
+    -0.0983,
+    -0.0035,
+    0.0036
+   ]
+  },
+  "pectoralis-minor-muscle-l": {
+   "o:third-rib-l": [
+    0.0848,
+    0.4815,
+    0.0451,
+    0.0024
+   ],
+   "o:fourth-rib-l": [
+    0.1005,
+    0.4324,
+    0.0614,
+    0.0023
+   ],
+   "o:fifth-rib-l": [
+    0.1062,
+    0.4085,
+    0.0718,
+    0.0011
+   ],
+   "i:scapula-l": [
+    0.1283,
+    0.5396,
+    -0.0092,
+    0.0012
+   ]
+  },
+  "pectoralis-minor-muscle-r": {
+   "o:third-rib-r": [
+    -0.0848,
+    0.4815,
+    0.0451,
+    0.0024
+   ],
+   "o:fourth-rib-r": [
+    -0.1005,
+    0.4324,
+    0.0614,
+    0.0023
+   ],
+   "o:fifth-rib-r": [
+    -0.1062,
+    0.4085,
+    0.0718,
+    0.0011
+   ],
+   "i:scapula-r": [
+    -0.1284,
+    0.5396,
+    -0.0092,
+    0.0012
+   ]
+  },
+  "piriformis-muscle-l": {
+   "o:sacrum": [
+    0.0226,
+    0.042,
+    -0.077,
+    0.0018
+   ],
+   "i:femur-l": [
+    0.1308,
+    0.0017,
+    -0.0195,
+    0.0032
+   ]
+  },
+  "piriformis-muscle-r": {
+   "o:sacrum": [
+    -0.0239,
+    0.0419,
+    -0.0765,
+    0.0006
+   ],
+   "i:femur-r": [
+    -0.1308,
+    0.0017,
+    -0.0195,
+    0.0031
+   ]
+  },
+  "plantaris-muscle-l": {
+   "o:femur-l": [
+    0.0859,
+    -0.4051,
+    -0.0546,
+    0.0028
+   ],
+   "o:humerus-l": [
+    0.2036,
+    0.2293,
+    -0.0384,
+    0.5863
+   ],
+   "i:calcaneus-l": [
+    0.0548,
+    -0.8305,
+    -0.0808,
+    0.0026
+   ]
+  },
+  "plantaris-muscle-r": {
+   "o:femur-r": [
+    -0.0859,
+    -0.4051,
+    -0.0546,
+    0.0028
+   ],
+   "o:humerus-r": [
+    -0.2036,
+    0.2293,
+    -0.0384,
+    0.5863
+   ],
+   "i:calcaneus-r": [
+    -0.0548,
+    -0.8305,
+    -0.0808,
+    0.0026
+   ]
+  },
+  "platysma-l": {
+   "i:mandible": [
+    0.0158,
+    0.6404,
+    0.0609,
+    0.0741
+   ]
+  },
+  "platysma-r": {
+   "i:mandible": [
+    -0.0158,
+    0.6404,
+    0.0609,
+    0.0741
+   ]
+  },
+  "popliteus-muscle-l": {
+   "o:femur-l": [
+    0.1106,
+    -0.4006,
+    -0.0533,
+    0.0036
+   ],
+   "o:humerus-l": [
+    0.168,
+    0.5192,
+    -0.0076,
+    1
+   ],
+   "i:tibia-l": [
+    0.0617,
+    -0.4924,
+    -0.0359,
+    0.0034
+   ]
+  },
+  "popliteus-muscle-r": {
+   "o:femur-r": [
+    -0.1106,
+    -0.4006,
+    -0.0533,
+    0.0036
+   ],
+   "o:humerus-r": [
+    -0.168,
+    0.5192,
+    -0.0076,
+    1
+   ],
+   "i:tibia-r": [
+    -0.0617,
+    -0.4924,
+    -0.0359,
+    0.0034
+   ]
+  },
+  "posterior-belly-of-digastric-muscle-l": {
+   "o:temporal-bone-l": [
+    0.0552,
+    0.7088,
+    -0.029,
+    0.0003
+   ],
+   "i:hyoid-bone": [
+    0.0155,
+    0.6449,
+    0.0304,
+    0.0015
+   ]
+  },
+  "posterior-belly-of-digastric-muscle-r": {
+   "o:temporal-bone-r": [
+    -0.0552,
+    0.7088,
+    -0.029,
+    0.0003
+   ],
+   "i:hyoid-bone": [
+    -0.0155,
+    0.6449,
+    0.0304,
+    0.0015
+   ]
+  },
+  "posterior-crico-arytenoid-muscle-l": {
+   "o:cricoid-cartilage": [
+    0.0017,
+    0.6113,
+    -0.0019,
+    0.006
+   ],
+   "i:arytenoid-cartilage-l": [
+    0.0068,
+    0.6175,
+    0.0006,
+    0.0048
+   ]
+  },
+  "posterior-crico-arytenoid-muscle-r": {
+   "o:cricoid-cartilage": [
+    -0.0024,
+    0.6061,
+    -0.0018,
+    0.006
+   ],
+   "i:arytenoid-cartilage-r": [
+    -0.0068,
+    0.6175,
+    0.0006,
+    0.0048
+   ]
+  },
+  "pronator-quadratus-l": {
+   "o:ulna-l": [
+    0.2406,
+    0.063,
+    0.0009,
+    0.0032
+   ],
+   "i:radius-l": [
+    0.2571,
+    0.0162,
+    0.0138,
+    0.0034
+   ]
+  },
+  "pronator-quadratus-r": {
+   "o:ulna-r": [
+    -0.2406,
+    0.063,
+    0.0009,
+    0.0032
+   ],
+   "i:radius-r": [
+    -0.2571,
+    0.0162,
+    0.0138,
+    0.0034
+   ]
+  },
+  "psoas-major-l": {
+   "o:vertebra-t12": [
+    0.0163,
+    0.2817,
+    -0.0047,
+    0.0009
+   ],
+   "o:vertebra-l1": [
+    0.0224,
+    0.2697,
+    -0.0162,
+    0.0014
+   ],
+   "o:vertebra-l2": [
+    0.0199,
+    0.2113,
+    0.0053,
+    0.0018
+   ],
+   "o:vertebra-l3": [
+    0.0172,
+    0.2057,
+    0.0095,
+    0.0038
+   ],
+   "o:vertebra-l4": [
+    0.0169,
+    0.1723,
+    -0.0197,
+    0.0374
+   ],
+   "i:femur-l": [
+    0.093,
+    -0.0724,
+    -0.0331,
+    0.001
+   ]
+  },
+  "psoas-major-r": {
+   "o:vertebra-t12": [
+    -0.0177,
+    0.2809,
+    -0.0064,
+    0.0014
+   ],
+   "o:vertebra-l1": [
+    -0.0224,
+    0.2697,
+    -0.0162,
+    0.0014
+   ],
+   "o:vertebra-l2": [
+    -0.0402,
+    0.2217,
+    -0.0415,
+    0.0019
+   ],
+   "o:vertebra-l3": [
+    -0.0182,
+    0.2056,
+    0.008,
+    0.0021
+   ],
+   "o:vertebra-l4": [
+    -0.0169,
+    0.1723,
+    -0.0197,
+    0.0374
+   ],
+   "i:femur-r": [
+    -0.093,
+    -0.0724,
+    -0.0331,
+    0.001
+   ]
+  },
+  "pyramidalis-muscle-l": {
+   "o:hip-bone-l": [
+    0.0125,
+    -0.0062,
+    0.0515,
+    0.0327
+   ]
+  },
+  "pyramidalis-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0125,
+    -0.0062,
+    0.0515,
+    0.0327
+   ]
+  },
+  "quadratus-femoris-muscle-l": {
+   "o:hip-bone-l": [
+    0.072,
+    -0.0362,
+    -0.0366,
+    0.0007
+   ],
+   "i:femur-l": [
+    0.1029,
+    -0.054,
+    -0.0335,
+    0.0022
+   ]
+  },
+  "quadratus-femoris-muscle-r": {
+   "o:hip-bone-r": [
+    -0.072,
+    -0.0362,
+    -0.0366,
+    0.0007
+   ],
+   "i:femur-r": [
+    -0.1029,
+    -0.054,
+    -0.0335,
+    0.0022
+   ]
+  },
+  "quadratus-lumborum-muscle-l": {
+   "o:hip-bone-l": [
+    0.04,
+    0.1064,
+    -0.0766,
+    0.001
+   ],
+   "i:vertebra-l1": [
+    0.0368,
+    0.2508,
+    -0.0457,
+    0.0022
+   ],
+   "i:vertebra-l2": [
+    0.0226,
+    0.2311,
+    -0.0381,
+    0.0046
+   ],
+   "i:vertebra-l3": [
+    0.02,
+    0.2064,
+    -0.042,
+    0.0228
+   ],
+   "i:vertebra-l4": [
+    0.0199,
+    0.1791,
+    -0.0357,
+    0.0499
+   ],
+   "i:twelfth-rib-l": [
+    0.0512,
+    0.2575,
+    -0.0646,
+    0.0008
+   ]
+  },
+  "quadratus-lumborum-muscle-r": {
+   "o:hip-bone-r": [
+    -0.04,
+    0.1064,
+    -0.0766,
+    0.001
+   ],
+   "i:vertebra-l1": [
+    -0.0368,
+    0.2508,
+    -0.0457,
+    0.0022
+   ],
+   "i:vertebra-l2": [
+    -0.0226,
+    0.2311,
+    -0.0381,
+    0.0046
+   ],
+   "i:vertebra-l3": [
+    -0.0199,
+    0.2064,
+    -0.042,
+    0.0228
+   ],
+   "i:vertebra-l4": [
+    -0.0199,
+    0.1791,
+    -0.0357,
+    0.0499
+   ],
+   "i:twelfth-rib-r": [
+    -0.0512,
+    0.2575,
+    -0.0646,
+    0.0008
+   ]
+  },
+  "radial-head-of-flexor-digitorum-superficialis-l": {
+   "o:radius-l": [
+    0.2316,
+    0.1979,
+    -0.024,
+    0.0073
+   ],
+   "i:middle-phalanx-of-second-finger-of-hand-l": [
+    0.3094,
+    -0.1197,
+    0.0538,
+    0.1388
+   ],
+   "i:middle-phalanx-of-third-finger-of-hand-l": [
+    0.2778,
+    -0.124,
+    0.0626,
+    0.1367
+   ],
+   "i:middle-phalanx-of-fourth-finger-of-hand-l": [
+    0.2528,
+    -0.1173,
+    0.0605,
+    0.1278
+   ],
+   "i:middle-phalanx-of-fifth-finger-of-hand-l": [
+    0.2306,
+    -0.103,
+    0.0578,
+    0.1159
+   ]
+  },
+  "radial-head-of-flexor-digitorum-superficialis-r": {
+   "o:radius-r": [
+    -0.2316,
+    0.1979,
+    -0.024,
+    0.0073
+   ],
+   "i:middle-phalanx-of-second-finger-of-hand-r": [
+    -0.3094,
+    -0.1197,
+    0.0538,
+    0.1388
+   ],
+   "i:middle-phalanx-of-third-finger-of-hand-r": [
+    -0.2778,
+    -0.124,
+    0.0626,
+    0.1367
+   ],
+   "i:middle-phalanx-of-fourth-finger-of-hand-r": [
+    -0.2528,
+    -0.1173,
+    0.0605,
+    0.1278
+   ],
+   "i:middle-phalanx-of-fifth-finger-of-hand-r": [
+    -0.2306,
+    -0.103,
+    0.0578,
+    0.1159
+   ]
+  },
+  "rectus-abdominis-muscle-l": {
+   "o:hip-bone-l": [
+    0.0125,
+    -0.0062,
+    0.0515,
+    0.0021
+   ],
+   "i:body-of-sternum": [
+    0.0114,
+    0.3816,
+    0.0983,
+    0.0028
+   ],
+   "i:xiphoid-process": [
+    0.0091,
+    0.3766,
+    0.0993,
+    0.0017
+   ],
+   "i:costal-cartilage-of-fifth-rib-l": [
+    0.0563,
+    0.3969,
+    0.104,
+    0.0008
+   ],
+   "i:costal-cartilage-of-sixth-rib-l": [
+    0.0665,
+    0.3515,
+    0.1015,
+    0.0007
+   ],
+   "i:costal-cartilage-of-seventh-rib-l": [
+    0.0459,
+    0.3611,
+    0.1034,
+    0.0003
+   ]
+  },
+  "rectus-abdominis-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0125,
+    -0.0062,
+    0.0515,
+    0.0021
+   ],
+   "i:body-of-sternum": [
+    -0.0114,
+    0.3816,
+    0.0983,
+    0.0028
+   ],
+   "i:xiphoid-process": [
+    -0.0091,
+    0.3766,
+    0.0993,
+    0.0017
+   ],
+   "i:costal-cartilage-of-fifth-rib-r": [
+    -0.0563,
+    0.3969,
+    0.104,
+    0.0008
+   ],
+   "i:costal-cartilage-of-sixth-rib-r": [
+    -0.0665,
+    0.3515,
+    0.1015,
+    0.0007
+   ],
+   "i:costal-cartilage-of-seventh-rib-r": [
+    -0.0459,
+    0.3611,
+    0.1034,
+    0.0003
+   ]
+  },
+  "rectus-anterior-capitis-muscle-l": {
+   "o:atlas-c1": [
+    0.025,
+    0.6871,
+    -0.0075,
+    0.0026
+   ],
+   "i:occipital-bone": [
+    0.0068,
+    0.7003,
+    -0.0079,
+    0.0042
+   ]
+  },
+  "rectus-anterior-capitis-muscle-r": {
+   "o:atlas-c1": [
+    -0.025,
+    0.6871,
+    -0.0075,
+    0.0026
+   ],
+   "i:occipital-bone": [
+    -0.0008,
+    0.703,
+    -0.0082,
+    0.0028
+   ]
+  },
+  "rectus-femoris-muscle-l": {
+   "o:hip-bone-l": [
+    0.1058,
+    0.0559,
+    0.0033,
+    0.0017
+   ],
+   "i:tibia-l": [
+    0.0879,
+    -0.4593,
+    0.0017,
+    0.0022
+   ],
+   "i:patella-l": [
+    0.0961,
+    -0.3947,
+    0.0087,
+    0.0011
+   ]
+  },
+  "rectus-femoris-muscle-r": {
+   "o:hip-bone-r": [
+    -0.1058,
+    0.0559,
+    0.0033,
+    0.0017
+   ],
+   "i:tibia-r": [
+    -0.0879,
+    -0.4593,
+    0.0017,
+    0.0022
+   ],
+   "i:patella-r": [
+    -0.1038,
+    -0.421,
+    0.0027,
+    0.0011
+   ]
+  },
+  "rectus-lateralis-capitis-muscle-l": {
+   "o:atlas-c1": [
+    0.0362,
+    0.6852,
+    -0.0149,
+    0.0023
+   ],
+   "i:occipital-bone": [
+    0.0317,
+    0.7013,
+    -0.0183,
+    0.0032
+   ]
+  },
+  "rectus-lateralis-capitis-muscle-r": {
+   "o:atlas-c1": [
+    -0.0362,
+    0.6852,
+    -0.0149,
+    0.0023
+   ],
+   "i:occipital-bone": [
+    -0.0317,
+    0.7013,
+    -0.0183,
+    0.0032
+   ]
+  },
+  "rectus-posterior-major-capitis-muscle-l": {
+   "o:axis-c2": [
+    0.0019,
+    0.6635,
+    -0.052,
+    0.0015
+   ],
+   "i:occipital-bone": [
+    0.0319,
+    0.7008,
+    -0.0385,
+    0.0035
+   ]
+  },
+  "rectus-posterior-major-capitis-muscle-r": {
+   "o:axis-c2": [
+    -0.0019,
+    0.6641,
+    -0.0518,
+    0.0021
+   ],
+   "i:occipital-bone": [
+    -0.0319,
+    0.7008,
+    -0.0385,
+    0.0035
+   ]
+  },
+  "rectus-posterior-minor-capitis-muscle-l": {
+   "o:atlas-c1": [
+    0,
+    0.6824,
+    -0.0492,
+    0.0025
+   ],
+   "i:occipital-bone": [
+    0,
+    0.7081,
+    -0.0681,
+    0.0066
+   ]
+  },
+  "rectus-posterior-minor-capitis-muscle-r": {
+   "o:atlas-c1": [
+    0,
+    0.6824,
+    -0.0492,
+    0.0025
+   ],
+   "i:occipital-bone": [
+    0,
+    0.7081,
+    -0.0681,
+    0.0066
+   ]
+  },
+  "rhomboid-major-muscle-l": {
+   "o:vertebra-t2": [
+    -0.001,
+    0.5567,
+    -0.0893,
+    0.0016
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5303,
+    -0.1017,
+    0.0014
+   ],
+   "o:vertebra-t4": [
+    0.0012,
+    0.505,
+    -0.104,
+    0.0118
+   ],
+   "o:vertebra-t5": [
+    -0.0006,
+    0.4938,
+    -0.0896,
+    0.0286
+   ],
+   "i:scapula-l": [
+    0.0681,
+    0.4511,
+    -0.1145,
+    0.0003
+   ]
+  },
+  "rhomboid-major-muscle-r": {
+   "o:vertebra-t2": [
+    -0.001,
+    0.5567,
+    -0.0893,
+    0.0016
+   ],
+   "o:vertebra-t3": [
+    0.001,
+    0.5213,
+    -0.1037,
+    0.0013
+   ],
+   "o:vertebra-t4": [
+    0.0012,
+    0.505,
+    -0.104,
+    0.0117
+   ],
+   "o:vertebra-t5": [
+    -0.0006,
+    0.4938,
+    -0.0896,
+    0.0286
+   ],
+   "i:scapula-r": [
+    -0.0681,
+    0.4511,
+    -0.1145,
+    0.0003
+   ]
+  },
+  "rhomboid-minor-muscle-l": {
+   "o:vertebra-c7": [
+    -0.0012,
+    0.5854,
+    -0.0805,
+    0.0042
+   ],
+   "o:vertebra-t1": [
+    0.0026,
+    0.5666,
+    -0.0861,
+    0.0092
+   ],
+   "i:scapula-l": [
+    0.0612,
+    0.5193,
+    -0.1009,
+    0.0004
+   ]
+  },
+  "rhomboid-minor-muscle-r": {
+   "o:vertebra-c7": [
+    -0.0012,
+    0.5854,
+    -0.0805,
+    0.0047
+   ],
+   "o:vertebra-t1": [
+    -0.0013,
+    0.5769,
+    -0.0811,
+    0.0087
+   ],
+   "i:scapula-r": [
+    -0.0612,
+    0.5193,
+    -0.1009,
+    0.0004
+   ]
+  },
+  "sartorius-muscle-l": {
+   "o:hip-bone-l": [
+    0.1153,
+    0.0704,
+    0.0391,
+    0.001
+   ],
+   "i:tibia-l": [
+    0.039,
+    -0.4339,
+    -0.0305,
+    0.007
+   ]
+  },
+  "sartorius-muscle-r": {
+   "o:hip-bone-r": [
+    -0.1153,
+    0.0704,
+    0.0391,
+    0.001
+   ],
+   "i:tibia-r": [
+    -0.039,
+    -0.4339,
+    -0.0305,
+    0.007
+   ]
+  },
+  "scalenus-anterior-muscle-l": {
+   "o:atlas-c1": [
+    0.0241,
+    0.6759,
+    -0.0126,
+    0.0402
+   ],
+   "o:axis-c2": [
+    0.0252,
+    0.6596,
+    -0.0148,
+    0.0243
+   ],
+   "o:vertebra-c3": [
+    0.0261,
+    0.6453,
+    -0.0129,
+    0.0102
+   ],
+   "o:vertebra-c4": [
+    0.0212,
+    0.6338,
+    -0.013,
+    0.0006
+   ],
+   "o:vertebra-c5": [
+    0.0238,
+    0.6199,
+    -0.0107,
+    0.0006
+   ],
+   "o:vertebra-c6": [
+    0.0235,
+    0.604,
+    -0.0148,
+    0.0025
+   ],
+   "o:vertebra-c7": [
+    0.025,
+    0.6066,
+    -0.0262,
+    0.0131
+   ],
+   "i:first-rib-l": [
+    0.05,
+    0.5548,
+    0.0025,
+    0.0016
+   ],
+   "i:second-rib-l": [
+    0.0736,
+    0.5514,
+    -0.02,
+    0.0275
+   ]
+  },
+  "scalenus-anterior-muscle-r": {
+   "o:atlas-c1": [
+    -0.0241,
+    0.6759,
+    -0.0126,
+    0.0402
+   ],
+   "o:axis-c2": [
+    -0.0252,
+    0.6596,
+    -0.0148,
+    0.0243
+   ],
+   "o:vertebra-c3": [
+    -0.0261,
+    0.6453,
+    -0.0129,
+    0.0102
+   ],
+   "o:vertebra-c4": [
+    -0.0211,
+    0.6338,
+    -0.013,
+    0.0007
+   ],
+   "o:vertebra-c5": [
+    -0.0238,
+    0.6199,
+    -0.0107,
+    0.0006
+   ],
+   "o:vertebra-c6": [
+    -0.0235,
+    0.604,
+    -0.0148,
+    0.0025
+   ],
+   "o:vertebra-c7": [
+    -0.025,
+    0.6066,
+    -0.0262,
+    0.0131
+   ],
+   "i:first-rib-r": [
+    -0.05,
+    0.5548,
+    0.0025,
+    0.0016
+   ],
+   "i:second-rib-r": [
+    -0.0736,
+    0.5514,
+    -0.02,
+    0.0275
+   ]
+  },
+  "scalenus-medius-muscle-l": {
+   "o:atlas-c1": [
+    0.0246,
+    0.6755,
+    -0.0225,
+    0.0155
+   ],
+   "o:axis-c2": [
+    0.0259,
+    0.6596,
+    -0.0183,
+    0.0015
+   ],
+   "o:vertebra-c3": [
+    0.0261,
+    0.6453,
+    -0.0129,
+    0.0003
+   ],
+   "o:vertebra-c4": [
+    0.0266,
+    0.6306,
+    -0.0128,
+    0.0005
+   ],
+   "o:vertebra-c5": [
+    0.0303,
+    0.6163,
+    -0.0188,
+    0.0006
+   ],
+   "o:vertebra-c6": [
+    0.0272,
+    0.6205,
+    -0.0242,
+    0.0067
+   ],
+   "o:vertebra-c7": [
+    0.025,
+    0.6066,
+    -0.0262,
+    0.0125
+   ],
+   "i:first-rib-l": [
+    0.0505,
+    0.5624,
+    -0.0093,
+    0.0011
+   ],
+   "i:second-rib-l": [
+    0.0479,
+    0.5674,
+    -0.036,
+    0.0204
+   ]
+  },
+  "scalenus-medius-muscle-r": {
+   "o:atlas-c1": [
+    -0.0246,
+    0.6755,
+    -0.0225,
+    0.0155
+   ],
+   "o:axis-c2": [
+    -0.0258,
+    0.6596,
+    -0.0183,
+    0.0015
+   ],
+   "o:vertebra-c3": [
+    -0.0261,
+    0.6453,
+    -0.0129,
+    0.0003
+   ],
+   "o:vertebra-c4": [
+    -0.0265,
+    0.6306,
+    -0.0128,
+    0.0004
+   ],
+   "o:vertebra-c5": [
+    -0.0303,
+    0.6163,
+    -0.0188,
+    0.0006
+   ],
+   "o:vertebra-c6": [
+    -0.0272,
+    0.6205,
+    -0.0242,
+    0.0067
+   ],
+   "o:vertebra-c7": [
+    -0.025,
+    0.6066,
+    -0.0262,
+    0.0125
+   ],
+   "i:first-rib-r": [
+    -0.0505,
+    0.5624,
+    -0.0093,
+    0.0011
+   ],
+   "i:second-rib-r": [
+    -0.0479,
+    0.5674,
+    -0.036,
+    0.0204
+   ]
+  },
+  "scalenus-posterior-muscle-l": {
+   "o:atlas-c1": [
+    0.0246,
+    0.6755,
+    -0.0225,
+    0.0566
+   ],
+   "o:axis-c2": [
+    0.0198,
+    0.6563,
+    -0.0319,
+    0.0405
+   ],
+   "o:vertebra-c3": [
+    0.0239,
+    0.6428,
+    -0.029,
+    0.0264
+   ],
+   "o:vertebra-c4": [
+    0.0266,
+    0.6306,
+    -0.0128,
+    0.0125
+   ],
+   "o:vertebra-c5": [
+    0.0306,
+    0.6201,
+    -0.0179,
+    0.0012
+   ],
+   "o:vertebra-c6": [
+    0.0292,
+    0.6019,
+    -0.02,
+    0.0011
+   ],
+   "o:vertebra-c7": [
+    0.0351,
+    0.5945,
+    -0.0301,
+    0.0011
+   ],
+   "i:first-rib-l": [
+    0.0488,
+    0.5803,
+    -0.0275,
+    0.0022
+   ],
+   "i:second-rib-l": [
+    0.0577,
+    0.5716,
+    -0.0439,
+    0.0022
+   ]
+  },
+  "scalenus-posterior-muscle-r": {
+   "o:atlas-c1": [
+    -0.0246,
+    0.6755,
+    -0.0225,
+    0.0566
+   ],
+   "o:axis-c2": [
+    -0.0198,
+    0.6563,
+    -0.0319,
+    0.0405
+   ],
+   "o:vertebra-c3": [
+    -0.0239,
+    0.6428,
+    -0.029,
+    0.0264
+   ],
+   "o:vertebra-c4": [
+    -0.0265,
+    0.6306,
+    -0.0128,
+    0.0125
+   ],
+   "o:vertebra-c5": [
+    -0.0306,
+    0.6201,
+    -0.0179,
+    0.0012
+   ],
+   "o:vertebra-c6": [
+    -0.0292,
+    0.6019,
+    -0.02,
+    0.0011
+   ],
+   "o:vertebra-c7": [
+    -0.0351,
+    0.5945,
+    -0.0301,
+    0.0011
+   ],
+   "i:first-rib-r": [
+    -0.0488,
+    0.5803,
+    -0.0275,
+    0.0022
+   ],
+   "i:second-rib-r": [
+    -0.0577,
+    0.5716,
+    -0.0439,
+    0.0022
+   ]
+  },
+  "scapular-spinal-part-of-deltoid-muscle-l": {
+   "o:scapula-l": [
+    0.1078,
+    0.5215,
+    -0.0983,
+    0.0005
+   ],
+   "i:humerus-l": [
+    0.2089,
+    0.4168,
+    -0.0418,
+    0.0027
+   ]
+  },
+  "scapular-spinal-part-of-deltoid-muscle-r": {
+   "o:scapula-r": [
+    -0.1078,
+    0.5215,
+    -0.0983,
+    0.0005
+   ],
+   "i:humerus-r": [
+    -0.2089,
+    0.4168,
+    -0.0418,
+    0.0027
+   ]
+  },
+  "semimembranosus-muscle-l": {
+   "o:hip-bone-l": [
+    0.0527,
+    -0.0584,
+    -0.04,
+    0.0017
+   ],
+   "i:tibia-l": [
+    0.0544,
+    -0.4642,
+    -0.025,
+    0.0023
+   ]
+  },
+  "semimembranosus-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0527,
+    -0.0584,
+    -0.04,
+    0.0017
+   ],
+   "i:tibia-r": [
+    -0.0544,
+    -0.4642,
+    -0.025,
+    0.0023
+   ]
+  },
+  "semitendinosus-muscle-l": {
+   "o:hip-bone-l": [
+    0.0528,
+    -0.0486,
+    -0.0562,
+    0.0011
+   ],
+   "i:tibia-l": [
+    0.0449,
+    -0.4483,
+    -0.0534,
+    0.0018
+   ]
+  },
+  "semitendinosus-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0528,
+    -0.0486,
+    -0.0562,
+    0.0011
+   ],
+   "i:tibia-r": [
+    -0.0449,
+    -0.4483,
+    -0.0534,
+    0.0018
+   ]
+  },
+  "serratus-anterior-muscle-l": {
+   "o:first-rib-l": [
+    0.0706,
+    0.5479,
+    0.0068,
+    0.004
+   ],
+   "o:second-rib-l": [
+    0.0805,
+    0.539,
+    -0.0008,
+    0.018
+   ],
+   "o:third-rib-l": [
+    0.104,
+    0.4976,
+    0.0135,
+    0.0038
+   ],
+   "o:fourth-rib-l": [
+    0.1187,
+    0.4598,
+    0.0272,
+    0.0011
+   ],
+   "o:fifth-rib-l": [
+    0.1297,
+    0.4372,
+    0.0136,
+    0.0008
+   ],
+   "o:sixth-rib-l": [
+    0.1334,
+    0.3906,
+    0.0291,
+    0.0015
+   ],
+   "o:seventh-rib-l": [
+    0.1281,
+    0.3775,
+    -0.0393,
+    0.0018
+   ],
+   "o:eighth-rib-l": [
+    0.1307,
+    0.3409,
+    -0.0221,
+    0.0018
+   ],
+   "o:ninth-rib-l": [
+    0.1234,
+    0.3189,
+    -0.0442,
+    0.0024
+   ],
+   "i:scapula-l": [
+    0.0701,
+    0.527,
+    -0.0916,
+    0.0003
+   ]
+  },
+  "serratus-anterior-muscle-r": {
+   "o:first-rib-r": [
+    -0.0706,
+    0.5479,
+    0.0068,
+    0.004
+   ],
+   "o:second-rib-r": [
+    -0.0805,
+    0.539,
+    -0.0008,
+    0.018
+   ],
+   "o:third-rib-r": [
+    -0.104,
+    0.4976,
+    0.0135,
+    0.0038
+   ],
+   "o:fourth-rib-r": [
+    -0.1187,
+    0.4598,
+    0.0272,
+    0.0011
+   ],
+   "o:fifth-rib-r": [
+    -0.1297,
+    0.4372,
+    0.0136,
+    0.0008
+   ],
+   "o:sixth-rib-r": [
+    -0.1334,
+    0.3906,
+    0.0291,
+    0.0015
+   ],
+   "o:seventh-rib-r": [
+    -0.1281,
+    0.3775,
+    -0.0393,
+    0.0018
+   ],
+   "o:eighth-rib-r": [
+    -0.1307,
+    0.3409,
+    -0.0221,
+    0.0018
+   ],
+   "o:ninth-rib-r": [
+    -0.1234,
+    0.3189,
+    -0.0442,
+    0.0024
+   ],
+   "i:scapula-r": [
+    -0.0701,
+    0.527,
+    -0.0916,
+    0.0003
+   ]
+  },
+  "serratus-posterior-inferior-muscle-l": {
+   "o:vertebra-t11": [
+    0,
+    0.2836,
+    -0.0852,
+    0.0148
+   ],
+   "o:vertebra-t12": [
+    0.0004,
+    0.2537,
+    -0.0761,
+    0.0006
+   ],
+   "o:vertebra-l1": [
+    0,
+    0.2308,
+    -0.0744,
+    0.0018
+   ],
+   "o:vertebra-l2": [
+    0,
+    0.1977,
+    -0.0691,
+    0.0013
+   ],
+   "i:ninth-rib-l": [
+    0.1083,
+    0.3233,
+    -0.0696,
+    0.0016
+   ],
+   "i:tenth-rib-l": [
+    0.1049,
+    0.2886,
+    -0.0643,
+    0.0007
+   ],
+   "i:eleventh-rib-l": [
+    0.0895,
+    0.2529,
+    -0.0619,
+    0.0011
+   ],
+   "i:twelfth-rib-l": [
+    0.0657,
+    0.2474,
+    -0.0665,
+    0.0145
+   ]
+  },
+  "serratus-posterior-inferior-muscle-r": {
+   "o:vertebra-t11": [
+    0,
+    0.2836,
+    -0.0852,
+    0.0148
+   ],
+   "o:vertebra-t12": [
+    0.0004,
+    0.2537,
+    -0.0761,
+    0.001
+   ],
+   "o:vertebra-l1": [
+    0,
+    0.2308,
+    -0.0744,
+    0.0018
+   ],
+   "o:vertebra-l2": [
+    0,
+    0.1977,
+    -0.0691,
+    0.0013
+   ],
+   "i:ninth-rib-r": [
+    -0.1083,
+    0.3233,
+    -0.0696,
+    0.0016
+   ],
+   "i:tenth-rib-r": [
+    -0.1049,
+    0.2886,
+    -0.0643,
+    0.0007
+   ],
+   "i:eleventh-rib-r": [
+    -0.0895,
+    0.2529,
+    -0.0619,
+    0.0011
+   ],
+   "i:twelfth-rib-r": [
+    -0.0657,
+    0.2474,
+    -0.0665,
+    0.0145
+   ]
+  },
+  "serratus-posterior-superior-muscle-l": {
+   "o:vertebra-c7": [
+    0.0024,
+    0.5855,
+    -0.0801,
+    0.0012
+   ],
+   "o:vertebra-t1": [
+    0,
+    0.57,
+    -0.0864,
+    0.0013
+   ],
+   "o:vertebra-t2": [
+    -0.001,
+    0.5567,
+    -0.0893,
+    0.0027
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5419,
+    -0.0793,
+    0.016
+   ],
+   "i:second-rib-l": [
+    0.074,
+    0.5637,
+    -0.0394,
+    0.0011
+   ],
+   "i:third-rib-l": [
+    0.0924,
+    0.5403,
+    -0.0476,
+    0.0004
+   ],
+   "i:fourth-rib-l": [
+    0.0998,
+    0.5078,
+    -0.0648,
+    0.0008
+   ],
+   "i:fifth-rib-l": [
+    0.1001,
+    0.4858,
+    -0.0771,
+    0.0008
+   ]
+  },
+  "serratus-posterior-superior-muscle-r": {
+   "o:vertebra-c7": [
+    -0.0013,
+    0.5933,
+    -0.0764,
+    0.0013
+   ],
+   "o:vertebra-t1": [
+    0,
+    0.57,
+    -0.0864,
+    0.0013
+   ],
+   "o:vertebra-t2": [
+    -0.001,
+    0.5567,
+    -0.0893,
+    0.0027
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5419,
+    -0.0793,
+    0.016
+   ],
+   "i:second-rib-r": [
+    -0.074,
+    0.5637,
+    -0.0394,
+    0.0011
+   ],
+   "i:third-rib-r": [
+    -0.0924,
+    0.5403,
+    -0.0476,
+    0.0004
+   ],
+   "i:fourth-rib-r": [
+    -0.0998,
+    0.5078,
+    -0.0648,
+    0.0008
+   ],
+   "i:fifth-rib-r": [
+    -0.1001,
+    0.4858,
+    -0.0771,
+    0.0008
+   ]
+  },
+  "short-head-of-biceps-brachii-l": {
+   "o:scapula-l": [
+    0.1409,
+    0.5367,
+    -0.0046,
+    0.0006
+   ],
+   "i:radius-l": [
+    0.2291,
+    0.2324,
+    -0.0273,
+    0.0416
+   ]
+  },
+  "short-head-of-biceps-brachii-r": {
+   "o:scapula-r": [
+    -0.1409,
+    0.5367,
+    -0.0046,
+    0.0006
+   ],
+   "i:radius-r": [
+    -0.2291,
+    0.2324,
+    -0.0273,
+    0.0416
+   ]
+  },
+  "short-head-of-biceps-femoris-l": {
+   "o:femur-l": [
+    0.0918,
+    -0.277,
+    -0.0245,
+    0.0081
+   ],
+   "i:tibia-l": [
+    0.1135,
+    -0.4384,
+    -0.0498,
+    0.0053
+   ],
+   "i:fibula-l": [
+    0.1186,
+    -0.4502,
+    -0.0547,
+    0.0016
+   ]
+  },
+  "short-head-of-biceps-femoris-r": {
+   "o:femur-r": [
+    -0.0918,
+    -0.277,
+    -0.0245,
+    0.0081
+   ],
+   "i:tibia-r": [
+    -0.1134,
+    -0.4384,
+    -0.0498,
+    0.0053
+   ],
+   "i:fibula-r": [
+    -0.1186,
+    -0.4502,
+    -0.0547,
+    0.0017
+   ]
+  },
+  "soleus-muscle-l": {
+   "o:tibia-l": [
+    0.09,
+    -0.4784,
+    -0.0396,
+    0.0031
+   ],
+   "o:fibula-l": [
+    0.1012,
+    -0.4532,
+    -0.0548,
+    0.0008
+   ],
+   "i:calcaneus-l": [
+    0.0774,
+    -0.7964,
+    -0.0699,
+    0.0738
+   ]
+  },
+  "soleus-muscle-r": {
+   "o:tibia-r": [
+    -0.09,
+    -0.4784,
+    -0.0396,
+    0.003
+   ],
+   "o:fibula-r": [
+    -0.1012,
+    -0.4532,
+    -0.0548,
+    0.0008
+   ],
+   "i:calcaneus-r": [
+    -0.0774,
+    -0.7964,
+    -0.0699,
+    0.0738
+   ]
+  },
+  "spinalis-capitis-muscle-l": {
+   "o:vertebra-c7": [
+    0.0307,
+    0.6038,
+    -0.0319,
+    0.003
+   ],
+   "o:vertebra-t1": [
+    0.0297,
+    0.5934,
+    -0.0387,
+    0.0006
+   ],
+   "o:vertebra-t2": [
+    0.0353,
+    0.5793,
+    -0.0524,
+    0.0161
+   ],
+   "o:vertebra-t3": [
+    0.0183,
+    0.5582,
+    -0.0499,
+    0.0356
+   ],
+   "o:vertebra-t4": [
+    0.0141,
+    0.5395,
+    -0.0617,
+    0.0572
+   ],
+   "o:vertebra-t5": [
+    0.013,
+    0.5166,
+    -0.0699,
+    0.0812
+   ],
+   "o:vertebra-t6": [
+    0.0161,
+    0.4861,
+    -0.0744,
+    0.1108
+   ],
+   "o:vertebra-t7": [
+    0.0138,
+    0.4593,
+    -0.0807,
+    0.1383
+   ],
+   "o:vertebra-t8": [
+    -0.0104,
+    0.4181,
+    -0.0306,
+    0.1781
+   ],
+   "o:vertebra-t9": [
+    0.0175,
+    0.3987,
+    -0.0752,
+    0.1957
+   ],
+   "o:vertebra-t10": [
+    0.0112,
+    0.3694,
+    -0.0722,
+    0.2246
+   ],
+   "o:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.2538
+   ],
+   "o:vertebra-t12": [
+    0.0171,
+    0.3049,
+    -0.0565,
+    0.2871
+   ],
+   "i:atlas-c1": [
+    0.0247,
+    0.6913,
+    -0.0287,
+    0.0437
+   ],
+   "i:axis-c2": [
+    -0.0019,
+    0.6641,
+    -0.0518,
+    0.0572
+   ],
+   "i:vertebra-c3": [
+    0.026,
+    0.659,
+    -0.0248,
+    0.0663
+   ],
+   "i:vertebra-c4": [
+    0.0284,
+    0.6455,
+    -0.021,
+    0.0786
+   ],
+   "i:vertebra-c5": [
+    0.0189,
+    0.6279,
+    -0.0328,
+    0.0909
+   ],
+   "i:vertebra-c6": [
+    0.0272,
+    0.6205,
+    -0.0242,
+    0.099
+   ],
+   "i:vertebra-c7": [
+    0.0289,
+    0.6069,
+    -0.0277,
+    0.11
+   ],
+   "i:vertebra-t1": [
+    0.0352,
+    0.5941,
+    -0.0408,
+    0.1182
+   ],
+   "i:vertebra-t2": [
+    0.0353,
+    0.5793,
+    -0.0524,
+    0.1312
+   ],
+   "i:vertebra-t3": [
+    0.0108,
+    0.5619,
+    -0.0525,
+    0.1512
+   ],
+   "i:vertebra-t4": [
+    0.0141,
+    0.5395,
+    -0.0617,
+    0.1722
+   ],
+   "i:vertebra-t5": [
+    0.013,
+    0.5166,
+    -0.0699,
+    0.195
+   ],
+   "i:vertebra-t6": [
+    0.0107,
+    0.4876,
+    -0.0767,
+    0.2242
+   ],
+   "i:vertebra-t7": [
+    0.0138,
+    0.4593,
+    -0.0807,
+    0.2522
+   ],
+   "i:vertebra-t8": [
+    0.016,
+    0.4167,
+    -0.076,
+    0.2942
+   ],
+   "i:vertebra-t9": [
+    0.0175,
+    0.3987,
+    -0.0752,
+    0.3119
+   ],
+   "i:vertebra-t10": [
+    0.0112,
+    0.3694,
+    -0.0722,
+    0.3415
+   ],
+   "i:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.3715
+   ],
+   "i:vertebra-t12": [
+    0.0171,
+    0.3049,
+    -0.0565,
+    0.4055
+   ]
+  },
+  "spinalis-capitis-muscle-r": {
+   "o:vertebra-c7": [
+    -0.0307,
+    0.6038,
+    -0.0319,
+    0.003
+   ],
+   "o:vertebra-t1": [
+    -0.0297,
+    0.5934,
+    -0.0387,
+    0.0006
+   ],
+   "o:vertebra-t2": [
+    -0.0353,
+    0.5793,
+    -0.0524,
+    0.0161
+   ],
+   "o:vertebra-t3": [
+    -0.0183,
+    0.5582,
+    -0.0499,
+    0.0356
+   ],
+   "o:vertebra-t4": [
+    -0.0141,
+    0.5395,
+    -0.0617,
+    0.0572
+   ],
+   "o:vertebra-t5": [
+    -0.013,
+    0.5166,
+    -0.0699,
+    0.0812
+   ],
+   "o:vertebra-t6": [
+    -0.0161,
+    0.4861,
+    -0.0744,
+    0.1108
+   ],
+   "o:vertebra-t7": [
+    -0.0138,
+    0.4593,
+    -0.0807,
+    0.1383
+   ],
+   "o:vertebra-t8": [
+    -0.0104,
+    0.4181,
+    -0.0306,
+    0.1747
+   ],
+   "o:vertebra-t9": [
+    -0.0175,
+    0.3987,
+    -0.0752,
+    0.1957
+   ],
+   "o:vertebra-t10": [
+    -0.0111,
+    0.3694,
+    -0.0722,
+    0.2247
+   ],
+   "o:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.2538
+   ],
+   "o:vertebra-t12": [
+    -0.0171,
+    0.3049,
+    -0.0565,
+    0.2871
+   ],
+   "i:atlas-c1": [
+    -0.0247,
+    0.6913,
+    -0.0287,
+    0.0437
+   ],
+   "i:axis-c2": [
+    -0.0019,
+    0.6641,
+    -0.0518,
+    0.0569
+   ],
+   "i:vertebra-c3": [
+    -0.026,
+    0.659,
+    -0.0248,
+    0.0662
+   ],
+   "i:vertebra-c4": [
+    -0.0283,
+    0.6455,
+    -0.021,
+    0.0787
+   ],
+   "i:vertebra-c5": [
+    -0.0189,
+    0.6279,
+    -0.0328,
+    0.0909
+   ],
+   "i:vertebra-c6": [
+    -0.0272,
+    0.6205,
+    -0.0242,
+    0.099
+   ],
+   "i:vertebra-c7": [
+    -0.0289,
+    0.6069,
+    -0.0277,
+    0.11
+   ],
+   "i:vertebra-t1": [
+    -0.0352,
+    0.5941,
+    -0.0408,
+    0.1182
+   ],
+   "i:vertebra-t2": [
+    -0.0353,
+    0.5793,
+    -0.0524,
+    0.1312
+   ],
+   "i:vertebra-t3": [
+    -0.0108,
+    0.5619,
+    -0.0525,
+    0.1512
+   ],
+   "i:vertebra-t4": [
+    -0.0141,
+    0.5395,
+    -0.0617,
+    0.1722
+   ],
+   "i:vertebra-t5": [
+    -0.013,
+    0.5166,
+    -0.0699,
+    0.195
+   ],
+   "i:vertebra-t6": [
+    -0.0107,
+    0.4876,
+    -0.0767,
+    0.2242
+   ],
+   "i:vertebra-t7": [
+    -0.0138,
+    0.4593,
+    -0.0807,
+    0.2522
+   ],
+   "i:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.2927
+   ],
+   "i:vertebra-t9": [
+    -0.0175,
+    0.3987,
+    -0.0752,
+    0.3119
+   ],
+   "i:vertebra-t10": [
+    -0.0111,
+    0.3694,
+    -0.0722,
+    0.3415
+   ],
+   "i:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.3715
+   ],
+   "i:vertebra-t12": [
+    -0.0171,
+    0.3049,
+    -0.0565,
+    0.4055
+   ]
+  },
+  "spinalis-colli-muscle-l": {
+   "o:vertebra-c7": [
+    0.0001,
+    0.584,
+    -0.0761,
+    0.0048
+   ],
+   "o:vertebra-t1": [
+    0.0026,
+    0.5666,
+    -0.0861,
+    0.0032
+   ],
+   "o:vertebra-t2": [
+    0.0014,
+    0.5569,
+    -0.0885,
+    0.0027
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5419,
+    -0.0793,
+    0.0147
+   ],
+   "o:vertebra-t4": [
+    0.0027,
+    0.5269,
+    -0.0743,
+    0.0289
+   ],
+   "o:vertebra-t5": [
+    0.013,
+    0.5166,
+    -0.0699,
+    0.0411
+   ],
+   "o:vertebra-t6": [
+    0.0107,
+    0.4876,
+    -0.0767,
+    0.0651
+   ],
+   "o:vertebra-t7": [
+    0.0138,
+    0.4593,
+    -0.0807,
+    0.0926
+   ],
+   "o:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.1339
+   ],
+   "o:vertebra-t9": [
+    0.0175,
+    0.3987,
+    -0.0752,
+    0.1534
+   ],
+   "o:vertebra-t10": [
+    0.0112,
+    0.3694,
+    -0.0722,
+    0.1824
+   ],
+   "o:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.2133
+   ],
+   "o:vertebra-t12": [
+    0.0114,
+    0.305,
+    -0.0577,
+    0.2481
+   ],
+   "i:atlas-c1": [
+    0.0031,
+    0.6781,
+    -0.048,
+    0.0243
+   ],
+   "i:axis-c2": [
+    0.0047,
+    0.6534,
+    -0.0491,
+    0.0016
+   ],
+   "i:vertebra-c3": [
+    0,
+    0.6449,
+    -0.0512,
+    0.0042
+   ],
+   "i:vertebra-c4": [
+    0.0001,
+    0.6341,
+    -0.045,
+    0.0088
+   ],
+   "i:vertebra-c5": [
+    0,
+    0.6236,
+    -0.0458,
+    0.0183
+   ],
+   "i:vertebra-c6": [
+    -0.0009,
+    0.6129,
+    -0.0402,
+    0.0301
+   ],
+   "i:vertebra-c7": [
+    0.0064,
+    0.6013,
+    -0.0411,
+    0.0411
+   ],
+   "i:vertebra-t1": [
+    0.0168,
+    0.5948,
+    -0.0343,
+    0.0509
+   ],
+   "i:vertebra-t2": [
+    0.0129,
+    0.579,
+    -0.0429,
+    0.0635
+   ],
+   "i:vertebra-t3": [
+    0.0108,
+    0.5619,
+    -0.0525,
+    0.0797
+   ],
+   "i:vertebra-t4": [
+    0.0141,
+    0.5395,
+    -0.0617,
+    0.103
+   ],
+   "i:vertebra-t5": [
+    0.013,
+    0.5166,
+    -0.0699,
+    0.1265
+   ],
+   "i:vertebra-t6": [
+    0.0107,
+    0.4876,
+    -0.0767,
+    0.156
+   ],
+   "i:vertebra-t7": [
+    0.0138,
+    0.4593,
+    -0.0807,
+    0.1847
+   ],
+   "i:vertebra-t8": [
+    -0.0104,
+    0.4181,
+    -0.0306,
+    0.2243
+   ],
+   "i:vertebra-t9": [
+    0.0175,
+    0.3987,
+    -0.0752,
+    0.2441
+   ],
+   "i:vertebra-t10": [
+    0.0112,
+    0.3694,
+    -0.0722,
+    0.2727
+   ],
+   "i:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.3026
+   ],
+   "i:vertebra-t12": [
+    0,
+    0.3081,
+    -0.0043,
+    0.3363
+   ]
+  },
+  "spinalis-colli-muscle-r": {
+   "o:vertebra-c7": [
+    0.0001,
+    0.584,
+    -0.0761,
+    0.0049
+   ],
+   "o:vertebra-t1": [
+    -0.0025,
+    0.5665,
+    -0.0861,
+    0.0032
+   ],
+   "o:vertebra-t2": [
+    -0.001,
+    0.5567,
+    -0.0893,
+    0.0028
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5419,
+    -0.0793,
+    0.0147
+   ],
+   "o:vertebra-t4": [
+    -0.0018,
+    0.527,
+    -0.0739,
+    0.0291
+   ],
+   "o:vertebra-t5": [
+    -0.013,
+    0.5166,
+    -0.0699,
+    0.0411
+   ],
+   "o:vertebra-t6": [
+    -0.0107,
+    0.4876,
+    -0.0767,
+    0.0651
+   ],
+   "o:vertebra-t7": [
+    -0.0138,
+    0.4593,
+    -0.0807,
+    0.0926
+   ],
+   "o:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.1332
+   ],
+   "o:vertebra-t9": [
+    -0.0175,
+    0.3987,
+    -0.0752,
+    0.1534
+   ],
+   "o:vertebra-t10": [
+    -0.0111,
+    0.3694,
+    -0.0722,
+    0.1824
+   ],
+   "o:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.2133
+   ],
+   "o:vertebra-t12": [
+    -0.0114,
+    0.305,
+    -0.0577,
+    0.2481
+   ],
+   "i:atlas-c1": [
+    -0.0031,
+    0.6781,
+    -0.048,
+    0.0243
+   ],
+   "i:axis-c2": [
+    -0.0047,
+    0.6534,
+    -0.0491,
+    0.0016
+   ],
+   "i:vertebra-c3": [
+    0,
+    0.6449,
+    -0.0512,
+    0.0042
+   ],
+   "i:vertebra-c4": [
+    0.0001,
+    0.6341,
+    -0.045,
+    0.0088
+   ],
+   "i:vertebra-c5": [
+    0,
+    0.6236,
+    -0.0458,
+    0.0183
+   ],
+   "i:vertebra-c6": [
+    -0.0009,
+    0.6129,
+    -0.0402,
+    0.0299
+   ],
+   "i:vertebra-c7": [
+    -0.0039,
+    0.6004,
+    -0.0465,
+    0.041
+   ],
+   "i:vertebra-t1": [
+    -0.0168,
+    0.5948,
+    -0.0343,
+    0.0509
+   ],
+   "i:vertebra-t2": [
+    -0.0129,
+    0.579,
+    -0.0429,
+    0.0635
+   ],
+   "i:vertebra-t3": [
+    -0.0108,
+    0.5619,
+    -0.0525,
+    0.0797
+   ],
+   "i:vertebra-t4": [
+    -0.0141,
+    0.5395,
+    -0.0617,
+    0.103
+   ],
+   "i:vertebra-t5": [
+    -0.013,
+    0.5166,
+    -0.0699,
+    0.1265
+   ],
+   "i:vertebra-t6": [
+    -0.0107,
+    0.4876,
+    -0.0767,
+    0.156
+   ],
+   "i:vertebra-t7": [
+    -0.0138,
+    0.4593,
+    -0.0807,
+    0.1847
+   ],
+   "i:vertebra-t8": [
+    -0.0104,
+    0.4181,
+    -0.0306,
+    0.2241
+   ],
+   "i:vertebra-t9": [
+    -0.0175,
+    0.3987,
+    -0.0752,
+    0.2441
+   ],
+   "i:vertebra-t10": [
+    -0.0111,
+    0.3694,
+    -0.0722,
+    0.2727
+   ],
+   "i:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.3026
+   ],
+   "i:vertebra-t12": [
+    0,
+    0.3081,
+    -0.0043,
+    0.3363
+   ]
+  },
+  "spinalis-thoracis-muscle-l": {
+   "o:vertebra-c7": [
+    0.0044,
+    0.5841,
+    -0.0797,
+    0.2642
+   ],
+   "o:vertebra-t1": [
+    -0.0025,
+    0.5665,
+    -0.0861,
+    0.2466
+   ],
+   "o:vertebra-t2": [
+    0.0006,
+    0.5466,
+    -0.0891,
+    0.2266
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5203,
+    -0.1013,
+    0.2008
+   ],
+   "o:vertebra-t4": [
+    0,
+    0.4964,
+    -0.0962,
+    0.1767
+   ],
+   "o:vertebra-t5": [
+    0.0012,
+    0.4628,
+    -0.1008,
+    0.1435
+   ],
+   "o:vertebra-t6": [
+    -0.0018,
+    0.4254,
+    -0.0998,
+    0.1063
+   ],
+   "o:vertebra-t7": [
+    0.0007,
+    0.3973,
+    -0.097,
+    0.0779
+   ],
+   "o:vertebra-t8": [
+    0,
+    0.3681,
+    -0.0989,
+    0.0496
+   ],
+   "o:vertebra-t9": [
+    0.0004,
+    0.3422,
+    -0.0969,
+    0.0243
+   ],
+   "o:vertebra-t10": [
+    0.0014,
+    0.3156,
+    -0.0854,
+    0.003
+   ],
+   "o:vertebra-t11": [
+    0.0031,
+    0.2939,
+    -0.078,
+    0.0026
+   ],
+   "o:vertebra-t12": [
+    0.0022,
+    0.2602,
+    -0.0789,
+    0.0038
+   ],
+   "i:atlas-c1": [
+    0.0031,
+    0.6781,
+    -0.048,
+    0.1312
+   ],
+   "i:axis-c2": [
+    0.0026,
+    0.6505,
+    -0.0524,
+    0.1036
+   ],
+   "i:vertebra-c3": [
+    0.0009,
+    0.6356,
+    -0.0575,
+    0.088
+   ],
+   "i:vertebra-c4": [
+    0.0001,
+    0.6231,
+    -0.0559,
+    0.0769
+   ],
+   "i:vertebra-c5": [
+    -0.0008,
+    0.6109,
+    -0.0605,
+    0.0639
+   ],
+   "i:vertebra-c6": [
+    -0.0039,
+    0.5984,
+    -0.0679,
+    0.0498
+   ],
+   "i:vertebra-c7": [
+    0.0044,
+    0.5841,
+    -0.0797,
+    0.0323
+   ],
+   "i:vertebra-t1": [
+    0.0026,
+    0.5666,
+    -0.0861,
+    0.0139
+   ],
+   "i:vertebra-t2": [
+    0.0023,
+    0.5467,
+    -0.0926,
+    0.0006
+   ],
+   "i:vertebra-t3": [
+    0,
+    0.5203,
+    -0.1013,
+    0.0002
+   ],
+   "i:vertebra-t4": [
+    0.0007,
+    0.4963,
+    -0.1034,
+    0.0007
+   ],
+   "i:vertebra-t5": [
+    -0.0001,
+    0.4651,
+    -0.103,
+    0.0006
+   ],
+   "i:vertebra-t6": [
+    0,
+    0.4628,
+    -0.0956,
+    0.0025
+   ],
+   "i:vertebra-t7": [
+    0.0015,
+    0.4402,
+    -0.0878,
+    0.0149
+   ],
+   "i:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.0414
+   ],
+   "i:vertebra-t9": [
+    0.0122,
+    0.3981,
+    -0.0774,
+    0.0561
+   ],
+   "i:vertebra-t10": [
+    0.0112,
+    0.3694,
+    -0.0722,
+    0.0846
+   ],
+   "i:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.1154
+   ],
+   "i:vertebra-t12": [
+    0.0114,
+    0.305,
+    -0.0577,
+    0.1502
+   ]
+  },
+  "spinalis-thoracis-muscle-r": {
+   "o:vertebra-c7": [
+    -0.0044,
+    0.5841,
+    -0.0797,
+    0.2642
+   ],
+   "o:vertebra-t1": [
+    -0.0025,
+    0.5665,
+    -0.0861,
+    0.2465
+   ],
+   "o:vertebra-t2": [
+    0.0006,
+    0.5466,
+    -0.0891,
+    0.2266
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5203,
+    -0.1013,
+    0.2008
+   ],
+   "o:vertebra-t4": [
+    0,
+    0.4964,
+    -0.0962,
+    0.1767
+   ],
+   "o:vertebra-t5": [
+    0.0012,
+    0.4628,
+    -0.1008,
+    0.1435
+   ],
+   "o:vertebra-t6": [
+    -0.0018,
+    0.4254,
+    -0.0998,
+    0.1062
+   ],
+   "o:vertebra-t7": [
+    0.0007,
+    0.3973,
+    -0.097,
+    0.078
+   ],
+   "o:vertebra-t8": [
+    0,
+    0.3681,
+    -0.0989,
+    0.0496
+   ],
+   "o:vertebra-t9": [
+    0.0004,
+    0.3422,
+    -0.0969,
+    0.0244
+   ],
+   "o:vertebra-t10": [
+    -0.0013,
+    0.3156,
+    -0.0854,
+    0.0031
+   ],
+   "o:vertebra-t11": [
+    -0.0032,
+    0.2937,
+    -0.0775,
+    0.003
+   ],
+   "o:vertebra-t12": [
+    0,
+    0.2717,
+    -0.0731,
+    0.0046
+   ],
+   "i:atlas-c1": [
+    -0.0031,
+    0.6781,
+    -0.048,
+    0.1312
+   ],
+   "i:axis-c2": [
+    -0.0025,
+    0.6505,
+    -0.0524,
+    0.1036
+   ],
+   "i:vertebra-c3": [
+    0.0009,
+    0.6356,
+    -0.0575,
+    0.088
+   ],
+   "i:vertebra-c4": [
+    0.0001,
+    0.6231,
+    -0.0559,
+    0.0769
+   ],
+   "i:vertebra-c5": [
+    -0.0008,
+    0.6109,
+    -0.0605,
+    0.0638
+   ],
+   "i:vertebra-c6": [
+    -0.0039,
+    0.5984,
+    -0.0679,
+    0.0494
+   ],
+   "i:vertebra-c7": [
+    -0.0044,
+    0.5841,
+    -0.0797,
+    0.0323
+   ],
+   "i:vertebra-t1": [
+    -0.0025,
+    0.5665,
+    -0.0861,
+    0.0138
+   ],
+   "i:vertebra-t2": [
+    -0.0027,
+    0.5468,
+    -0.0915,
+    0.0007
+   ],
+   "i:vertebra-t3": [
+    0,
+    0.5203,
+    -0.1013,
+    0.0002
+   ],
+   "i:vertebra-t4": [
+    -0.0008,
+    0.4961,
+    -0.1032,
+    0.0005
+   ],
+   "i:vertebra-t5": [
+    -0.0001,
+    0.4651,
+    -0.103,
+    0.0005
+   ],
+   "i:vertebra-t6": [
+    0,
+    0.4628,
+    -0.0956,
+    0.0025
+   ],
+   "i:vertebra-t7": [
+    -0.0022,
+    0.4399,
+    -0.088,
+    0.0149
+   ],
+   "i:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.0383
+   ],
+   "i:vertebra-t9": [
+    -0.0122,
+    0.3981,
+    -0.0774,
+    0.0561
+   ],
+   "i:vertebra-t10": [
+    -0.0111,
+    0.3694,
+    -0.0722,
+    0.0845
+   ],
+   "i:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.1154
+   ],
+   "i:vertebra-t12": [
+    -0.0114,
+    0.305,
+    -0.0577,
+    0.1502
+   ]
+  },
+  "splenius-capitis-muscle-l": {
+   "o:vertebra-c7": [
+    -0.0012,
+    0.5854,
+    -0.0805,
+    0.0037
+   ],
+   "o:vertebra-t1": [
+    0.0026,
+    0.5666,
+    -0.0861,
+    0.0016
+   ],
+   "o:vertebra-t2": [
+    -0.0004,
+    0.5475,
+    -0.0926,
+    0.0015
+   ],
+   "o:vertebra-t3": [
+    0.001,
+    0.5213,
+    -0.1037,
+    0.0005
+   ],
+   "i:temporal-bone-l": [
+    0.0591,
+    0.7082,
+    -0.0283,
+    0.0013
+   ],
+   "i:occipital-bone": [
+    0.0472,
+    0.7072,
+    -0.0479,
+    0.0016
+   ]
+  },
+  "splenius-capitis-muscle-r": {
+   "o:vertebra-c7": [
+    -0.0012,
+    0.5854,
+    -0.0805,
+    0.0036
+   ],
+   "o:vertebra-t1": [
+    -0.0025,
+    0.5665,
+    -0.0861,
+    0.0016
+   ],
+   "o:vertebra-t2": [
+    -0.0004,
+    0.5475,
+    -0.0926,
+    0.0013
+   ],
+   "o:vertebra-t3": [
+    -0.0011,
+    0.5218,
+    -0.1038,
+    0.0006
+   ],
+   "i:temporal-bone-r": [
+    -0.0591,
+    0.7082,
+    -0.0283,
+    0.0013
+   ],
+   "i:occipital-bone": [
+    -0.0472,
+    0.7072,
+    -0.0479,
+    0.0015
+   ]
+  },
+  "splenius-colli-muscle-l": {
+   "o:vertebra-t3": [
+    0,
+    0.5203,
+    -0.1013,
+    0.0305
+   ],
+   "o:vertebra-t4": [
+    0.0007,
+    0.4963,
+    -0.1034,
+    0.0068
+   ],
+   "o:vertebra-t5": [
+    -0.0001,
+    0.4651,
+    -0.103,
+    0.0008
+   ],
+   "o:vertebra-t6": [
+    0.0014,
+    0.4359,
+    -0.1026,
+    0.001
+   ],
+   "i:atlas-c1": [
+    0.0407,
+    0.6822,
+    -0.0131,
+    0.0022
+   ],
+   "i:axis-c2": [
+    0.0271,
+    0.6617,
+    -0.0157,
+    0.0001
+   ],
+   "i:vertebra-c3": [
+    0.0257,
+    0.6539,
+    -0.0237,
+    0.004
+   ]
+  },
+  "splenius-colli-muscle-r": {
+   "o:vertebra-t3": [
+    0,
+    0.5203,
+    -0.1013,
+    0.0305
+   ],
+   "o:vertebra-t4": [
+    -0.0008,
+    0.4961,
+    -0.1032,
+    0.0065
+   ],
+   "o:vertebra-t5": [
+    -0.0001,
+    0.4651,
+    -0.103,
+    0.0008
+   ],
+   "o:vertebra-t6": [
+    -0.0011,
+    0.4359,
+    -0.1025,
+    0.0007
+   ],
+   "i:atlas-c1": [
+    -0.0407,
+    0.6822,
+    -0.0131,
+    0.0022
+   ],
+   "i:axis-c2": [
+    -0.0271,
+    0.6617,
+    -0.0157,
+    0.0001
+   ],
+   "i:vertebra-c3": [
+    -0.0257,
+    0.6539,
+    -0.0237,
+    0.004
+   ]
+  },
+  "sternocleidomastoid-muscle-l": {
+   "o:clavicle-l": [
+    0.0512,
+    0.5573,
+    0.0319,
+    0.0003
+   ],
+   "o:manubrium-of-sternum": [
+    0.0088,
+    0.5428,
+    0.0442,
+    0.0026
+   ],
+   "i:temporal-bone-l": [
+    0.0515,
+    0.7096,
+    -0.0361,
+    0.0004
+   ],
+   "i:occipital-bone": [
+    0.0518,
+    0.7108,
+    -0.0466,
+    0.0031
+   ]
+  },
+  "sternocleidomastoid-muscle-r": {
+   "o:clavicle-r": [
+    -0.0512,
+    0.5573,
+    0.0319,
+    0.0003
+   ],
+   "o:manubrium-of-sternum": [
+    -0.0191,
+    0.5308,
+    0.0496,
+    0.0021
+   ],
+   "i:temporal-bone-r": [
+    -0.0515,
+    0.7096,
+    -0.0361,
+    0.0004
+   ],
+   "i:occipital-bone": [
+    -0.0518,
+    0.7108,
+    -0.0466,
+    0.0031
+   ]
+  },
+  "sternocostal-head-of-pectoralis-major-muscle-l": {
+   "o:manubrium-of-sternum": [
+    0.028,
+    0.5217,
+    0.0522,
+    0.0008
+   ],
+   "o:body-of-sternum": [
+    0.0158,
+    0.4897,
+    0.079,
+    0.0006
+   ],
+   "i:humerus-l": [
+    0.179,
+    0.4798,
+    -0.0199,
+    0.0073
+   ]
+  },
+  "sternocostal-head-of-pectoralis-major-muscle-r": {
+   "o:manubrium-of-sternum": [
+    -0.0284,
+    0.5218,
+    0.052,
+    0.0008
+   ],
+   "o:body-of-sternum": [
+    -0.0158,
+    0.4897,
+    0.079,
+    0.0006
+   ],
+   "i:humerus-r": [
+    -0.179,
+    0.4798,
+    -0.0199,
+    0.0073
+   ]
+  },
+  "sternohyoid-muscle-l": {
+   "o:manubrium-of-sternum": [
+    0.0119,
+    0.5339,
+    0.0281,
+    0.0001
+   ],
+   "o:body-of-sternum": [
+    0,
+    0.4956,
+    0.0666,
+    0.0529
+   ],
+   "i:hyoid-bone": [
+    0.0121,
+    0.6361,
+    0.0259,
+    0.0011
+   ]
+  },
+  "sternohyoid-muscle-r": {
+   "o:manubrium-of-sternum": [
+    -0.0113,
+    0.5367,
+    0.029,
+    0.0008
+   ],
+   "o:body-of-sternum": [
+    0,
+    0.4956,
+    0.0666,
+    0.0529
+   ],
+   "i:hyoid-bone": [
+    -0.0144,
+    0.6367,
+    0.0246,
+    0.0017
+   ]
+  },
+  "sternothyroid-muscle-l": {
+   "o:manubrium-of-sternum": [
+    0.0058,
+    0.5223,
+    0.0333,
+    0.0024
+   ],
+   "i:thyroid-cartilage": [
+    0.0173,
+    0.6215,
+    0.0047,
+    0.0004
+   ]
+  },
+  "sternothyroid-muscle-r": {
+   "o:manubrium-of-sternum": [
+    -0.0203,
+    0.5293,
+    0.0328,
+    0.0023
+   ],
+   "i:thyroid-cartilage": [
+    -0.0098,
+    0.6094,
+    0.0144,
+    0.0013
+   ]
+  },
+  "straight-part-of-cricothyroid-muscle-l": {
+   "o:cricoid-cartilage": [
+    0.0071,
+    0.6075,
+    0.0116,
+    0.0027
+   ],
+   "i:thyroid-cartilage": [
+    0.0128,
+    0.6151,
+    0.0043,
+    0.0013
+   ]
+  },
+  "straight-part-of-cricothyroid-muscle-r": {
+   "o:cricoid-cartilage": [
+    -0.0071,
+    0.6075,
+    0.0116,
+    0.0027
+   ],
+   "i:thyroid-cartilage": [
+    -0.0128,
+    0.6151,
+    0.0043,
+    0.0013
+   ]
+  },
+  "stylohyoid-muscle-l": {
+   "i:hyoid-bone": [
+    0.0132,
+    0.6415,
+    0.0307,
+    0.0007
+   ]
+  },
+  "stylohyoid-muscle-r": {
+   "i:hyoid-bone": [
+    -0.0132,
+    0.6415,
+    0.0307,
+    0.0007
+   ]
+  },
+  "stylopharyngeus-muscle-l": {
+   "i:thyroid-cartilage": [
+    0.0182,
+    0.6393,
+    -0.0003,
+    0.0025
+   ]
+  },
+  "stylopharyngeus-muscle-r": {
+   "i:thyroid-cartilage": [
+    -0.0182,
+    0.6393,
+    -0.0003,
+    0.0025
+   ]
+  },
+  "subclavius-muscle-l": {
+   "o:first-rib-l": [
+    0.0402,
+    0.5368,
+    0.027,
+    0.0183
+   ],
+   "i:clavicle-l": [
+    0.0911,
+    0.5478,
+    0.0034,
+    0.0023
+   ]
+  },
+  "subclavius-muscle-r": {
+   "o:first-rib-r": [
+    -0.0402,
+    0.5368,
+    0.027,
+    0.0183
+   ],
+   "i:clavicle-r": [
+    -0.0911,
+    0.5478,
+    0.0034,
+    0.0023
+   ]
+  },
+  "subscapularis-muscle-l": {
+   "o:scapula-l": [
+    0.0688,
+    0.4743,
+    -0.1042,
+    0.0003
+   ],
+   "i:humerus-l": [
+    0.1602,
+    0.5249,
+    -0.0085,
+    0.0002
+   ]
+  },
+  "subscapularis-muscle-r": {
+   "o:scapula-r": [
+    -0.0688,
+    0.4743,
+    -0.1042,
+    0.0003
+   ],
+   "i:humerus-r": [
+    -0.1602,
+    0.5249,
+    -0.0085,
+    0.0002
+   ]
+  },
+  "superficial-head-of-flexor-pollicis-brevis-l": {
+   "o:trapezium-bone-l": [
+    0.2762,
+    -0.011,
+    0.0292,
+    0.0075
+   ]
+  },
+  "superficial-head-of-flexor-pollicis-brevis-r": {
+   "o:trapezium-bone-r": [
+    -0.2763,
+    -0.011,
+    0.0292,
+    0.0075
+   ]
+  },
+  "superficial-head-of-pronator-teres-l": {
+   "o:humerus-l": [
+    0.2051,
+    0.2453,
+    -0.0232,
+    0.0013
+   ],
+   "i:radius-l": [
+    0.2627,
+    0.1361,
+    -0.0206,
+    0.0013
+   ]
+  },
+  "superficial-head-of-pronator-teres-r": {
+   "o:humerus-r": [
+    -0.2051,
+    0.2453,
+    -0.0232,
+    0.0013
+   ],
+   "i:radius-r": [
+    -0.2627,
+    0.1361,
+    -0.0206,
+    0.0013
+   ]
+  },
+  "superficial-part-of-masseter-l": {
+   "o:maxilla-l": [
+    0.0437,
+    0.7005,
+    0.0558,
+    0.0079
+   ],
+   "o:zygomatic-bone-l": [
+    0.0623,
+    0.7134,
+    0.0304,
+    0.0004
+   ],
+   "i:mandible": [
+    0.0414,
+    0.6641,
+    0.0204,
+    0.0007
+   ]
+  },
+  "superficial-part-of-masseter-r": {
+   "o:maxilla-r": [
+    -0.0437,
+    0.7005,
+    0.0558,
+    0.0079
+   ],
+   "o:zygomatic-bone-r": [
+    -0.0623,
+    0.7134,
+    0.0304,
+    0.0004
+   ],
+   "i:mandible": [
+    -0.0414,
+    0.6641,
+    0.0204,
+    0.0007
+   ]
+  },
+  "superior-gemellus-muscle-l": {
+   "o:hip-bone-l": [
+    0.0441,
+    0.0094,
+    -0.0568,
+    0.0006
+   ]
+  },
+  "superior-gemellus-muscle-r": {
+   "o:hip-bone-r": [
+    -0.0441,
+    0.0094,
+    -0.0568,
+    0.0006
+   ]
+  },
+  "superior-head-of-lateral-pterygoid-muscle-l": {
+   "o:sphenoid-bone": [
+    0.0214,
+    0.7244,
+    0.0233,
+    0.0022
+   ],
+   "i:mandible": [
+    0.0404,
+    0.7129,
+    0.0084,
+    0.0051
+   ]
+  },
+  "superior-head-of-lateral-pterygoid-muscle-r": {
+   "o:sphenoid-bone": [
+    -0.0214,
+    0.7244,
+    0.0233,
+    0.0022
+   ],
+   "i:mandible": [
+    -0.0404,
+    0.7129,
+    0.0084,
+    0.0051
+   ]
+  },
+  "superior-oblique-muscle-l": {
+   "o:sphenoid-bone": [
+    0.0103,
+    0.7456,
+    0.0389,
+    0.0081
+   ]
+  },
+  "superior-oblique-muscle-r": {
+   "o:sphenoid-bone": [
+    -0.0103,
+    0.7456,
+    0.0389,
+    0.0081
+   ]
+  },
+  "superior-pharyngeal-constrictor-l": {
+   "o:sphenoid-bone": [
+    0.0272,
+    0.6965,
+    0.0261,
+    0.0018
+   ]
+  },
+  "superior-pharyngeal-constrictor-r": {
+   "o:sphenoid-bone": [
+    -0.0272,
+    0.6965,
+    0.0261,
+    0.0018
+   ]
+  },
+  "supinator-l": {
+   "o:humerus-l": [
+    0.2488,
+    0.2548,
+    -0.0476,
+    0.0013
+   ],
+   "o:radius-l": [
+    0.248,
+    0.2305,
+    -0.0425,
+    0.001
+   ],
+   "o:ulna-l": [
+    0.2311,
+    0.2215,
+    -0.0467,
+    0.0014
+   ],
+   "i:radius-l": [
+    0.2627,
+    0.1361,
+    -0.0206,
+    0.0034
+   ]
+  },
+  "supinator-r": {
+   "o:humerus-r": [
+    -0.2489,
+    0.2548,
+    -0.0476,
+    0.0013
+   ],
+   "o:radius-r": [
+    -0.248,
+    0.2305,
+    -0.0425,
+    0.001
+   ],
+   "o:ulna-r": [
+    -0.2311,
+    0.2215,
+    -0.0467,
+    0.0014
+   ],
+   "i:radius-r": [
+    -0.2627,
+    0.1361,
+    -0.0206,
+    0.0034
+   ]
+  },
+  "supraspinatus-muscle-l": {
+   "o:scapula-l": [
+    0.0915,
+    0.5392,
+    -0.0714,
+    0.0008
+   ],
+   "i:humerus-l": [
+    0.1866,
+    0.5329,
+    -0.0132,
+    0.0014
+   ]
+  },
+  "supraspinatus-muscle-r": {
+   "o:scapula-r": [
+    -0.0915,
+    0.5392,
+    -0.0714,
+    0.0008
+   ],
+   "i:humerus-r": [
+    -0.1866,
+    0.5329,
+    -0.0132,
+    0.0014
+   ]
+  },
+  "temporalis-muscle-l": {
+   "o:parietal-bone-l": [
+    0.0565,
+    0.8002,
+    0.0276,
+    0.0011
+   ],
+   "o:sphenoid-bone": [
+    0.0546,
+    0.7581,
+    0.0284,
+    0.0312
+   ],
+   "i:mandible": [
+    0.0436,
+    0.7085,
+    0.0427,
+    0.0005
+   ]
+  },
+  "temporalis-muscle-r": {
+   "o:parietal-bone-r": [
+    -0.0571,
+    0.7994,
+    0.0269,
+    0.0012
+   ],
+   "o:sphenoid-bone": [
+    -0.0546,
+    0.7581,
+    0.0284,
+    0.0312
+   ],
+   "i:mandible": [
+    -0.0436,
+    0.7085,
+    0.0427,
+    0.0005
+   ]
+  },
+  "teres-major-muscle-l": {
+   "o:scapula-l": [
+    0.102,
+    0.4018,
+    -0.1019,
+    0.0008
+   ],
+   "i:humerus-l": [
+    0.1766,
+    0.4724,
+    -0.0224,
+    0.0049
+   ]
+  },
+  "teres-major-muscle-r": {
+   "o:scapula-r": [
+    -0.102,
+    0.4018,
+    -0.1019,
+    0.0008
+   ],
+   "i:humerus-r": [
+    -0.1766,
+    0.4724,
+    -0.0224,
+    0.0049
+   ]
+  },
+  "teres-minor-muscle-l": {
+   "o:scapula-l": [
+    0.1393,
+    0.4922,
+    -0.0587,
+    0.0013
+   ],
+   "i:humerus-l": [
+    0.1935,
+    0.524,
+    -0.0363,
+    0.0004
+   ]
+  },
+  "teres-minor-muscle-r": {
+   "o:scapula-r": [
+    -0.1393,
+    0.4922,
+    -0.0587,
+    0.0013
+   ],
+   "i:humerus-r": [
+    -0.1936,
+    0.524,
+    -0.0363,
+    0.0004
+   ]
+  },
+  "thyro-epiglottic-part-of-thyro-arytenoid-muscle-l": {
+   "o:thyroid-cartilage": [
+    0,
+    0.621,
+    0.0247,
+    0.0003
+   ],
+   "i:arytenoid-cartilage-l": [
+    0.0039,
+    0.6229,
+    0.0025,
+    0.0052
+   ]
+  },
+  "thyro-epiglottic-part-of-thyro-arytenoid-muscle-r": {
+   "o:thyroid-cartilage": [
+    0,
+    0.621,
+    0.0247,
+    0.0003
+   ],
+   "i:arytenoid-cartilage-r": [
+    -0.0039,
+    0.6229,
+    0.0025,
+    0.0052
+   ]
+  },
+  "thyrohyoid-muscle-l": {
+   "o:thyroid-cartilage": [
+    0.0189,
+    0.6252,
+    0.0051,
+    0.0012
+   ],
+   "i:hyoid-bone": [
+    0.0121,
+    0.6361,
+    0.0259,
+    0.0008
+   ]
+  },
+  "thyrohyoid-muscle-r": {
+   "o:thyroid-cartilage": [
+    -0.0189,
+    0.6258,
+    0.0056,
+    0.0007
+   ],
+   "i:hyoid-bone": [
+    -0.0175,
+    0.6397,
+    0.0152,
+    0.0014
+   ]
+  },
+  "tibialis-anterior-muscle-l": {
+   "o:tibia-l": [
+    0.1098,
+    -0.4446,
+    -0.018,
+    0.0037
+   ],
+   "i:medial-cuneiform-bone-l": [
+    0.0594,
+    -0.8142,
+    0.0167,
+    0.0004
+   ],
+   "i:first-metatarsal-bone-l": [
+    0.0629,
+    -0.8103,
+    0.0229,
+    0.0006
+   ]
+  },
+  "tibialis-anterior-muscle-r": {
+   "o:tibia-r": [
+    -0.1098,
+    -0.4446,
+    -0.018,
+    0.0037
+   ],
+   "i:medial-cuneiform-bone-r": [
+    -0.0594,
+    -0.8142,
+    0.0167,
+    0.0004
+   ],
+   "i:first-metatarsal-bone-r": [
+    -0.0629,
+    -0.8103,
+    0.0229,
+    0.0006
+   ]
+  },
+  "tibialis-posterior-muscle-l": {
+   "o:tibia-l": [
+    0.09,
+    -0.4784,
+    -0.0396,
+    0.003
+   ],
+   "o:fibula-l": [
+    0.1099,
+    -0.572,
+    -0.0393,
+    0.0025
+   ],
+   "i:navicular-bone-l": [
+    0.0646,
+    -0.8069,
+    -0.0047,
+    0.0023
+   ],
+   "i:medial-cuneiform-bone-l": [
+    0.0647,
+    -0.8092,
+    -0.0045,
+    0.0005
+   ]
+  },
+  "tibialis-posterior-muscle-r": {
+   "o:tibia-r": [
+    -0.09,
+    -0.4784,
+    -0.0396,
+    0.003
+   ],
+   "o:fibula-r": [
+    -0.1099,
+    -0.572,
+    -0.0393,
+    0.0025
+   ],
+   "i:navicular-bone-r": [
+    -0.0646,
+    -0.8069,
+    -0.0047,
+    0.0023
+   ],
+   "i:medial-cuneiform-bone-r": [
+    -0.0647,
+    -0.8092,
+    -0.0045,
+    0.0005
+   ]
+  },
+  "transverse-arytenoid-muscle": {
+   "o:arytenoid-cartilage-l": [
+    0.0051,
+    0.6202,
+    0.0032,
+    0.0001
+   ],
+   "o:arytenoid-cartilage-r": [
+    -0.006,
+    0.6204,
+    0.0026,
+    0.0003
+   ],
+   "i:arytenoid-cartilage-l": [
+    0.0043,
+    0.6163,
+    0.0008,
+    0.0001
+   ],
+   "i:arytenoid-cartilage-r": [
+    -0.0066,
+    0.6164,
+    0.002,
+    0.0001
+   ]
+  },
+  "transverse-head-of-adductor-hallucis-l": {
+   "o:third-metatarsal-bone-l": [
+    0.0993,
+    -0.8406,
+    0.0683,
+    0.0025
+   ]
+  },
+  "transverse-head-of-adductor-hallucis-r": {
+   "o:third-metatarsal-bone-r": [
+    -0.0993,
+    -0.8406,
+    0.0683,
+    0.0025
+   ]
+  },
+  "transverse-head-of-adductor-pollicis-l": {
+   "o:third-metacarpal-bone-l": [
+    0.2717,
+    -0.0717,
+    0.0334,
+    0.0026
+   ],
+   "i:ulna-l": [
+    0.2447,
+    -0.0027,
+    0.0088,
+    0.0396
+   ],
+   "i:proximal-phalanx-of-first-finger-of-hand-l": [
+    0.3084,
+    -0.0475,
+    0.0438,
+    0.0164
+   ]
+  },
+  "transverse-head-of-adductor-pollicis-r": {
+   "o:third-metacarpal-bone-r": [
+    -0.2717,
+    -0.0717,
+    0.0334,
+    0.0026
+   ],
+   "i:ulna-r": [
+    -0.2447,
+    -0.0027,
+    0.0088,
+    0.0396
+   ],
+   "i:proximal-phalanx-of-first-finger-of-hand-r": [
+    -0.3084,
+    -0.0475,
+    0.0438,
+    0.0164
+   ]
+  },
+  "transverse-part-of-trapezius-muscle-l": {
+   "o:occipital-bone": [
+    -0.0089,
+    0.6958,
+    -0.0474,
+    0.134
+   ],
+   "o:vertebra-c7": [
+    -0.0044,
+    0.5841,
+    -0.0797,
+    0.0184
+   ],
+   "o:vertebra-t1": [
+    -0.0025,
+    0.5665,
+    -0.0861,
+    0.0049
+   ],
+   "o:vertebra-t2": [
+    -0.0004,
+    0.5475,
+    -0.0926,
+    0.0038
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5303,
+    -0.1017,
+    0.0011
+   ],
+   "o:vertebra-t4": [
+    0.0012,
+    0.505,
+    -0.104,
+    0.0084
+   ],
+   "o:vertebra-t5": [
+    -0.0001,
+    0.4905,
+    -0.0942,
+    0.0258
+   ],
+   "o:vertebra-t6": [
+    -0.0107,
+    0.4876,
+    -0.0767,
+    0.041
+   ],
+   "o:vertebra-t7": [
+    -0.0138,
+    0.4593,
+    -0.0807,
+    0.0611
+   ],
+   "o:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.0994
+   ],
+   "o:vertebra-t9": [
+    -0.0122,
+    0.3981,
+    -0.0774,
+    0.1188
+   ],
+   "o:vertebra-t10": [
+    -0.0111,
+    0.3694,
+    -0.0722,
+    0.1477
+   ],
+   "o:vertebra-t11": [
+    -0.0134,
+    0.3391,
+    -0.0657,
+    0.1788
+   ],
+   "o:vertebra-t12": [
+    -0.0114,
+    0.305,
+    -0.0577,
+    0.2136
+   ],
+   "i:scapula-l": [
+    0.1493,
+    0.554,
+    -0.0601,
+    0.0004
+   ],
+   "i:clavicle-l": [
+    0.154,
+    0.5622,
+    -0.0415,
+    0.0008
+   ]
+  },
+  "transverse-part-of-trapezius-muscle-r": {
+   "o:occipital-bone": [
+    0.0089,
+    0.6958,
+    -0.0474,
+    0.134
+   ],
+   "o:vertebra-c7": [
+    0.0044,
+    0.5841,
+    -0.0797,
+    0.0184
+   ],
+   "o:vertebra-t1": [
+    0.0026,
+    0.5666,
+    -0.0861,
+    0.0048
+   ],
+   "o:vertebra-t2": [
+    -0.0004,
+    0.5475,
+    -0.0926,
+    0.0038
+   ],
+   "o:vertebra-t3": [
+    0,
+    0.5303,
+    -0.1017,
+    0.0011
+   ],
+   "o:vertebra-t4": [
+    0.0012,
+    0.505,
+    -0.104,
+    0.0083
+   ],
+   "o:vertebra-t5": [
+    -0.0001,
+    0.4905,
+    -0.0942,
+    0.0258
+   ],
+   "o:vertebra-t6": [
+    0.0107,
+    0.4876,
+    -0.0767,
+    0.041
+   ],
+   "o:vertebra-t7": [
+    0.0138,
+    0.4593,
+    -0.0807,
+    0.0611
+   ],
+   "o:vertebra-t8": [
+    -0.013,
+    0.4185,
+    -0.0779,
+    0.0994
+   ],
+   "o:vertebra-t9": [
+    0.0122,
+    0.3981,
+    -0.0774,
+    0.1188
+   ],
+   "o:vertebra-t10": [
+    0.0112,
+    0.3694,
+    -0.0722,
+    0.1477
+   ],
+   "o:vertebra-t11": [
+    0.0135,
+    0.3391,
+    -0.0657,
+    0.1788
+   ],
+   "o:vertebra-t12": [
+    0.0114,
+    0.305,
+    -0.0577,
+    0.2136
+   ],
+   "i:scapula-r": [
+    -0.1493,
+    0.554,
+    -0.0601,
+    0.0004
+   ],
+   "i:clavicle-r": [
+    -0.154,
+    0.5622,
+    -0.0415,
+    0.0008
+   ]
+  },
+  "transversus-abdominis-muscle-l": {
+   "o:hip-bone-l": [
+    0.1092,
+    0.1527,
+    -0.0218,
+    0.0852
+   ],
+   "o:costal-cartilage-of-seventh-rib-l": [
+    0.1032,
+    0.3225,
+    0.0759,
+    0.0015
+   ],
+   "o:costal-cartilage-of-eighth-rib-l": [
+    0.1125,
+    0.2904,
+    0.0603,
+    0.0016
+   ],
+   "o:costal-cartilage-of-ninth-rib-l": [
+    0.1186,
+    0.2574,
+    0.0379,
+    0.0015
+   ],
+   "o:costal-cartilage-of-tenth-rib-l": [
+    0.1259,
+    0.2279,
+    0.0203,
+    0.0107
+   ],
+   "i:hip-bone-l": [
+    0.0125,
+    -0.0062,
+    0.0515,
+    0.0015
+   ],
+   "i:xiphoid-process": [
+    0,
+    0.3629,
+    0.099,
+    0.0853
+   ]
+  },
+  "transversus-abdominis-muscle-r": {
+   "o:hip-bone-r": [
+    -0.1092,
+    0.1527,
+    -0.0218,
+    0.0852
+   ],
+   "o:costal-cartilage-of-seventh-rib-r": [
+    -0.1032,
+    0.3225,
+    0.0759,
+    0.0015
+   ],
+   "o:costal-cartilage-of-eighth-rib-r": [
+    -0.1125,
+    0.2904,
+    0.0603,
+    0.0016
+   ],
+   "o:costal-cartilage-of-ninth-rib-r": [
+    -0.1186,
+    0.2574,
+    0.0379,
+    0.0015
+   ],
+   "o:costal-cartilage-of-tenth-rib-r": [
+    -0.1259,
+    0.2279,
+    0.0203,
+    0.0107
+   ],
+   "i:hip-bone-r": [
+    -0.0125,
+    -0.0062,
+    0.0515,
+    0.0015
+   ],
+   "i:xiphoid-process": [
+    0,
+    0.3629,
+    0.099,
+    0.0853
+   ]
+  },
+  "transversus-thoracis-muscle-l": {
+   "o:body-of-sternum": [
+    0.011,
+    0.4029,
+    0.0889,
+    0.0013
+   ],
+   "o:xiphoid-process": [
+    0.0062,
+    0.385,
+    0.0934,
+    0.0016
+   ],
+   "i:costal-cartilage-of-second-rib-l": [
+    0.0374,
+    0.4965,
+    0.0567,
+    0.0021
+   ],
+   "i:costal-cartilage-of-third-rib-l": [
+    0.0469,
+    0.4639,
+    0.0666,
+    0.0015
+   ],
+   "i:costal-cartilage-of-fourth-rib-l": [
+    0.0661,
+    0.4218,
+    0.0839,
+    0.0013
+   ],
+   "i:costal-cartilage-of-fifth-rib-l": [
+    0.0761,
+    0.3899,
+    0.0926,
+    0.0008
+   ],
+   "i:costal-cartilage-of-sixth-rib-l": [
+    0.0632,
+    0.3631,
+    0.0993,
+    0.0013
+   ]
+  },
+  "transversus-thoracis-muscle-r": {
+   "o:body-of-sternum": [
+    -0.0112,
+    0.4029,
+    0.089,
+    0.0013
+   ],
+   "o:xiphoid-process": [
+    -0.0062,
+    0.385,
+    0.0934,
+    0.0016
+   ],
+   "i:costal-cartilage-of-second-rib-r": [
+    -0.0374,
+    0.4965,
+    0.0567,
+    0.0021
+   ],
+   "i:costal-cartilage-of-third-rib-r": [
+    -0.0469,
+    0.4639,
+    0.0666,
+    0.0015
+   ],
+   "i:costal-cartilage-of-fourth-rib-r": [
+    -0.0661,
+    0.4218,
+    0.0839,
+    0.0013
+   ],
+   "i:costal-cartilage-of-fifth-rib-r": [
+    -0.0761,
+    0.3899,
+    0.0926,
+    0.0008
+   ],
+   "i:costal-cartilage-of-sixth-rib-r": [
+    -0.0632,
+    0.3631,
+    0.0993,
+    0.0013
+   ]
+  },
+  "ulnar-head-of-extensor-carpi-ulnaris-l": {
+   "o:ulna-l": [
+    0.2232,
+    0.1749,
+    -0.0325,
+    0.0032
+   ],
+   "i:fifth-metacarpal-bone-l": [
+    0.244,
+    -0.0264,
+    0.0169,
+    0.0015
+   ]
+  },
+  "ulnar-head-of-extensor-carpi-ulnaris-r": {
+   "o:ulna-r": [
+    -0.2232,
+    0.1749,
+    -0.0325,
+    0.0032
+   ],
+   "i:fifth-metacarpal-bone-r": [
+    -0.244,
+    -0.0264,
+    0.0169,
+    0.0015
+   ]
+  },
+  "ulnar-head-of-flexor-carpi-ulnaris-l": {
+   "o:ulna-l": [
+    0.2041,
+    0.2422,
+    -0.0507,
+    0.0022
+   ],
+   "i:pisiform-bone-l": [
+    0.2423,
+    -0.0075,
+    0.0252,
+    0.0379
+   ],
+   "i:hamate-bone-l": [
+    0.2548,
+    -0.0063,
+    0.0148,
+    0.0378
+   ],
+   "i:fifth-metacarpal-bone-l": [
+    0.2442,
+    -0.0209,
+    0.0201,
+    0.0487
+   ]
+  },
+  "ulnar-head-of-flexor-carpi-ulnaris-r": {
+   "o:ulna-r": [
+    -0.2041,
+    0.2422,
+    -0.0507,
+    0.0022
+   ],
+   "i:pisiform-bone-r": [
+    -0.2423,
+    -0.0075,
+    0.0252,
+    0.0379
+   ],
+   "i:hamate-bone-r": [
+    -0.2548,
+    -0.0063,
+    0.0148,
+    0.0378
+   ],
+   "i:fifth-metacarpal-bone-r": [
+    -0.2442,
+    -0.0209,
+    0.0201,
+    0.0487
+   ]
+  },
+  "vastus-intermedius-muscle-l": {
+   "o:femur-l": [
+    0.112,
+    -0.1996,
+    -0.0094,
+    0.0038
+   ],
+   "i:patella-l": [
+    0.0797,
+    -0.4101,
+    -0.0041,
+    0.0028
+   ]
+  },
+  "vastus-intermedius-muscle-r": {
+   "o:femur-r": [
+    -0.112,
+    -0.1996,
+    -0.0094,
+    0.0038
+   ],
+   "i:patella-r": [
+    -0.0797,
+    -0.4101,
+    -0.0041,
+    0.0028
+   ]
+  },
+  "vastus-lateralis-muscle-l": {
+   "o:femur-l": [
+    0.1321,
+    -0.0626,
+    -0.0161,
+    0.0025
+   ],
+   "i:tibia-l": [
+    0.0879,
+    -0.4593,
+    0.0017,
+    0.0035
+   ],
+   "i:patella-l": [
+    0.0961,
+    -0.3947,
+    0.0087,
+    0.0047
+   ]
+  },
+  "vastus-lateralis-muscle-r": {
+   "o:femur-r": [
+    -0.1321,
+    -0.0626,
+    -0.0161,
+    0.0025
+   ],
+   "i:tibia-r": [
+    -0.0879,
+    -0.4593,
+    0.0017,
+    0.0035
+   ],
+   "i:patella-r": [
+    -0.0961,
+    -0.3947,
+    0.0087,
+    0.0047
+   ]
+  },
+  "vastus-medialis-muscle-l": {
+   "o:femur-l": [
+    0.0877,
+    -0.1822,
+    -0.0004,
+    0.0021
+   ],
+   "i:patella-l": [
+    0.0796,
+    -0.4218,
+    -0.0079,
+    0.0015
+   ]
+  },
+  "vastus-medialis-muscle-r": {
+   "o:femur-r": [
+    -0.0877,
+    -0.1822,
+    -0.0004,
+    0.0021
+   ],
+   "i:patella-r": [
+    -0.0796,
+    -0.4218,
+    -0.0079,
+    0.0015
+   ]
+  },
+  "zygomaticus-minor-muscle-l": {
+   "o:zygomatic-bone-l": [
+    0.0329,
+    0.7118,
+    0.0683,
+    0.0019
+   ]
+  },
+  "zygomaticus-minor-muscle-r": {
+   "o:zygomatic-bone-r": [
+    -0.0329,
+    0.7118,
+    0.0683,
+    0.0019
+   ]
+  }
+ }
+}

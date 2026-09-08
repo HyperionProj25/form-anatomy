@@ -1,5 +1,6 @@
 import { partsByKey } from "./catalog";
 import { factsForWiki } from "./facts";
+import { HEAD_ORIGINS } from "./head-origins";
 import type { CatalogPart } from "./types";
 
 /** Bone group keys a muscle's attachment text names, by end. */
@@ -228,7 +229,9 @@ export function attachmentsFor(part: CatalogPart): Attachments | undefined {
   const f = factsForWiki(part.wiki);
   let result: Attachments | undefined;
   if (f) {
-    const origin = f.origin ? boneKeysIn(f.origin) : [];
+    // A named head starts on its own bone; the article lists the whole muscle's origins.
+    const headOrigin = HEAD_ORIGINS[part.key]?.filter((k) => partsByKey(k).length > 0);
+    const origin = headOrigin ?? (f.origin ? boneKeysIn(f.origin) : []);
     const insertion = f.insertion ? boneKeysIn(f.insertion) : [];
     result = origin.length || insertion.length ? { origin, insertion } : undefined;
   }

@@ -112,7 +112,7 @@ function Shell() {
           from: c.from,
           via: c.via,
           to: c.to,
-          moveVia: c.moveVia,
+          viaWeight: c.viaWeight,
           color: c.role === "shortens" ? "#c8473f" : c.role === "lengthens" ? "#2b7bd9" : "#8a8f86",
         })),
       },

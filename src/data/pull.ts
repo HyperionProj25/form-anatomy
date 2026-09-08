@@ -1,5 +1,6 @@
 import { attachmentIds } from "./attachments";
 import { partById } from "./catalog";
+import { contact, reaches } from "./geometry";
 import type { CatalogPart, Vec3 } from "./types";
 
 /** One line of action: from the insertion (moving end) through the muscle to an origin (fixed end). */
@@ -49,14 +50,15 @@ export function pullFor(muscle: CatalogPart): Pull | undefined {
   const ids = attachmentIds(muscle);
   if (!ids || !ids.origin.length || !ids.insertion.length) return undefined;
   const c = muscle.centroid;
-  const points = (list: string[]) =>
+  const points = (list: string[], end: "origin" | "insertion") =>
     list
+      .filter((id) => reaches(muscle.id, id, end))
       .map((id) => partById(id))
       .filter((p): p is CatalogPart => !!p)
-      .map((bone) => contactPoint(bone, c))
+      .map((bone) => contact(muscle.id, bone.id, end) ?? contactPoint(bone, c))
       .sort((a, b) => dist2(a, c) - dist2(b, c));
-  const origin = points(ids.origin);
-  const insertion = points(ids.insertion);
+  const origin = points(ids.origin, "origin");
+  const insertion = points(ids.insertion, "insertion");
   if (!origin.length || !insertion.length) return undefined;
   const paths: PullPath[] = [];
   for (const from of insertion.slice(0, 2))
