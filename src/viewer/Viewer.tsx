@@ -40,7 +40,10 @@ type Props = {
   motion?: MotionDrawing | null;
   motionPhase?: number;
   motionPlaying?: boolean;
+  motionLines?: boolean;
   onMotionPhase?(phase: number): void;
+  /** Contraction pulse on one muscle along its line of action. */
+  pulse?: { id: string; axisFrom: Vec3; axisTo: Vec3; belly: Vec3 } | null;
   onSelect(id: string): void;
   onReady(ids: string[]): void;
   onCameraChange(pose: CameraPose): void;
@@ -150,6 +153,14 @@ export default function Viewer(props: Props) {
   useEffect(() => {
     if (ready) engine.current?.setMotionPlaying(!!props.motionPlaying);
   }, [ready, props.motionPlaying, props.motion]);
+
+  useEffect(() => {
+    if (ready) engine.current?.setCablesVisible(!!props.motionLines);
+  }, [ready, props.motionLines, props.motion]);
+
+  useEffect(() => {
+    if (ready) engine.current?.setPulse(props.pulse ?? null);
+  }, [ready, props.pulse]);
 
   useEffect(() => {
     const e = engine.current;

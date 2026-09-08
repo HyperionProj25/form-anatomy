@@ -20,22 +20,22 @@
 
 **Files:** `scripts/build-geometry.ts`, `src/data/geometry.json`, `src/data/geometry.ts`, `package.json`, `tests/geometry.test.ts`
 
-- [ ] Decode positions per node; landmark helpers; joint pivots per spec 12.1; contacts for attachment pairs.
-- [ ] `npm run geometry`; runtime helpers with fallbacks; tests. Commit "Derive joint centres and attachment contacts from the mesh".
+- [x] Decode positions per node; landmark helpers; joint pivots per spec 12.1; contacts for attachment pairs.
+- [x] `npm run geometry`; runtime helpers with fallbacks; tests. Commit "Derive joint centres and attachment contacts from the mesh".
 
 ### Task 2: Use the geometry
 
 **Files:** `src/data/motion.ts`, `src/data/pull.ts`, `tests/motion.test.ts`
 
-- [ ] Pivots and contacts from geometry with fallbacks; diagnostics re-run; pronator teres deep head shortens at the elbow. Commit "Drive motion and pull from mesh contacts".
+- [x] Pivots and contacts from geometry with fallbacks; diagnostics re-run; pronator teres deep head shortens at the elbow. Commit "Drive motion and pull from mesh contacts".
 
 ### Task 3: Deformation
 
 **Files:** `src/viewer/engine.ts`, `src/viewer/Viewer.tsx`, `src/App.tsx`, `src/features/motion/MotionCard.tsx`, `src/styles/globals.css`
 
-- [ ] SkinnedMesh copies with two bones and band weights for crossing muscles; bulge shader; per-frame material mirroring; pickable.
-- [ ] Lines toggle in the card (off by default). Contraction pulse for the selected muscle with attachments on. Caveats. Verify in Chrome. Commit "Bend, shorten and bulge crossing muscles during joint motion".
+- [x] SkinnedMesh copies with two bones and band weights for crossing muscles; bulge shader; per-frame material mirroring; pickable.
+- [x] Lines toggle in the card (off by default). Contraction pulse for the selected muscle with attachments on. Caveats. Verify in Chrome. Commit "Bend, shorten and bulge crossing muscles during joint motion".
 
 ### Task 4: Docs, deploy
 
-- [ ] README and guide; spec appended; plan ticked. Commit, push, watch CI, verify live. Update memory.
+- [x] README and guide; spec appended; plan ticked. Commit, push, watch CI, verify live. Update memory.

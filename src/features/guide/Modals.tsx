@@ -17,7 +17,7 @@ const GUIDE_STEPS = [
   {
     icon: Layers,
     title: "Explore one layer at a time",
-    text: "Switch between muscles and bones. Filter by body region, approximate layer and side, and choose English or Latin names. Select a structure, then isolate it, hide it, pin it to compare with others, or show its origin and insertion bones on the skeleton with the direction of pull animated. The joint chips list every muscle that crosses a joint, and Animate bends the joint with those muscles drawn as lines of action: red shortens, blue lengthens.",
+    text: "Switch between muscles and bones. Filter by body region, approximate layer and side, and choose English or Latin names. Select a structure, then isolate it, hide it, pin it to compare with others, or show its origin and insertion bones on the skeleton with the direction of pull animated. The joint chips list every muscle that crosses a joint, and Animate bends the joint: the crossing muscles bend, shorten and bulge with it, and the card says which shorten and which lengthen.",
   },
   {
     icon: Network,

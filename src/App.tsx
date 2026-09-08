@@ -104,6 +104,8 @@ function Shell() {
     () =>
       motion && {
         pivot: motion.pivot,
+        dir: motion.dir,
+        band: motion.band,
         axis: motion.axis,
         range: motion.range,
         movingIds: motion.movingIds,
@@ -113,6 +115,7 @@ function Shell() {
           via: c.via,
           to: c.to,
           viaWeight: c.viaWeight,
+          change: c.change,
           color: c.role === "shortens" ? "#c8473f" : c.role === "lengthens" ? "#2b7bd9" : "#8a8f86",
         })),
       },
@@ -130,13 +133,20 @@ function Shell() {
     const part = partById(state.selected);
     return part ? (pullFor(part) ?? null) : null;
   }, [attachments, state.selected]);
+  const pulse = useMemo(
+    () =>
+      pull && pull.paths[0]
+        ? { id: pull.muscleId, axisFrom: pull.paths[0].to, axisTo: pull.paths[0].from, belly: pull.paths[0].via }
+        : null,
+    [pull],
+  );
   const styles = useMemo(
     () =>
       computeStyles({
         parts,
         mode: state.mode,
         selected: state.selected,
-        hidden: new Set([...state.hidden, ...(motion?.hiddenIds ?? [])]),
+        hidden: new Set(state.hidden),
         isolated: state.isolated,
         opacity: state.opacity / 100,
         lineColor: activeLine.color,
@@ -155,7 +165,6 @@ function Shell() {
       state.pinned,
       activeLine,
       attachments,
-      motion,
     ],
   );
   const cameraCommand = useMemo<CameraCommand>(() => {
@@ -291,7 +300,9 @@ function Shell() {
             motion={motionDrawing}
             motionPhase={state.motion?.phase ?? 0}
             motionPlaying={!!state.motion?.playing}
+            motionLines={!!state.motion?.lines}
             onMotionPhase={(phase) => dispatch({ type: "motionTick", phase })}
+            pulse={pulse}
             onSelect={(id) => dispatch({ type: "select", id })}
             onReady={() => setReady(true)}
             onCameraChange={(pose) => dispatch({ type: "cameraMoved", pose })}

@@ -47,6 +47,8 @@ export type Motion = {
   side: MotionSide;
   phase: number;
   playing: boolean;
+  /** Draw the lines of action as well as the deformed muscles. */
+  lines: boolean;
   frameNonce: number;
 };
 
@@ -149,6 +151,7 @@ export type Action =
   | { type: "motionScrub"; phase: number }
   | { type: "motionPlay"; playing: boolean }
   | { type: "motionSide"; side: MotionSide }
+  | { type: "motionLines"; lines: boolean }
   | { type: "motionStop" }
   | { type: "reset" }
   | { type: "hydrate"; state: Partial<AppState> };
@@ -472,10 +475,13 @@ export function reducer(s: AppState, a: Action): AppState {
           side: a.side ?? "right",
           phase: 0,
           playing: true,
+          lines: false,
           frameNonce: s.cameraNonce + 1,
         },
         cameraNonce: s.cameraNonce + 1,
       };
+    case "motionLines":
+      return s.motion ? { ...s, motion: { ...s.motion, lines: a.lines } } : s;
     case "motionTick":
       return s.motion ? { ...s, motion: { ...s.motion, phase: a.phase } } : s;
     case "motionScrub":

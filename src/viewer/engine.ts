@@ -21,14 +21,81 @@ export type EngineHandlers = {
   onMotionPhase?(phase: number): void;
 };
 
-/** A rigid joint motion: the moving meshes rotate about the pivot; cables follow their insertion end. */
+/**
+ * A rigid joint motion: the moving meshes rotate about the pivot; crossing muscles are re-skinned
+ * with two bones so they bend across the joint plane and bulge as they shorten; cables follow
+ * their insertion end.
+ */
 export type MotionDrawing = {
   pivot: Vec3;
+  /** Proximal-to-distal limb direction; with `band`, the blend across the joint plane. */
+  dir: Vec3;
+  band: number;
   axis: Vec3;
   range: [number, number];
   movingIds: string[];
-  cables: { id: string; from: Vec3; via: Vec3; to: Vec3; viaWeight: number; color: string }[];
+  cables: {
+    id: string;
+    from: Vec3;
+    via: Vec3;
+    to: Vec3;
+    viaWeight: number;
+    /** Path length change over the full range as a fraction of the muscle's size; negative shortens. */
+    change: number;
+    color: string;
+  }[];
 };
+
+type Deformed = {
+  id: string;
+  skinned: THREE.SkinnedMesh;
+  seg: THREE.Bone;
+  material: THREE.MeshStandardMaterial;
+  uniforms: BulgeUniforms;
+  change: number;
+};
+
+type BulgeUniforms = {
+  uAxisOrigin: { value: THREE.Vector3 };
+  uAxisDir: { value: THREE.Vector3 };
+  uBulge: { value: number };
+  uShorten: { value: number };
+};
+
+/**
+ * Vertex-shader addition: scale the mesh radially about its own line of action (volume-preserving
+ * bulge) and along it (contraction), before skinning bends it at the joint.
+ */
+const BULGE_VERTEX = `
+{
+  vec3 rel = transformed - uAxisOrigin;
+  float along = dot(rel, uAxisDir);
+  vec3 radial = rel - along * uAxisDir;
+  transformed = uAxisOrigin + radial * uBulge + uAxisDir * along * uShorten;
+}`;
+
+function addBulge(material: THREE.MeshStandardMaterial, uniforms: BulgeUniforms): void {
+  material.onBeforeCompile = (shader) => {
+    Object.assign(shader.uniforms, uniforms);
+    shader.vertexShader =
+      "uniform vec3 uAxisOrigin;\nuniform vec3 uAxisDir;\nuniform float uBulge;\nuniform float uShorten;\n" +
+      shader.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>" + BULGE_VERTEX);
+  };
+  material.customProgramCacheKey = () => "bulge";
+  material.needsUpdate = true;
+}
+
+function removeBulge(material: THREE.MeshStandardMaterial): void {
+  material.onBeforeCompile = () => {};
+  material.customProgramCacheKey = () => "";
+  material.needsUpdate = true;
+}
+
+/** Smooth 0..1 ramp across a band; the same shape src/data/motion.ts uses for the belly. */
+function bandWeight(signedDistance: number, band: number): number {
+  const x = Math.min(1, Math.max(0, (signedDistance + band) / (2 * band)));
+  return x * x * (3 - 2 * x);
+}
 
 /** Seconds for a full sweep of a joint motion in one direction. */
 const MOTION_SWEEP_MS = 2600;
@@ -124,6 +191,9 @@ export class AnatomyEngine {
   private motionPlaying = false;
   private motionReported = 0;
   private posed = new Set<string>();
+  private deformed: Deformed[] = [];
+  private deformedIds = new Set<string>();
+  private pulse: { id: string; uniforms: BulgeUniforms } | null = null;
   private targets = new Map<string, Target>();
   private pending = new Set<string>();
   private hoverId: string | null = null;
@@ -274,7 +344,9 @@ export class AnatomyEngine {
         this.snap(mesh, target);
         continue;
       }
-      if (s.visible && !mesh.visible) {
+      // A muscle with a deformed copy stays hidden itself; its material still tweens so the
+      // copy, which mirrors it every frame, follows selection and hover.
+      if (s.visible && !mesh.visible && !this.deformedIds.has(id)) {
         mesh.visible = true;
         mesh.material.opacity = 0;
         mesh.material.transparent = true;
@@ -283,6 +355,40 @@ export class AnatomyEngine {
       this.pending.add(id);
     }
     this.initialized = true;
+  }
+
+  /** Show or hide the lines of action drawn during a joint motion. */
+  setCablesVisible(on: boolean): void {
+    this.cableGroup.visible = on;
+  }
+
+  /**
+   * A slow contraction pulse on one muscle: it shortens a few percent along its line of action
+   * and bulges to match, then relaxes. Off under reduced motion. Pass null to stop.
+   */
+  setPulse(pulse: { id: string; axisFrom: Vec3; axisTo: Vec3; belly: Vec3 } | null): void {
+    if (this.pulse) {
+      const mesh = this.meshes.get(this.pulse.id);
+      if (mesh) removeBulge(mesh.material);
+      this.pulse = null;
+    }
+    if (!pulse || this.reduced) return;
+    const mesh = this.meshes.get(pulse.id);
+    if (!mesh) return;
+    const c = this.modelCenter;
+    const dir = new THREE.Vector3(
+      pulse.axisTo[0] - pulse.axisFrom[0],
+      pulse.axisTo[1] - pulse.axisFrom[1],
+      pulse.axisTo[2] - pulse.axisFrom[2],
+    ).normalize();
+    const uniforms: BulgeUniforms = {
+      uAxisOrigin: { value: new THREE.Vector3(pulse.belly[0] + c[0], pulse.belly[1] + c[1], pulse.belly[2] + c[2]) },
+      uAxisDir: { value: dir },
+      uBulge: { value: 1 },
+      uShorten: { value: 1 },
+    };
+    addBulge(mesh.material, uniforms);
+    this.pulse = { id: pulse.id, uniforms };
   }
 
   /** Draw a thin halo around one part (or none). */
@@ -322,7 +428,7 @@ export class AnatomyEngine {
   frame(center: Vec3, radius: number, direction: Vec3): Promise<void> {
     const halfFov = THREE.MathUtils.degToRad(this.camera.fov / 2);
     const distance = THREE.MathUtils.clamp(
-      (Math.max(radius, 0.05) * 1.6) / Math.sin(halfFov),
+      (Math.max(radius, 0.05) * 1.05) / Math.sin(halfFov),
       this.controls.minDistance,
       this.controls.maxDistance,
     );
@@ -364,8 +470,68 @@ export class AnatomyEngine {
         to: new THREE.Vector3(...c.to),
         viaWeight: c.viaWeight,
       });
+      this.deform(c, m);
     }
+    this.model?.updateMatrixWorld(true);
+    for (const d of this.deformed) d.skinned.bind(d.skinned.skeleton);
     this.applyMotion();
+  }
+
+  /**
+   * Re-skin one crossing muscle with two bones: a fixed root and the moving segment. Each vertex
+   * blends between them by a smooth band across the joint plane, so the mesh bends at the joint
+   * and its ends follow their bones. A bulge shader thickens it as it shortens.
+   */
+  private deform(c: MotionDrawing["cables"][number], m: MotionDrawing): void {
+    const mesh = this.meshes.get(c.id);
+    if (!mesh || !this.model) return;
+    const geometry = mesh.geometry.clone();
+    const pos = geometry.attributes.position;
+    const n = pos.count;
+    const skinIndex = new Uint16Array(n * 4);
+    const skinWeight = new Float32Array(n * 4);
+    const cx = m.pivot[0] + this.modelCenter[0];
+    const cy = m.pivot[1] + this.modelCenter[1];
+    const cz = m.pivot[2] + this.modelCenter[2];
+    for (let i = 0; i < n; i++) {
+      const s =
+        (pos.getX(i) - cx) * m.dir[0] + (pos.getY(i) - cy) * m.dir[1] + (pos.getZ(i) - cz) * m.dir[2];
+      const w = bandWeight(s, m.band);
+      skinIndex[i * 4] = 1;
+      skinIndex[i * 4 + 1] = 0;
+      skinWeight[i * 4] = w;
+      skinWeight[i * 4 + 1] = 1 - w;
+    }
+    geometry.setAttribute("skinIndex", new THREE.Uint16BufferAttribute(skinIndex, 4));
+    geometry.setAttribute("skinWeight", new THREE.Float32BufferAttribute(skinWeight, 4));
+    const root = new THREE.Bone();
+    const seg = new THREE.Bone();
+    seg.matrixAutoUpdate = false;
+    root.add(seg);
+    const material = mesh.material.clone();
+    const axisDir = new THREE.Vector3(c.to[0] - c.from[0], c.to[1] - c.from[1], c.to[2] - c.from[2]).normalize();
+    const uniforms: BulgeUniforms = {
+      uAxisOrigin: {
+        value: new THREE.Vector3(
+          c.via[0] + this.modelCenter[0],
+          c.via[1] + this.modelCenter[1],
+          c.via[2] + this.modelCenter[2],
+        ),
+      },
+      uAxisDir: { value: axisDir },
+      uBulge: { value: 1 },
+      uShorten: { value: 1 },
+    };
+    addBulge(material, uniforms);
+    const skinned = new THREE.SkinnedMesh(geometry, material);
+    skinned.add(root);
+    skinned.frustumCulled = false;
+    skinned.userData.catalogId = c.id;
+    this.model.add(skinned);
+    skinned.skeleton = new THREE.Skeleton([root, seg]);
+    this.deformed.push({ id: c.id, skinned, seg, material, uniforms, change: c.change });
+    this.deformedIds.add(c.id);
+    mesh.visible = false;
   }
 
   private static placeSegment(mesh: THREE.Mesh, a: THREE.Vector3, b: THREE.Vector3): void {
@@ -411,6 +577,13 @@ export class AnatomyEngine {
       mesh.matrixWorldNeedsUpdate = true;
       this.posed.add(id);
     }
+    for (const d of this.deformed) {
+      d.seg.matrix.copy(pose);
+      d.seg.matrixWorldNeedsUpdate = true;
+      // Volume-preserving: a path that shortens by k thickens by 1/sqrt(1 - k).
+      const ratio = Math.max(0.35, 1 + d.change * this.motionPhase);
+      d.uniforms.uBulge.value = Math.min(1.45, Math.max(0.75, 1 / Math.sqrt(ratio)));
+    }
     const pivotWorld = new THREE.Vector3(...m.pivot);
     const axisUnit = new THREE.Vector3(...m.axis).normalize();
     const turn = (p: THREE.Vector3, weight = 1) =>
@@ -453,8 +626,32 @@ export class AnatomyEngine {
       (c.dot.material as THREE.Material).dispose();
     }
     this.cables = [];
+    for (const d of this.deformed) {
+      this.model?.remove(d.skinned);
+      d.skinned.geometry.dispose();
+      d.material.dispose();
+      const original = this.meshes.get(d.id);
+      const target = this.targets.get(d.id);
+      if (original) original.visible = target ? target.style.visible : true;
+    }
+    this.deformed = [];
+    this.deformedIds.clear();
     this.motion = null;
     this.motionPlaying = false;
+  }
+
+  /** Copy the original's tweened look onto its deformed copy so selection and hover still read. */
+  private mirrorDeformed(): void {
+    for (const d of this.deformed) {
+      const src = this.meshes.get(d.id)?.material;
+      if (!src) continue;
+      d.material.color.copy(src.color);
+      d.material.emissive.copy(src.emissive);
+      d.material.emissiveIntensity = src.emissiveIntensity;
+      d.material.opacity = src.opacity;
+      d.material.transparent = src.transparent;
+      d.material.depthWrite = src.depthWrite;
+    }
   }
 
   /** Slow drift around the target, for cinematic tours. Off under reduced motion. */
@@ -676,6 +873,7 @@ export class AnatomyEngine {
     this.clearPaths();
     this.clearPull();
     this.clearMotion();
+    this.setPulse(null);
     this.setSelected(null);
     if (this.ground) {
       this.scene.remove(this.ground);
@@ -857,6 +1055,13 @@ export class AnatomyEngine {
         this.handlers.onMotionPhase?.(this.motionPhase);
       }
     }
+    if (this.deformed.length) this.mirrorDeformed();
+    if (this.pulse) {
+      // A slow breath: about 7% shorter at the peak, thicker to match.
+      const p = (1 - Math.cos((now % 2600) / 2600 * Math.PI * 2)) / 2;
+      this.pulse.uniforms.uShorten.value = 1 - 0.07 * p;
+      this.pulse.uniforms.uBulge.value = 1 + 0.11 * p;
+    }
     this.placeLabels();
     this.renderer.render(this.scene, this.camera);
   };
@@ -868,7 +1073,10 @@ export class AnatomyEngine {
       (-(event.clientY - rect.top) / rect.height) * 2 + 1,
     );
     this.raycaster.setFromCamera(this.pointer, this.camera);
-    const candidates = [...this.meshes.values()].filter((m) => m.visible && m.material.opacity > 0.2);
+    const candidates: THREE.Object3D[] = [...this.meshes.values()].filter(
+      (m) => m.visible && m.material.opacity > 0.2,
+    );
+    for (const d of this.deformed) if (d.material.opacity > 0.2) candidates.push(d.skinned);
     return this.raycaster.intersectObjects(candidates, false)[0]?.object as PartMesh | undefined;
   }
 

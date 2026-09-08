@@ -96,14 +96,21 @@ checks without deploying.
 - Anki export: any playlist or study set downloads as a tab-separated deck,
   one card per structure with its facts and a link back to the atlas.
 - Joint motion: animate the jaw, shoulder, elbow, wrist, hip, knee or ankle.
-  The distal bones rotate rigidly about an estimated joint centre while the
-  muscles that cross the joint become lines of action bending through their
-  bellies, red where the line shortens and blue where it lengthens, so
-  agonists and antagonists read at a glance. Scrub the angle, switch sides,
-  and read the caveat: real joints roll and glide.
+  The distal bones rotate rigidly about a joint centre measured from the
+  mesh (epicondyles, condyles, femoral and humeral heads, malleoli), and the
+  muscles that cross the joint bend, shorten and bulge: each is re-skinned
+  with two bones and a smooth blend across the joint plane, with a
+  volume-preserving bulge as it shortens. The card lists which muscles
+  shorten and which lengthen; lines of action can be overlaid. Scrub the
+  angle, switch sides, and read the caveat: procedural deformation, not
+  measured mechanics, and real joints roll and glide.
+- Mesh geometry: `npm run geometry` decodes every part's Draco geometry once
+  and writes joint centres and, for every attachment pair, the bone-surface
+  point nearest the end of the muscle that attaches there. Named heads start
+  on their own bone (the ulnar head of pronator teres on the ulna).
 - Direction of pull: with attachments shown, particles flow from the
   insertion through the muscle to the origin with the fixed and moving ends
-  labelled.
+  labelled, and the muscle itself breathes through a slow contraction pulse.
 - Cinematic tours: while a fascial-line tour plays, the camera drifts around
   each stop under a caption band with the hop's evidence.
 - Rendering: image-based lighting, a contact shadow, a halo on the selected

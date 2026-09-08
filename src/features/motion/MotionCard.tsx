@@ -84,9 +84,18 @@ export default function MotionCard({ setup }: { setup: MotionSetup | null }) {
           </span>
         </div>
       </div>
+      <label className="motion-lines">
+        <input
+          type="checkbox"
+          checked={m.lines}
+          onChange={(e) => dispatch({ type: "motionLines", lines: e.target.checked })}
+        />
+        Show lines of action
+      </label>
       <p className="subtle">
-        Rigid rotation about an estimated joint centre; attachment points are approximate; real joints
-        roll and glide. Muscles that cross the joint are drawn as lines of action.
+        Procedural deformation for teaching: bones rotate rigidly about a joint centre measured from
+        the mesh, and crossing muscles bend, shorten and bulge by geometry, not by measured tissue
+        mechanics. Real joints roll and glide.
       </p>
     </div>
   );
