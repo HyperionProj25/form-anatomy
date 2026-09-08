@@ -104,6 +104,7 @@ function Shell() {
         axis: motion.axis,
         range: motion.range,
         movingIds: motion.movingIds,
+        radius: motion.radius,
         cables: motion.cables.map((c) => ({
           id: c.id,
           from: c.from,
@@ -124,6 +125,11 @@ function Shell() {
     const ids = attachmentIds(part);
     return ids ? { origin: new Set(ids.origin), insertion: new Set(ids.insertion) } : undefined;
   }, [state.attach, state.mode, state.selected, state.motion]);
+  // While a joint moves, only the bones and muscles taking part stay solid.
+  const spotlight = useMemo(
+    () => (motion ? new Set([...motion.movingIds, ...motion.cables.map((c) => c.id)]) : undefined),
+    [motion],
+  );
   const pull = useMemo(() => {
     if (!attachments || !state.selected) return null;
     const part = partById(state.selected);
@@ -151,6 +157,7 @@ function Shell() {
         pinned: state.pinned,
         attachments,
         layer: state.filters.layer,
+        spotlight,
       }),
     [
       state.mode,
@@ -163,6 +170,7 @@ function Shell() {
       activeLine,
       attachments,
       state.filters.layer,
+      spotlight,
     ],
   );
   const cameraCommand = useMemo<CameraCommand>(() => {
@@ -287,26 +295,26 @@ function Shell() {
               <Maximize2 size={17} />
             </button>
           </div>
-          {state.mode === "muscles" && state.filters.layer === "deep" && (
-            <div className="stage-caption">Surface layer peeled · approximate</div>
-          )}
-          {state.mode === "fascia" && (
-            <div className="stage-caption line-caption">
-              <span className="line-dot" style={{ background: activeLine.color }} />
-              {activeLine.name}
-              <CaveatChip label="Teaching model" tone="dark">
-                A teaching path drawn through structure centres, not a fascial sheet. Each hop
-                carries its own evidence badge in the panel.
-              </CaveatChip>
-              <button className="text-button" onClick={() => dispatch({ type: "togglePath" })}>
-                {state.showPath ? "Hide path" : "Show path"}
-              </button>
-            </div>
-          )}
           <button className="mobile-layers outline-button" onClick={() => setMobilePanel(true)}>
             <Search size={15} /> Find a structure
           </button>
           <div className="stage-left">
+            {state.mode === "muscles" && state.filters.layer === "deep" && (
+              <div className="stage-caption">Surface layer peeled · approximate</div>
+            )}
+            {state.mode === "fascia" && (
+              <div className="stage-caption line-caption">
+                <span className="line-dot" style={{ background: activeLine.color }} />
+                {activeLine.name}
+                <CaveatChip label="Teaching model" tone="dark">
+                  A teaching path drawn through structure centres, not a fascial sheet. Each hop
+                  carries its own evidence badge in the panel.
+                </CaveatChip>
+                <button className="text-button" onClick={() => dispatch({ type: "togglePath" })}>
+                  {state.showPath ? "Hide path" : "Show path"}
+                </button>
+              </div>
+            )}
             <PinLegend />
           </div>
           <Viewer

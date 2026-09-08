@@ -21,8 +21,10 @@ export default function MotionCard({ setup, onCollapse }: Props) {
   const degrees = Math.round(setup.range[0] + (setup.range[1] - setup.range[0]) * m.phase);
   const names = (list: typeof roles.shortens) => {
     if (!list.length) return "none matched";
-    const shown = list.slice(0, 5).map((c) => prettyName(c.name));
-    const more = list.length - shown.length;
+    // The jaw moves both sides at once; name each muscle once.
+    const unique = [...new Set(list.map((c) => prettyName(c.name)))];
+    const shown = unique.slice(0, 5);
+    const more = unique.length - shown.length;
     return shown.join(", ") + (more > 0 ? ` and ${more} more` : "");
   };
 
@@ -117,6 +119,8 @@ export default function MotionCard({ setup, onCollapse }: Props) {
           Bones rotate rigidly about a joint centre measured from the mesh, and crossing muscles
           bend, shorten and bulge by geometry, not by measured tissue mechanics. Real joints roll
           and glide.
+          {setup.joint === "tmj" &&
+            " The jaw is a pure hinge here; the real condyle also glides forward as the mouth opens, which is why the lateral pterygoid reads as lengthening when in life it shortens to open the jaw."}
         </CaveatChip>
       </div>
     </div>

@@ -34,6 +34,8 @@ export type MotionDrawing = {
   axis: Vec3;
   range: [number, number];
   movingIds: string[];
+  /** Frame radius of the joint region; cable thickness scales with it so a jaw is not drawn with knee-sized tubes. */
+  radius: number;
   cables: {
     id: string;
     from: Vec3;
@@ -126,7 +128,7 @@ const TWEEN_TAU = 110;
 const HOVER_LIFT = 0.16;
 const HOVER_EMISSIVE = new THREE.Color("#5b5346");
 /** Bright rim around the selected part; carries the selection cue for colour-blind viewers. */
-const HALO_COLOR = "#eafffb";
+const HALO_COLOR = "#8fe9f7";
 
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
@@ -188,6 +190,7 @@ export class AnatomyEngine {
   }[] = [];
   private motion: MotionDrawing | null = null;
   private motionPhase = 0;
+  private motionT = 0;
   private motionDir = 1;
   private motionPlaying = false;
   private motionReported = 0;
@@ -409,12 +412,12 @@ export class AnatomyEngine {
         color: HALO_COLOR,
         side: THREE.BackSide,
         transparent: true,
-        opacity: 0.78,
+        opacity: 0.55,
         depthWrite: false,
       }),
     );
     halo.matrixAutoUpdate = false;
-    const s = 1.045;
+    const s = 1.035;
     halo.matrix
       .makeTranslation(c.x, c.y, c.z)
       .multiply(new THREE.Matrix4().makeScale(s, s, s))
@@ -443,21 +446,30 @@ export class AnatomyEngine {
     this.clearMotion();
     this.motion = m;
     this.motionPhase = 0;
+    this.motionT = 0;
     this.motionDir = 1;
     if (!m) return;
+    // Screen-space thickness stays about the same for a jaw framed at 0.16 and a knee at 0.4.
+    const k = Math.min(1, Math.max(0.3, m.radius / 0.42));
     for (const c of m.cables) {
       const material = new THREE.MeshBasicMaterial({
         color: c.color,
         transparent: true,
-        opacity: 0.92,
+        opacity: 0.85,
         depthTest: false,
       });
-      const first = new THREE.Mesh(new THREE.CylinderGeometry(0.0055, 0.0055, 1, 10, 1, true), material);
+      const first = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.0045 * k, 0.0045 * k, 1, 10, 1, true),
+        material,
+      );
       first.renderOrder = 30;
-      const second = new THREE.Mesh(new THREE.CylinderGeometry(0.0065, 0.0065, 1, 10, 1, true), material);
+      const second = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.0052 * k, 0.0052 * k, 1, 10, 1, true),
+        material,
+      );
       second.renderOrder = 30;
       const dot = new THREE.Mesh(
-        new THREE.SphereGeometry(0.011, 12, 10),
+        new THREE.SphereGeometry(0.008 * k, 12, 10),
         new THREE.MeshBasicMaterial({ color: c.color, depthTest: false }),
       );
       dot.renderOrder = 31;
@@ -545,6 +557,7 @@ export class AnatomyEngine {
   setMotionPhase(phase: number): void {
     if (!this.motion) return;
     this.motionPhase = Math.min(1, Math.max(0, phase));
+    this.motionT = this.motionPhase;
     this.applyMotion();
   }
 
@@ -720,16 +733,21 @@ export class AnatomyEngine {
         "centripetal",
         0.5,
       );
-      // A dark core with a pale strand keeps the cable readable over muscles drawn in the same hue.
-      const core = new THREE.Color(path.color).multiplyScalar(0.45);
-      const strand = new THREE.Color(path.color).lerp(new THREE.Color("#fffefb"), 0.75);
+      // A bright core with a pale strand and a soft glow keeps the cable readable on the slate.
+      const core = new THREE.Color(path.color).lerp(new THREE.Color("#fffefb"), 0.12);
+      const strand = new THREE.Color(path.color).lerp(new THREE.Color("#fffefb"), 0.85);
+      const glow = new THREE.Mesh(
+        new THREE.TubeGeometry(curve, 240, 0.016, 10, false),
+        new THREE.MeshBasicMaterial({ color: path.color, transparent: true, opacity: 0.22, depthTest: false }),
+      );
+      glow.renderOrder = 9;
       const outer = new THREE.Mesh(
-        new THREE.TubeGeometry(curve, 240, 0.009, 10, false),
-        new THREE.MeshBasicMaterial({ color: core, transparent: true, opacity: 0.9, depthTest: false }),
+        new THREE.TubeGeometry(curve, 240, 0.0075, 10, false),
+        new THREE.MeshBasicMaterial({ color: core, transparent: true, opacity: 0.95, depthTest: false }),
       );
       outer.renderOrder = 10;
       const inner = new THREE.Mesh(
-        new THREE.TubeGeometry(curve, 240, 0.004, 8, false),
+        new THREE.TubeGeometry(curve, 240, 0.0032, 8, false),
         new THREE.MeshBasicMaterial({ color: strand, depthTest: false }),
       );
       inner.renderOrder = 11;
@@ -738,7 +756,7 @@ export class AnatomyEngine {
         new THREE.MeshBasicMaterial({ color: "#fffefb", depthTest: false }),
       );
       pulse.renderOrder = 12;
-      this.pathGroup.add(outer, inner, pulse);
+      this.pathGroup.add(glow, outer, inner, pulse);
       this.pulses.push({ curve, mesh: pulse, phase: (i * 0.5) % 1 });
     });
   }
@@ -1043,14 +1061,16 @@ export class AnatomyEngine {
         );
     }
     if (this.motion && this.motionPlaying) {
-      this.motionPhase += (this.motionDir * dt) / MOTION_SWEEP_MS;
-      if (this.motionPhase >= 1) {
-        this.motionPhase = 1;
+      this.motionT += (this.motionDir * dt) / MOTION_SWEEP_MS;
+      if (this.motionT >= 1) {
+        this.motionT = 1;
         this.motionDir = -1;
-      } else if (this.motionPhase <= 0) {
-        this.motionPhase = 0;
+      } else if (this.motionT <= 0) {
+        this.motionT = 0;
         this.motionDir = 1;
       }
+      // Eased, so the joint slows into each end of its range instead of bouncing off it.
+      this.motionPhase = easeInOut(this.motionT);
       this.applyMotion();
       if (now - this.motionReported > 120) {
         this.motionReported = now;

@@ -894,3 +894,48 @@ or the sources.
 - The full phone bottom-sheet layout (11), first-visit anchored hints (14)
   and ghosting occluders for hidden selections (15) stay open on the issue
   tracker.
+
+## 14. Phase 12 addendum: clarity on the stage (2026-09-08)
+
+Source: Chase's review of the phase 11 build on his own screen. Three
+complaints: the lines of action are unreadable blobs on the jaw, a selected
+muscle "is like white", and the fascial-line path and its caption are hard
+to see; he wants the motion smooth and clear.
+
+### 14.1 Selection
+
+- Selection base colour darkens to #12a6c4 with emissive #0b6d80 at 0.32 so
+  the lit, tone-mapped result is a mid cyan; the halo becomes cyan (#8fe9f7)
+  at 0.55 opacity and scale 1.035 instead of a near-white rim.
+
+### 14.2 Joint motion
+
+- Cable radii scale with the motion's frame radius (k = radius / 0.42,
+  clamped to 0.3–1), so the jaw is drawn with tubes a third of the knee's;
+  base radii 4.5 and 5.2 mm, end dot 8 mm, opacity 0.85.
+- While a joint moves, muscles that neither move with the distal segment nor
+  cross the joint fade to 0.3 opacity (`spotlight` in `computeStyles`).
+  Bones, the selection and focused parts stay solid.
+- Playback eases in and out of each end of the range (cubic), so the joint
+  slows into full flexion and full extension instead of bouncing.
+- The jaw moves both sides at once; the card names each muscle once.
+
+### 14.3 Fascial lines
+
+- The drawn path becomes a soft glow (radius 16 mm at 0.22), a bright core
+  (7.5 mm, line colour nearly unlit) and a pale strand (3.2 mm). Line
+  muscles glow a little more (emissive 0.16) and the other muscles ghost at
+  0.16 instead of 0.1, so the body still reads on the slate.
+
+### 14.4 Captions
+
+- Stage captions (Deep peel, fascial-line legend) move into the top-left
+  stack under the stage title, on an opaque dark band, so they never sit
+  over the model's head. On phones the stack starts below the finder button.
+
+### 14.5 Verification
+
+- Headless SwiftShader renders before and after at 1440×900 for the
+  selected gastrocnemius, the superficial back line, and the jaw with lines
+  of action; the contrast check and the test suite pass; live check in
+  Chrome.

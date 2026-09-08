@@ -27,6 +27,8 @@ export type StyleInput = {
   attachments?: { origin: Set<string>; insertion: Set<string> };
   /** Deep peels the superficial layer to a ghost on the model; the other values change nothing here. */
   layer?: "all" | "superficial" | "deep";
+  /** Muscles taking part in a joint motion; every other muscle fades so the moving parts read. */
+  spotlight?: Set<string>;
 };
 
 /** Compare pins: violet, magenta, yellow, deep purple, none near the origin blue or insertion amber. */
@@ -38,8 +40,9 @@ export const PEELED_OPACITY = 0.12;
 
 export const COLORS = {
   // Cyan-teal reads against muscle red for protanopes and deuteranopes (ΔE 33 and 49); green did not.
-  selected: "#2ac7e0",
-  selectedEmissive: "#0b7c8f",
+  // Kept dark enough that the lit, tone-mapped result is a mid cyan rather than near-white.
+  selected: "#12a6c4",
+  selectedEmissive: "#0b6d80",
   bone: "#e0d3b7",
   connective: "#dbd4bb",
   muscle: "#a35b4c",
@@ -94,7 +97,7 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
             ? COLORS.connective
             : COLORS.muscle;
     const emissive = selected ? COLORS.selectedEmissive : chain ? input.lineColor : COLORS.none;
-    const emissiveIntensity = selected ? 0.26 : focused ? 0.45 : chain ? 0.08 : 0;
+    const emissiveIntensity = selected ? 0.32 : focused ? 0.45 : chain ? 0.16 : 0;
     const emissiveColor = focused && !chain && !selected ? input.lineColor : emissive;
     const baseOpacity =
       selected || focused
@@ -108,7 +111,7 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
               ? input.opacity
               : 1
             : input.mode === "fascia"
-              ? 0.1
+              ? 0.16
               : input.opacity;
     const peeled =
       input.layer === "deep" &&
@@ -117,11 +120,15 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
       p.layer === "superficial" &&
       !selected &&
       !focused;
+    const outside =
+      !!input.spotlight && p.type === "muscle" && !input.spotlight.has(p.id) && !selected && !focused;
     const opacity = peeled
       ? Math.min(baseOpacity, PEELED_OPACITY)
       : revealed
         ? Math.min(baseOpacity, 0.28)
-        : baseOpacity;
+        : outside
+          ? Math.min(baseOpacity, 0.3)
+          : baseOpacity;
     out.set(p.id, { visible, color, emissive: emissiveColor, emissiveIntensity, opacity });
   }
   return out;

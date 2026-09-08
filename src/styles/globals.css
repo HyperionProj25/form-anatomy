@@ -2957,3 +2957,33 @@ button.start-point:hover {
     display: inline-block;
   }
 }
+
+/* Captions stack top-left under the stage title on an opaque band, clear of the model's head. */
+.stage-left {
+  top: 96px;
+  max-width: min(440px, calc(100% - 32px));
+}
+.stage-caption {
+  position: static;
+  left: auto;
+  top: auto;
+  transform: none;
+  max-width: 100%;
+  padding: 6px 12px;
+  background: rgba(20, 30, 24, 0.82);
+  color: #fffefb;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 6px 18px rgba(10, 14, 16, 0.25);
+}
+.line-caption {
+  justify-content: flex-start;
+  text-align: left;
+}
+@media (max-width: 600px) {
+  .stage-left {
+    top: 118px;
+  }
+  .stage-caption {
+    position: static;
+  }
+}

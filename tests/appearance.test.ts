@@ -69,9 +69,9 @@ describe("computeStyles", () => {
     const s = computeStyles({ ...base, mode: "fascia" });
     expect(s.get("gastro")).toMatchObject({ color: "#bd914b", emissive: "#bd914b", opacity: 1 });
     expect(s.get("femur")?.opacity).toBe(1);
-    expect(s.get("soleus")?.opacity).toBe(0.1);
+    expect(s.get("soleus")?.opacity).toBe(0.16);
     const other = computeStyles({ ...base, mode: "fascia", lineKeys: new Set(["soleus"]) });
-    expect(other.get("gastro")?.opacity).toBe(0.1);
+    expect(other.get("gastro")?.opacity).toBe(0.16);
     expect(other.get("soleus")?.opacity).toBe(1);
   });
 
@@ -153,5 +153,18 @@ describe("layer peel", () => {
     expect(s.get("soleus")!.opacity).toBe(1);
     const whole = computeStyles({ ...base, layer: "superficial" });
     expect(whole.get("gastro")!.opacity).toBe(1);
+  });
+});
+
+describe("motion spotlight", () => {
+  test("muscles outside the moving set fade; bones, connective parts and the selection stay solid", () => {
+    const s = computeStyles({ ...base, spotlight: new Set(["femur"]) });
+    expect(s.get("gastro")?.opacity).toBe(0.3);
+    expect(s.get("soleus")?.opacity).toBe(0.3);
+    expect(s.get("femur")?.opacity).toBe(1);
+    expect(s.get("bursa")?.opacity).toBe(1);
+    const t = computeStyles({ ...base, selected: "soleus", spotlight: new Set(["gastro"]) });
+    expect(t.get("soleus")?.opacity).toBe(1);
+    expect(t.get("gastro")?.opacity).toBe(1);
   });
 });
