@@ -28,4 +28,4 @@
 
 ### Task 2: Deploy
 
-- [ ] Push, watch CI, verify live. Update memory.
+- [x] Push, watch CI, verify live. Update memory.
