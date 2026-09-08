@@ -776,3 +776,48 @@ element states what it approximates.
 - Caveat in the card: "Rigid rotation about an estimated joint centre;
   attachment points are approximate; real joints roll and glide."
 - Store `motion: { joint; side; phase; playing } | null`; not in the URL.
+
+## 12. Phase 10 addendum: mesh-accurate geometry and muscle deformation (2026-09-07)
+
+### 12.1 Geometry from the mesh, not the box
+
+- `scripts/build-geometry.ts` decodes the Draco geometry of every part with
+  the `draco3d` Node decoder (header parsing as in `build-catalog.ts`) and
+  writes `src/data/geometry.json`:
+  - `pivots`: per joint and side, a joint centre from bone landmarks: the
+    midpoint of the humeral epicondyles (elbow) and femoral condyles (knee),
+    the femoral and humeral head centres (hip, shoulder), the midpoint of the
+    malleoli (ankle), the midpoint of the distal radius and ulna (wrist), and
+    the mandibular condyles (jaw). Landmarks are centroids or extremes of the
+    top or bottom few percent of a bone's vertices.
+  - `contacts`: for every muscle part and each bone its attachments name, the
+    bone-surface vertex nearest the muscle (sampled vertices, so within a few
+    millimetres).
+- `src/data/geometry.ts` exposes `jointPivot(joint, side)` and
+  `contact(muscleId, boneId)`; `motion.ts` and `pull.ts` use them and fall
+  back to the bounding-box estimates when an entry is missing. The build runs
+  offline from the committed GLB; the JSON is committed like the catalog.
+- Tests: pivots exist for every joint and side and sit between the bones
+  they join; contacts exist for at least 95% of attachment pairs; the
+  classifications in the motion tests still hold and the deep head of
+  pronator teres shortens at the elbow.
+
+### 12.2 Muscles that bend, shorten and bulge
+
+- In a joint motion, a crossing muscle is no longer hidden. The engine clones
+  its geometry into a SkinnedMesh with two bones, a fixed root and the moving
+  segment, and gives each vertex a weight from a smooth band across the joint
+  plane, so the mesh bends at the joint and its ends follow the bones.
+- A volume-preserving bulge in the vertex shader scales the mesh around its
+  own axis by the inverse square root of its length ratio: a shortening
+  muscle thickens, a lengthening one thins. The bulge is capped.
+- The deformed copy mirrors the original's colour, emissive and opacity every
+  frame so selection and hover still read; it is pickable.
+- Lines of action stay available as a toggle in the motion card, off by
+  default now that the muscle itself shows the change.
+- With attachments shown, the selected muscle plays a slow contraction
+  pulse: it shortens a few percent along its line of action toward the
+  belly and bulges to match, then relaxes.
+- Caveats in the card and panel: "Procedural deformation for teaching: the
+  mesh bends and bulges by geometry, not by measured tissue mechanics."
+- Reduced motion disables the pulse; the joint scrubber still deforms.
