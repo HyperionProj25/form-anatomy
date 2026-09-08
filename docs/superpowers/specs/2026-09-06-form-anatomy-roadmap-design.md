@@ -821,3 +821,76 @@ element states what it approximates.
 - Caveats in the card and panel: "Procedural deformation for teaching: the
   mesh bends and bulges by geometry, not by measured tissue mechanics."
 - Reduced motion disables the pulse; the joint scrubber still deforms.
+
+## 13. Phase 11 addendum: design review implementation (2026-09-07)
+
+Source: the design review "Make the model the page" (Form Design Review artifact,
+7 September 2026), a measured heuristic review with seventeen prioritised
+issues. This phase implements the P0 items, the cheap P1 and P2 items, and a
+simplified version of the card dock. Nothing here changes the model, the data
+or the sources.
+
+### 13.1 Colour and contrast (issues 1, 6, 9)
+
+- The stage gets a dark slate ground: radial gradient #3e4d55 to #2c3940 at
+  70% to #232d33, no dot pattern. Stage text is #dbe2dc, stage muted text
+  #aab4ad; cards that float over the stage stay paper-white. The ground
+  shadow drops to a third of its opacity. Panels and the page stay light.
+- Selection fill becomes #2ac7e0 with a brighter, wider halo (#eafffb);
+  origin bones #3d8bff and insertion bones #f2a531; compare pins violet,
+  magenta, yellow, deep purple (#5b3fa6, #a86ee0, #e0569f, #e8c547); motion
+  cables use insertion amber for shortening and origin blue for lengthening.
+- Type floor of 12px on stage text and tags; the seven failing text colours
+  are set to the review's values; the Latin subtitle is body-sized.
+
+### 13.2 Layout (issues 2, 3, 4, 7, 8)
+
+- The intro banner and the start-panel headline go. "Quiz" and "Help" move
+  into the top navigation; the "free" badge goes and the About dialog says
+  "Free, no account". The workspace fills the viewport below the topbar and
+  the panels scroll inside it.
+- Left panel heading "Find a structure": search, system switch, one filter
+  row (Region and Joint as selects, Side segmented), then the list. Only an
+  active filter is filled. The English/Latin toggle sits at the panel foot
+  with opacity. Layer leaves the panel.
+- Stage toolbar at the bottom: Anterior · Posterior · Lateral | Move a joint
+  (menu of seven) | Layer: Surface · Deep | zoom and reset. Orientation
+  moves to the top-right corner. The left-panel button is renamed "Move the
+  knee".
+- Right panel heading "Selected" (or "Nothing selected" with three starting
+  points and the study sets). In the detail state an Attachments chip sits
+  with Isolate, Hide and Pin under the name; the Crosses row reads "Crosses
+  the knee · Move it".
+- Quiz, playlist and motion cards share the bottom-left dock, one at a time,
+  each collapsible to a one-line strip.
+
+### 13.3 Behaviour (issues 5, 10, 12, 13, 17)
+
+- Layer: Deep drops superficial muscles to 12% opacity on the model and out
+  of hover, keeps deep muscles solid, filters the list, and shows a stage
+  caption "Surface layer peeled · approximate". Surface leaves the model
+  whole. URL `d` is unchanged.
+- Under reduced motion the motion card hides Play and says "Animation is off
+  because your system prefers reduced motion. Drag the angle."; the tour
+  card says "Auto-advance is off; use Next".
+- Caveats become labelled chips ("Teaching model", "Approximate") that expand
+  on click and stay visible while their overlay is on; the legend caveat sits
+  in the caption band at 12px.
+- Copy: names drop the "Muscle" suffix and title case in lists and cards
+  ("Soleus", "Long head of biceps femoris"); "Show on model" becomes "Show
+  attachments"; "Animate" becomes "Move"; "Layer controls" becomes
+  "Opacity"; "A little help exploring" becomes "Help".
+- Search: Enter selects the first match on the current side; a one-line
+  strip under the box names the first match and the count.
+
+### 13.4 Guard (issue 16)
+
+- A headless-Chrome contrast check runs against the built site at 1440×900
+  and 375×812 with axe-core and asserts zero colour-contrast violations. It
+  runs in CI after the build.
+
+### 13.5 Deferred
+
+- The full phone bottom-sheet layout (11), first-visit anchored hints (14)
+  and ghosting occluders for hidden selections (15) stay open on the issue
+  tracker.
