@@ -93,7 +93,7 @@ p {
   color: #8c9a6f;
 }
 .brand-description {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 500;
   letter-spacing: 1.5px;
   max-width: 78px;
@@ -124,7 +124,7 @@ p {
   font-weight: 600;
 }
 .free-badge {
-  font-size: 10px;
+  font-size: 12px;
   display: flex;
   align-items: center;
   gap: 7px;
@@ -150,7 +150,7 @@ p {
   gap: 20px;
 }
 .eyebrow {
-  font-size: 9px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 1.8px;
   color: #566349;
@@ -181,7 +181,7 @@ h1 em {
   gap: 9px;
   padding: 10px 13px;
   background: #fffefa;
-  font-size: 11px;
+  font-size: 12px;
   white-space: nowrap;
 }
 .workspace {
@@ -229,7 +229,7 @@ h1 em {
   border: 1px solid #e4e7df;
   border-radius: 7px;
   padding: 14px 6px 11px;
-  font-size: 10px;
+  font-size: 12px;
   color: #7a8477;
 }
 .system-switch .active {
@@ -251,7 +251,7 @@ h1 em {
   border: 0;
   background: none;
   font: inherit;
-  font-size: 11px;
+  font-size: 12px;
   min-width: 0;
   width: 100%;
   color: var(--ink);
@@ -267,7 +267,7 @@ h1 em {
   display: flex;
 }
 .section-label {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 1.3px;
   color: #646c5f;
   font-weight: 600;
@@ -299,7 +299,7 @@ h1 em {
   width: 100%;
   padding: 11px 9px;
   border-radius: 5px;
-  font-size: 11px;
+  font-size: 12px;
   gap: 8px;
   color: #5f6d5e;
 }
@@ -318,7 +318,7 @@ h1 em {
   width: 100%;
   padding: 15px 8px;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 12px;
   margin-bottom: 6px;
 }
 .line-item > span:nth-child(2) {
@@ -331,7 +331,7 @@ h1 em {
 .line-item small {
   display: block;
   color: #8c9384;
-  font-size: 9px;
+  font-size: 12px;
   margin-top: 6px;
 }
 .line-dot {
@@ -353,11 +353,11 @@ h1 em {
   margin-top: 15px;
 }
 .context-note p {
-  font-size: 10px;
+  font-size: 12px;
 }
 .context-note span {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.65;
   color: #a0a596;
   margin-top: 6px;
@@ -369,7 +369,7 @@ h1 em {
 }
 .opacity-label {
   display: block;
-  font-size: 10px;
+  font-size: 12px;
   color: #77816f;
 }
 .opacity-label span {
@@ -389,7 +389,7 @@ h1 em {
   align-items: center;
   gap: 8px;
   padding: 7px 0;
-  font-size: 10px;
+  font-size: 12px;
   color: #75816e;
   margin-bottom: 14px;
 }
@@ -399,7 +399,7 @@ h1 em {
   gap: 8px;
   border-top: 1px solid var(--border);
   padding: 18px 0;
-  font-size: 10px;
+  font-size: 12px;
   color: #818a79;
 }
 .help-link svg:last-child {
@@ -440,7 +440,7 @@ h1 em {
   pointer-events: auto;
 }
 .stage-title {
-  font-size: 9px;
+  font-size: 12px;
   letter-spacing: 1.3px;
   color: #6a7761;
 }
@@ -449,7 +449,7 @@ h1 em {
 }
 .stage-title small {
   display: block;
-  font-size: 9px;
+  font-size: 12px;
   color: #949d8b;
   letter-spacing: 0.15px;
   margin-top: 8px;
@@ -513,7 +513,7 @@ h1 em {
   border: 1px solid #d2dacb;
   border-radius: 5px;
   padding: 8px 12px;
-  font-size: 10px;
+  font-size: 12px;
   max-width: 220px;
   box-shadow: 0 4px 20px #29372012;
 }
@@ -525,7 +525,7 @@ h1 em {
   flex-direction: column;
   align-items: center;
   gap: 6px;
-  font-size: 8px;
+  font-size: 12px;
   color: #89917c;
   pointer-events: none;
 }
@@ -542,7 +542,7 @@ h1 em {
   place-items: center;
   width: 28px;
   height: 30px;
-  font-size: 10px;
+  font-size: 12px;
 }
 .view-tools {
   position: absolute;
@@ -582,7 +582,7 @@ h1 em {
 }
 .view-selector button {
   padding: 8px 16px;
-  font-size: 10px;
+  font-size: 12px;
   color: #859077;
   border-radius: 4px;
 }
@@ -591,7 +591,7 @@ h1 em {
   color: #4a5e3d;
 }
 .interaction-hint {
-  font-size: 8px;
+  font-size: 12px;
   color: #97a08a;
   display: flex;
   align-items: center;
@@ -604,7 +604,7 @@ h1 em {
   position: absolute;
   left: 20px;
   bottom: 118px;
-  font-size: 9px;
+  font-size: 12px;
   color: #7b846f;
   max-width: 160px;
   line-height: 1.5;
@@ -614,7 +614,7 @@ h1 em {
 }
 .line-legend small {
   display: block;
-  font-size: 8px;
+  font-size: 12px;
   color: #9aa18e;
   margin-left: 13px;
   margin-top: 4px;
@@ -635,13 +635,13 @@ h1 em {
   min-height: 24px;
 }
 .tiny-tag {
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 1.3px;
   line-height: 1.5;
   color: #5d6b4d;
 }
 .chapter {
-  font-size: 9px;
+  font-size: 12px;
   color: #a4ac99;
 }
 .detail-title {
@@ -661,7 +661,7 @@ h1 em {
   line-height: 1.5;
 }
 .detail-copy {
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.85;
   color: #5e6b52;
   margin: 21px 0 27px;
@@ -683,13 +683,13 @@ h1 em {
   padding-top: 1px;
 }
 .start-tips p {
-  font-size: 11px;
+  font-size: 12px;
   color: #67775b;
 }
 .start-tips small {
   display: block;
   line-height: 1.6;
-  font-size: 10px;
+  font-size: 12px;
   color: #66705b;
   margin-top: 5px;
 }
@@ -718,7 +718,7 @@ h1 em {
   color: #556b44;
 }
 .feature-card p {
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
   margin: 14px 0 20px;
   color: #5f6e4f;
@@ -727,7 +727,7 @@ h1 em {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 10px;
+  font-size: 12px;
   color: #4c6139;
 }
 .detail-actions {
@@ -745,7 +745,7 @@ h1 em {
   border-bottom: 1px solid #e0e5d6;
 }
 .detail-tabs button {
-  font-size: 11px;
+  font-size: 12px;
   color: #8b967f;
   padding: 0 0 12px;
   border-bottom: 2px solid transparent;
@@ -759,13 +759,13 @@ h1 em {
   padding: 15px 0;
 }
 .facts span {
-  font-size: 8px;
+  font-size: 12px;
   letter-spacing: 1.2px;
   color: #a0aa93;
 }
 .facts p {
   margin-top: 9px;
-  font-size: 11px;
+  font-size: 12px;
   line-height: 1.8;
   color: #7f8d71;
 }
@@ -773,7 +773,7 @@ h1 em {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 12px;
   color: #617d4e;
   margin: 18px 0;
 }
@@ -782,7 +782,7 @@ h1 em {
   gap: 8px;
   text-align: left;
   align-items: center;
-  font-size: 11px;
+  font-size: 12px;
   padding: 13px 0;
   border-top: 1px solid #e0e6d6;
   width: 100%;
@@ -814,7 +814,7 @@ h1 em {
   width: 100%;
   text-align: left;
   padding: 9px 0 15px;
-  font-size: 11px;
+  font-size: 12px;
   color: #6e7d5f;
 }
 .connection-path button:disabled {
@@ -822,7 +822,7 @@ h1 em {
 }
 .connection-path small {
   display: block;
-  font-size: 9px;
+  font-size: 12px;
   color: #a1ac93;
   margin-top: 6px;
   line-height: 1.5;
@@ -835,7 +835,7 @@ h1 em {
   display: grid;
   place-items: center;
   border-radius: 50%;
-  font-size: 9px;
+  font-size: 12px;
   background: #f6f8ef;
   color: #99a887;
 }
@@ -854,19 +854,19 @@ h1 em {
   color: #7d906b;
 }
 .movement-card h3 {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   padding-top: 2px;
 }
 .movement-card p {
   grid-column: 1/-1;
-  font-size: 10px;
+  font-size: 12px;
   line-height: 1.8;
   color: #939f83;
 }
 .evidence-note {
   margin-top: 20px;
-  font-size: 10px;
+  font-size: 12px;
   color: #88977a;
 }
 .evidence-note summary {
@@ -882,7 +882,7 @@ h1 em {
 }
 .evidence-note a {
   display: block;
-  font-size: 9px;
+  font-size: 12px;
   margin: 8px 0;
   text-decoration: underline;
   text-underline-offset: 3px;
@@ -892,7 +892,7 @@ footer {
   justify-content: space-between;
   align-items: center;
   padding: 21px 32px;
-  font-size: 9px;
+  font-size: 12px;
   color: #666c5c;
   gap: 20px;
 }
@@ -913,7 +913,7 @@ footer button {
   align-items: center;
   gap: 6px;
   color: #5b6c4d;
-  font-size: 9px;
+  font-size: 12px;
 }
 .modal-backdrop {
   position: fixed;
@@ -964,13 +964,13 @@ footer button {
 }
 .modal a {
   display: block;
-  font-size: 11px;
+  font-size: 12px;
   color: #688153;
   margin: 12px 0;
 }
 .modal .subtle,
 .subtle {
-  font-size: 10px;
+  font-size: 12px;
   color: #667158;
   line-height: 1.8;
 }
@@ -984,7 +984,7 @@ footer button {
   margin: 0 0 8px;
 }
 .guide-step p {
-  font-size: 11px;
+  font-size: 12px;
 }
 .primary-button {
   display: flex;
@@ -995,11 +995,11 @@ footer button {
   background: #536e44;
   border-radius: 6px;
   padding: 13px 19px;
-  font-size: 11px;
+  font-size: 12px;
   margin-top: 22px;
 }
 .quiz-progress {
-  font-size: 10px;
+  font-size: 12px;
   color: #8e9e7f;
   border-bottom: 2px solid #e3e9d8;
   position: relative;
@@ -1031,7 +1031,7 @@ footer button {
   margin: 10px 0;
 }
 .quiz-options button > span {
-  font-size: 10px;
+  font-size: 12px;
   background: #edf1e5;
   border-radius: 3px;
   padding: 4px 6px;
@@ -1056,7 +1056,7 @@ footer button {
   background: #f1f4e9;
   padding: 14px;
   border-radius: 6px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .quiz-score {
   font-family: Georgia, serif;
@@ -1136,13 +1136,13 @@ footer button {
     gap: 5px;
   }
   .line-item {
-    font-size: 10px;
+    font-size: 12px;
   }
   .free-badge {
-    font-size: 9px;
+    font-size: 12px;
   }
   .intro > .outline-button {
-    font-size: 10px;
+    font-size: 12px;
   }
 }
 @media (max-width: 900px) {
@@ -1240,7 +1240,7 @@ footer button {
     gap: 13px;
   }
   .topbar nav button {
-    font-size: 10px;
+    font-size: 12px;
   }
   .topbar nav button:last-child {
     display: none;
@@ -1253,7 +1253,7 @@ footer button {
     font-size: 28px;
   }
   .intro p {
-    font-size: 11px;
+    font-size: 12px;
     line-height: 1.6;
   }
   .intro > .outline-button {
@@ -1287,7 +1287,7 @@ footer button {
     top: 75px;
     left: 16px;
     z-index: 3;
-    font-size: 10px;
+    font-size: 12px;
     padding: 8px;
   }
   .stage {
@@ -1301,7 +1301,7 @@ footer button {
     inset: 20px 16px auto;
   }
   .stage-title {
-    font-size: 8px;
+    font-size: 12px;
   }
   .orientation {
     right: 15px;
@@ -1314,7 +1314,7 @@ footer button {
     bottom: 112px;
     left: 15px;
     max-width: 130px;
-    font-size: 8px;
+    font-size: 12px;
   }
   .right-panel {
     padding: 25px 22px;
@@ -1329,7 +1329,7 @@ footer button {
     font-size: 12px;
   }
   .interaction-hint {
-    font-size: 8px;
+    font-size: 12px;
   }
   .connection-path {
     display: block;
@@ -1344,7 +1344,7 @@ footer button {
     font-size: 32px;
   }
   footer {
-    font-size: 8px;
+    font-size: 12px;
     align-items: flex-start;
     line-height: 1.8;
     padding: 17px 15px;
@@ -1388,7 +1388,7 @@ footer button {
 }
 .filter-chips button,
 .segmented button {
-  font-size: 11px;
+  font-size: 12px;
   padding: 5px 10px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -1452,7 +1452,7 @@ footer button {
   height: 24px;
   border-radius: 7px;
   border: 1px solid var(--border);
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   color: var(--muted);
   background: #fffefb;
@@ -1492,7 +1492,7 @@ footer button {
 }
 .attribution {
   margin-top: 10px;
-  font-size: 10.5px;
+  font-size: 12px;
   color: var(--muted);
 }
 .attribution a {
@@ -1522,7 +1522,7 @@ footer button {
 .evidence-pill,
 .kind-pill {
   display: inline-block;
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 700;
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -1561,7 +1561,7 @@ footer button {
   margin: 6px 0 4px 34px;
   padding: 8px 10px;
   border-left: 2px solid var(--border);
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
   line-height: 1.5;
 }
@@ -1573,7 +1573,7 @@ footer button {
 }
 .evidence-detail {
   margin-left: 8px;
-  font-size: 10.5px;
+  font-size: 12px;
 }
 .evidence p {
   margin-top: 5px;
@@ -1585,7 +1585,7 @@ footer button {
   display: inline-block;
   margin-top: 4px;
   text-decoration: underline;
-  font-size: 10.5px;
+  font-size: 12px;
 }
 .evidence-summary {
   margin-top: 16px;
@@ -1604,7 +1604,7 @@ footer button {
 }
 .evidence-summary a {
   display: inline-block;
-  font-size: 11px;
+  font-size: 12px;
   text-decoration: underline;
   margin: 4px 0 8px;
 }
@@ -1632,7 +1632,7 @@ footer button {
   margin-bottom: 4px;
 }
 .digest-year {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
 }
 .digest-entry h4 {
@@ -1641,7 +1641,7 @@ footer button {
   margin: 2px 0 4px;
 }
 .digest-authors {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
   margin-bottom: 6px;
 }
@@ -1658,7 +1658,7 @@ footer button {
 .digest-entry a {
   display: inline-block;
   margin-top: 6px;
-  font-size: 11px;
+  font-size: 12px;
   text-decoration: underline;
 }
 .line-legend small {
@@ -1667,7 +1667,7 @@ footer button {
 }
 .line-legend button {
   margin-top: 4px;
-  font-size: 11px;
+  font-size: 12px;
   padding: 0;
 }
 .tour {
@@ -1755,7 +1755,7 @@ footer button {
   background: #f1f4e9;
   padding: 10px 12px;
   border-radius: 6px;
-  font-size: 11.5px;
+  font-size: 12px;
   line-height: 1.5;
 }
 .quiz-card .answer-explanation a {
@@ -1787,7 +1787,7 @@ footer button {
   flex-direction: column;
 }
 .quiz-stats span {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   color: var(--muted);
 }
@@ -1795,7 +1795,7 @@ footer button {
   font-size: 22px;
 }
 .quiz-stats small {
-  font-size: 10.5px;
+  font-size: 12px;
   color: var(--muted);
 }
 .quiz-sets {
@@ -1830,7 +1830,7 @@ footer button {
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  font-size: 11px;
+  font-size: 12px;
   padding: 4px 8px;
   border-radius: 999px;
   border: 1px solid;
@@ -1842,7 +1842,7 @@ footer button {
   color: var(--muted);
 }
 .pin-legend .text-button {
-  font-size: 11px;
+  font-size: 12px;
 }
 @media (max-width: 600px) {
   .quiz-card {
@@ -1874,7 +1874,7 @@ footer button {
 }
 .group-row .group-name small {
   display: block;
-  font-size: 10.5px;
+  font-size: 12px;
   color: var(--muted);
   font-weight: 400;
 }
@@ -1969,7 +1969,7 @@ footer button {
   flex: none;
   border-radius: 50%;
   background: var(--border);
-  font-size: 10px;
+  font-size: 12px;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -1994,16 +1994,16 @@ footer button {
 .playlist-controls .outline-button,
 .playlist-controls .primary-button {
   padding: 4px 9px;
-  font-size: 11px;
+  font-size: 12px;
 }
 .playlist-status {
-  font-size: 11px;
+  font-size: 12px;
   color: var(--muted);
   font-variant-numeric: tabular-nums;
 }
 .playlist-card .subtle {
   margin: 6px 0 0;
-  font-size: 10.5px;
+  font-size: 12px;
 }
 @media (max-width: 600px) {
   .stage-left {
@@ -2050,13 +2050,13 @@ footer button {
 .study-set small {
   display: block;
   font-weight: 400;
-  font-size: 10.5px;
+  font-size: 12px;
   color: var(--muted);
   margin-top: 1px;
 }
 .study-count {
   flex: none;
-  font-size: 10px;
+  font-size: 12px;
   color: var(--muted);
   border: 1px solid var(--border);
   border-radius: 999px;
@@ -2096,7 +2096,7 @@ footer button {
 }
 .handout-meta {
   margin: 2px 0 6px;
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.05em;
   text-transform: uppercase;
   color: var(--muted);
@@ -2113,7 +2113,7 @@ footer button {
   display: contents;
 }
 .handout dt {
-  font-size: 10px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.05em;
   text-transform: uppercase;
@@ -2179,7 +2179,7 @@ footer button {
 }
 .attachment-chip {
   font: inherit;
-  font-size: 11px;
+  font-size: 12px;
   padding: 2px 9px;
   border-radius: 999px;
   border: 1px solid var(--border);
@@ -2195,7 +2195,7 @@ footer button {
 }
 .attachments .subtle {
   margin: 6px 0 0;
-  font-size: 10.5px;
+  font-size: 12px;
 }
 
 footer a {
@@ -2203,7 +2203,7 @@ footer a {
   align-items: center;
   gap: 6px;
   color: #5b6c4d;
-  font-size: 9px;
+  font-size: 12px;
   text-decoration: none;
 }
 footer a:hover {
@@ -2215,7 +2215,7 @@ footer a:hover {
 }
 .joint-note {
   margin: 4px 0 6px;
-  font-size: 10.5px;
+  font-size: 12px;
 }
 .handout-actions {
   display: flex;
@@ -2228,7 +2228,7 @@ footer a:hover {
   margin: 0;
   max-width: 220px;
   text-align: right;
-  font-size: 10px;
+  font-size: 12px;
 }
 
 .applied {
@@ -2274,7 +2274,7 @@ footer a:hover {
   animation: caption-in 500ms ease-out both;
 }
 .tour-caption-kicker {
-  font-size: 10px;
+  font-size: 12px;
   letter-spacing: 0.08em;
   text-transform: uppercase;
   opacity: 0.8;
@@ -2284,7 +2284,7 @@ footer a:hover {
   font-weight: 600;
 }
 .tour-caption-next {
-  font-size: 11.5px;
+  font-size: 12px;
   opacity: 0.9;
 }
 @keyframes caption-in {
@@ -2331,7 +2331,7 @@ footer a:hover {
   transform: translate(10px, -50%);
   padding: 3px 9px;
   border-radius: 999px;
-  font-size: 10.5px;
+  font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.02em;
   color: #fffefb;
@@ -2399,11 +2399,11 @@ footer a:hover {
   font-weight: 400;
   color: var(--muted);
   line-height: 1.3;
-  font-size: 10.5px;
+  font-size: 12px;
 }
 .motion-card .subtle {
   margin: 8px 0 0;
-  font-size: 10.5px;
+  font-size: 12px;
 }
 .animate-joint {
   margin: 8px 0 2px;
@@ -2429,9 +2429,97 @@ footer a:hover {
   align-items: center;
   gap: 6px;
   margin-top: 8px;
-  font-size: 11.5px;
+  font-size: 12px;
   cursor: pointer;
 }
 .motion-lines input {
   accent-color: var(--green);
+}
+
+/* ---------------------------------------------------------------------------
+   Design review, 7 September 2026: the model is the page. Dark slate ground so
+   muscle (5.7:1) and bone (9.2:1) read; chrome stays light; stage text tokens;
+   highlight roles separated by lightness as well as hue.
+   --------------------------------------------------------------------------- */
+:root {
+  --stage-text: #dbe2dc;
+  --stage-muted: #aab4ad;
+  --secondary: #5c665e;
+}
+.stage {
+  background: radial-gradient(ellipse at 50% 40%, #3e4d55 0%, #2c3940 70%, #232d33 100%);
+}
+.stage::before {
+  display: none;
+}
+.stage-title {
+  color: var(--stage-text);
+}
+.stage-title small {
+  color: var(--stage-muted);
+}
+.stage-title .live-dot {
+  background: #6fd3c4;
+}
+.interaction-hint {
+  color: #c2cbc4;
+}
+.interaction-hint span {
+  color: var(--stage-muted);
+}
+.line-legend {
+  color: var(--stage-text);
+}
+.line-legend small {
+  color: var(--stage-muted);
+}
+.line-legend button {
+  color: #eafffb;
+}
+.orientation {
+  color: var(--stage-text);
+}
+.model-status {
+  color: var(--stage-text);
+}
+.model-status.error {
+  background: #2c3940;
+  color: var(--stage-text);
+}
+.stage-caption {
+  position: absolute;
+  top: 58px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: rgba(255, 254, 251, 0.14);
+  color: var(--stage-text);
+  font-size: 12px;
+  letter-spacing: 0.02em;
+  z-index: 3;
+  pointer-events: none;
+}
+.view-selector button {
+  color: var(--secondary);
+}
+.icon-button {
+  color: var(--secondary);
+}
+.tiny-tag {
+  color: var(--secondary);
+}
+.latin {
+  font-size: 13.5px;
+  color: var(--secondary);
+}
+.model-label-origin {
+  background: #3d8bff;
+}
+.model-label-insertion {
+  background: #f2a531;
+  color: #1f1a12;
+}
+.model-tooltip {
+  font-size: 12px;
 }

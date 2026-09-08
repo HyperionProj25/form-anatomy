@@ -3,8 +3,8 @@ import { JOINT_LABELS } from "../../data/joints";
 import { cableRoles, type MotionSetup, type MotionSide } from "../../data/motion";
 import { useStore } from "../../state/store";
 
-const SHORTEN = "#c8473f";
-const LENGTHEN = "#2b7bd9";
+const SHORTEN = "#f2a531";
+const LENGTHEN = "#3d8bff";
 
 /** Controls and the shortening/lengthening readout for a rigid joint motion, drawn over the stage. */
 export default function MotionCard({ setup }: { setup: MotionSetup | null }) {

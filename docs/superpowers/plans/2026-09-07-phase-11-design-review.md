@@ -19,10 +19,10 @@
 
 **Files:** `src/styles/globals.css`, `src/viewer/appearance.ts`, `src/viewer/engine.ts`, `src/App.tsx`, `src/features/motion/MotionCard.tsx`, `tests/appearance.test.ts`
 
-- [ ] Slate stage gradient, no dot grid, stage text tokens, ground shadow at a third.
-- [ ] Selection #2ac7e0 with halo #eafffb; origin #3d8bff; insertion #f2a531; pins violet/magenta/yellow/purple; cables amber/blue.
-- [ ] `computeStyles` `layer`: Deep dims superficial muscles to 0.12; stage caption; test.
-- [ ] 12px floor and the seven text colours. Verify in Chrome. Commit "Dark stage, colour-blind-safe highlights, Deep peels the model".
+- [x] Slate stage gradient, no dot grid, stage text tokens, ground shadow at a third.
+- [x] Selection #2ac7e0 with halo #eafffb; origin #3d8bff; insertion #f2a531; pins violet/magenta/yellow/purple; cables amber/blue.
+- [x] `computeStyles` `layer`: Deep dims superficial muscles to 0.12; stage caption; test.
+- [x] 12px floor and the seven text colours. Verify in Chrome. Commit "Dark stage, colour-blind-safe highlights, Deep peels the model".
 
 ### Task 2: Layout (issues 2, 3, 4, 7, 8, 13, 17)
 

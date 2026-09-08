@@ -116,7 +116,8 @@ function Shell() {
           to: c.to,
           viaWeight: c.viaWeight,
           change: c.change,
-          color: c.role === "shortens" ? "#c8473f" : c.role === "lengthens" ? "#2b7bd9" : "#8a8f86",
+          // Warm is the end that moves: shortening in insertion amber, lengthening in origin blue.
+          color: c.role === "shortens" ? "#f2a531" : c.role === "lengthens" ? "#3d8bff" : "#8a8f86",
         })),
       },
     [motion],
@@ -154,6 +155,7 @@ function Shell() {
         focusIds: state.focus ? new Set(state.focus.ids) : undefined,
         pinned: state.pinned,
         attachments,
+        layer: state.filters.layer,
       }),
     [
       state.mode,
@@ -165,6 +167,7 @@ function Shell() {
       state.pinned,
       activeLine,
       attachments,
+      state.filters.layer,
     ],
   );
   const cameraCommand = useMemo<CameraCommand>(() => {
@@ -281,6 +284,9 @@ function Shell() {
               <Maximize2 size={17} />
             </button>
           </div>
+          {state.mode === "muscles" && state.filters.layer === "deep" && (
+            <div className="stage-caption">Surface layer peeled · approximate</div>
+          )}
           <button className="mobile-layers outline-button" onClick={() => setMobilePanel(true)}>
             <Layers size={15} /> Layers & search
           </button>

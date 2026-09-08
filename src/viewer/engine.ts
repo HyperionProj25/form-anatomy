@@ -112,8 +112,8 @@ export type PullDrawing = {
 
 const PULL_PARTICLES = 4;
 const PULL_PERIOD_MS = 2200;
-const ORIGIN_COLOR = "#2b7bd9";
-const INSERTION_COLOR = "#d9822b";
+const ORIGIN_COLOR = "#3d8bff";
+const INSERTION_COLOR = "#f2a531";
 
 const PRESET_DIRECTIONS: Record<ViewPreset, Vec3> = {
   front: [0, 0, 1],
@@ -125,7 +125,8 @@ const PRESET_DIRECTIONS: Record<ViewPreset, Vec3> = {
 const TWEEN_TAU = 110;
 const HOVER_LIFT = 0.16;
 const HOVER_EMISSIVE = new THREE.Color("#5b5346");
-const HALO_COLOR = "#9fc7b4";
+/** Bright rim around the selected part; carries the selection cue for colour-blind viewers. */
+const HALO_COLOR = "#eafffb";
 
 const easeInOut = (t: number) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
@@ -408,12 +409,12 @@ export class AnatomyEngine {
         color: HALO_COLOR,
         side: THREE.BackSide,
         transparent: true,
-        opacity: 0.6,
+        opacity: 0.78,
         depthWrite: false,
       }),
     );
     halo.matrixAutoUpdate = false;
-    const s = 1.03;
+    const s = 1.045;
     halo.matrix
       .makeTranslation(c.x, c.y, c.z)
       .multiply(new THREE.Matrix4().makeScale(s, s, s))
@@ -896,9 +897,10 @@ export class AnatomyEngine {
     const ctx = canvas.getContext("2d");
     if (!ctx) return;
     const g = ctx.createRadialGradient(size / 2, size / 2, 0, size / 2, size / 2, size / 2);
-    g.addColorStop(0, "rgba(38, 44, 34, 0.42)");
-    g.addColorStop(0.5, "rgba(38, 44, 34, 0.16)");
-    g.addColorStop(1, "rgba(38, 44, 34, 0)");
+    // Soft on the dark slate ground; a third of what the cream stage needed.
+    g.addColorStop(0, "rgba(10, 14, 16, 0.34)");
+    g.addColorStop(0.5, "rgba(10, 14, 16, 0.12)");
+    g.addColorStop(1, "rgba(10, 14, 16, 0)");
     ctx.fillStyle = g;
     ctx.fillRect(0, 0, size, size);
     const tex = new THREE.CanvasTexture(canvas);

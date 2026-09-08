@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { ATTACH_COLORS, computeStyles, PIN_COLORS, type StyleInput } from "../src/viewer/appearance";
+import { ATTACH_COLORS, COLORS, computeStyles, PIN_COLORS, type StyleInput } from "../src/viewer/appearance";
 import type { CatalogPart } from "../src/data/types";
 
 const part = (id: string, type: CatalogPart["type"], name = id): CatalogPart => ({
@@ -48,7 +48,7 @@ describe("computeStyles", () => {
 
   test("selected part is green and always visible even when isolated hides the rest", () => {
     const s = computeStyles({ ...base, selected: "gastro", isolated: true });
-    expect(s.get("gastro")).toMatchObject({ visible: true, color: "#477965", emissive: "#204d3a" });
+    expect(s.get("gastro")).toMatchObject({ visible: true, color: COLORS.selected, emissive: COLORS.selectedEmissive });
     expect(s.get("femur")?.visible).toBe(false);
   });
 
@@ -92,7 +92,7 @@ describe("computeStyles", () => {
     });
     expect(s.get("gastro")).toMatchObject({ visible: true, color: PIN_COLORS[0], opacity: 1 });
     expect(s.get("soleus")).toMatchObject({ visible: true, color: PIN_COLORS[1] });
-    expect(s.get("femur")?.color).toBe("#477965"); // selection wins over pins
+    expect(s.get("femur")?.color).toBe(COLORS.selected); // selection wins over pins
   });
 
   test("outside fascia mode a focus fades everything else so a deep target shows", () => {
@@ -140,5 +140,18 @@ describe("attachments", () => {
       attachments: { origin: new Set(["femur"]), insertion: new Set(["femur"]) },
     });
     expect(both.get("femur")!.color).toBe(ATTACH_COLORS.origin);
+  });
+});
+
+describe("layer peel", () => {
+  test("Deep drops superficial muscles to a ghost and leaves deep muscles, bones and the selection alone", () => {
+    const deepMuscle = { ...part("deepm", "muscle", "Popliteus"), layer: "deep" as const };
+    const s = computeStyles({ ...base, parts: [...base.parts, deepMuscle], layer: "deep", selected: "soleus" });
+    expect(s.get("gastro")!.opacity).toBeCloseTo(0.12);
+    expect(s.get("deepm")!.opacity).toBe(1);
+    expect(s.get("femur")!.opacity).toBe(1);
+    expect(s.get("soleus")!.opacity).toBe(1);
+    const whole = computeStyles({ ...base, layer: "superficial" });
+    expect(whole.get("gastro")!.opacity).toBe(1);
   });
 });

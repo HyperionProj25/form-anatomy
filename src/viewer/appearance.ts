@@ -25,14 +25,21 @@ export type StyleInput = {
   pinned?: string[];
   /** Origin and insertion bone ids of the selected muscle; they light up and everything else dims. */
   attachments?: { origin: Set<string>; insertion: Set<string> };
+  /** Deep peels the superficial layer to a ghost on the model; the other values change nothing here. */
+  layer?: "all" | "superficial" | "deep";
 };
 
-export const PIN_COLORS = ["#d9822b", "#2b7bd9", "#b03a8f", "#3aa76d"] as const;
-export const ATTACH_COLORS = { origin: "#2b7bd9", insertion: "#d9822b" } as const;
+/** Compare pins: violet, magenta, yellow, deep purple, none near the origin blue or insertion amber. */
+export const PIN_COLORS = ["#5b3fa6", "#a86ee0", "#e0569f", "#e8c547"] as const;
+/** Origin blue and insertion amber differ in lightness as well as hue, so they survive colour-blindness. */
+export const ATTACH_COLORS = { origin: "#3d8bff", insertion: "#f2a531" } as const;
+/** Opacity of superficial muscles while the Deep layer is shown. */
+export const PEELED_OPACITY = 0.12;
 
 export const COLORS = {
-  selected: "#477965",
-  selectedEmissive: "#204d3a",
+  // Cyan-teal reads against muscle red for protanopes and deuteranopes (ΔE 33 and 49); green did not.
+  selected: "#2ac7e0",
+  selectedEmissive: "#0b7c8f",
   bone: "#e0d3b7",
   connective: "#dbd4bb",
   muscle: "#a35b4c",
@@ -103,7 +110,18 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
             : input.mode === "fascia"
               ? 0.1
               : input.opacity;
-    const opacity = revealed ? Math.min(baseOpacity, 0.28) : baseOpacity;
+    const peeled =
+      input.layer === "deep" &&
+      input.mode === "muscles" &&
+      p.type === "muscle" &&
+      p.layer === "superficial" &&
+      !selected &&
+      !focused;
+    const opacity = peeled
+      ? Math.min(baseOpacity, PEELED_OPACITY)
+      : revealed
+        ? Math.min(baseOpacity, 0.28)
+        : baseOpacity;
     out.set(p.id, { visible, color, emissive: emissiveColor, emissiveIntensity, opacity });
   }
   return out;
