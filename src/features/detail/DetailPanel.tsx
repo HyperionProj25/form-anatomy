@@ -24,6 +24,7 @@ import { displayName, prettyName, secondaryName } from "../../data/names";
 import { REGION_LABELS } from "../../data/regions";
 import { useStore } from "../../state/store";
 import { ATTACH_COLORS } from "../../viewer/appearance";
+import CaveatChip from "../shared/CaveatChip";
 import CopyLink from "../shared/CopyLink";
 
 type Props = { describe: (id: string) => string | undefined; onToast: (m: string) => void };
@@ -229,11 +230,14 @@ export default function DetailPanel({ describe, onToast }: Props) {
                   ))}
                 </div>
               )}
-              <p className="subtle">
-                Matched from the attachment text by bone name. Approximate.
-                {state.attach &&
-                  " The arrow shows the conventional direction of pull, insertion toward origin, between estimated contact points."}
-              </p>
+              <div className="card-caveat">
+                <CaveatChip label="Approximate">
+                  Bones are matched from the reference attachment text by name, so a head that
+                  attaches by tendon or aponeurosis can be missed or over-matched.
+                  {state.attach &&
+                    " The arrow shows the conventional direction of pull, insertion toward origin, between estimated contact points on the meshes."}
+                </CaveatChip>
+              </div>
             </div>
           )}
           {applied.map((note) => (

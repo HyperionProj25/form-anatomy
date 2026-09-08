@@ -2884,3 +2884,76 @@ button.start-point:hover {
     display: none;
   }
 }
+
+/* Caveat chips: a labelled disclosure that expands in place; dark ones sit on the stage. */
+.caveat {
+  display: inline-block;
+  font-size: 12px;
+  max-width: 100%;
+}
+.caveat summary {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  border: 1px solid var(--border);
+  background: #fffefb;
+  color: var(--secondary);
+  font-weight: 600;
+  cursor: pointer;
+  list-style: none;
+  white-space: nowrap;
+}
+.caveat summary::-webkit-details-marker {
+  display: none;
+}
+.caveat[open] summary {
+  background: #eef1e9;
+  color: var(--green);
+  border-color: #b6c3aa;
+}
+.caveat p {
+  margin: 6px 0 0;
+  font-size: 12px;
+  line-height: 1.5;
+  color: var(--muted);
+}
+.card-caveat {
+  margin-top: 8px;
+}
+.caveat-dark {
+  position: relative;
+}
+.caveat-dark summary {
+  background: rgba(255, 254, 251, 0.12);
+  border-color: rgba(255, 254, 251, 0.3);
+  color: var(--stage-text);
+}
+.caveat-dark[open] summary {
+  background: rgba(255, 254, 251, 0.24);
+  color: #fffefb;
+  border-color: rgba(255, 254, 251, 0.5);
+}
+.caveat-dark p {
+  position: absolute;
+  top: calc(100% + 8px);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 260px;
+  padding: 8px 10px;
+  border-radius: 8px;
+  background: rgba(20, 30, 24, 0.94);
+  color: var(--stage-text);
+  text-align: left;
+  white-space: normal;
+  box-shadow: 0 8px 24px rgba(10, 14, 16, 0.3);
+}
+.motion-reduced {
+  margin: -2px 0 8px;
+}
+@media (max-width: 1120px) {
+  .line-caption .caveat {
+    display: inline-block;
+  }
+}

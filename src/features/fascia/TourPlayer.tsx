@@ -2,6 +2,7 @@ import { ChevronLeft, ChevronRight, Pause, Play, Route, X } from "lucide-react";
 import { useEffect } from "react";
 import type { Line } from "../../data/lines";
 import { useStore } from "../../state/store";
+import { usePrefersReducedMotion } from "../shared/usePrefersReducedMotion";
 import { EvidenceBadge } from "./EvidenceBadge";
 
 const AUTOPLAY_MS = 6000;
@@ -10,12 +11,13 @@ const AUTOPLAY_MS = 6000;
 export default function TourPlayer({ line }: { line: Line }) {
   const { state, dispatch } = useStore();
   const tour = state.tour;
+  const reduced = usePrefersReducedMotion();
 
   useEffect(() => {
-    if (!tour?.playing) return;
+    if (!tour?.playing || reduced) return;
     const timer = window.setTimeout(() => dispatch({ type: "tourNext" }), AUTOPLAY_MS);
     return () => window.clearTimeout(timer);
-  }, [tour, dispatch]);
+  }, [tour, reduced, dispatch]);
 
   useEffect(() => {
     if (!tour) return;
@@ -66,19 +68,26 @@ export default function TourPlayer({ line }: { line: Line }) {
         >
           <ChevronLeft size={15} /> Previous
         </button>
-        <button
-          className="outline-button"
-          onClick={() => dispatch({ type: "tourPlay", playing: !tour.playing })}
-          disabled={last}
-        >
-          {tour.playing ? <Pause size={15} /> : <Play size={15} />}
-          {tour.playing ? "Pause" : "Play"}
-        </button>
+        {!reduced && (
+          <button
+            className="outline-button"
+            onClick={() => dispatch({ type: "tourPlay", playing: !tour.playing })}
+            disabled={last}
+          >
+            {tour.playing ? <Pause size={15} /> : <Play size={15} />}
+            {tour.playing ? "Pause" : "Play"}
+          </button>
+        )}
         <button className="outline-button" disabled={last} onClick={() => dispatch({ type: "tourNext" })}>
           Next <ChevronRight size={15} />
         </button>
       </div>
-      <p className="subtle">Arrow keys move between stops. Esc ends the tour.</p>
+      <p className="subtle">
+        {reduced
+          ? "Auto-advance is off because your system prefers reduced motion; use Next. "
+          : ""}
+        Arrow keys move between stops. Esc ends the tour.
+      </p>
     </div>
   );
 }

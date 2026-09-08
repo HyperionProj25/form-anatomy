@@ -37,8 +37,8 @@
 
 ### Task 3: Reduced motion and caveat chips (issues 10, 12)
 
-- [ ] `usePrefersReducedMotion`; motion card hides Play and explains; tour card notes auto-advance is off.
-- [ ] Caveat chips that expand; legend caveat in the caption band. Commit "Explain what reduced motion turns off; caveats as chips".
+- [x] `usePrefersReducedMotion`; motion card hides Play and explains; tour card notes auto-advance is off.
+- [x] Caveat chips that expand; legend caveat in the caption band. Commit "Explain what reduced motion turns off; caveats as chips".
 
 ### Task 4: Real-browser contrast check (issue 16)
 

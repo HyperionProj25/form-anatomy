@@ -24,6 +24,7 @@ import Modals from "./features/guide/Modals";
 import QuizOverlay from "./features/quiz/QuizOverlay";
 import { buildSet, mulberry32, type QuizSetId } from "./features/quiz/generators";
 import { loadProgress, weakSpots } from "./features/quiz/progress";
+import CaveatChip from "./features/shared/CaveatChip";
 import { DockStrip, foldedAfter, type DockCardId } from "./features/shared/Dock";
 import Toast from "./features/shared/Toast";
 import StageToolbar from "./features/stage/StageToolbar";
@@ -293,7 +294,10 @@ function Shell() {
             <div className="stage-caption line-caption">
               <span className="line-dot" style={{ background: activeLine.color }} />
               {activeLine.name}
-              <small>Teaching path through structure centres, not a fascial sheet.</small>
+              <CaveatChip label="Teaching model" tone="dark">
+                A teaching path drawn through structure centres, not a fascial sheet. Each hop
+                carries its own evidence badge in the panel.
+              </CaveatChip>
               <button className="text-button" onClick={() => dispatch({ type: "togglePath" })}>
                 {state.showPath ? "Hide path" : "Show path"}
               </button>

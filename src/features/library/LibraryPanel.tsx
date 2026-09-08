@@ -20,6 +20,7 @@ import { LINE_GROUPS, lines } from "../../data/lines";
 import { displayName, secondaryName, type NameLang } from "../../data/names";
 import { REGION_LABELS, REGION_ORDER } from "../../data/regions";
 import { useStore, type Filters, type Mode, type SideFilter } from "../../state/store";
+import CaveatChip from "../shared/CaveatChip";
 
 type Props = { mobileOpen: boolean; onCloseMobile: () => void };
 
@@ -208,10 +209,12 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
                 {moving ? <Square size={12} /> : <Play size={14} />}
                 {moving ? "Stop moving" : `Move the ${jointPhrase(activeJoint)}`}
               </button>
-              <p className="subtle joint-note">
-                Muscles attached on both sides of the {jointPhrase(activeJoint)}, from the
-                attachment text. Aponeuroses and the iliotibial tract are not seen.
-              </p>
+              <div className="card-caveat joint-note">
+                <CaveatChip label="Approximate">
+                  Muscles attached on both sides of the {jointPhrase(activeJoint)}, matched from
+                  the attachment text. Aponeuroses and the iliotibial tract are not seen.
+                </CaveatChip>
+              </div>
             </>
           )}
           <div className="section-label">

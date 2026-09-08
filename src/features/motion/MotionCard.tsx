@@ -3,6 +3,8 @@ import { JOINT_LABELS } from "../../data/joints";
 import { cableRoles, type MotionSetup, type MotionSide } from "../../data/motion";
 import { prettyName } from "../../data/names";
 import { useStore } from "../../state/store";
+import CaveatChip from "../shared/CaveatChip";
+import { usePrefersReducedMotion } from "../shared/usePrefersReducedMotion";
 
 const SHORTEN = "#f2a531";
 const LENGTHEN = "#3d8bff";
@@ -12,6 +14,7 @@ type Props = { setup: MotionSetup | null; onCollapse?: () => void };
 /** Controls and the shortening/lengthening readout for a joint motion, in the stage dock. */
 export default function MotionCard({ setup, onCollapse }: Props) {
   const { state, dispatch } = useStore();
+  const reduced = usePrefersReducedMotion();
   const m = state.motion;
   if (!m || !setup) return null;
   const roles = cableRoles(setup);
@@ -47,13 +50,15 @@ export default function MotionCard({ setup, onCollapse }: Props) {
         </span>
       </div>
       <div className="motion-controls">
-        <button
-          className="outline-button"
-          aria-label={m.playing ? "Pause" : "Play"}
-          onClick={() => dispatch({ type: "motionPlay", playing: !m.playing })}
-        >
-          {m.playing ? <Pause size={13} /> : <Play size={13} />}
-        </button>
+        {!reduced && (
+          <button
+            className="outline-button"
+            aria-label={m.playing ? "Pause" : "Play"}
+            onClick={() => dispatch({ type: "motionPlay", playing: !m.playing })}
+          >
+            {m.playing ? <Pause size={13} /> : <Play size={13} />}
+          </button>
+        )}
         <input
           type="range"
           min={0}
@@ -64,6 +69,11 @@ export default function MotionCard({ setup, onCollapse }: Props) {
         />
         <span className="playlist-status">{degrees}°</span>
       </div>
+      {reduced && (
+        <p className="subtle motion-reduced">
+          Animation is off because your system prefers reduced motion. Drag the angle.
+        </p>
+      )}
       {setup.joint !== "tmj" && (
         <div className="segmented motion-side" role="group" aria-label="Body side">
           {(["left", "right"] as MotionSide[]).map((side) => (
@@ -102,11 +112,13 @@ export default function MotionCard({ setup, onCollapse }: Props) {
         />
         Show lines of action
       </label>
-      <p className="subtle">
-        Procedural deformation for teaching: bones rotate rigidly about a joint centre measured from
-        the mesh, and crossing muscles bend, shorten and bulge by geometry, not by measured tissue
-        mechanics. Real joints roll and glide.
-      </p>
+      <div className="card-caveat">
+        <CaveatChip label="Teaching model">
+          Bones rotate rigidly about a joint centre measured from the mesh, and crossing muscles
+          bend, shorten and bulge by geometry, not by measured tissue mechanics. Real joints roll
+          and glide.
+        </CaveatChip>
+      </div>
     </div>
   );
 }
