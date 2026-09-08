@@ -17,7 +17,8 @@
     "facts": "tsx scripts/fetch-facts.ts",
     "verify:citations": "tsx scripts/verify-citations.ts",
     "icons": "tsx scripts/make-icons.ts",
-    "geometry": "tsx scripts/build-geometry.ts"
+    "geometry": "tsx scripts/build-geometry.ts",
+    "check:contrast": "tsx scripts/check-contrast.ts"
   },
   "dependencies": {
     "lucide-react": "^1.41.0",

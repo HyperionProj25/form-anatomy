@@ -44,7 +44,7 @@
 
 **Files:** `scripts/check-contrast.ts`, `package.json`, `.github/workflows/deploy.yml`
 
-- [ ] Headless Chrome over CDP, axe-core injected, two viewports, zero colour-contrast violations. Runs in CI after the build. Commit "Check colour contrast in a real browser in CI".
+- [x] Headless Chrome over CDP, axe-core injected, two viewports, zero colour-contrast violations. Runs in CI after the build. Commit "Check colour contrast in a real browser in CI".
 
 ### Task 5: Docs, deploy
 

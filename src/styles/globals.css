@@ -198,7 +198,7 @@ p {
   border-radius: 7px;
   padding: 14px 6px 11px;
   font-size: 12px;
-  color: #7a8477;
+  color: #6e776b;
 }
 .system-switch .active {
   background: #eaf0e5;
@@ -298,7 +298,7 @@ p {
 }
 .line-item small {
   display: block;
-  color: #8c9384;
+  color: #676d60;
   font-size: 12px;
   margin-top: 6px;
 }
@@ -338,11 +338,11 @@ p {
 .opacity-label {
   display: block;
   font-size: 12px;
-  color: #77816f;
+  color: #6e7767;
 }
 .opacity-label span {
   float: right;
-  color: #8e9983;
+  color: #6d7762;
 }
 .opacity-label input {
   display: block;
@@ -358,7 +358,7 @@ p {
   gap: 8px;
   padding: 7px 0;
   font-size: 12px;
-  color: #75816e;
+  color: #6c7766;
   margin-bottom: 14px;
 }
 .help-link {
@@ -368,7 +368,7 @@ p {
   border-top: 1px solid var(--border);
   padding: 18px 0;
   font-size: 12px;
-  color: #818a79;
+  color: #6e7667;
 }
 .help-link svg:last-child {
   margin-left: auto;
@@ -594,7 +594,7 @@ p {
 }
 .chapter {
   font-size: 12px;
-  color: #a4ac99;
+  color: #6d7761;
 }
 .detail-title {
   font-family: Georgia, serif;
@@ -693,7 +693,7 @@ p {
 }
 .detail-tabs button {
   font-size: 12px;
-  color: #8b967f;
+  color: #6e7862;
   padding: 0 0 12px;
   border-bottom: 2px solid transparent;
 }
@@ -708,13 +708,13 @@ p {
 .facts span {
   font-size: 12px;
   letter-spacing: 1.2px;
-  color: #a0aa93;
+  color: #6d785f;
 }
 .facts p {
   margin-top: 9px;
   font-size: 12px;
   line-height: 1.8;
-  color: #7f8d71;
+  color: #6c7860;
 }
 .source-link {
   display: flex;
@@ -762,7 +762,7 @@ p {
   text-align: left;
   padding: 9px 0 15px;
   font-size: 12px;
-  color: #6e7d5f;
+  color: #6a795c;
 }
 .connection-path button:disabled {
   opacity: 1;
@@ -770,7 +770,7 @@ p {
 .connection-path small {
   display: block;
   font-size: 12px;
-  color: #a1ac93;
+  color: #6c785c;
   margin-top: 6px;
   line-height: 1.5;
 }
@@ -798,7 +798,7 @@ p {
   display: grid;
   grid-template-columns: 18px 1fr;
   gap: 9px;
-  color: #7d906b;
+  color: #647355;
 }
 .movement-card h3 {
   font-size: 12px;
@@ -809,12 +809,12 @@ p {
   grid-column: 1/-1;
   font-size: 12px;
   line-height: 1.8;
-  color: #939f83;
+  color: #667158;
 }
 .evidence-note {
   margin-top: 20px;
   font-size: 12px;
-  color: #88977a;
+  color: #6b785e;
 }
 .evidence-note summary {
   display: flex;
@@ -1461,7 +1461,7 @@ footer button {
 .evidence-mechanical .evidence-pill,
 .evidence-not-assessed .evidence-pill {
   background: #ecebe5;
-  color: #6b6f66;
+  color: #666a61;
 }
 .evidence {
   margin: 6px 0 4px 34px;
