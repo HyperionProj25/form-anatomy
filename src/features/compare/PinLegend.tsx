@@ -1,5 +1,6 @@
 import { X } from "lucide-react";
 import { partById } from "../../data/catalog";
+import { displayName } from "../../data/names";
 import { useStore } from "../../state/store";
 import { PIN_COLORS } from "../../viewer/appearance";
 
@@ -11,7 +12,8 @@ export default function PinLegend() {
     <div className="pin-legend" aria-label="Pinned structures">
       {state.pinned.map((id, i) => {
         const color = PIN_COLORS[i % PIN_COLORS.length];
-        const name = partById(id)?.name ?? id;
+        const part = partById(id);
+        const name = part ? displayName(part, state.names) : id;
         return (
           <span className="pin-chip" key={id} style={{ borderColor: color }}>
             <span className="line-dot" style={{ background: color }} />

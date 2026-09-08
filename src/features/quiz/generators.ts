@@ -1,5 +1,6 @@
 import { partForSide, parts, partsByKey } from "../../data/catalog";
 import { factsForWiki } from "../../data/facts";
+import { prettyName } from "../../data/names";
 import { LINE_IDS, lineById, lineKeys, type LineId } from "../../data/lines";
 import { EVIDENCE_BANK, QUIZ_BONES, QUIZ_MUSCLES } from "../../data/quiz-pool";
 import { REGION_LABELS, REGION_ORDER } from "../../data/regions";
@@ -93,7 +94,7 @@ export function setLabel(id: QuizSetId): string {
   return lineById(id.slice(5))?.name ?? id;
 }
 
-const nameOf = (key: string) => partsByKey(key)[0]?.name ?? key;
+const nameOf = (key: string) => prettyName(partsByKey(key)[0]?.name ?? key);
 const factsOf = (key: string) => factsForWiki(partsByKey(key)[0]?.wiki);
 const clip = (s: string) =>
   s.length > ACTION_MAX ? s.slice(0, ACTION_MAX - 1).trimEnd() + "…" : s;
@@ -119,13 +120,14 @@ function evidenceFor(setId: QuizSetId) {
 /** Names of other parts of the same type and region, for identify distractors. */
 function distractorNames(key: string, rng: () => number, count: number): string[] {
   const part = partsByKey(key)[0];
-  const seen = new Set<string>([part.name]);
+  const seen = new Set<string>([prettyName(part.name)]);
   const names: string[] = [];
   const take = (candidates: typeof parts) => {
     for (const p of shuffle(candidates, rng)) {
-      if (seen.has(p.name)) continue;
-      seen.add(p.name);
-      names.push(p.name);
+      const name = prettyName(p.name);
+      if (seen.has(name)) continue;
+      seen.add(name);
+      names.push(name);
       if (names.length === count) return;
     }
   };

@@ -1,7 +1,7 @@
 import { Download, Printer } from "lucide-react";
 import { partById } from "../../data/catalog";
 import { factsForWiki } from "../../data/facts";
-import { latinName } from "../../data/names";
+import { latinName, prettyName } from "../../data/names";
 import { REGION_LABELS, slugify } from "../../data/regions";
 import { useStore } from "../../state/store";
 import type { CatalogPart } from "../../data/types";
@@ -90,7 +90,7 @@ export default function Handout() {
           return (
             <li key={part.id} className="handout-item">
               <h3>
-                {i + 1}. {part.name}
+                {i + 1}. {prettyName(part.name)}
                 {latin && latin !== part.name && <small> · {latin}</small>}
               </h3>
               <p className="handout-meta">

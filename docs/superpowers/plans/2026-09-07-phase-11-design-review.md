@@ -28,12 +28,12 @@
 
 **Files:** `src/App.tsx`, `src/features/library/LibraryPanel.tsx`, `src/features/detail/StartPanel.tsx`, `src/features/detail/DetailPanel.tsx`, `src/features/quiz/QuizOverlay.tsx`, `src/features/motion/MotionCard.tsx`, `src/features/playlist/PlaylistCard.tsx`, `src/data/names.ts`, `src/styles/globals.css`, tests
 
-- [ ] Remove the banner; Quiz and Help in the nav; workspace fills the viewport; panels scroll inside.
-- [ ] Left panel: "Find a structure", search first, one filter row (Region and Joint selects, Side), names toggle at the foot, "Move the knee" wording, Enter selects the first match with a match strip.
-- [ ] Stage toolbar: views, Move a joint menu, Layer, zoom, reset; orientation to the top-right corner.
-- [ ] Right panel: "Selected" / "Nothing selected" with three starting points; Attachments chip in the action row; "Crosses the knee · Move it".
-- [ ] Dock: quiz, playlist and motion cards bottom-left, collapsible.
-- [ ] Copy pass with `prettyName`. Verify at 1440×900, 1366×768 and 375 wide. Commit "Make the model the page".
+- [x] Remove the banner; Quiz and Help in the nav; workspace fills the viewport; panels scroll inside.
+- [x] Left panel: "Find a structure", search first, one filter row (Region and Joint selects, Side), names toggle at the foot, "Move the knee" wording, Enter selects the first match with a match strip.
+- [x] Stage toolbar: views, Move a joint menu, Layer, zoom, reset; orientation to the top-right corner.
+- [x] Right panel: "Selected" / "Nothing selected" with three starting points; Attachments chip in the action row; "Crosses the knee · Move it".
+- [x] Dock: quiz, playlist and motion cards bottom-left, collapsible.
+- [x] Copy pass with `prettyName`. Verify at 1440×900, 1366×768 and 375 wide. Commit "Make the model the page".
 
 ### Task 3: Reduced motion and caveat chips (issues 10, 12)
 

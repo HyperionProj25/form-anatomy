@@ -1,15 +1,16 @@
-import { ArrowRight, Check, Eye, X } from "lucide-react";
+import { ArrowRight, Check, ChevronDown, Eye, X } from "lucide-react";
 import { useEffect, useRef } from "react";
 import { partById, partsByKey } from "../../data/catalog";
+import { prettyName } from "../../data/names";
 import { citationById, citationUrl } from "../../data/research";
 import { useStore } from "../../state/store";
 import { setLabel, type QuizSetId } from "./generators";
 import { loadProgress, recordAnswer, saveProgress, weakSpots } from "./progress";
 
-type Props = { onStart: (setId: QuizSetId) => void };
+type Props = { onStart: (setId: QuizSetId) => void; onCollapse?: () => void };
 
-/** Floating question card over the stage. The model stays visible and clickable for find questions. */
-export default function QuizOverlay({ onStart }: Props) {
+/** Question card in the stage dock. The model stays visible and clickable for find questions. */
+export default function QuizOverlay({ onStart, onCollapse }: Props) {
   const { state, dispatch } = useStore();
   const quiz = state.quiz;
   const recorded = useRef(new Set<string>());
@@ -37,6 +38,18 @@ export default function QuizOverlay({ onStart }: Props) {
   const q = quiz.questions[quiz.index];
   const answer = quiz.answers[quiz.index];
   const exit = () => dispatch({ type: "endQuiz" });
+  const buttons = (
+    <span className="card-buttons">
+      {onCollapse && (
+        <button className="icon-button" aria-label="Fold the quiz card" onClick={onCollapse}>
+          <ChevronDown size={16} />
+        </button>
+      )}
+      <button className="icon-button" aria-label="Exit quiz" onClick={exit}>
+        <X size={16} />
+      </button>
+    </span>
+  );
 
   if (done) {
     const score = quiz.answers.filter((a) => a?.correct).length;
@@ -45,9 +58,7 @@ export default function QuizOverlay({ onStart }: Props) {
       <div className="quiz-card" role="dialog" aria-label="Quiz results">
         <div className="quiz-head">
           <span className="tiny-tag">{setLabel(quiz.setId).toUpperCase()} · RESULTS</span>
-          <button className="icon-button" aria-label="Close quiz" onClick={exit}>
-            <X size={16} />
-          </button>
+          {buttons}
         </div>
         <div className="quiz-score">
           {score}
@@ -78,7 +89,7 @@ export default function QuizOverlay({ onStart }: Props) {
     );
   }
 
-  const name = q.kind === "evidence" ? null : (partsByKey(q.key)[0]?.name ?? q.key);
+  const name = q.kind === "evidence" ? null : prettyName(partsByKey(q.key)[0]?.name ?? q.key);
   const cite = q.kind === "evidence" ? citationById(q.source) : undefined;
 
   if (quiz.showing)
@@ -115,16 +126,15 @@ export default function QuizOverlay({ onStart }: Props) {
     );
 
   const canShow = q.kind === "find" || q.kind === "fact";
-  const pickedName = answer?.pickedId ? partById(answer.pickedId)?.name : undefined;
+  const picked = answer?.pickedId ? partById(answer.pickedId) : undefined;
+  const pickedName = picked ? prettyName(picked.name) : undefined;
   return (
     <div className="quiz-card" role="dialog" aria-label="Quiz question">
       <div className="quiz-head">
         <span className="tiny-tag">
           QUESTION {quiz.index + 1} OF {total} · {setLabel(quiz.setId).toUpperCase()}
         </span>
-        <button className="icon-button" aria-label="Exit quiz" onClick={exit}>
-          <X size={16} />
-        </button>
+        {buttons}
       </div>
       <div className="quiz-progress">
         <div style={{ width: `${((quiz.index + 1) / total) * 100}%` }} />
@@ -160,7 +170,7 @@ export default function QuizOverlay({ onStart }: Props) {
               (answer.correct
                 ? "Correct. "
                 : pickedName
-                  ? `That was the ${pickedName}. `
+                  ? `That was the ${pickedName.toLowerCase()}. `
                   : "Skipped. ")}
             {q.explanation}
             {cite && (

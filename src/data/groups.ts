@@ -60,3 +60,10 @@ export function filterParts(all: CatalogPart[], mode: Mode, filters: Filters): C
 function matchesLatin(p: CatalogPart, needle: string): boolean {
   return latinName(p)?.toLowerCase().includes(needle.toLowerCase()) ?? false;
 }
+
+/** The group Enter selects: the first whose name starts with the search text, else the first listed. */
+export function firstMatch(groups: PartGroup[], needle: string): PartGroup | undefined {
+  const n = needle.trim().toLowerCase();
+  if (!n) return undefined;
+  return groups.find((g) => g.name.toLowerCase().startsWith(n)) ?? groups[0];
+}

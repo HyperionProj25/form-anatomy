@@ -2,23 +2,24 @@ import {
   Activity,
   ArrowRight,
   Bone,
+  ChevronDown,
   ChevronRight,
   CircleHelp,
   Eye,
-  Layers,
   Network,
   Play,
   Search,
+  Square,
   X,
 } from "lucide-react";
 import { useMemo } from "react";
 import { parts, partForSide, partById } from "../../data/catalog";
-import { filterParts, groupParts } from "../../data/groups";
-import { JOINT_IDS, JOINT_LABELS } from "../../data/joints";
+import { filterParts, firstMatch, groupParts } from "../../data/groups";
+import { JOINT_IDS, JOINT_LABELS, jointPhrase } from "../../data/joints";
 import { LINE_GROUPS, lines } from "../../data/lines";
 import { displayName, secondaryName, type NameLang } from "../../data/names";
 import { REGION_LABELS, REGION_ORDER } from "../../data/regions";
-import { useStore, type LayerFilter, type Mode, type SideFilter } from "../../state/store";
+import { useStore, type Filters, type Mode, type SideFilter } from "../../state/store";
 
 type Props = { mobileOpen: boolean; onCloseMobile: () => void };
 
@@ -28,6 +29,39 @@ const SYSTEMS: { id: Mode; label: string; icon: typeof Activity }[] = [
   { id: "fascia", label: "Fascia", icon: Network },
 ];
 
+type SelectProps = {
+  label: string;
+  value: string;
+  options: readonly (readonly [string, string])[];
+  onChange: (value: string) => void;
+};
+
+/** A native select that fills green only while it filters. */
+function FilterSelect({ label, value, options, onChange }: SelectProps) {
+  const active = value !== options[0][0];
+  return (
+    <span className={`filter-select ${active ? "active" : ""}`}>
+      <select aria-label={label} value={value} onChange={(e) => onChange(e.target.value)}>
+        {options.map(([v, l]) => (
+          <option key={v} value={v}>
+            {l}
+          </option>
+        ))}
+      </select>
+      <ChevronDown size={13} />
+    </span>
+  );
+}
+
+const REGION_OPTIONS = [
+  ["all", "All regions"] as const,
+  ...REGION_ORDER.map((r) => [r, REGION_LABELS[r]] as const),
+];
+const JOINT_OPTIONS = [
+  ["all", "Any joint"] as const,
+  ...JOINT_IDS.map((j) => [j, JOINT_LABELS[j]] as const),
+];
+
 export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
   const { state, dispatch } = useStore();
   const { mode, filters, selected, hidden, isolated, opacity, line, names } = state;
@@ -35,16 +69,53 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
   const groups = useMemo(() => groupParts(filterParts(parts, mode, filters)), [mode, filters]);
   const showLines = mode === "fascia" && !filters.search;
   const activeJoint = filters.joint === "all" ? null : filters.joint;
+  const moving = !!activeJoint && state.motion?.joint === activeJoint;
+  const first = filters.search ? firstMatch(groups, filters.search) : undefined;
+  const noun = mode === "bones" ? "bones" : "muscles";
+  const setFilters = (f: Partial<Filters>) => dispatch({ type: "setFilters", filters: f });
+  const selectFirst = () => {
+    const p = first && partForSide(first.key, filters.side);
+    if (p) dispatch({ type: "select", id: p.id });
+  };
 
   return (
-    <aside className={`left-panel ${mobileOpen ? "mobile-open" : ""}`} aria-label="Explore the body">
+    <aside className={`left-panel ${mobileOpen ? "mobile-open" : ""}`} aria-label="Find a structure">
       <div className="panel-heading">
-        <Layers size={17} />
-        <h2>Explore the body</h2>
-        <button className="mobile-close icon-button" onClick={onCloseMobile} aria-label="Close layers">
+        <Search size={17} />
+        <h2>Find a structure</h2>
+        <button className="mobile-close icon-button" onClick={onCloseMobile} aria-label="Close the finder">
           <X size={18} />
         </button>
       </div>
+      <label className="search-box">
+        <Search size={16} />
+        <input
+          id="structure-search"
+          aria-label="Search structures"
+          placeholder={mode === "fascia" ? "Search muscles…" : `Search ${noun}…`}
+          value={filters.search}
+          onChange={(e) => setFilters({ search: e.target.value })}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault();
+              selectFirst();
+            }
+          }}
+        />
+        {filters.search && (
+          <button onClick={() => setFilters({ search: "" })} aria-label="Clear search">
+            <X size={14} />
+          </button>
+        )}
+      </label>
+      {first && (
+        <div className="match-strip" aria-live="polite">
+          <kbd>Enter</kbd> selects <strong>{displayName(first.parts[0], names)}</strong>
+          <span className="match-count">
+            · {groups.length} {groups.length === 1 ? "match" : "matches"}
+          </span>
+        </div>
+      )}
       <div className="system-switch" role="group" aria-label="Anatomy system">
         {SYSTEMS.map(({ id, label, icon: Icon }) => (
           <button
@@ -55,35 +126,6 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
           >
             <Icon size={19} />
             {label}
-          </button>
-        ))}
-      </div>
-      <label className="search-box">
-        <Search size={16} />
-        <input
-          aria-label="Search anatomical structures"
-          placeholder="Find a structure…"
-          value={filters.search}
-          onChange={(e) => dispatch({ type: "setFilters", filters: { search: e.target.value } })}
-        />
-        {filters.search && (
-          <button
-            onClick={() => dispatch({ type: "setFilters", filters: { search: "" } })}
-            aria-label="Clear search"
-          >
-            <X size={14} />
-          </button>
-        )}
-      </label>
-      <div className="segmented names-toggle" role="group" aria-label="Structure names">
-        {(["english", "latin"] as NameLang[]).map((l) => (
-          <button
-            key={l}
-            aria-pressed={names === l}
-            className={names === l ? "active" : ""}
-            onClick={() => dispatch({ type: "setNames", names: l })}
-          >
-            {l === "english" ? "English names" : "Latin names"}
           </button>
         ))}
       </div>
@@ -125,96 +167,55 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
         </>
       ) : (
         <>
-          <div className="filter-chips" role="group" aria-label="Body region">
-            <button
-              className={filters.region === "all" ? "active" : ""}
-              onClick={() => dispatch({ type: "setFilters", filters: { region: "all" } })}
-            >
-              All regions
-            </button>
-            {REGION_ORDER.map((r) => (
-              <button
-                key={r}
-                className={filters.region === r ? "active" : ""}
-                onClick={() => dispatch({ type: "setFilters", filters: { region: r } })}
-              >
-                {REGION_LABELS[r]}
-              </button>
-            ))}
-          </div>
-          {mode === "muscles" && (
-            <>
-              <div className="filter-chips joint-chips" role="group" aria-label="Crosses joint">
-                <button
-                  className={filters.joint === "all" ? "active" : ""}
-                  onClick={() => dispatch({ type: "setFilters", filters: { joint: "all" } })}
-                >
-                  Any joint
-                </button>
-                {JOINT_IDS.map((j) => (
-                  <button
-                    key={j}
-                    className={filters.joint === j ? "active" : ""}
-                    onClick={() => dispatch({ type: "setFilters", filters: { joint: j } })}
-                  >
-                    {JOINT_LABELS[j]}
-                  </button>
-                ))}
-              </div>
-              {activeJoint && (
-                <>
-                  <button
-                    className="primary-button animate-joint"
-                    onClick={() =>
-                      state.motion?.joint === activeJoint
-                        ? dispatch({ type: "motionStop" })
-                        : dispatch({ type: "motionStart", joint: activeJoint })
-                    }
-                  >
-                    <Play size={14} />
-                    {state.motion?.joint === activeJoint
-                      ? "Stop the animation"
-                      : `Animate the ${JOINT_LABELS[activeJoint].toLowerCase()}`}
-                  </button>
-                  <p className="subtle joint-note">
-                    Muscles attached on both sides of the {JOINT_LABELS[activeJoint].toLowerCase()},
-                    derived from the attachment text. Connective attachments such as aponeuroses and
-                    the iliotibial tract are not seen.
-                  </p>
-                </>
-              )}
-            </>
-          )}
-          <div className="filter-rows">
-            {mode !== "bones" && (
-              <div className="segmented" role="group" aria-label="Layer (approximate)">
-                {(["all", "superficial", "deep"] as LayerFilter[]).map((l) => (
-                  <button
-                    key={l}
-                    aria-pressed={filters.layer === l}
-                    className={filters.layer === l ? "active" : ""}
-                    onClick={() => dispatch({ type: "setFilters", filters: { layer: l } })}
-                  >
-                    {l === "all" ? "All layers" : l[0].toUpperCase() + l.slice(1)}
-                  </button>
-                ))}
-              </div>
+          <div className="filter-row">
+            <FilterSelect
+              label="Body region"
+              value={filters.region}
+              options={REGION_OPTIONS}
+              onChange={(v) => setFilters({ region: v as Filters["region"] })}
+            />
+            {mode === "muscles" && (
+              <FilterSelect
+                label="Joint crossed"
+                value={filters.joint}
+                options={JOINT_OPTIONS}
+                onChange={(v) => setFilters({ joint: v as Filters["joint"] })}
+              />
             )}
             <div className="segmented" role="group" aria-label="Body side">
               {(["both", "left", "right"] as SideFilter[]).map((s) => (
                 <button
                   key={s}
                   aria-pressed={filters.side === s}
-                  className={filters.side === s ? "active" : ""}
-                  onClick={() => dispatch({ type: "setFilters", filters: { side: s } })}
+                  className={filters.side !== s ? "" : s === "both" ? "current" : "active"}
+                  onClick={() => setFilters({ side: s })}
                 >
                   {s === "both" ? "Both sides" : s === "left" ? "Left" : "Right"}
                 </button>
               ))}
             </div>
           </div>
+          {mode === "muscles" && activeJoint && (
+            <>
+              <button
+                className={moving ? "outline-button move-joint" : "primary-button move-joint"}
+                onClick={() =>
+                  moving
+                    ? dispatch({ type: "motionStop" })
+                    : dispatch({ type: "motionStart", joint: activeJoint })
+                }
+              >
+                {moving ? <Square size={12} /> : <Play size={14} />}
+                {moving ? "Stop moving" : `Move the ${jointPhrase(activeJoint)}`}
+              </button>
+              <p className="subtle joint-note">
+                Muscles attached on both sides of the {jointPhrase(activeJoint)}, from the
+                attachment text. Aponeuroses and the iliotibial tract are not seen.
+              </p>
+            </>
+          )}
           <div className="section-label">
-            {filters.search ? "SEARCH RESULTS" : "STRUCTURE LIBRARY"} <span>{groups.length}</span>
+            {filters.search ? "MATCHES" : noun.toUpperCase()} <span>{groups.length}</span>
           </div>
           <div className="structure-list">
             {!groups.length ? (
@@ -265,9 +266,9 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
       )}
 
       <div className="layer-settings">
-        <div className="section-label">LAYER CONTROLS</div>
+        <div className="section-label">OPACITY</div>
         <label className="opacity-label">
-          {mode === "bones" ? "Bone" : "Muscle"} opacity <span>{opacity}%</span>
+          {mode === "bones" ? "Bones" : "Muscles"} <span>{opacity}%</span>
           <input
             type="range"
             min="10"
@@ -276,6 +277,18 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
             onChange={(e) => dispatch({ type: "setOpacity", opacity: +e.target.value })}
           />
         </label>
+        <div className="segmented names-toggle" role="group" aria-label="Structure names">
+          {(["english", "latin"] as NameLang[]).map((l) => (
+            <button
+              key={l}
+              aria-pressed={names === l}
+              className={names === l ? "active" : ""}
+              onClick={() => dispatch({ type: "setNames", names: l })}
+            >
+              {l === "english" ? "English names" : "Latin names"}
+            </button>
+          ))}
+        </div>
         <button
           className="text-button"
           disabled={!hidden.length && !isolated}
@@ -285,7 +298,7 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
         </button>
       </div>
       <button className="help-link" onClick={() => dispatch({ type: "setModal", modal: "guide" })}>
-        <CircleHelp size={16} /> A little help exploring <ArrowRight size={14} />
+        <CircleHelp size={16} /> Help <ArrowRight size={14} />
       </button>
     </aside>
   );

@@ -8,6 +8,7 @@ import {
   ListPlus,
   Pin,
   PinOff,
+  Play,
   X,
 } from "lucide-react";
 import { useState } from "react";
@@ -16,10 +17,10 @@ import { appliedNotesFor } from "../../data/applied";
 import { attachmentsFor } from "../../data/attachments";
 import { factsForWiki } from "../../data/facts";
 import { citationById, citationUrl } from "../../data/research";
-import { JOINT_LABELS, jointsCrossed } from "../../data/joints";
+import { jointPhrase, jointsCrossed } from "../../data/joints";
 import { lessons } from "../../data/lessons";
 import { lineKeys, lines } from "../../data/lines";
-import { displayName, secondaryName } from "../../data/names";
+import { displayName, prettyName, secondaryName } from "../../data/names";
 import { REGION_LABELS } from "../../data/regions";
 import { useStore } from "../../state/store";
 import { ATTACH_COLORS } from "../../viewer/appearance";
@@ -43,6 +44,15 @@ export default function DetailPanel({ describe, onToast }: Props) {
     .trim();
   const related = lines.filter((l) => lineKeys(l).has(part.key));
   const sideLabel = part.side === "left" ? "Left" : part.side === "right" ? "Right" : "Midline";
+  const meta = [
+    part.type[0].toUpperCase() + part.type.slice(1),
+    sideLabel,
+    REGION_LABELS[part.region],
+    part.group,
+    part.type === "muscle" ? `${part.layer} layer (approximate)` : undefined,
+  ]
+    .filter(Boolean)
+    .join(" · ");
   const factRows: [string, string | undefined][] = [
     ["ORIGIN", facts?.origin],
     ["INSERTION", facts?.insertion],
@@ -59,13 +69,12 @@ export default function DetailPanel({ describe, onToast }: Props) {
   const boneFor = (key: string) =>
     partForSide(key, part.side === "left" ? "left" : "right") ?? partsByKey(key)[0];
   const attributionUrl = facts?.url ?? part.wiki;
+  const secondary = secondaryName(part, state.names);
 
   return (
     <>
       <div className="detail-kicker">
-        <span className="tiny-tag">
-          {part.type} · {sideLabel} · {REGION_LABELS[part.region]}
-        </span>
+        <span className="tiny-tag">SELECTED</span>
         <button
           className="icon-button"
           aria-label="Clear selection"
@@ -75,11 +84,8 @@ export default function DetailPanel({ describe, onToast }: Props) {
         </button>
       </div>
       <h2 className="detail-title">{displayName(part, state.names)}</h2>
-      <p className="latin">
-        {secondaryName(part, state.names) ??
-          part.group ??
-          (part.type === "muscle" ? `${part.layer} layer (approximate)` : "")}
-      </p>
+      {secondary && <p className="latin">{secondary}</p>}
+      <p className="detail-meta">{meta}</p>
       <div className="detail-actions">
         <button className="outline-button" onClick={() => dispatch({ type: "toggleIsolate" })}>
           <Focus size={15} />
@@ -96,6 +102,16 @@ export default function DetailPanel({ describe, onToast }: Props) {
           {state.pinned.includes(part.id) ? <PinOff size={15} /> : <Pin size={15} />}
           {state.pinned.includes(part.id) ? "Unpin" : "Pin"}
         </button>
+        {attachments && (
+          <button
+            className="outline-button"
+            aria-pressed={state.attach}
+            onClick={() => dispatch({ type: "toggleAttach" })}
+            title="Light the origin bones blue and the insertion bones amber on the model"
+          >
+            <Bone size={15} /> {state.attach ? "Hide attachments" : "Show attachments"}
+          </button>
+        )}
         <button
           className="outline-button"
           onClick={() =>
@@ -127,7 +143,7 @@ export default function DetailPanel({ describe, onToast }: Props) {
         <>
           <p className="detail-copy">
             {lesson?.description ||
-              `Explore the ${part.name.toLowerCase()} in its anatomical position. Isolate this structure to inspect its shape, or hide it to reveal the structures beneath it.`}
+              `Explore the ${prettyName(part.name).toLowerCase()} in its anatomical position. Isolate this structure to inspect its shape, or hide it to reveal the structures beneath it.`}
           </p>
           {lesson && (
             <div className="facts">
@@ -169,17 +185,17 @@ export default function DetailPanel({ describe, onToast }: Props) {
                       <span className="attachment-label">{end === "origin" ? "Origin" : "Insertion"}</span>
                       {attachments[end].map((key) => {
                         const bone = boneFor(key);
+                        if (!bone) return null;
+                        const name = prettyName(bone.name);
                         return (
-                          bone && (
-                            <button
-                              key={key}
-                              className="attachment-chip"
-                              title={`Select the ${bone.name}`}
-                              onClick={() => dispatch({ type: "select", id: bone.id })}
-                            >
-                              {bone.name}
-                            </button>
-                          )
+                          <button
+                            key={key}
+                            className="attachment-chip"
+                            title={`Select the ${name.toLowerCase()}`}
+                            onClick={() => dispatch({ type: "select", id: bone.id })}
+                          >
+                            {name}
+                          </button>
                         );
                       })}
                     </div>
@@ -187,27 +203,32 @@ export default function DetailPanel({ describe, onToast }: Props) {
               )}
               {crossed.length > 0 && (
                 <div className="attachment-row">
-                  <span className="line-dot" style={{ background: "var(--border)" }} />
-                  <span className="attachment-label">Crosses</span>
                   {crossed.map((j) => (
-                    <button
-                      key={j}
-                      className="attachment-chip"
-                      title={`List every muscle crossing the ${JOINT_LABELS[j].toLowerCase()}`}
-                      onClick={() => dispatch({ type: "setFilters", filters: { joint: j, search: "" } })}
-                    >
-                      {JOINT_LABELS[j]}
-                    </button>
+                    <span className="chip-pair" key={j}>
+                      <button
+                        className="attachment-chip"
+                        title={`List every muscle crossing the ${jointPhrase(j)}`}
+                        onClick={() => dispatch({ type: "setFilters", filters: { joint: j, search: "" } })}
+                      >
+                        Crosses the {jointPhrase(j)}
+                      </button>
+                      <button
+                        className="attachment-chip move-it"
+                        title={`Move the ${jointPhrase(j)} and watch this muscle change length`}
+                        onClick={() =>
+                          dispatch({
+                            type: "motionStart",
+                            joint: j,
+                            side: part.side === "left" ? "left" : "right",
+                          })
+                        }
+                      >
+                        <Play size={11} /> Move it
+                      </button>
+                    </span>
                   ))}
                 </div>
               )}
-              <button
-                className="outline-button"
-                aria-pressed={state.attach}
-                onClick={() => dispatch({ type: "toggleAttach" })}
-              >
-                <Bone size={15} /> {state.attach ? "Hide on model" : "Show on model"}
-              </button>
               <p className="subtle">
                 Matched from the attachment text by bone name. Approximate.
                 {state.attach &&

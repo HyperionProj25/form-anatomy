@@ -114,7 +114,7 @@ function About({ onResearch }: { onResearch: () => void }) {
       <div className="eyebrow">BUILT ON OPEN KNOWLEDGE</div>
       <h2 id="modal-title">Anatomy for everyone.</h2>
       <p>
-        Form is a free student learning tool with no account required. The model represents one
+        Free, no account. Form is a student learning tool. The model represents one
         adult anatomy; individual anatomy varies.
       </p>
       <h3>3D anatomy & licensing</h3>

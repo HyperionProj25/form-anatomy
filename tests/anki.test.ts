@@ -12,7 +12,7 @@ describe("ankiTsv", () => {
     expect(lines.length).toBe(5);
     for (const line of lines.slice(3)) expect(line.split("\t").length).toBe(2);
     const [front, back] = lines[3].split("\t");
-    expect(front).toBe("Lateral Head Of Gastrocnemius");
+    expect(front).toBe("Lateral head of gastrocnemius");
     expect(back).toContain("<b>Origin</b>");
     expect(back).toContain("condyle");
     expect(back).toContain("?s=lateral-head-of-gastrocnemius-l");
@@ -24,12 +24,12 @@ describe("ankiTsv", () => {
   test("Latin mode puts the Latin name first with English beneath", () => {
     const gastro = partById("lateral-head-of-gastrocnemius-l")!;
     const [front] = ankiTsv([gastro], "latin").trimEnd().split("\n")[3].split("\t");
-    expect(front).toBe("Musculus gastrocnemius (lateral head)<br><i>Lateral Head Of Gastrocnemius</i>");
+    expect(front).toBe("Musculus gastrocnemius (lateral head)<br><i>Lateral head of gastrocnemius</i>");
   });
 
   test("escapes angle brackets and ampersands in facts", () => {
     const part = { ...partById("femur-l")!, wiki: undefined, name: "A & B <c>" };
     const text = ankiTsv([part], "english");
-    expect(text).toContain("A &amp; B &lt;c&gt;");
+    expect(text).toContain("A &amp; b &lt;c&gt;");
   });
 });

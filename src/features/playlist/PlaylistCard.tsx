@@ -1,14 +1,23 @@
-import { ChevronLeft, ChevronRight, ListMusic, Play, Printer, Square, X } from "lucide-react";
+import {
+  ChevronDown,
+  ChevronLeft,
+  ChevronRight,
+  ListMusic,
+  Play,
+  Printer,
+  Square,
+  X,
+} from "lucide-react";
 import { useEffect } from "react";
 import { partById } from "../../data/catalog";
 import { displayName } from "../../data/names";
 import { MAX_PLAYLIST, MAX_PLAYLIST_TITLE, useStore } from "../../state/store";
 import CopyLink from "../shared/CopyLink";
 
-type Props = { onToast: (message: string) => void };
+type Props = { onToast: (message: string) => void; onCollapse?: () => void };
 
-/** A teacher's ordered list of structures, drawn over the stage. The URL carries the whole list. */
-export default function PlaylistCard({ onToast }: Props) {
+/** A teacher's ordered list of structures, in the stage dock. The URL carries the whole list. */
+export default function PlaylistCard({ onToast, onCollapse }: Props) {
   const { state, dispatch } = useStore();
   const playlist = state.playlist;
   const step = playlist?.step ?? null;
@@ -46,14 +55,21 @@ export default function PlaylistCard({ onToast }: Props) {
           maxLength={MAX_PLAYLIST_TITLE}
           onChange={(e) => dispatch({ type: "playlistTitle", title: e.target.value })}
         />
-        <button
-          className="icon-button"
-          aria-label="Clear playlist"
-          title="Remove every structure from the playlist"
-          onClick={() => dispatch({ type: "playlistClear" })}
-        >
-          <X size={14} />
-        </button>
+        <span className="card-buttons">
+          {onCollapse && (
+            <button className="icon-button" aria-label="Fold the playlist card" onClick={onCollapse}>
+              <ChevronDown size={14} />
+            </button>
+          )}
+          <button
+            className="icon-button"
+            aria-label="Clear playlist"
+            title="Remove every structure from the playlist"
+            onClick={() => dispatch({ type: "playlistClear" })}
+          >
+            <X size={14} />
+          </button>
+        </span>
       </div>
       <ol className="playlist-items">
         {playlist.ids.map((id, i) => {

@@ -1,13 +1,16 @@
-import { Activity, Pause, Play, X } from "lucide-react";
+import { Activity, ChevronDown, Pause, Play, X } from "lucide-react";
 import { JOINT_LABELS } from "../../data/joints";
 import { cableRoles, type MotionSetup, type MotionSide } from "../../data/motion";
+import { prettyName } from "../../data/names";
 import { useStore } from "../../state/store";
 
 const SHORTEN = "#f2a531";
 const LENGTHEN = "#3d8bff";
 
-/** Controls and the shortening/lengthening readout for a rigid joint motion, drawn over the stage. */
-export default function MotionCard({ setup }: { setup: MotionSetup | null }) {
+type Props = { setup: MotionSetup | null; onCollapse?: () => void };
+
+/** Controls and the shortening/lengthening readout for a joint motion, in the stage dock. */
+export default function MotionCard({ setup, onCollapse }: Props) {
   const { state, dispatch } = useStore();
   const m = state.motion;
   if (!m || !setup) return null;
@@ -15,7 +18,7 @@ export default function MotionCard({ setup }: { setup: MotionSetup | null }) {
   const degrees = Math.round(setup.range[0] + (setup.range[1] - setup.range[0]) * m.phase);
   const names = (list: typeof roles.shortens) => {
     if (!list.length) return "none matched";
-    const shown = list.slice(0, 5).map((c) => c.name.replace(/ Muscle$/, ""));
+    const shown = list.slice(0, 5).map((c) => prettyName(c.name));
     const more = list.length - shown.length;
     return shown.join(", ") + (more > 0 ? ` and ${more} more` : "");
   };
@@ -28,13 +31,20 @@ export default function MotionCard({ setup }: { setup: MotionSetup | null }) {
           {setup.label}
           {setup.joint !== "tmj" && ` · ${m.side}`}
         </strong>
-        <button
-          className="icon-button"
-          aria-label="Stop the joint animation"
-          onClick={() => dispatch({ type: "motionStop" })}
-        >
-          <X size={14} />
-        </button>
+        <span className="card-buttons">
+          {onCollapse && (
+            <button className="icon-button" aria-label="Fold the motion card" onClick={onCollapse}>
+              <ChevronDown size={14} />
+            </button>
+          )}
+          <button
+            className="icon-button"
+            aria-label="Stop moving the joint"
+            onClick={() => dispatch({ type: "motionStop" })}
+          >
+            <X size={14} />
+          </button>
+        </span>
       </div>
       <div className="motion-controls">
         <button

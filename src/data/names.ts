@@ -16,6 +16,24 @@ for (const p of parts) {
 }
 
 /**
+ * A catalog name for reading: the "Muscle" suffix goes and title case becomes sentence case.
+ * "Soleus Muscle" -> "Soleus"; "Lateral Head Of Gastrocnemius" -> "Lateral head of gastrocnemius";
+ * "Opponens Digiti Minimi Muscle Of Hand" -> "Opponens digiti minimi of hand". Tokens with a
+ * digit ("T5", "(C1)") keep their case.
+ */
+export function prettyName(name: string): string {
+  const base = name.replace(/\s+Muscle$/i, "").replace(/\s+Muscle\s+Of\s+/i, " of ") || name;
+  return base
+    .split(" ")
+    .map((token, i) => {
+      if (!token || /\d/.test(token)) return token;
+      const lower = token.toLowerCase();
+      return i === 0 ? lower[0].toUpperCase() + lower.slice(1) : lower;
+    })
+    .join(" ");
+}
+
+/**
  * English qualifier for a part whose Latin label is shared: "lateral head", "descending part",
  * "T5", or the whole English name when it has no "… of …" shape.
  */
@@ -39,14 +57,14 @@ export function latinName(part: CatalogPart): string | undefined {
 
 /** Primary label in the chosen language, falling back to English when no Latin label exists. */
 export function displayName(part: CatalogPart, lang: NameLang): string {
-  if (lang === "latin") return latinName(part) ?? part.name;
-  return part.name;
+  if (lang === "latin") return latinName(part) ?? prettyName(part.name);
+  return prettyName(part.name);
 }
 
 /** The other language's name when it differs from the primary label, else undefined. */
 export function secondaryName(part: CatalogPart, lang: NameLang): string | undefined {
   const primary = displayName(part, lang);
-  const other = lang === "latin" ? part.name : latinName(part);
+  const other = lang === "latin" ? prettyName(part.name) : latinName(part);
   return other && other !== primary ? other : undefined;
 }
 

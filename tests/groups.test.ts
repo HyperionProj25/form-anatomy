@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { filterParts, groupParts } from "../src/data/groups";
+import { filterParts, firstMatch, groupParts } from "../src/data/groups";
 import { parts } from "../src/data/catalog";
 import { initialState } from "../src/state/store";
 
@@ -40,5 +40,18 @@ describe("filterParts", () => {
   test("layer filter is ignored in bones mode", () => {
     const bones = filterParts(parts, "bones", { ...f, layer: "deep" });
     expect(bones.length).toBeGreaterThan(100);
+  });
+});
+
+describe("firstMatch", () => {
+  const f = initialState.filters;
+  test("prefers a name that starts with the search text, else the first listed; empty search matches nothing", () => {
+    const pect = groupParts(filterParts(parts, "muscles", { ...f, search: "pect" }));
+    expect(pect[0].name).not.toMatch(/^Pect/);
+    expect(firstMatch(pect, "pect")?.name).toMatch(/^Pect/);
+    const gastro = groupParts(filterParts(parts, "muscles", { ...f, search: "gastrocnemius" }));
+    expect(firstMatch(gastro, "gastrocnemius")?.name).toBe(gastro[0].name);
+    expect(firstMatch(gastro, "")).toBeUndefined();
+    expect(firstMatch([], "zzz")).toBeUndefined();
   });
 });

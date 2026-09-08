@@ -1,6 +1,13 @@
 import { describe, expect, test } from "vitest";
 import { parts } from "../src/data/catalog";
-import { displayName, latinName, loadNamePref, saveNamePref, secondaryName } from "../src/data/names";
+import {
+  displayName,
+  latinName,
+  loadNamePref,
+  prettyName,
+  saveNamePref,
+  secondaryName,
+} from "../src/data/names";
 
 function fakeStorage(): Storage {
   const m = new Map<string, string>();
@@ -16,6 +23,22 @@ function fakeStorage(): Storage {
   };
 }
 
+describe("prettyName", () => {
+  test("drops the Muscle suffix and title case; tokens with digits keep their case", () => {
+    expect(prettyName("Soleus Muscle")).toBe("Soleus");
+    expect(prettyName("Lateral Head Of Gastrocnemius")).toBe("Lateral head of gastrocnemius");
+    expect(prettyName("Opponens Digiti Minimi Muscle Of Hand")).toBe("Opponens digiti minimi of hand");
+    expect(prettyName("Vertebra T5")).toBe("Vertebra T5");
+    expect(prettyName("Rectus Capitis Posterior Major (C1)")).toBe("Rectus capitis posterior major (C1)");
+    expect(prettyName("Thyro-Arytenoid Muscle")).toBe("Thyro-arytenoid");
+    expect(prettyName("Femur")).toBe("Femur");
+  });
+
+  test("every catalog name keeps something to show", () => {
+    for (const p of parts) expect(prettyName(p.name).length).toBeGreaterThan(0);
+  });
+});
+
 describe("names", () => {
   const gastro = parts.find((p) => p.key === "lateral-head-of-gastrocnemius")!;
   const femur = parts.find((p) => p.key === "femur")!;
@@ -27,15 +50,15 @@ describe("names", () => {
     expect(latinName(noWiki)).toBeUndefined();
   });
 
-  test("displayName falls back to English and secondaryName shows the other language", () => {
-    expect(displayName(gastro, "english")).toBe("Lateral Head Of Gastrocnemius");
+  test("displayName reads in sentence case and secondaryName shows the other language", () => {
+    expect(displayName(gastro, "english")).toBe("Lateral head of gastrocnemius");
     expect(displayName(gastro, "latin")).toBe("Musculus gastrocnemius (lateral head)");
-    expect(secondaryName(gastro, "latin")).toBe("Lateral Head Of Gastrocnemius");
+    expect(secondaryName(gastro, "latin")).toBe("Lateral head of gastrocnemius");
     expect(secondaryName(gastro, "english")).toBe("Musculus gastrocnemius (lateral head)");
-    expect(displayName(noWiki, "latin")).toBe(noWiki.name);
+    expect(displayName(noWiki, "latin")).toBe(prettyName(noWiki.name));
     expect(secondaryName(noWiki, "latin")).toBeUndefined();
     expect(secondaryName(femur, "latin")).toBe("Femur");
-    const same = parts.find((p) => latinName(p) === p.name);
+    const same = parts.find((p) => latinName(p) === prettyName(p.name));
     if (same) expect(secondaryName(same, "latin")).toBeUndefined(); // identical in both languages
   });
 

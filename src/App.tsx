@@ -1,14 +1,4 @@
-import {
-  Activity,
-  ArrowRight,
-  BookOpen,
-  Layers,
-  Maximize2,
-  Move,
-  RotateCcw,
-  ZoomIn,
-  ZoomOut,
-} from "lucide-react";
+import { Activity, ArrowRight, BookOpen, ListMusic, Maximize2, Move, Search } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { partById, parts } from "./data/catalog";
 import { attachmentIds } from "./data/attachments";
@@ -34,7 +24,9 @@ import Modals from "./features/guide/Modals";
 import QuizOverlay from "./features/quiz/QuizOverlay";
 import { buildSet, mulberry32, type QuizSetId } from "./features/quiz/generators";
 import { loadProgress, weakSpots } from "./features/quiz/progress";
+import { DockStrip, foldedAfter, type DockCardId } from "./features/shared/Dock";
 import Toast from "./features/shared/Toast";
+import StageToolbar from "./features/stage/StageToolbar";
 import { ensureModelCached, shouldAnnounceOffline } from "./offline";
 
 export default function App() {
@@ -44,6 +36,8 @@ export default function App() {
     </StoreProvider>
   );
 }
+
+const splitIds = (key: string) => (key ? (key.split(",") as DockCardId[]) : []);
 
 function Shell() {
   const { state, dispatch } = useStore();
@@ -202,6 +196,26 @@ function Shell() {
   const tourNext = tourStop && state.tour ? activeLine.path[state.tour.step + 1] : undefined;
   const cinematic = !!tourStop && !!state.tour?.playing;
 
+  // The dock: quiz, motion and playlist cards bottom-left. A card that just opened shows in full
+  // and folds the others to strips; the user can fold or expand any of them.
+  const activeKey = [state.quiz ? "quiz" : "", state.motion ? "motion" : "", state.playlist ? "playlist" : ""]
+    .filter(Boolean)
+    .join(",");
+  const [dock, setDock] = useState<{ key: string; folded: DockCardId[] }>({ key: "", folded: [] });
+  if (dock.key !== activeKey)
+    setDock({ key: activeKey, folded: foldedAfter(splitIds(dock.key), splitIds(activeKey), dock.folded) });
+  const folded = new Set(dock.folded);
+  const fold = (id: DockCardId, on: boolean) =>
+    setDock((d) => ({
+      ...d,
+      folded: on ? [...new Set([...d.folded, id])] : d.folded.filter((x) => x !== id),
+    }));
+  const quizLabel = state.quiz
+    ? state.quiz.index >= state.quiz.questions.length
+      ? "Quiz results"
+      : `Quiz · ${state.quiz.index + 1} of ${state.quiz.questions.length}`
+    : "";
+
   return (
     <div className="app-shell">
       <header className="topbar">
@@ -233,29 +247,17 @@ function Shell() {
           >
             Fascial lines
           </button>
-          <button onClick={() => dispatch({ type: "setModal", modal: "research" })}>
+          <button className="nav-extra" onClick={() => dispatch({ type: "setModal", modal: "research" })}>
             Research
           </button>
-          <button onClick={() => dispatch({ type: "setModal", modal: "guide" })}>
-            Learning guide <ArrowRight size={14} />
+          <button onClick={() => dispatch({ type: "setModal", modal: "quiz" })}>
+            <BookOpen size={14} /> Quiz
+          </button>
+          <button className="nav-extra" onClick={() => dispatch({ type: "setModal", modal: "guide" })}>
+            Help
           </button>
         </nav>
-        <span className="free-badge">
-          <span /> Free for every curious mind
-        </span>
       </header>
-      <div className="intro">
-        <div>
-          <div className="eyebrow">THE INTERACTIVE HUMAN ATLAS</div>
-          <h1>
-            Understand the body.<em> See the connections.</em>
-          </h1>
-          <p>Explore beneath the surface. Discover how anatomy works together.</p>
-        </div>
-        <button className="outline-button" onClick={() => dispatch({ type: "setModal", modal: "quiz" })}>
-          <BookOpen size={16} /> Test your knowledge <ArrowRight size={15} />
-        </button>
-      </div>
       <main className="workspace">
         <LibraryPanel mobileOpen={mobilePanel} onCloseMobile={() => setMobilePanel(false)} />
         <section
@@ -287,13 +289,21 @@ function Shell() {
           {state.mode === "muscles" && state.filters.layer === "deep" && (
             <div className="stage-caption">Surface layer peeled · approximate</div>
           )}
+          {state.mode === "fascia" && (
+            <div className="stage-caption line-caption">
+              <span className="line-dot" style={{ background: activeLine.color }} />
+              {activeLine.name}
+              <small>Teaching path through structure centres, not a fascial sheet.</small>
+              <button className="text-button" onClick={() => dispatch({ type: "togglePath" })}>
+                {state.showPath ? "Hide path" : "Show path"}
+              </button>
+            </div>
+          )}
           <button className="mobile-layers outline-button" onClick={() => setMobilePanel(true)}>
-            <Layers size={15} /> Layers & search
+            <Search size={15} /> Find a structure
           </button>
           <div className="stage-left">
             <PinLegend />
-            <MotionCard setup={motion} />
-            <PlaylistCard onToast={showToast} />
           </div>
           <Viewer
             styles={styles}
@@ -326,22 +336,6 @@ function Shell() {
             </div>
             <span>I</span>
           </div>
-          <div className="view-tools">
-            <button className="icon-button" onClick={() => handle.current?.zoom(0.8)} aria-label="Zoom in">
-              <ZoomIn size={19} />
-            </button>
-            <button className="icon-button" onClick={() => handle.current?.zoom(1.25)} aria-label="Zoom out">
-              <ZoomOut size={19} />
-            </button>
-            <span />
-            <button
-              className="icon-button"
-              onClick={() => dispatch({ type: "reset" })}
-              aria-label="Reset anatomy view"
-            >
-              <RotateCcw size={18} />
-            </button>
-          </div>
           {tourStop && state.tour && (
             <div className="tour-caption" key={state.tour.step} aria-hidden="true">
               <span className="tour-caption-kicker">
@@ -357,37 +351,48 @@ function Shell() {
               )}
             </div>
           )}
-          {state.mode === "fascia" && (
-            <div className="line-legend">
-              <span className="line-dot" style={{ background: activeLine.color }} />
-              {activeLine.name}
-              <small>Teaching path drawn through structure centers. Not a fascial sheet.</small>
-              <button className="text-button" onClick={() => dispatch({ type: "togglePath" })}>
-                {state.showPath ? "Hide path" : "Show path"}
-              </button>
-            </div>
-          )}
-          <div className="stage-bottom">
-            <div className="view-selector" role="group" aria-label="Camera view">
-              {(["front", "back", "side"] as const).map((v) => (
-                <button
-                  className={state.view === v ? "active" : ""}
-                  aria-pressed={state.view === v}
-                  onClick={() => dispatch({ type: "setView", view: v })}
-                  key={v}
-                >
-                  {v === "front" ? "Anterior" : v === "back" ? "Posterior" : "Lateral"}
-                </button>
+          <div className="dock">
+            {state.quiz &&
+              (folded.has("quiz") ? (
+                <DockStrip
+                  icon={<BookOpen size={14} />}
+                  label={quizLabel}
+                  onExpand={() => fold("quiz", false)}
+                />
+              ) : (
+                <QuizOverlay onStart={startQuiz} onCollapse={() => fold("quiz", true)} />
               ))}
-            </div>
+            {state.motion &&
+              motion &&
+              (folded.has("motion") ? (
+                <DockStrip
+                  icon={<Activity size={14} />}
+                  label={motion.joint === "tmj" ? motion.label : `${motion.label} · ${state.motion.side}`}
+                  onExpand={() => fold("motion", false)}
+                />
+              ) : (
+                <MotionCard setup={motion} onCollapse={() => fold("motion", true)} />
+              ))}
+            {state.playlist &&
+              (folded.has("playlist") ? (
+                <DockStrip
+                  icon={<ListMusic size={14} />}
+                  label={`${state.playlist.title || "Playlist"} · ${state.playlist.ids.length}`}
+                  onExpand={() => fold("playlist", false)}
+                />
+              ) : (
+                <PlaylistCard onToast={showToast} onCollapse={() => fold("playlist", true)} />
+              ))}
+          </div>
+          <div className="stage-bottom">
+            <StageToolbar onZoom={(f) => handle.current?.zoom(f)} />
             <span className="interaction-hint">
               <Move size={13} /> Drag to rotate <span>·</span> Scroll to zoom <span>·</span> Click to
               explore
             </span>
           </div>
-          <QuizOverlay onStart={startQuiz} />
         </section>
-        <aside className="right-panel" aria-label="Structure details">
+        <aside className="right-panel" aria-label="Selected structure">
           {state.selected ? (
             <DetailPanel
               describe={(id) => (ready ? handle.current?.description(id) : undefined)}
@@ -406,7 +411,7 @@ function Shell() {
           connection.
         </span>
         <div>
-          <span>Open anatomy. Open access.</span>
+          <span>Free, no account. Open anatomy, open access.</span>
           <a
             href="https://github.com/HyperionProj25/form-anatomy/issues"
             target="_blank"

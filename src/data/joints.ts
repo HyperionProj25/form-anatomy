@@ -108,3 +108,8 @@ export function musclesCrossing(joint: JointId): string[] {
   }
   return out.sort((a, b) => a.name.localeCompare(b.name)).map((p) => p.key);
 }
+
+/** "Jaw (TMJ)" -> "jaw (TMJ)", for sentences such as "Move the jaw (TMJ)". */
+export function jointPhrase(joint: JointId): string {
+  return JOINT_LABELS[joint].replace(/^[A-Z]/, (c) => c.toLowerCase());
+}
