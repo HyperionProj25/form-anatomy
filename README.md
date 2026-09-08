@@ -22,13 +22,17 @@ Open the Local URL the server prints (it includes the `/form-anatomy/` path).
     npm test
     npm run build
     npm run verify:citations
+    npm run check:contrast
 
 `npm run preview` serves the production build locally, including the service
 worker (the dev server does not register it). The citation check needs
 network access; it resolves every reference in `src/data/research.ts`
 against PubMed and doi.org and fails if any cannot be found. `npm run icons`
 regenerates the PWA icons from the favicon geometry without any image
-library.
+library. `npm run check:contrast` serves the built site to headless Chrome,
+injects axe-core and fails on any colour-contrast violation at 1440×900 and
+375×812; it needs a Chrome or Chromium binary (set `CHROME_PATH` if none of
+the usual paths exist) and runs in CI after the build.
 
 ## Data files
 
@@ -55,8 +59,10 @@ checks without deploying.
 - Locally bundled Z-Anatomy GLB with 826 individually selectable mesh parts
   (439 muscle, 269 bone, 118 connective). Left and right copies are grouped,
   so the library lists each structure once with a side toggle.
-- Browse by body region, approximate layer (superficial or deep) and side, or
-  search by name.
+- Find a structure: search by name (Enter selects the first match), or filter
+  by region, side and the joint a muscle crosses. Layer lives in the stage
+  toolbar: Deep peels the surface muscles to a ghost so the deep layer shows,
+  with a caption that says the layering is approximate.
 - Origin, insertion, action, innervation and antagonist for most muscles, and
   articulations for bones, sourced from Wikipedia infoboxes at build time
   (CC BY-SA 4.0, attributed in the panel), plus the model's own descriptions
@@ -95,7 +101,8 @@ checks without deploying.
   crosses.
 - Anki export: any playlist or study set downloads as a tab-separated deck,
   one card per structure with its facts and a link back to the atlas.
-- Joint motion: animate the jaw, shoulder, elbow, wrist, hip, knee or ankle.
+- Joint motion: move the jaw, shoulder, elbow, wrist, hip, knee or ankle from
+  the stage toolbar, the joint filter, or a muscle's "Move it" chip.
   The distal bones rotate rigidly about a joint centre measured from the
   mesh (epicondyles, condyles, femoral and humeral heads, malleoli), and the
   muscles that cross the joint bend, shorten and bulge: each is re-skinned
@@ -132,8 +139,14 @@ checks without deploying.
   through any mode, filter or hidden layer.
 - Works offline after the first visit and installs as an app. The 8 MB model
   is cached on first use so later visits open instantly.
+- The model is the page: a dark slate stage with cyan-teal selection, blue
+  origin and amber insertion bones, and compare pins that survive
+  colour-blindness; the workspace fills the viewport, the quiz, motion and
+  playlist cards share a dock that folds to strips, and caveats are chips
+  ("Teaching model", "Approximate") that expand in place. Under a
+  reduced-motion preference the motion card and tour say what is off.
 - Responsive layout and keyboard-accessible controls, with an axe-core
-  accessibility test in the suite and text colours that meet WCAG contrast.
+  accessibility test in the suite and a real-browser contrast check in CI.
 - A [pilot guide](docs/pilot-guide.md): a twenty-minute session plan and four
   questions for running the atlas with a class.
 

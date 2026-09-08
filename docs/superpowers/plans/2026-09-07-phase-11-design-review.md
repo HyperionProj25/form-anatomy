@@ -48,4 +48,4 @@
 
 ### Task 5: Docs, deploy
 
-- [ ] README and guide; plan ticked; remaining issues (11, 14, 15) filed on GitHub. Commit, push, watch CI, verify live. Update memory.
+- [x] README and guide; plan ticked; remaining issues (11, 14, 15) filed on GitHub. Commit, push, watch CI, verify live. Update memory.

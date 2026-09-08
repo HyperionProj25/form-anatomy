@@ -16,9 +16,9 @@ hesitate; that is the feedback.
 1. **Find a structure.** Find the soleus. Then find it a second way (search
    box, region filter, or clicking the model). Which was faster?
 2. **Run a study set.** On the start panel, open "Rotator cuff". Step through
-   all four with the arrow keys. Turn on "Show on model" in the attachments
+   all four with the arrow keys. Turn on "Show attachments" in the action row above the tabs
    block for one of them.
-3. **Take a quiz.** "Test your knowledge", pick a region you are studying, and
+3. **Take a quiz.** Open "Quiz" in the top bar, pick a region you are studying, and
    finish ten questions. Look at the weak spots it records.
 4. **Follow a fascial line.** Switch to Fascia, choose the superficial back
    line, start the tour, and read one evidence badge. Say in one sentence what
