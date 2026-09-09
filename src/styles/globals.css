@@ -2987,3 +2987,7 @@ button.start-point:hover {
     position: static;
   }
 }
+
+.graphics-label {
+  margin-top: 12px;
+}

@@ -939,3 +939,59 @@ to see; he wants the motion smooth and clear.
   selected gastrocnemius, the superficial back line, and the jaw with lines
   of action; the contrast check and the test suite pass; live check in
   Chrome.
+
+## 15. Phase 13 addendum: graphics, tiers A and B (2026-09-08)
+
+Chase: "upgrade the graphics in its entirety … tier A and full tier B, I
+want this to look great." Tier C (a higher-resolution model) stays on hold
+until pilot students ask for finer shapes.
+
+### 15.1 Quality levels
+
+- A graphics preference, Auto · High · Low, in the left-panel foot, stored in
+  `localStorage` `form.graphics.v1`, not in the URL (`?gfx=high|low` is a
+  testing override). Low is the renderer as shipped in phase 12: forward
+  rendering, no post-processing, pixel ratio up to 2. High adds everything
+  below at pixel ratio up to 1.5.
+- Auto picks High unless the system prefers reduced motion, the pointer is
+  coarse and the viewport narrow (a phone), the GPU reports a software
+  renderer, or the device has fewer than four cores or under 4 GB. After the
+  model loads, Auto also meters the first three seconds of frames and drops
+  to Low with a toast if the average frame exceeds 28 ms.
+
+### 15.2 Tier A: materials and light (High)
+
+- Post-processing chain: render, ground-truth ambient occlusion (GTAO,
+  radius 0.25 model units, blend 0.9), bloom (threshold 1.0, strength 0.35,
+  radius 0.4; only HDR-bright pixels bloom, which is the selection halo at
+  twice brightness), output (ACES, sRGB), a grade pass (vignette, mild
+  contrast and saturation, alpha preserved so the CSS stage shows through)
+  and SMAA anti-aliasing. The bloom composite keeps alpha so glow over the
+  empty stage has no dark fringe.
+- Tissue materials: muscles become physical materials with sheen and a
+  light clearcoat, fibre striations bumped along each muscle's principal
+  axis in its own shader (amplitude 0.35, spacing about 3.5 mm), and a ±3 %
+  tint by id so the mass does not read as one plastic. Bones: roughness
+  0.62, warm. Connective parts: glossy, roughness 0.3, pale. Low keeps the
+  standard materials.
+- Shadows: the key light casts a 2048 px soft shadow onto a shadow-catching
+  floor and onto the body; the shadow map re-renders only when appearance
+  or pose changes, not on camera moves.
+- Selection: the cyan halo is written at HDR brightness so it blooms into a
+  soft glow; the mesh tint stays as in phase 12.
+
+### 15.3 Tier B: cinematics (High)
+
+- Tours: depth of field (bokeh) focused on the stop while the tour plays, a
+  slow dolly from 1.08× to 1.0× of the framing distance over each stop, and
+  a stronger vignette in cinematic.
+- Floor reflection: a mirror plane under the feet rendered at 512 px, faded
+  with distance from the contact and tinted to the slate; it re-renders only
+  when the camera or appearance changes.
+
+### 15.4 Verification
+
+- Headless SwiftShader renders at 1440×900 (home, a selection, a tour stop,
+  the knee motion) at High and Low; frame times in real Chrome at High and
+  Low; the contrast check, the test suite and the a11y test pass; live
+  check after deploy.

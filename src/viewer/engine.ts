@@ -3,6 +3,17 @@ import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { DRACOLoader } from "three/addons/loaders/DRACOLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 import { RoomEnvironment } from "three/addons/environments/RoomEnvironment.js";
+import { createFloor, type Floor } from "./floor";
+import { principalAxis, richMaterial, standardMaterial, tissueOf } from "./materials";
+import type { Pipeline } from "./post";
+import {
+  decideGraphics,
+  FrameMeter,
+  readSignals,
+  shouldDowngrade,
+  type GraphicsLevel,
+  type RenderLevel,
+} from "./quality";
 import type { PartStyle } from "./appearance";
 import type { Vec3 } from "../data/types";
 
@@ -19,6 +30,8 @@ export type EngineHandlers = {
   onCameraChange(pose: CameraPose): void;
   /** Fires a few times a second while a joint motion plays, with the current phase 0..1. */
   onMotionPhase?(phase: number): void;
+  /** Auto graphics dropped to Low after measuring slow frames. */
+  onGraphicsAuto?(level: RenderLevel): void;
 };
 
 /**
@@ -77,21 +90,37 @@ const BULGE_VERTEX = `
 }`;
 
 function addBulge(material: THREE.MeshStandardMaterial, uniforms: BulgeUniforms): void {
-  material.onBeforeCompile = (shader) => {
+  // Chain after any look the material already injects (fibre striations at High).
+  const base = material.userData.baseCompile as THREE.Material["onBeforeCompile"] | undefined;
+  const baseKey = typeof material.userData.baseKey === "string" ? material.userData.baseKey : "";
+  material.onBeforeCompile = (shader, renderer) => {
+    base?.(shader, renderer);
     Object.assign(shader.uniforms, uniforms);
     shader.vertexShader =
       "uniform vec3 uAxisOrigin;\nuniform vec3 uAxisDir;\nuniform float uBulge;\nuniform float uShorten;\n" +
       shader.vertexShader.replace("#include <begin_vertex>", "#include <begin_vertex>" + BULGE_VERTEX);
   };
-  material.customProgramCacheKey = () => "bulge";
+  material.customProgramCacheKey = () => "bulge" + baseKey;
   material.needsUpdate = true;
 }
 
 function removeBulge(material: THREE.MeshStandardMaterial): void {
-  material.onBeforeCompile = () => {};
-  material.customProgramCacheKey = () => "";
+  const base = material.userData.baseCompile as THREE.Material["onBeforeCompile"] | undefined;
+  const baseKey = typeof material.userData.baseKey === "string" ? material.userData.baseKey : "";
+  material.onBeforeCompile = base ?? (() => {});
+  material.customProgramCacheKey = () => baseKey;
   material.needsUpdate = true;
 }
+
+/** Stable per-part seed for material variation. */
+function hashOf(s: string): number {
+  let h = 2166136261;
+  for (let i = 0; i < s.length; i++) h = Math.imul(h ^ s.charCodeAt(i), 16777619);
+  return h >>> 0;
+}
+
+/** Duration of the slow dolly after a cinematic flight. */
+const DOLLY_MS = 6000;
 
 /** Smooth 0..1 ramp across a band; the same shape src/data/motion.ts uses for the belly. */
 function bandWeight(signedDistance: number, band: number): number {
@@ -202,6 +231,20 @@ export class AnatomyEngine {
   private pending = new Set<string>();
   private hoverId: string | null = null;
   private initialized = false;
+  private level: RenderLevel = "low";
+  private pref: GraphicsLevel = "auto";
+  private pipeline: Pipeline | null = null;
+  private pipelineLoading = false;
+  private floor: Floor | null = null;
+  private key: THREE.DirectionalLight;
+  private axes = new Map<string, THREE.Vector3>();
+  private shadowDirty = true;
+  private meter: FrameMeter | null = null;
+  private cinematic = false;
+  private focusTarget: THREE.Vector3 | null = null;
+  private dolly: { start: number; from: number; to: number } | null = null;
+  private modelBox: THREE.Box3 | null = null;
+  private typeById: Map<string, string>;
   private reduced: boolean;
 
   constructor(
@@ -209,7 +252,9 @@ export class AnatomyEngine {
     private nodeToId: Map<string, string>,
     private modelCenter: Vec3,
     private handlers: EngineHandlers,
+    typeById: Map<string, string> = new Map(),
   ) {
+    this.typeById = typeById;
     this.reduced =
       typeof window.matchMedia === "function" &&
       window.matchMedia("(prefers-reduced-motion: reduce)").matches;
@@ -239,6 +284,7 @@ export class AnatomyEngine {
     this.controls.autoRotateSpeed = 0.5;
     this.controls.addEventListener("start", this.cancelAnimation);
     this.controls.addEventListener("end", this.scheduleCameraChange);
+    this.controls.addEventListener("change", this.markReflection);
 
     // Image-based light from a neutral room gives soft reflections; direct lights carry the shape.
     const pmrem = new THREE.PMREMGenerator(this.renderer);
@@ -247,6 +293,18 @@ export class AnatomyEngine {
     this.scene.add(new THREE.HemisphereLight(0xffffff, 0x8e8173, 0.7));
     const key = new THREE.DirectionalLight(0xfff4e8, 1.9);
     key.position.set(-3, 4, 5);
+    key.shadow.mapSize.set(2048, 2048);
+    key.shadow.bias = -0.0004;
+    key.shadow.normalBias = 0.015;
+    key.shadow.radius = 3;
+    key.shadow.camera.left = -1.3;
+    key.shadow.camera.right = 1.3;
+    key.shadow.camera.top = 1.3;
+    key.shadow.camera.bottom = -1.3;
+    key.shadow.camera.near = 4;
+    key.shadow.camera.far = 11;
+    key.shadow.camera.updateProjectionMatrix();
+    this.key = key;
     const fill = new THREE.DirectionalLight(0xe0ecf3, 0.7);
     fill.position.set(3, 1, -4);
     const rim = new THREE.DirectionalLight(0xffffff, 1.1);
@@ -295,14 +353,7 @@ export class AnatomyEngine {
           if (!(o instanceof THREE.Mesh)) return;
           const id = idBySanitized.get(o.name);
           const original = Array.isArray(o.material) ? o.material[0] : o.material;
-          const bone = o.userData.type === "bone";
-          o.material = new THREE.MeshStandardMaterial({
-            color: bone ? 0xe0d3b7 : 0xa35b4c,
-            roughness: bone ? 0.72 : 0.55,
-            metalness: 0,
-            envMapIntensity: 0.32,
-            side: THREE.DoubleSide,
-          });
+          o.material = standardMaterial(tissueOf(this.typeById.get(id ?? "") ?? o.userData.type));
           original.dispose();
           if (!id) {
             console.warn("Mesh not in catalog:", o.name);
@@ -314,6 +365,9 @@ export class AnatomyEngine {
             this.descriptionsById.set(id, o.userData.description);
         });
         this.addGroundShadow(box);
+        this.modelBox = box;
+        this.applyLevel();
+        if (this.pref === "auto" && this.level === "high") this.meter = new FrameMeter();
         this.handlers.onReady();
       },
       (event) => {
@@ -359,6 +413,7 @@ export class AnatomyEngine {
       this.pending.add(id);
     }
     this.initialized = true;
+    this.shadowDirty = true;
   }
 
   /** Show or hide the lines of action drawn during a joint motion. */
@@ -395,6 +450,140 @@ export class AnatomyEngine {
     this.pulse = { id: pulse.id, uniforms };
   }
 
+  /** Choose the graphics level; Auto decides from the device and may later back off to Low. */
+  setGraphics(pref: GraphicsLevel): void {
+    this.pref = pref;
+    const level: RenderLevel =
+      pref === "auto" ? decideGraphics(readSignals(this.renderer.getContext())) : pref;
+    this.meter = this.model && pref === "auto" && level === "high" ? new FrameMeter() : null;
+    if (level === this.level) return;
+    this.level = level;
+    this.applyLevel();
+  }
+
+  /** Depth of field and a slow dolly while a tour plays, focused on the part with `focusId`. */
+  setCinematic(on: boolean, focusId: string | null): void {
+    this.cinematic = on;
+    const mesh = focusId ? this.meshes.get(focusId) : undefined;
+    if (mesh) {
+      mesh.geometry.computeBoundingBox();
+      this.focusTarget = mesh.geometry
+        .boundingBox!.getCenter(new THREE.Vector3())
+        .applyMatrix4(mesh.matrixWorld);
+    } else this.focusTarget = null;
+    this.pipeline?.setCinematic(on && this.level === "high");
+    if (!on) this.dolly = null;
+  }
+
+  /** Apply the current level to the renderer, lights, floor, materials and post-processing. */
+  private applyLevel(): void {
+    const high = this.level === "high";
+    this.renderer.setPixelRatio(Math.min(window.devicePixelRatio, high ? 1.5 : 2));
+    this.renderer.shadowMap.enabled = high;
+    this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+    this.renderer.shadowMap.autoUpdate = false;
+    this.key.castShadow = high;
+    if (high && !this.pipeline && !this.pipelineLoading) {
+      // The post-processing chain and its three.js addons load only when High is in use.
+      this.pipelineLoading = true;
+      void import("./post").then(({ createPipeline }) => {
+        this.pipelineLoading = false;
+        if (this.disposed || this.level !== "high") return;
+        const pw = this.host.clientWidth;
+        const ph = Math.max(this.host.clientHeight, 1);
+        const pipeline = createPipeline(this.renderer, this.scene, this.camera, pw, ph);
+        pipeline.setPixelRatio(Math.min(window.devicePixelRatio, 1.5));
+        pipeline.setSize(pw, ph);
+        if (this.modelBox) pipeline.setSceneBox(this.modelBox);
+        pipeline.setCinematic(this.cinematic);
+        this.pipeline = pipeline;
+      });
+    } else if (!high && this.pipeline) {
+      this.pipeline.dispose();
+      this.pipeline = null;
+    }
+    if (this.modelBox) {
+      this.pipeline?.setSceneBox(this.modelBox);
+      if (high && !this.floor) {
+        this.floor = createFloor(this.modelBox);
+        this.scene.add(this.floor.group);
+      } else if (!high && this.floor) {
+        this.floor.dispose();
+        this.floor = null;
+      }
+    }
+    // The painted shadow disc stands in for the real shadow at Low.
+    if (this.ground) this.ground.visible = !high;
+    this.pipeline?.setCinematic(this.cinematic && high);
+    if (this.model) this.swapMaterials();
+    if (this.halo && this.halo.material instanceof THREE.MeshBasicMaterial)
+      this.halo.material.color.copy(this.haloColor());
+    this.shadowDirty = true;
+    this.floor?.markDirty();
+  }
+
+  /** Replace every part's material for the current level, keeping its tweened look. */
+  private swapMaterials(): void {
+    const high = this.level === "high";
+    for (const [id, mesh] of this.meshes) {
+      const old = mesh.material;
+      const tissue = tissueOf(this.typeById.get(id));
+      let axis: THREE.Vector3 | null = null;
+      if (high && tissue === "muscle") {
+        axis = this.axes.get(id) ?? principalAxis(mesh.geometry);
+        this.axes.set(id, axis);
+      }
+      const next = high ? richMaterial(tissue, axis, hashOf(id)) : standardMaterial(tissue);
+      next.color.copy(old.color);
+      next.emissive.copy(old.emissive);
+      next.emissiveIntensity = old.emissiveIntensity;
+      next.opacity = old.opacity;
+      next.transparent = old.transparent;
+      next.depthWrite = old.depthWrite;
+      mesh.material = next;
+      mesh.castShadow = high && mesh.visible && old.opacity >= 0.5;
+      mesh.receiveShadow = high;
+      old.dispose();
+    }
+    if (this.pulse) {
+      const mesh = this.meshes.get(this.pulse.id);
+      if (mesh) addBulge(mesh.material, this.pulse.uniforms);
+    }
+  }
+
+  /** At High the halo is written brighter than white so it blooms into a soft glow. */
+  private haloColor(): THREE.Color {
+    const c = new THREE.Color(HALO_COLOR);
+    return this.level === "high" ? c.multiplyScalar(3) : c;
+  }
+
+  private meterFrame(dt: number): void {
+    const meter = this.meter;
+    if (!meter) return;
+    meter.push(dt);
+    if (!meter.finished) return;
+    this.meter = null;
+    if (shouldDowngrade(meter.average(), meter.frames)) {
+      this.level = "low";
+      this.applyLevel();
+      this.handlers.onGraphicsAuto?.("low");
+    }
+  }
+
+  private stepDolly(now: number): void {
+    const d = this.dolly;
+    if (!d) return;
+    const t = Math.min(1, (now - d.start) / DOLLY_MS);
+    const distance = d.from + (d.to - d.from) * easeInOut(t);
+    const dir = this.camera.position.clone().sub(this.controls.target).normalize();
+    this.camera.position.copy(this.controls.target).addScaledVector(dir, distance);
+    if (t >= 1) this.dolly = null;
+  }
+
+  private markReflection = () => {
+    this.floor?.markDirty();
+  };
+
   /** Draw a thin halo around one part (or none). */
   setSelected(id: string | null): void {
     if (this.halo) {
@@ -409,7 +598,7 @@ export class AnatomyEngine {
     const halo = new THREE.Mesh(
       mesh.geometry,
       new THREE.MeshBasicMaterial({
-        color: HALO_COLOR,
+        color: this.haloColor(),
         side: THREE.BackSide,
         transparent: true,
         opacity: 0.55,
@@ -540,6 +729,8 @@ export class AnatomyEngine {
     skinned.add(root);
     skinned.frustumCulled = false;
     skinned.userData.catalogId = c.id;
+    skinned.castShadow = this.level === "high";
+    skinned.receiveShadow = this.level === "high";
     this.model.add(skinned);
     skinned.skeleton = new THREE.Skeleton([root, seg]);
     this.deformed.push({ id: c.id, skinned, seg, material, uniforms, change: c.change });
@@ -617,9 +808,13 @@ export class AnatomyEngine {
       AnatomyEngine.placeSegment(c.second, via, to);
       c.dot.position.copy(to);
     }
+    this.shadowDirty = true;
+    this.floor?.markDirty();
   }
 
   private clearMotion(): void {
+    this.shadowDirty = true;
+    this.floor?.markDirty();
     for (const id of this.posed) {
       const mesh = this.meshes.get(id);
       if (!mesh) continue;
@@ -714,12 +909,21 @@ export class AnatomyEngine {
       : opts.preset
         ? new THREE.Vector3(...PRESET_DIRECTIONS[opts.preset])
         : this.camera.position.clone().sub(this.controls.target).normalize();
-    const pos = sphere.center.clone().add(dir.multiplyScalar(distance));
-    return this.moveCamera(
+    // In a cinematic tour the flight lands a little far out and a slow dolly closes the rest.
+    const dollyIn = this.cinematic && this.level === "high" && !this.reduced;
+    const start = dollyIn ? distance * 1.08 : distance;
+    const pos = sphere.center.clone().add(dir.multiplyScalar(start));
+    const flight = this.moveCamera(
       [pos.x, pos.y, pos.z],
       [sphere.center.x, sphere.center.y, sphere.center.z],
       true,
     );
+    if (dollyIn)
+      void flight.then(() => {
+        if (this.cinematic && !this.disposed)
+          this.dolly = { start: performance.now(), from: start, to: distance };
+      });
+    return flight;
   }
 
   /** Replace the drawn teaching cables. Points are in model space (catalog coordinates). */
@@ -894,6 +1098,9 @@ export class AnatomyEngine {
     this.clearMotion();
     this.setPulse(null);
     this.setSelected(null);
+    this.controls.removeEventListener("change", this.markReflection);
+    this.pipeline?.dispose();
+    this.floor?.dispose();
     if (this.ground) {
       this.scene.remove(this.ground);
       this.ground.geometry.dispose();
@@ -945,6 +1152,7 @@ export class AnatomyEngine {
     mat.opacity = t.style.opacity;
     mat.transparent = t.style.opacity < 1;
     mat.depthWrite = t.style.opacity >= 0.95;
+    mesh.castShadow = this.level === "high" && t.style.visible && t.style.opacity >= 0.5;
   }
 
   /** Advance every pending tween by one frame. */
@@ -981,7 +1189,9 @@ export class AnatomyEngine {
       }
       mat.transparent = mat.opacity < 1;
       mat.depthWrite = mat.opacity >= 0.95;
+      mesh.castShadow = this.level === "high" && mesh.visible && mat.opacity >= 0.5;
     }
+    this.shadowDirty = true;
   }
 
   private setHover(id: string | null): void {
@@ -1038,6 +1248,7 @@ export class AnatomyEngine {
     const w = this.host.clientWidth;
     const h = Math.max(this.host.clientHeight, 1);
     this.renderer.setSize(w, h);
+    this.pipeline?.setSize(w, h);
     this.camera.aspect = w / h;
     this.camera.updateProjectionMatrix();
   };
@@ -1085,7 +1296,25 @@ export class AnatomyEngine {
       this.pulse.uniforms.uBulge.value = 1 + 0.11 * p;
     }
     this.placeLabels();
-    this.renderer.render(this.scene, this.camera);
+    if (
+      this.pending.size ||
+      this.motionPlaying ||
+      this.animation !== null ||
+      this.pullFlows.length ||
+      this.pulses.length ||
+      this.dolly
+    )
+      this.floor?.markDirty();
+    if (this.dolly) this.stepDolly(now);
+    if (this.cinematic && this.pipeline && this.focusTarget)
+      this.pipeline.setFocus(this.camera.position.distanceTo(this.focusTarget));
+    if (this.shadowDirty && this.renderer.shadowMap.enabled) {
+      this.renderer.shadowMap.needsUpdate = true;
+      this.shadowDirty = false;
+    }
+    if (this.pipeline) this.pipeline.render();
+    else this.renderer.render(this.scene, this.camera);
+    if (this.meter) this.meterFrame(dt);
   };
 
   private hit(event: PointerEvent): PartMesh | undefined {

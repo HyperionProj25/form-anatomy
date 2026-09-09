@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import type { GraphicsLevel, RenderLevel } from "./quality";
 import {
   AnatomyEngine,
   type CameraPose,
@@ -7,7 +8,7 @@ import {
   type ViewPreset,
 } from "./engine";
 import type { PartStyle } from "./appearance";
-import { catalog, nodeToId, partById } from "../data/catalog";
+import { catalog, nodeToId, partById, parts } from "../data/catalog";
 import type { Vec3 } from "../data/types";
 
 /** A camera instruction from the store. `nonce` changes whenever the app wants the camera moved. */
@@ -48,7 +49,15 @@ type Props = {
   onReady(ids: string[]): void;
   onCameraChange(pose: CameraPose): void;
   onHandle(handle: ViewerHandle | null): void;
+  /** Graphics preference; Auto decides from the device and may report a downgrade. */
+  graphics?: GraphicsLevel;
+  onGraphicsAuto?(level: RenderLevel): void;
+  /** Cinematic look (depth of field, slow dolly) while a tour plays, focused on this part. */
+  cinematic?: boolean;
+  focusId?: string | null;
 };
+
+const typeById = new Map(parts.map((p) => [p.id, p.type]));
 
 const LOADING_MESSAGE = "Loading detailed anatomy…";
 const WEBGL_MESSAGE =
@@ -102,7 +111,8 @@ export default function Viewer(props: Props) {
         onSelect: (id) => latest.current.onSelect(id),
         onCameraChange: (pose) => latest.current.onCameraChange(pose),
         onMotionPhase: (phase) => latest.current.onMotionPhase?.(phase),
-      });
+        onGraphicsAuto: (level) => latest.current.onGraphicsAuto?.(level),
+      }, typeById);
     } catch {
       queueMicrotask(() => {
         setError(true);
@@ -161,6 +171,14 @@ export default function Viewer(props: Props) {
   useEffect(() => {
     if (ready) engine.current?.setPulse(props.pulse ?? null);
   }, [ready, props.pulse]);
+
+  useEffect(() => {
+    engine.current?.setGraphics(props.graphics ?? "auto");
+  }, [ready, props.graphics]);
+
+  useEffect(() => {
+    if (ready) engine.current?.setCinematic(!!props.cinematic, props.focusId ?? null);
+  }, [ready, props.cinematic, props.focusId]);
 
   useEffect(() => {
     const e = engine.current;

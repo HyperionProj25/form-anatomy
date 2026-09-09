@@ -11,6 +11,7 @@ import type { MotionDrawing } from "./viewer/engine";
 import { StoreProvider, useStore } from "./state/store";
 import { useUrlSync } from "./state/useUrlSync";
 import { computeStyles } from "./viewer/appearance";
+import { saveGraphicsPref } from "./viewer/quality";
 import { linePaths } from "./viewer/paths";
 import Viewer, { type CameraCommand, type DrawnPath, type ViewerHandle } from "./viewer/Viewer";
 import PinLegend from "./features/compare/PinLegend";
@@ -73,6 +74,9 @@ function Shell() {
   useEffect(() => {
     saveNamePref(state.names);
   }, [state.names]);
+  useEffect(() => {
+    saveGraphicsPref(state.graphics);
+  }, [state.graphics]);
   const nameOf = useCallback(
     (id: string) => {
       const part = partById(id);
@@ -331,6 +335,12 @@ function Shell() {
             motionLines={!!state.motion?.lines}
             onMotionPhase={(phase) => dispatch({ type: "motionTick", phase })}
             pulse={pulse}
+            graphics={state.graphics}
+            onGraphicsAuto={() =>
+              showToast("Graphics set to Low so motion stays smooth. Change it under Opacity.")
+            }
+            cinematic={cinematic}
+            focusId={state.focus?.flyId ?? null}
             onSelect={(id) => dispatch({ type: "select", id })}
             onReady={() => setReady(true)}
             onCameraChange={(pose) => dispatch({ type: "cameraMoved", pose })}

@@ -6,6 +6,7 @@ import { lineById, stopPartId, stopSides, type LineId } from "../data/lines";
 import type { JointId } from "../data/joints";
 import type { MotionSide } from "../data/motion";
 import { loadNamePref, type NameLang } from "../data/names";
+import { initialGraphics, type GraphicsLevel } from "../viewer/quality";
 import type { Question, QuizSetId } from "../features/quiz/generators";
 
 export type Mode = "muscles" | "bones" | "fascia";
@@ -73,6 +74,8 @@ export type AppState = {
   quizRequest: QuizSetId | null;
   /** Primary language for structure names; a browser preference, not part of the URL. */
   names: NameLang;
+  /** Graphics preference (Auto, High, Low); a browser preference, not part of the URL. */
+  graphics: GraphicsLevel;
   playlist: Playlist | null;
   /** Light the selected muscle's origin and insertion bones (URL `a`). Sticky across selections. */
   attach: boolean;
@@ -98,6 +101,7 @@ export const initialState: AppState = {
   quiz: null,
   quizRequest: null,
   names: loadNamePref(),
+  graphics: initialGraphics(),
   playlist: null,
   attach: false,
   motion: null,
@@ -136,6 +140,7 @@ export type Action =
   | { type: "quizNext" }
   | { type: "endQuiz" }
   | { type: "setNames"; names: NameLang }
+  | { type: "setGraphics"; graphics: GraphicsLevel }
   | { type: "playlistAdd"; id: string }
   | { type: "playlistRemove"; id: string }
   | { type: "playlistTitle"; title: string }
@@ -410,6 +415,8 @@ export function reducer(s: AppState, a: Action): AppState {
       return { ...s, quiz: null, focus: null };
     case "setNames":
       return { ...s, names: a.names };
+    case "setGraphics":
+      return { ...s, graphics: a.graphics };
     case "playlistAdd": {
       const pl = s.playlist ?? { title: "", ids: [], step: null };
       if (pl.ids.includes(a.id) || pl.ids.length >= MAX_PLAYLIST || !partById(a.id)) return s;

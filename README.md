@@ -139,6 +139,14 @@ checks without deploying.
   through any mode, filter or hidden layer.
 - Works offline after the first visit and installs as an app. The 8 MB model
   is cached on first use so later visits open instantly.
+- Graphics levels: Auto, High and Low in the left-panel foot. High adds
+  ground-truth ambient occlusion, a soft key-light shadow onto a floor that
+  also reflects the body faintly, physical tissue materials with fibre
+  striations that appear as you zoom in, a bloomed selection glow, a mild
+  grade and anti-aliasing, and, during tours, depth of field with a slow
+  dolly. Low is plain forward rendering for phones and weak machines. Auto
+  picks from the device and backs off to Low if the first seconds of frames
+  run slow. `?gfx=high|low` overrides the saved preference for testing.
 - The model is the page: a dark slate stage with cyan-teal selection, blue
   origin and amber insertion bones, and compare pins that survive
   colour-blindness; the workspace fills the viewport, the quiz, motion and

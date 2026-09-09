@@ -20,6 +20,7 @@ import { LINE_GROUPS, lines } from "../../data/lines";
 import { displayName, secondaryName, type NameLang } from "../../data/names";
 import { REGION_LABELS, REGION_ORDER } from "../../data/regions";
 import { useStore, type Filters, type Mode, type SideFilter } from "../../state/store";
+import type { GraphicsLevel } from "../../viewer/quality";
 import CaveatChip from "../shared/CaveatChip";
 
 type Props = { mobileOpen: boolean; onCloseMobile: () => void };
@@ -289,6 +290,26 @@ export default function LibraryPanel({ mobileOpen, onCloseMobile }: Props) {
               onClick={() => dispatch({ type: "setNames", names: l })}
             >
               {l === "english" ? "English names" : "Latin names"}
+            </button>
+          ))}
+        </div>
+        <div className="section-label graphics-label">GRAPHICS</div>
+        <div className="segmented" role="group" aria-label="Graphics quality">
+          {(["auto", "high", "low"] as GraphicsLevel[]).map((g) => (
+            <button
+              key={g}
+              aria-pressed={state.graphics === g}
+              className={state.graphics === g ? "active" : ""}
+              title={
+                g === "auto"
+                  ? "High on capable machines, Low on phones and slow ones"
+                  : g === "high"
+                    ? "Ambient occlusion, shadows, fibre detail, glow"
+                    : "Plain rendering, fastest"
+              }
+              onClick={() => dispatch({ type: "setGraphics", graphics: g })}
+            >
+              {g === "auto" ? "Auto" : g === "high" ? "High" : "Low"}
             </button>
           ))}
         </div>
