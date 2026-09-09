@@ -42,4 +42,4 @@
 ### Task 4: Verify, document, deploy
 
 - [x] Headless renders High vs Low (home, selection, tour stop, knee motion); frame times in real Chrome; contrast check; a11y test.
-- [ ] README and spec note; plan ticked; commit "Graphics: ambient occlusion, shadows, tissue materials, cinematic tours"; push; watch CI; verify live; update memory.
+- [x] README and spec note; plan ticked; commit "Graphics: ambient occlusion, shadows, tissue materials, cinematic tours"; push; watch CI; verify live; update memory.
