@@ -995,3 +995,14 @@ until pilot students ask for finer shapes.
   the knee motion) at High and Low; frame times in real Chrome at High and
   Low; the contrast check, the test suite and the a11y test pass; live
   check after deploy.
+
+## 16. Phases 14 and 15: Swing lab (spec only, 2026-09-10)
+
+Chase asked for the full design of "measured swings on the model" without
+building it yet. The complete spec is
+`docs/superpowers/specs/2026-09-10-swing-lab-design.md`: data sources and
+licensing (CMU subject 124 public; TrackMan sample private until permitted),
+the `form.swing.v1` format, the offline pipeline with validation, phase 14
+(one joint driven by a measured curve, swing card with timeline and events)
+and phase 15 (eighteen-segment rigid pose, skinned soft parts, muscle length
+curves, colour by change, bat), with copy, tests, rollout and open questions.
