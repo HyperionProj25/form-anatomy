@@ -14,7 +14,16 @@ export type ViewState = ViewPreset | "custom";
 export type LayerFilter = "all" | "superficial" | "deep";
 export type SideFilter = "both" | "left" | "right";
 export type RegionFilter = Region | "all";
-export type ModalId = "about" | "guide" | "quiz" | "research" | "handout" | "swing-report" | "session-report" | null;
+export type ModalId =
+  | "about"
+  | "guide"
+  | "quiz"
+  | "research"
+  | "handout"
+  | "swing-report"
+  | "session-report"
+  | "session-ingest"
+  | null;
 
 export type Filters = {
   region: RegionFilter;

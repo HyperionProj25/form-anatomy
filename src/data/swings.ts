@@ -135,6 +135,27 @@ export function changeBetween(curve: number[], a: number, b: number): number {
 
 const cache = new Map<string, Promise<SwingFile>>();
 
+/** A swing built in the browser: seed the loader cache and list it for this visit. */
+export function registerSwing(file: SwingFile, session?: string): void {
+  cache.set(file.id, Promise.resolve(file));
+  const entry: SwingIndexEntry = {
+    id: file.id,
+    label: file.label,
+    handedness: file.handedness,
+    kind: file.source.kind,
+    frames: file.frames,
+    fps: file.fps,
+    events: file.events,
+    eventsEstimated: file.eventsEstimated,
+    attribution: file.source.attribution,
+    caveats: file.caveats,
+    ...(session ? { session } : {}),
+  };
+  const at = SWING_INDEX.findIndex((s) => s.id === file.id);
+  if (at >= 0) SWING_INDEX[at] = entry;
+  else SWING_INDEX.push(entry);
+}
+
 /** Fetch a swing file once; later calls share the same promise. */
 export function loadSwing(id: string, base = import.meta.env.BASE_URL): Promise<SwingFile> {
   const hit = cache.get(id);

@@ -101,7 +101,16 @@ export default function StageToolbar({ onZoom }: Props) {
                     {s.label}
                   </button>
                 ))}
-                {SESSION_INDEX.length > 0 && <p className="menu-group">Session reports</p>}
+                <p className="menu-group">Session reports</p>
+                <button
+                  role="menuitem"
+                  onClick={() => {
+                    setOpen(false);
+                    dispatch({ type: "setModal", modal: "session-ingest" });
+                  }}
+                >
+                  Load a TrackMan export…
+                </button>
                 {SESSION_INDEX.map((s) => (
                   <button
                     key={s.id}

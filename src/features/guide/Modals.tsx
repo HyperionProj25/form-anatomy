@@ -9,6 +9,7 @@ const QuizStart = lazy(() => import("../quiz/QuizStart"));
 const ResearchDigest = lazy(() => import("../research/ResearchDigest"));
 const SwingReport = lazy(() => import("../motion/SwingReport"));
 const SessionReport = lazy(() => import("../motion/SessionReport"));
+const IngestModal = lazy(() => import("../session/IngestModal"));
 
 const GUIDE_STEPS = [
   {
@@ -105,6 +106,8 @@ export default function Modals({ ready, onStartQuiz }: Props) {
             <SwingReport />
           ) : modal === "session-report" ? (
             <SessionReport />
+          ) : modal === "session-ingest" ? (
+            <IngestModal />
           ) : (
             <QuizStart ready={ready} onStart={onStartQuiz} />
           )}

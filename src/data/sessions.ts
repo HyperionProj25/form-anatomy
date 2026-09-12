@@ -66,13 +66,28 @@ export type SessionIndexEntry = {
   hands: ("L" | "R")[];
 };
 
+const cache = new Map<string, Promise<SessionFile>>();
+
 export const SESSION_INDEX = index as SessionIndexEntry[];
+
+/** A session built in the browser: seed the loader cache and list it in the menu for this visit. */
+export function registerSession(file: SessionFile, totalSwings: number): void {
+  cache.set(file.id, Promise.resolve(file));
+  const entry: SessionIndexEntry = {
+    id: file.id,
+    label: file.label,
+    swings: totalSwings,
+    fullSwings: file.swings.length,
+    hands: Object.keys(file.byHand) as ("L" | "R")[],
+  };
+  const at = SESSION_INDEX.findIndex((s) => s.id === file.id);
+  if (at >= 0) SESSION_INDEX[at] = entry;
+  else SESSION_INDEX.push(entry);
+}
 
 export function sessionById(id: string): SessionIndexEntry | undefined {
   return SESSION_INDEX.find((s) => s.id === id);
 }
-
-const cache = new Map<string, Promise<SessionFile>>();
 
 export function loadSession(id: string, base = import.meta.env.BASE_URL): Promise<SessionFile> {
   const hit = cache.get(id);

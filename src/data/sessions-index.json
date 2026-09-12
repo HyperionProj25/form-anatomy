@@ -8,5 +8,35 @@
       "R",
       "L"
     ]
+  },
+  {
+    "id": "trackman-session-2",
+    "label": "TrackMan session 2",
+    "swings": 292,
+    "fullSwings": 113,
+    "hands": [
+      "R",
+      "L"
+    ]
+  },
+  {
+    "id": "trackman-session-3",
+    "label": "TrackMan session 3",
+    "swings": 274,
+    "fullSwings": 75,
+    "hands": [
+      "R",
+      "L"
+    ]
+  },
+  {
+    "id": "trackman-session-4",
+    "label": "TrackMan session 4",
+    "swings": 368,
+    "fullSwings": 55,
+    "hands": [
+      "R",
+      "L"
+    ]
   }
 ]

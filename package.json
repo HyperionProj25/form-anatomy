@@ -20,7 +20,9 @@
     "geometry": "tsx scripts/build-geometry.ts",
     "check:contrast": "tsx scripts/check-contrast.ts",
     "build:swings": "tsx scripts/build-swings.ts",
-    "build:session": "tsx scripts/build-session.ts"
+    "build:session": "tsx scripts/build-session.ts",
+    "validation:note": "tsx scripts/validation-note.ts",
+    "licenses": "tsx scripts/licenses.ts"
   },
   "dependencies": {
     "lucide-react": "^1.41.0",
