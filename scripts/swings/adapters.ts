@@ -2,7 +2,7 @@ import type { Handedness, PointCloud, PointName, Vec3 } from "./types";
 
 /** `baseline.biomech.pose.v0`: CMU BVH converted to joint positions by tools/bvh_to_pose.py. */
 type CmuFile = {
-  metadata: { handedness?: string; capture_fps: number; events?: { contact_frame?: number } };
+  metadata: { handedness?: string; capture_fps: number; motion_type?: string; events?: { contact_frame?: number } };
   frames: { timestamp: number; joints: Record<string, Vec3> }[];
 };
 
@@ -44,6 +44,7 @@ export function fromCmu(json: unknown): PointCloud {
     eventsEstimated: true,
     handedness,
     source: { kind: "cmu", attribution: CMU_ATTRIBUTION, captureHz: file.metadata.capture_fps },
+    motion: /pitch/i.test(file.metadata.motion_type ?? "") ? "pitch" : "swing",
   };
 }
 
@@ -157,5 +158,6 @@ function trackmanCloud(swing: TrackmanDemo["sessions"][number]["swings"][number]
     eventsEstimated: false,
     handedness: swing.handedness === "l" ? "L" : "R",
     source: { kind: "trackman", attribution: TRACKMAN_ATTRIBUTION, captureHz: Math.round(hz) },
+    motion: "swing",
   };
 }

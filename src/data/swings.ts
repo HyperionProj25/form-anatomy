@@ -32,6 +32,8 @@ export type SwingFile = {
   label: string;
   source: { kind: "cmu" | "trackman"; attribution: string; captureHz: number };
   handedness: Handedness;
+  /** "swing" (foot plant, contact) or "pitch" (foot strike, release); absent means swing. */
+  motion?: "swing" | "pitch";
   fps: number;
   frames: number;
   events: SwingEvents;
@@ -71,6 +73,26 @@ export const EVENT_LABELS: Record<SwingEventName, string> = {
   contact: "Contact",
   followThrough: "Follow-through",
 };
+
+/** Event names in the motion's own words: a pitch strikes the foot and releases the ball. */
+export function eventLabel(event: SwingEventName, motion: SwingFile["motion"] = "swing", short = false): string {
+  if (motion === "pitch") {
+    const pitch: Record<SwingEventName, [string, string]> = {
+      footPlant: ["Foot strike", "Strike"],
+      maxBatSpeed: ["Peak arm speed", "Peak"],
+      contact: ["Release", "Release"],
+      followThrough: ["Follow-through", "Follow"],
+    };
+    return pitch[event][short ? 1 : 0];
+  }
+  const swing: Record<SwingEventName, [string, string]> = {
+    footPlant: ["Foot plant", "Plant"],
+    maxBatSpeed: ["Peak bat speed", "Peak"],
+    contact: ["Contact", "Contact"],
+    followThrough: ["Follow-through", "Follow"],
+  };
+  return swing[event][short ? 1 : 0];
+}
 
 /** What each caveat key means on screen. */
 export const CAVEATS: Record<string, string> = {

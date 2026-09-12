@@ -29,6 +29,9 @@ export type Handedness = "L" | "R";
 
 export type SwingSource = { kind: "cmu" | "trackman"; attribution: string; captureHz: number };
 
+/** A batting swing, or a pitch: the same pipeline, with foot strike and release as its events. */
+export type MotionKind = "swing" | "pitch";
+
 /** A capture as a set of named points over time, metres, Y up, right handed. */
 export type PointCloud = {
   hz: number;
@@ -41,6 +44,7 @@ export type PointCloud = {
   eventsEstimated: boolean;
   handedness: Handedness;
   source: SwingSource;
+  motion: MotionKind;
 };
 
 export type JointKey =

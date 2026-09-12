@@ -238,7 +238,9 @@ export function estimateEvents(cloud: PointCloud): PointCloud {
   const n = cloud.times.length;
   const lead = cloud.handedness === "R" ? "L" : "R";
   const ankle = cloud.points[`ankle${lead}`];
-  const wrist = cloud.points[`wrist${lead}`];
+  // A hitter's contact is the lead wrist's peak; a pitcher's release is the throwing wrist's.
+  const wristName: PointName = cloud.motion === "pitch" ? `wrist${cloud.handedness}` : `wrist${lead}`;
+  const wrist = cloud.points[wristName];
   if (!ankle || !wrist) return cloud;
   let estimated = cloud.eventsEstimated;
   const wristSpeed = speeds(wrist, cloud.hz);

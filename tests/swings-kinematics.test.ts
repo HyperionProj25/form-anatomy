@@ -48,6 +48,7 @@ function cloudOf(poses: Pose[], hz = 120): PointCloud {
     eventsEstimated: false,
     handedness: "R",
     source: { kind: "cmu", attribution: "test", captureHz: hz },
+    motion: "swing",
   };
 }
 

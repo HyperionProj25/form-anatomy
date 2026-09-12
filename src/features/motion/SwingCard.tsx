@@ -8,6 +8,7 @@ import {
   CAVEATS,
   SWING_JOINTS,
   curveOf,
+  eventLabel,
   frameAt,
   phaseAt,
   roleForSide,
@@ -27,12 +28,6 @@ const SHORTEN = "#f2a531";
 const LENGTHEN = "#3d8bff";
 const SPEEDS = [0.25, 0.5, 1];
 const EVENTS: SwingEventName[] = ["footPlant", "maxBatSpeed", "contact"];
-const SHORT_EVENT: Record<SwingEventName, string> = {
-  footPlant: "Plant",
-  maxBatSpeed: "Peak",
-  contact: "Contact",
-  followThrough: "Follow",
-};
 const ROLES: Role[] = ["lead", "back"];
 
 type Props = { swing: SwingFile; setup: MotionSetup; onCollapse?: () => void };
@@ -137,7 +132,7 @@ export default function SwingCard({ swing, setup, onCollapse }: Props) {
           return (
             f !== undefined && (
               <span key={e} className={i === 1 ? "row-1" : ""} style={{ left: `${(x(f) / 200) * 100}%` }}>
-                {SHORT_EVENT[e]}
+                {eventLabel(e, swing.motion, true)}
               </span>
             )
           );
@@ -194,8 +189,10 @@ export default function SwingCard({ swing, setup, onCollapse }: Props) {
         <strong>
           {r(role)} {jointName}: {angle}° now.
         </strong>{" "}
-        {atPlant}° at {swing.eventsEstimated ? "estimated " : ""}foot plant, {atContact}° at{" "}
-        {swing.eventsEstimated ? "estimated " : ""}contact: {verb(m.joint, delta)} {Math.abs(delta)}°.
+        {atPlant}° at {swing.eventsEstimated ? "estimated " : ""}
+        {eventLabel("footPlant", swing.motion).toLowerCase()}, {atContact}° at{" "}
+        {swing.eventsEstimated ? "estimated " : ""}
+        {eventLabel("contact", swing.motion).toLowerCase()}: {verb(m.joint, delta)} {Math.abs(delta)}°.
       </p>
       <div className="motion-roles">
         <div>

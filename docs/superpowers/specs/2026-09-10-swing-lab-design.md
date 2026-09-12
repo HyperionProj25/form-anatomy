@@ -671,3 +671,23 @@ exports through `trackman-index.json`, never the whole file.
 - Not fixed by this: the export has no hitter identity, so a session's
   averages describe a group of hitters, not one. Product plan:
   `docs/product/2026-09-12-swing-product-plan.md`.
+
+## 19. Session in, report out (12 September 2026)
+
+The hero flow's first step from the product plan: a TrackMan export loaded
+in the browser. "Load a TrackMan export…" under Move a joint takes the pose
+and metrics files of one session (or the curated extract), joins plays by
+first timestamp, runs each through the same pipeline as the built sessions
+in a Web Worker, registers the resulting session and its two exemplar swings
+per hand for the visit, and opens the session report. Nothing is uploaded.
+Verified live with the curated extract: 14 of 20 plays passed in about 25
+seconds. The full 130 MB exports parse in the worker; expect a minute.
+
+## 20. Pitching (12 September 2026)
+
+The pipeline carries `motion: "swing" | "pitch"`. For a pitch, foot strike
+is the lead ankle's landing as before and release is the throwing wrist's
+peak speed; the card and reports say foot strike, peak arm speed and release.
+Tested on the CMU subject 124 pitch as a local fixture; not shipped in the
+menu at Chase's direction. Ships the day TrackMan pitching pose captures
+arrive: the adapter, rig, report and session build need no change.

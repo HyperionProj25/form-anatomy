@@ -174,6 +174,14 @@ checks without deploying.
   sortable swing list and a CSV. Each swing also reports the agreement between
   this pipeline's pelvis and torso rotation and TrackMan's own segment
   angles: 3 to 5° and 7 to 8° RMS on the sample session.
+- Load your own TrackMan export: "Load a TrackMan export…" under Move a
+  joint takes a session's pose and metrics files (or the curated extract),
+  runs every play through the pipeline in a Web Worker in your browser, and
+  opens the session report. Nothing is uploaded. `npm run validation:note`
+  regenerates `docs/validation/validation-note.md` from the built sessions
+  (355 swings: pelvis 5.5°, torso 9.2° RMS against TrackMan's own segment
+  angles). The pipeline also handles pitches (foot strike, release) and will
+  ship them when pitching captures arrive.
 - Graphics levels: Auto, High and Low in the left-panel foot. High adds
   ground-truth ambient occlusion, a soft key-light shadow onto a floor that
   also reflects the body faintly, physical tissue materials with fibre

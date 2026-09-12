@@ -13,6 +13,8 @@ export type SwingFile = {
   label: string;
   source: PointCloud["source"];
   handedness: "L" | "R";
+  /** "swing" (foot plant, contact) or "pitch" (foot strike, release). */
+  motion: "swing" | "pitch";
   fps: number;
   frames: number;
   events: PointCloud["events"];
@@ -74,6 +76,7 @@ export function buildSwing(
     label,
     source: cloud.source,
     handedness: cloud.handedness,
+    motion: cloud.motion,
     fps: FPS,
     frames,
     events: t.cloud.events,
