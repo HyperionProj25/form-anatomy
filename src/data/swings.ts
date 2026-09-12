@@ -56,6 +56,8 @@ export type SwingIndexEntry = {
   eventsEstimated: boolean;
   attribution: string;
   caveats: string[];
+  /** Set on a session's exemplar swings, which the menu lists under the session instead. */
+  session?: string;
 };
 
 export const SWING_INDEX = index as SwingIndexEntry[];

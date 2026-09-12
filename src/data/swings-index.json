@@ -83,5 +83,93 @@
       "twist-held",
       "one-axis"
     ]
+  },
+  {
+    "id": "session1-best-r",
+    "label": "Session 1 · best right-handed swing by bat speed · markerless capture",
+    "handedness": "R",
+    "kind": "trackman",
+    "frames": 167,
+    "fps": 120,
+    "events": {
+      "footPlant": 44,
+      "contact": 124,
+      "maxBatSpeed": 122,
+      "followThrough": 134
+    },
+    "eventsEstimated": false,
+    "attribution": "TrackMan markerless hitting capture, sample supplied to Baseline Analytics",
+    "caveats": [
+      "markerless",
+      "twist-held",
+      "one-axis"
+    ],
+    "session": "trackman-session-1"
+  },
+  {
+    "id": "session1-median-r",
+    "label": "Session 1 · median right-handed swing by bat speed · markerless capture",
+    "handedness": "R",
+    "kind": "trackman",
+    "frames": 137,
+    "fps": 120,
+    "events": {
+      "footPlant": 60,
+      "contact": 94,
+      "maxBatSpeed": 97,
+      "followThrough": 103
+    },
+    "eventsEstimated": false,
+    "attribution": "TrackMan markerless hitting capture, sample supplied to Baseline Analytics",
+    "caveats": [
+      "markerless",
+      "twist-held",
+      "one-axis"
+    ],
+    "session": "trackman-session-1"
+  },
+  {
+    "id": "session1-best-l",
+    "label": "Session 1 · best left-handed swing by bat speed · markerless capture",
+    "handedness": "L",
+    "kind": "trackman",
+    "frames": 143,
+    "fps": 120,
+    "events": {
+      "footPlant": 60,
+      "contact": 100,
+      "maxBatSpeed": 100,
+      "followThrough": 141
+    },
+    "eventsEstimated": false,
+    "attribution": "TrackMan markerless hitting capture, sample supplied to Baseline Analytics",
+    "caveats": [
+      "markerless",
+      "twist-held",
+      "one-axis"
+    ],
+    "session": "trackman-session-1"
+  },
+  {
+    "id": "session1-median-l",
+    "label": "Session 1 · median left-handed swing by bat speed · markerless capture",
+    "handedness": "L",
+    "kind": "trackman",
+    "frames": 139,
+    "fps": 120,
+    "events": {
+      "footPlant": 60,
+      "contact": 96,
+      "maxBatSpeed": 94,
+      "followThrough": 109
+    },
+    "eventsEstimated": false,
+    "attribution": "TrackMan markerless hitting capture, sample supplied to Baseline Analytics",
+    "caveats": [
+      "markerless",
+      "twist-held",
+      "one-axis"
+    ],
+    "session": "trackman-session-1"
   }
 ]

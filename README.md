@@ -164,6 +164,16 @@ checks without deploying.
   rotation are held, the shoulder girdle takes a quarter of the arm's lift,
   the patella rides with the shin, and the head is one rigid block; the card
   and the report say so.
+- Session reports: `npm run build:session -- 1` runs every full swing of a
+  TrackMan session export through the pipeline and writes a session file
+  with each swing's metrics (bat speed from the tip, separation at foot
+  plant, lead knee, kinematic sequence, muscle-group changes) and the
+  per-hand mean and spread, plus the fastest and median swings as openable
+  swing files. The session report (under "Move a joint") shows the
+  aggregates, the sequence beside TrackMan's own, the muscle-group table, a
+  sortable swing list and a CSV. Each swing also reports the agreement between
+  this pipeline's pelvis and torso rotation and TrackMan's own segment
+  angles: 3 to 5° and 7 to 8° RMS on the sample session.
 - Graphics levels: Auto, High and Low in the left-panel foot. High adds
   ground-truth ambient occlusion, a soft key-light shadow onto a floor that
   also reflects the body faintly, physical tissue materials with fibre

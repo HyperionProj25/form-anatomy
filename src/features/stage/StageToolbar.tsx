@@ -1,6 +1,7 @@
 import { ChevronUp, Move, RotateCcw, Square, ZoomIn, ZoomOut } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { JOINT_IDS, JOINT_LABELS, jointPhrase } from "../../data/joints";
+import { SESSION_INDEX } from "../../data/sessions";
 import { SWING_INDEX, roleForSide, sideForRole, swingById } from "../../data/swings";
 import { useStore } from "../../state/store";
 
@@ -87,7 +88,7 @@ export default function StageToolbar({ onZoom }: Props) {
                   </button>
                 ))}
                 <p className="menu-group">Measured swing</p>
-                {SWING_INDEX.map((s) => (
+                {SWING_INDEX.filter((s) => !("session" in s)).map((s) => (
                   <button
                     key={s.id}
                     role="menuitem"
@@ -98,6 +99,19 @@ export default function StageToolbar({ onZoom }: Props) {
                     }}
                   >
                     {s.label}
+                  </button>
+                ))}
+                {SESSION_INDEX.length > 0 && <p className="menu-group">Session reports</p>}
+                {SESSION_INDEX.map((s) => (
+                  <button
+                    key={s.id}
+                    role="menuitem"
+                    onClick={() => {
+                      setOpen(false);
+                      dispatch({ type: "openSession", id: s.id });
+                    }}
+                  >
+                    {s.label} · {s.fullSwings} swings
                   </button>
                 ))}
                 {moving && (

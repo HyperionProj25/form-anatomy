@@ -8,6 +8,7 @@ const Handout = lazy(() => import("../playlist/Handout"));
 const QuizStart = lazy(() => import("../quiz/QuizStart"));
 const ResearchDigest = lazy(() => import("../research/ResearchDigest"));
 const SwingReport = lazy(() => import("../motion/SwingReport"));
+const SessionReport = lazy(() => import("../motion/SessionReport"));
 
 const GUIDE_STEPS = [
   {
@@ -83,7 +84,7 @@ export default function Modals({ ready, onStartQuiz }: Props) {
       }}
     >
       <section
-        className={modal === "handout" || modal === "swing-report" ? "modal modal-wide" : "modal"}
+        className={modal === "handout" || modal === "swing-report" || modal === "session-report" ? "modal modal-wide" : "modal"}
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
@@ -102,6 +103,8 @@ export default function Modals({ ready, onStartQuiz }: Props) {
             <Handout />
           ) : modal === "swing-report" ? (
             <SwingReport />
+          ) : modal === "session-report" ? (
+            <SessionReport />
           ) : (
             <QuizStart ready={ready} onStart={onStartQuiz} />
           )}

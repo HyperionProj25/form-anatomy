@@ -635,3 +635,39 @@ validation proves it); the soft-tissue guess is what fails.
 - Phase 14's per-joint readout and phase 15's rig, pipeline and validation.
 - The caveats: twist held, girdle share, patella with the shin, head as a
   block, neck muscles excluded from rankings.
+
+## 18. Session mode (12 September 2026)
+
+Chase: "feed a hitter's real session, report averages across their swings
+with the spread." Built as `scripts/build-session.ts` (`npm run build:session
+-- 1`), reading one play at a time by byte range from the full TrackMan
+exports through `trackman-index.json`, never the whole file.
+
+- Every full swing (one with a swing plane) goes through the swing pipeline;
+  rejected swings (clipping, events out of order, posed angles off) are
+  dropped and counted. Per swing: bat speed from the tracked tip (peak, mph),
+  hip-shoulder separation at foot plant and its peak, lead knee at foot plant
+  and contact, the kinematic sequence (pelvis and torso rotation about
+  vertical; lead upper arm and forearm whole-orientation rate, as TrackMan's
+  own segment velocities are defined; peaks searched to 25 ms past contact),
+  TrackMan's own sequence from its angular velocities, every muscle group's
+  change, peak shortening and timing, and the agreement between this
+  pipeline's pelvis and torso rotation and TrackMan's own segment angles on
+  the same swing (RMS, sign convention allowed to differ, differences taken
+  modulo 360).
+- The session file (`public/sessions/<id>.json`, `form.session.v1`) holds
+  every swing's metrics without series, aggregates per hand (mean, sd, min,
+  max), and exemplars: the fastest and the median swing per hand written as
+  full swing files that open in the swing lab.
+- Session 1: 306 swings, 142 full, 112 passed. Agreement with TrackMan:
+  pelvis 3 to 5° RMS, torso 7 to 8° RMS. Torso timing matches TrackMan's
+  (−82 versus −52 ms right-handed, −85 versus −85 ms left-handed).
+- The session report modal: per-hand aggregates, the sequence beside
+  TrackMan's, the muscle-group table, a sortable swing list with "Open" on
+  the exemplars, and a CSV of every swing's numbers.
+- Found on the way: trunk rotation curves wrapped at ±180° in the
+  follow-through, which broke peak-velocity timing and the comparison; the
+  pipeline now writes unwrapped rotations (ranges ±360°).
+- Not fixed by this: the export has no hitter identity, so a session's
+  averages describe a group of hitters, not one. Product plan:
+  `docs/product/2026-09-12-swing-product-plan.md`.

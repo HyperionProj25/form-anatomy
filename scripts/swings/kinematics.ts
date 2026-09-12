@@ -213,9 +213,12 @@ export function curves(cloud: PointCloud): Curves {
       pelvis0 = ph;
       torso0 = th;
     }
-    out.pelvisRotation[i] = wrap(ph - pelvis0);
-    out.torsoRotation[i] = wrap(th - torso0);
-    out.separation[i] = wrap(out.torsoRotation[i] - out.pelvisRotation[i]);
+    // Unwrapped: a swing turns the trunk through more than 180°, so the curves stay continuous.
+    const pelvisRel = wrap(ph - pelvis0);
+    const torsoRel = wrap(th - torso0);
+    out.pelvisRotation[i] = i === 0 ? pelvisRel : out.pelvisRotation[i - 1] + wrap(pelvisRel - wrap(out.pelvisRotation[i - 1]));
+    out.torsoRotation[i] = i === 0 ? torsoRel : out.torsoRotation[i - 1] + wrap(torsoRel - wrap(out.torsoRotation[i - 1]));
+    out.separation[i] = out.torsoRotation[i] - out.pelvisRotation[i];
   }
   return out;
 }

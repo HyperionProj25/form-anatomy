@@ -1,6 +1,8 @@
 import { lengthRatios, musclePaths } from "./body";
 import { MUSCLE_GROUPS, REGION_ORDER, type MuscleGroup } from "./muscle-groups";
 import type { MotionSide } from "./motion";
+import { angleOf, inverse, mul } from "./quat";
+import type { SegmentId } from "./segments";
 import { roleForSide, sideForRole, type Role, type SwingFile } from "./swings";
 
 /**
@@ -126,23 +128,41 @@ export function groupStats(swing: SwingFile): GroupStat[] {
 
 export type SequenceStep = { label: string; peakDegPerS: number; peakMs: number };
 
+/** Rotation speed of a rig segment per frame, degrees per second, from its stored orientations. */
+function segmentSpeed(swing: SwingFile, seg: SegmentId): Float32Array {
+  const q = swing.segments?.[seg];
+  const n = swing.frames;
+  const out = new Float32Array(n);
+  if (!q) return out;
+  for (let f = 0; f < n; f++) {
+    const a = q[Math.max(0, f - 1)];
+    const b = q[Math.min(n - 1, f + 1)];
+    const span = (Math.min(n - 1, f + 1) - Math.max(0, f - 1)) / swing.fps || 1 / swing.fps;
+    out[f] = angleOf(mul(b, inverse(a))) / span;
+  }
+  return out;
+}
+
 /**
- * The kinematic sequence: when the pelvis, the torso and the lead arm each reached peak rotation
- * speed, in ms relative to contact. A proximal-to-distal order is the textbook pattern; the
- * report states the order it measured and nothing more.
+ * The kinematic sequence: when the pelvis, the torso, the lead upper arm and the lead forearm each
+ * reached peak rotation speed, in ms relative to contact. Pelvis and torso use the rotation about
+ * vertical; the arm segments use their whole-orientation rate, as TrackMan's own segment
+ * velocities do. A proximal-to-distal order is the textbook pattern; the report states the order
+ * it measured and nothing more.
  */
 export function kinematicSequence(swing: SwingFile): SequenceStep[] {
   const lead = sideForRole("lead", swing.handedness) === "left" ? "L" : "R";
-  const curves: [string, number[]][] = [
-    ["Pelvis rotation", swing.joints.pelvisRotation],
-    ["Torso rotation", swing.joints.torsoRotation],
-    ["Lead shoulder", swing.joints[`shoulder${lead}`]],
-    ["Lead elbow", swing.joints[`elbow${lead}`]],
+  const series: [string, Float32Array][] = [
+    ["Pelvis rotation", velocity(Float32Array.from(swing.joints.pelvisRotation), swing.fps)],
+    ["Torso rotation", velocity(Float32Array.from(swing.joints.torsoRotation), swing.fps)],
+    ["Lead arm", segmentSpeed(swing, `upperArm${lead}`)],
+    ["Lead forearm", segmentSpeed(swing, `forearm${lead}`)],
   ];
-  return curves.map(([label, curve]) => {
-    const v = velocity(Float32Array.from(curve), swing.fps);
+  // The sequence is about the drive into contact: search up to 25 ms past contact, not the follow-through.
+  const last = Math.min(swing.frames - 1, (swing.events.contact ?? swing.frames - 1) + Math.round(0.025 * swing.fps));
+  return series.map(([label, v]) => {
     let best = 0;
-    for (let f = 1; f < v.length; f++) if (Math.abs(v[f]) > Math.abs(v[best])) best = f;
+    for (let f = 1; f <= last; f++) if (Math.abs(v[f]) > Math.abs(v[best])) best = f;
     return { label, peakDegPerS: Math.round(v[best]), peakMs: msBeforeContact(best, swing) };
   });
 }

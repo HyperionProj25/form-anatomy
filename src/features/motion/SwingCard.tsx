@@ -17,6 +17,9 @@ import {
   type SwingFile,
 } from "../../data/swings";
 import { useStore } from "../../state/store";
+import { swingById } from "../../data/swings";
+
+const sessionOf = (id: string) => swingById(id)?.session ?? null;
 import CaveatChip from "../shared/CaveatChip";
 import { usePrefersReducedMotion } from "../shared/usePrefersReducedMotion";
 
@@ -259,6 +262,14 @@ export default function SwingCard({ swing, setup, onCollapse }: Props) {
           >
             <FileText size={14} /> Swing report
           </button>
+          {sessionOf(swing.id) && (
+            <button
+              className="outline-button swing-report-button"
+              onClick={() => dispatch({ type: "openSession", id: sessionOf(swing.id)! })}
+            >
+              <FileText size={14} /> Session report
+            </button>
+          )}
           {ranked && (
             <div className="motion-roles swing-ranked">
               <div>

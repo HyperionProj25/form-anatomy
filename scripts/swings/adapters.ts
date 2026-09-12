@@ -92,6 +92,33 @@ export const TRACKMAN_ATTRIBUTION = "TrackMan markerless hitting capture, sample
 export function fromTrackmanDemo(json: unknown, session: number, index: number): PointCloud | null {
   const swing = (json as TrackmanDemo).sessions[session]?.swings[index];
   if (!swing) return null;
+  return trackmanCloud(swing);
+}
+
+/** A play from the full hpepose3d and hittermetrics exports, joined by the caller. */
+export type TrackmanPlay = {
+  pose: { timestamps: number[]; hitter: Record<string, Vec3[]>; bat: { tip: Vec3[]; leadHandTop: Vec3[]; leadHandBottom: Vec3[] } };
+  metrics: {
+    handedness: "l" | "r";
+    numSamples: number;
+    swingEvents: { frontFootPlant?: number; batInStrikeZone?: number; maxBatSpeed?: number; batHorizEnd?: number };
+  };
+};
+
+/** One play from the full exports: timestamps are epoch nanoseconds, so seconds are relative. */
+export function fromTrackmanPlay(play: TrackmanPlay): PointCloud | null {
+  const t0 = play.pose.timestamps[0];
+  return trackmanCloud({
+    handedness: play.metrics.handedness,
+    frames: play.pose.timestamps.length,
+    timesSec: play.pose.timestamps.map((t) => Number(t - t0) / 1e9),
+    swingEvents: play.metrics.swingEvents,
+    hitter: play.pose.hitter,
+    bat: play.pose.bat,
+  });
+}
+
+function trackmanCloud(swing: TrackmanDemo["sessions"][number]["swings"][number]): PointCloud | null {
   const ev = swing.swingEvents;
   const valid = (v: number | undefined) => (v !== undefined && v > 0 && v < swing.frames ? v : undefined);
   const footPlant = valid(ev.frontFootPlant);

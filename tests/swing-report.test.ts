@@ -38,7 +38,7 @@ describe("swing report", () => {
 
   test("the kinematic sequence reports four peaks with times relative to contact", () => {
     const seq = kinematicSequence(swing);
-    expect(seq.map((s) => s.label)).toEqual(["Pelvis rotation", "Torso rotation", "Lead shoulder", "Lead elbow"]);
+    expect(seq.map((s) => s.label)).toEqual(["Pelvis rotation", "Torso rotation", "Lead arm", "Lead forearm"]);
     for (const s of seq) {
       expect(Number.isFinite(s.peakDegPerS)).toBe(true);
       expect(Math.abs(s.peakMs)).toBeLessThan(1000);

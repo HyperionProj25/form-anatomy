@@ -14,7 +14,7 @@ export type ViewState = ViewPreset | "custom";
 export type LayerFilter = "all" | "superficial" | "deep";
 export type SideFilter = "both" | "left" | "right";
 export type RegionFilter = Region | "all";
-export type ModalId = "about" | "guide" | "quiz" | "research" | "handout" | "swing-report" | null;
+export type ModalId = "about" | "guide" | "quiz" | "research" | "handout" | "swing-report" | "session-report" | null;
 
 export type Filters = {
   region: RegionFilter;
@@ -84,6 +84,8 @@ export type AppState = {
   motion: Motion | null;
   filters: Filters;
   modal: ModalId;
+  /** The TrackMan session the session report shows. */
+  sessionId: string | null;
 };
 
 export const initialState: AppState = {
@@ -107,6 +109,7 @@ export const initialState: AppState = {
   playlist: null,
   attach: false,
   motion: null,
+  sessionId: null,
   filters: { region: "all", layer: "all", side: "both", joint: "all", search: "" },
   modal: null,
 };
@@ -124,6 +127,7 @@ export type Action =
   | { type: "setLine"; line: LineId }
   | { type: "setFilters"; filters: Partial<Filters> }
   | { type: "setModal"; modal: ModalId }
+  | { type: "openSession"; id: string }
   | { type: "togglePath" }
   | { type: "startTour" }
   | { type: "tourStep"; step: number }
@@ -563,6 +567,8 @@ export function reducer(s: AppState, a: Action): AppState {
       return s.motion?.swing
         ? { ...s, motion: { ...s.motion, swing: { ...s.motion.swing, colour: a.on } } }
         : s;
+    case "openSession":
+      return { ...s, sessionId: a.id, modal: "session-report" };
     case "swingShapes":
       return s.motion?.swing
         ? { ...s, motion: { ...s.motion, swing: { ...s.motion.swing, shapes: a.on } } }

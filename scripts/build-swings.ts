@@ -14,14 +14,9 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
-import type { Quat } from "../src/data/quat";
-import { SEGMENT_IDS, type SegmentId } from "../src/data/segments";
-import type { SwingFile as AppSwingFile } from "../src/data/swings";
 import { fromCmu, fromTrackmanDemo } from "./swings/adapters";
-import { rootTrack, segmentQuats } from "./swings/body";
-import { curves, estimateEvents, faceForward, quality, resample, smooth, trim } from "./swings/kinematics";
-import { JOINT_KEYS, type Curves, type PointCloud } from "./swings/types";
-import { floorCorrect, validateBody } from "./swings/validate";
+import { buildSwing, FPS, type Built } from "./swings/finish";
+import { faceForward, resample, smooth } from "./swings/kinematics";
 
 const OUT_DIR = resolve("public/swings");
 const INDEX_PATH = resolve("src/data/swings-index.json");
@@ -29,93 +24,18 @@ const CMU_PATH =
   process.env.SWING_CMU ?? join(tmpdir(), "cmu124", "baseline-biomech", "data", "swing_124.json");
 const TRACKMAN_PATH =
   process.env.SWING_TRACKMAN ?? "C:/Users/User/Desktop/baseline-biomech/data/trackman-demo-swings.json";
-const FPS = 120;
-const BEFORE_S = 0.5;
-const AFTER_S = 0.35;
-
-type SwingFile = {
-  schema: "form.swing.v1";
-  id: string;
-  label: string;
-  source: PointCloud["source"];
-  handedness: "L" | "R";
-  fps: number;
-  frames: number;
-  events: PointCloud["events"];
-  eventsEstimated: boolean;
-  joints: Curves;
-  segments: Record<SegmentId, Quat[]>;
-  root: number[][];
-  bat: { knob: number[][]; tip: number[][] } | null;
-  caveats: string[];
-};
-
-type Built = { file: SwingFile; clippedPct: number };
-
-const round = (v: number, places: number) => Math.round(v * 10 ** places) / 10 ** places;
-
-function finish(cloud: PointCloud, id: string, label: string, caveats: string[]): Built | null {
-  const c = curves(cloud);
-  const withEvents = estimateEvents(cloud);
-  const t = trim(withEvents, c, BEFORE_S, AFTER_S);
-  const frames = t.cloud.times.length;
-  const q = quality(t.curves, t.cloud.events, frames);
-  const ranges = JOINT_KEYS.map((k) => `${k} ${round(Math.min(...t.curves[k]), 0)}..${round(Math.max(...t.curves[k]), 0)}`);
-  console.log(
-    `${id}: ${frames} frames, events ${JSON.stringify(t.cloud.events)}${t.cloud.eventsEstimated ? " (estimated)" : ""}, clipped ${q.clippedPct.toFixed(2)} %${q.ok ? "" : " REJECTED"}`,
-  );
-  console.log(`  ${ranges.join(" · ")}`);
-  if (!q.ok) return null;
-  const joints = Object.fromEntries(JOINT_KEYS.map((k) => [k, t.curves[k].map((v) => round(v, 2))])) as Curves;
-  const bat = t.cloud.bat
-    ? {
-        knob: t.cloud.bat.knob.map((p) => p.map((v) => round(v, 3))),
-        tip: t.cloud.bat.tip.map((p) => p.map((v) => round(v, 3))),
-      }
-    : null;
-  const allCaveats = [...caveats];
-  if (t.cloud.eventsEstimated && !allCaveats.includes("events-estimated")) allCaveats.push("events-estimated");
-  // Full-body rig (spec section 6): segment orientations and the pelvis track, on the trimmed clip.
-  const quats = segmentQuats(t.cloud);
-  const segments = Object.fromEntries(
-    SEGMENT_IDS.map((s) => [s, quats[s].map((qv) => qv.map((v) => round(v, 4)) as Quat)]),
-  ) as Record<SegmentId, Quat[]>;
-  const root = rootTrack(t.cloud).map((p) => p.map((v) => round(v, 3)));
-  const file: SwingFile = {
-    schema: "form.swing.v1",
-    id,
-    label,
-    source: cloud.source,
-    handedness: cloud.handedness,
-    fps: FPS,
-    frames,
-    events: t.cloud.events,
-    eventsEstimated: t.cloud.eventsEstimated,
-    joints,
-    segments,
-    root,
-    bat,
-    caveats: allCaveats,
-  };
-  floorCorrect(file as unknown as AppSwingFile);
-  const body = validateBody(file as unknown as AppSwingFile);
-  console.log(
-    `  body: knee RMS ${body.kneeRms.toFixed(2)}°, elbow RMS ${body.elbowRms.toFixed(2)}°, lowest toe ${(body.lowestToe * 100).toFixed(1)} cm${body.ok ? "" : " REJECTED"}`,
-  );
-  if (!body.ok) return null;
-  return { file, clippedPct: q.clippedPct };
-}
 
 function buildCmu(): Built | null {
   const raw = JSON.parse(readFileSync(CMU_PATH, "utf8")) as unknown;
   const cloud = faceForward(smooth(fromCmu(raw), 15));
   const hand = cloud.handedness === "R" ? "right" : "left";
-  return finish(cloud, "cmu-124-swing", `Hitter A · ${hand}-handed · optical capture`, [
-    "optical",
-    "no-bat",
-    "twist-held",
-    "one-axis",
-  ]);
+  return buildSwing(
+    cloud,
+    "cmu-124-swing",
+    `Hitter A · ${hand}-handed · optical capture`,
+    ["optical", "no-bat", "twist-held", "one-axis"],
+    console.log,
+  );
 }
 
 function buildTrackman(): Built[] {
@@ -129,7 +49,7 @@ function buildTrackman(): Built[] {
         return;
       }
       const prepared = faceForward(resample(smooth(cloud, 12), FPS));
-      const built = finish(prepared, `trackman-${s + 1}-${i + 1}`, "", ["markerless", "twist-held", "one-axis"]);
+      const built = buildSwing(prepared, `trackman-${s + 1}-${i + 1}`, "", ["markerless", "twist-held", "one-axis"], console.log);
       if (built) candidates.push({ built, handedness: cloud.handedness });
     });
   });

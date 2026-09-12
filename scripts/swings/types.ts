@@ -89,7 +89,7 @@ export const RANGES: Record<JointKey, [number, number]> = {
   shoulderR: [-90, 180],
   ankleL: [-40, 60],
   ankleR: [-40, 60],
-  pelvisRotation: [-180, 180],
-  torsoRotation: [-180, 180],
+  pelvisRotation: [-360, 360],
+  torsoRotation: [-360, 360],
   separation: [-180, 180],
 };
