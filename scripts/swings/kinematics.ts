@@ -128,7 +128,7 @@ function pt(cloud: PointCloud, name: PointName, i: number): Vec3 {
   return series[i];
 }
 
-function frameFrom(lateralRaw: Vec3, upRaw: Vec3): Frame {
+export function frameFrom(lateralRaw: Vec3, upRaw: Vec3): Frame {
   const lateral = norm(lateralRaw);
   const anterior = norm(cross(lateral, norm(upRaw)));
   const up = norm(cross(anterior, lateral));

@@ -63,6 +63,6 @@ Bat speed is the peak speed of TrackMan's tracked bat tip after a five-sample mo
 ## Limits
 
 - No hitter identity in the export: a session mixes hitters, so per-hand statistics describe a group.
-- Forearm and shin rotation are not observable from 21 points and are held; the shoulder girdle follows a quarter of the arm's rotation; the head is one rigid block.
+- Forearm and shin rotation are not observable from 21 points and are held; the shoulder girdle follows a quarter of the arm's rotation; the head is one rigid block whose facing comes from the measured ear line, so it holds its gaze while the torso turns.
 - Muscle-path changes are straight lines between attachment points on a generic model: no wrapping, tendon or fibre-angle model.
 - The generic model's segment lengths differ from the hitter's; retargeting uses orientation only, so joint angles are exact and positions approximate.

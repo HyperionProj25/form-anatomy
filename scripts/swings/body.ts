@@ -16,7 +16,7 @@ import {
 } from "../../src/data/quat";
 import { restBasis, SEGMENT_IDS, segmentPivot, type SegmentId } from "../../src/data/segments";
 import type { Vec3 } from "../../src/data/types";
-import { pelvisFrame, thoraxFrame } from "./kinematics";
+import { frameFrom, pelvisFrame, thoraxFrame } from "./kinematics";
 import type { PointCloud, PointName } from "./types";
 
 /** Below this bend the flexion plane is unreliable; the previous frame's second axis is kept. */
@@ -76,7 +76,12 @@ export function measuredBases(
   out.pelvis = basisFrom(pf.up, pf.anterior);
   out.lumbar = basisFrom(sub(torso, hipMid), normalize(add(pf.anterior, tf.anterior)));
   out.thorax = basisFrom(tf.up, tf.anterior);
-  out.head = basisFrom(sub(head, neck), tf.anterior);
+  // With the ears measured the head faces its own way (the hitter keeps watching the ball while the
+  // torso turns); without them it keeps the thorax's facing.
+  const earL = cloud.points.earL?.[i];
+  const earR = cloud.points.earR?.[i];
+  const headFacing = earL && earR ? frameFrom(sub(earL, earR), sub(head, neck)).anterior : tf.anterior;
+  out.head = basisFrom(sub(head, neck), headFacing);
   out.girdleL = out.thorax;
   out.girdleR = out.thorax;
   for (const side of ["L", "R"] as const) {

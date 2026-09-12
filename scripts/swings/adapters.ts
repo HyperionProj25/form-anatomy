@@ -65,6 +65,8 @@ type TrackmanDemo = {
 const TRACKMAN_MAP: Record<string, PointName> = {
   headTip: "head",
   neck: "neck",
+  leftEar: "earL",
+  rightEar: "earR",
   centerTorso: "torso",
   leftShoulder: "shoulderL",
   rightShoulder: "shoulderR",
@@ -131,7 +133,11 @@ function trackmanCloud(swing: TrackmanDemo["sessions"][number]["swings"][number]
   const points: PointCloud["points"] = {};
   for (const [src, name] of Object.entries(TRACKMAN_MAP)) {
     const series = swing.hitter[src];
-    if (!series) return null;
+    // Ears are optional: without them the head keeps the thorax's facing.
+    if (!series) {
+      if (name === "earL" || name === "earR") continue;
+      return null;
+    }
     points[name] = series.map((p) => [...p] as Vec3);
   }
   const hipL = points.hipL!;

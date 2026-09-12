@@ -167,7 +167,9 @@ checks without deploying.
   posed model reproduces the measured knee and elbow angles to a hundredth of
   a degree, and the build refuses a swing that does not. Forearm and shin
   rotation are held, the shoulder girdle takes a quarter of the arm's lift,
-  the patella rides with the shin, and the head is one rigid block; the card
+  the patella rides with the shin, and the head is one rigid block that faces
+  along TrackMan's measured ear line (so it holds its gaze while the torso
+  turns; captures without ears keep the thorax's facing); the card
   and the report say so.
 - Session reports: `npm run build:session -- 1` runs every full swing of a
   TrackMan session export through the pipeline and writes a session file

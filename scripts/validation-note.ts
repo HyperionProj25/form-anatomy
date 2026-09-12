@@ -107,7 +107,7 @@ function main() {
   lines.push("## Limits");
   lines.push("");
   lines.push("- No hitter identity in the export: a session mixes hitters, so per-hand statistics describe a group.");
-  lines.push("- Forearm and shin rotation are not observable from 21 points and are held; the shoulder girdle follows a quarter of the arm's rotation; the head is one rigid block.");
+  lines.push("- Forearm and shin rotation are not observable from 21 points and are held; the shoulder girdle follows a quarter of the arm's rotation; the head is one rigid block whose facing comes from the measured ear line, so it holds its gaze while the torso turns.");
   lines.push("- Muscle-path changes are straight lines between attachment points on a generic model: no wrapping, tendon or fibre-angle model.");
   lines.push("- The generic model's segment lengths differ from the hitter's; retargeting uses orientation only, so joint angles are exact and positions approximate.");
   mkdirSync(resolve("docs/validation"), { recursive: true });

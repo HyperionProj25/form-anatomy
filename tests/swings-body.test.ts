@@ -10,8 +10,12 @@ type Pose = Record<PointName, Vec3>;
 /** A capture standing exactly on the model's own joint centres, facing +Z. */
 function onModel(): Pose {
   const p = (name: string, side: "left" | "right") => [...pivotOf(name, side)!] as Vec3;
+  const headTop = p("headTop", "left");
   return {
-    head: p("headTop", "left"),
+    head: headTop,
+    // Ears a little below the crown, the left ear on the model's left (+x).
+    earL: [headTop[0] + 0.07, headTop[1] - 0.08, headTop[2]],
+    earR: [headTop[0] - 0.07, headTop[1] - 0.08, headTop[2]],
     neck: p("cervicothoracic", "left"),
     torso: p("thoracolumbar", "left"),
     shoulderL: p("shoulder", "left"),
@@ -79,6 +83,29 @@ describe("segment orientations", () => {
     expect(angleOf(q.thighL[1])).toBeLessThan(6);
     expect(angleOf(q.thighR[1])).toBeLessThan(3);
     expect(angleOf(q.footL[1])).toBeGreaterThan(80);
+  });
+
+  test("turning the ear line 60 degrees about vertical turns the head and leaves the thorax alone", () => {
+    const turned = onModel();
+    const axis = turned.head;
+    const turn = axisAngle([0, 1, 0], 60);
+    for (const name of ["earL", "earR"] as const) {
+      const rel: Vec3 = [turned[name][0] - axis[0], turned[name][1] - axis[1], turned[name][2] - axis[2]];
+      const r = rotate(turn, rel);
+      turned[name] = [axis[0] + r[0], axis[1] + r[1], axis[2] + r[2]];
+    }
+    const q = segmentQuats(cloudOf([onModel(), turned]));
+    expect(angleOf(q.head[1])).toBeGreaterThan(55);
+    expect(angleOf(q.head[1])).toBeLessThan(65);
+    // Trunk segments carry a few degrees of rest offset on the model's own pivots, so compare to frame 0.
+    expect(angleOf(q.thorax[1])).toBeCloseTo(angleOf(q.thorax[0]), 3);
+    expect(angleOf(q.pelvis[1])).toBeCloseTo(angleOf(q.pelvis[0]), 3);
+    // Without ears the head keeps the thorax's facing.
+    const noEars = cloudOf([onModel(), turned]);
+    delete noEars.points.earL;
+    delete noEars.points.earR;
+    const q0 = segmentQuats(noEars);
+    expect(angleOf(q0.head[1])).toBeCloseTo(angleOf(q0.head[0]), 3);
   });
 
   test("measured bases are orthonormal and the root track is zero at frame 0 and scaled after", () => {

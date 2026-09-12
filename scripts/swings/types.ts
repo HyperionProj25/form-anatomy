@@ -5,6 +5,9 @@ export type Vec3 = [number, number, number];
 export type PointName =
   | "head"
   | "neck"
+  /** Ears are optional (TrackMan only): they give the head its own facing. */
+  | "earL"
+  | "earR"
   | "torso"
   | "shoulderL"
   | "shoulderR"
