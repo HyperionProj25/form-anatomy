@@ -107,7 +107,7 @@ describe("swing url", () => {
   test("round-trips swing, joint, side and phase and ignores an unknown swing", () => {
     const state = {
       ...initialState,
-      motion: { joint: "hip" as const, side: "right" as const, phase: 0.412, playing: true, lines: false, frameNonce: 3, swing: { id: "cmu-124-swing", speed: 1, body: true, colour: false } },
+      motion: { joint: "hip" as const, side: "right" as const, phase: 0.412, playing: true, lines: false, frameNonce: 3, swing: { id: "cmu-124-swing", speed: 1, body: true, colour: false, shapes: false } },
     };
     const q = encodeState(state);
     expect(q).toContain("sw=cmu-124-swing");

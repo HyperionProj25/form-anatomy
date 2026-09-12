@@ -149,16 +149,21 @@ checks without deploying.
   and event frames only. Every joint moves about one axis; the other axes
   are held, and the card says so.
 - Whole-body swing: with a measured swing playing, "Whole body" (on by
-  default) poses all eighteen rig segments from the capture and re-skins every
-  muscle and connective part across them, so the whole model swings. "Colour
-  by change" paints each muscle amber as its path shortens and blue as it
-  lengthens, and the card ranks the eight muscles that shorten and lengthen
-  most between foot plant and contact. Segment orientations come from the
-  capture's own points; the posed model reproduces the measured knee and
-  elbow angles to a hundredth of a degree, and the build refuses a swing
-  that does not. Forearm and shin rotation are held, the shoulder girdle
-  takes a quarter of the arm's lift, the patella rides with the shin, and
-  the head is one rigid block; the card says so.
+  default) poses all eighteen rig segments from the capture and draws the
+  skeleton with every muscle as a line of action, origin to insertion,
+  coloured amber as its path shortens and blue as it lengthens; click a line
+  to select the muscle. "Muscle shapes (approximate)" re-skins the muscle
+  meshes across the segments instead, with a caveat. The swing report
+  (button on the card) gives, per functional muscle group and side, the
+  path-length change from foot plant to contact, the fastest shortening and
+  when, the longest path before contact, sparklines, the kinematic sequence
+  (pelvis, torso, lead shoulder, lead elbow peak speeds and times), a
+  side-by-side comparison with another swing, and a CSV of every number. The
+  posed model reproduces the measured knee and elbow angles to a hundredth of
+  a degree, and the build refuses a swing that does not. Forearm and shin
+  rotation are held, the shoulder girdle takes a quarter of the arm's lift,
+  the patella rides with the shin, and the head is one rigid block; the card
+  and the report say so.
 - Graphics levels: Auto, High and Low in the left-panel foot. High adds
   ground-truth ambient occlusion, a soft key-light shadow onto a floor that
   also reflects the body faintly, physical tissue materials with fibre

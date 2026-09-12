@@ -123,11 +123,15 @@ function Shell() {
     [swing, motionJoint, motionSide],
   );
   const bodyOn = state.motion?.swing?.body ?? false;
-  const body = useMemo(() => (swing && bodyOn ? bodyDrawing(swing) : null), [swing, bodyOn]);
+  const swingShapes = state.motion?.swing?.shapes ?? false;
+  const body = useMemo(
+    () => (swing && bodyOn ? bodyDrawing(swing, swingShapes ? "shapes" : "lines") : null),
+    [swing, bodyOn, swingShapes],
+  );
   const swingColour = state.motion?.swing?.colour ?? false;
   const motionPhase = state.motion?.phase ?? 0;
   const tint = useMemo(() => {
-    if (!swing || !body || !swingColour) return undefined;
+    if (!swing || !body || !swingColour || body.mode !== "shapes") return undefined;
     const frame = frameAt(swing, motionPhase);
     const map = new Map<string, string>();
     for (const [id, r] of lengthRatios(swing)) {

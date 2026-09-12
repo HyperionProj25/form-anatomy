@@ -585,3 +585,53 @@ file.
   of never matching the hitter's silhouette exactly.
 - Path length is not fibre length. Every screen that shows a percentage
   carries the sentence in 6.6.
+
+## 17. Second pass (12 September 2026): skeleton and muscle lines, swing report
+
+Chase, after seeing phase 15 live: "the muscles and the joints are horrible
+and not actually mapped … we need to map the muscle length and shortening
+etc, get something actionable out of this." Close up he is right: skinning
+557 separate meshes with automatic weights across joints that turn 60 to 90
+degrees smears the trunk like a twisted sheet, the open hands hold nothing,
+and the eye reads a lunge, not a swing. The posed skeleton is correct (the
+validation proves it); the soft-tissue guess is what fails.
+
+### 17.1 Default whole-body view: skeleton plus muscle lines
+
+- Bones follow their segments rigidly as before. Soft parts are hidden.
+- Every muscle with a measured path is drawn as a line of action, origin to
+  belly to insertion, posed through the same segment transforms that drive
+  the report. Colour is the muscle's current path-length change against its
+  setup length: amber shortening, blue lengthening, neutral grey within 1 %.
+  The selected muscle's line is cyan and thicker; hovering a line names it;
+  clicking selects it. This is how OpenSim and Visual3D show muscles, and it
+  is honest: a line's length is exactly the number the report uses.
+- The bat's knob sits at the midpoint of the two posed hand tips, along the
+  measured bat direction.
+- The skinned muscle shapes stay available as "Muscle shapes (approximate)",
+  off by default, with their caveat.
+
+### 17.2 Swing report
+
+- Functional groups (`src/data/muscle-groups.ts`): calf, shin, knee
+  extensors, knee flexors, hip extensors, hip flexors, hip adductors, hip
+  abductors and rotators, trunk rotators, trunk flexors, back extensors,
+  shoulder front, back and top, scapula movers, elbow flexors, elbow
+  extensors, forearm and wrist. Each is reported per side, lead and back.
+- Per row: mean path-length ratio series; ratio at foot plant and at
+  contact; change between them; fastest shortening and fastest lengthening
+  (ratio per second) and when, in ms relative to contact; the longest path
+  before contact (the load point) and when.
+- Kinematic sequence: the time and size of peak rotation speed of pelvis,
+  torso, lead shoulder and lead elbow, relative to contact.
+- A report modal from the swing card: the table with sparklines and the
+  sentence per row, the sequence, a second swing for side-by-side deltas,
+  and a CSV download of every number.
+- Wording: the report says what moved and when. It never says what the
+  hitter should change. Path length is not fibre length; the modal says so.
+
+### 17.3 Not changed
+
+- Phase 14's per-joint readout and phase 15's rig, pipeline and validation.
+- The caveats: twist held, girdle share, patella with the shin, head as a
+  block, neck muscles excluded from rankings.

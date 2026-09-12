@@ -178,6 +178,10 @@ export function changeTint(change: number): string | undefined {
 export type BodyDrawing = {
   frames: number;
   fps: number;
+  /** "lines": skeleton plus muscle lines of action (default); "shapes": skinned muscle meshes (approximate). */
+  mode: "lines" | "shapes";
+  /** Every muscle path, for the lines view; posed through `transformsAt`. */
+  paths: MusclePath[];
   transformsAt(frame: number): Transforms;
   /** The rigid segment a part follows, or null for a soft part. */
   segmentOf(partId: string): SegmentId | null;
@@ -187,17 +191,20 @@ export type BodyDrawing = {
   carrierOf(partId: string): SegmentId;
   bulgeOf(partId: string): { axisFrom: Vec3; axisTo: Vec3; belly: Vec3 } | null;
   ratioAt(partId: string, frame: number): number;
-  /** The bat hangs from the lead hand's tip along the measured bat direction (unit, per frame). */
-  bat: { dirs: Vec3[]; anchor: Vec3; hand: SegmentId } | null;
+  /** The bat's knob sits between the two posed hand tips, along the measured bat direction (unit, per frame). */
+  bat: { dirs: Vec3[]; anchors: [Vec3, Vec3]; hands: [SegmentId, SegmentId] } | null;
 };
 
-export function bodyDrawing(swing: SwingFile): BodyDrawing {
+export function bodyDrawing(swing: SwingFile, mode: BodyDrawing["mode"] = "lines"): BodyDrawing {
   const ratios = lengthRatios(swing);
-  const pathById = new Map(musclePaths().map((p) => [p.id, p]));
+  const paths = musclePaths();
+  const pathById = new Map(paths.map((p) => [p.id, p]));
   const part = (id: string): CatalogPart | undefined => partById(id);
   return {
     frames: swing.frames,
     fps: swing.fps,
+    mode,
+    paths,
     transformsAt: (f) => transformsAt(swing, f),
     segmentOf: (id) => {
       const p = part(id);
@@ -219,8 +226,8 @@ export function bodyDrawing(swing: SwingFile): BodyDrawing {
     bat: swing.bat
       ? {
           dirs: swing.bat.tip.map((tip, i) => normalize(sub(tip, swing.bat!.knob[i]))),
-          anchor: pivotOf("handTip", swing.handedness === "R" ? "left" : "right")!,
-          hand: swing.handedness === "R" ? "handL" : "handR",
+          anchors: [pivotOf("handTip", "left")!, pivotOf("handTip", "right")!],
+          hands: ["handL", "handR"],
         }
       : null,
   };

@@ -58,6 +58,7 @@ export function encodeState(s: AppState): string {
     if (s.motion.phase > 0) q.set("sp", String(Math.round(s.motion.phase * 1000) / 1000));
     if (!s.motion.swing.body) q.set("sb", "0");
     if (s.motion.swing.colour) q.set("sc", "1");
+    if (s.motion.swing.shapes) q.set("sh", "1");
   }
   // Commas and colons are safe in a query string; keep them readable instead of %2C and %3A.
   const str = q.toString().replace(/%2C/g, ",").replace(/%3A/g, ":");
@@ -145,7 +146,13 @@ export function decodeSearch(search: string): Partial<AppState> {
       playing: false,
       lines: false,
       frameNonce: 0,
-      swing: { id: swing.id, speed: 0.5, body: q.get("sb") !== "0", colour: q.get("sc") === "1" },
+      swing: {
+        id: swing.id,
+        speed: 0.5,
+        body: q.get("sb") !== "0",
+        colour: q.get("sc") === "1",
+        shapes: q.get("sh") === "1",
+      },
     };
     out.filters = { ...(out.filters ?? initialState.filters), joint: swingJoint };
   }

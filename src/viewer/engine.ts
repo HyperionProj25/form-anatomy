@@ -15,7 +15,8 @@ import {
   type RenderLevel,
 } from "./quality";
 import type { PartStyle } from "./appearance";
-import type { BodyDrawing } from "../data/body";
+import type { BodyDrawing, MusclePath } from "../data/body";
+import { COLORS } from "./appearance";
 import type { Vec3 } from "../data/types";
 
 export type ViewPreset = "front" | "back" | "side";
@@ -129,6 +130,16 @@ function hashOf(s: string): number {
 
 /** Duration of the slow dolly after a cinematic flight. */
 const DOLLY_MS = 6000;
+/** Muscle lines of action in the whole-body swing: neutral, then amber as they shorten, blue as they lengthen. */
+const LINE_NEUTRAL = new THREE.Color("#cfc7b8");
+const LINE_SHORTEN = new THREE.Color("#f2a531");
+const LINE_LENGTHEN = new THREE.Color("#3d8bff");
+const LINE_RADIUS = 0.004;
+function lineColor(change: number): THREE.Color {
+  if (!Number.isFinite(change) || Math.abs(change) < 0.01) return LINE_NEUTRAL.clone();
+  const k = 0.35 + 0.65 * Math.min(1, Math.abs(change) / 0.15);
+  return LINE_NEUTRAL.clone().lerp(change < 0 ? LINE_SHORTEN : LINE_LENGTHEN, k);
+}
 
 /** Smooth 0..1 ramp across a band; the same shape src/data/motion.ts uses for the belly. */
 function bandWeight(signedDistance: number, band: number): number {
@@ -260,6 +271,10 @@ export class AnatomyEngine {
     uniforms: BulgeUniforms | null;
   }[] = [];
   private bodyRigid: { id: string; seg: string }[] = [];
+  private bodyHidden: string[] = [];
+  private bodyLines: { id: string; path: MusclePath; first: THREE.Mesh; second: THREE.Mesh; material: THREE.MeshStandardMaterial }[] = [];
+  private lineGroup = new THREE.Group();
+  private selectedId: string | null = null;
   private batMesh: THREE.Mesh | null = null;
   private pulse: { id: string; uniforms: BulgeUniforms } | null = null;
   private targets = new Map<string, Target>();
@@ -345,7 +360,7 @@ export class AnatomyEngine {
     const rim = new THREE.DirectionalLight(0xffffff, 1.1);
     rim.position.set(-2, 2, -3);
     this.scene.add(key, fill, rim);
-    this.scene.add(this.pathGroup, this.pullGroup, this.cableGroup);
+    this.scene.add(this.pathGroup, this.pullGroup, this.cableGroup, this.lineGroup);
 
     this.observer = new ResizeObserver(this.resize);
     this.observer.observe(host);
@@ -621,6 +636,8 @@ export class AnatomyEngine {
 
   /** Draw a thin halo around one part (or none). */
   setSelected(id: string | null): void {
+    this.selectedId = id;
+    if (this.body) this.applyBody(this.motionPhase * (this.body.frames - 1));
     if (this.halo) {
       this.halo.parent?.remove(this.halo);
       (this.halo.material as THREE.Material).dispose();
@@ -896,6 +913,12 @@ export class AnatomyEngine {
         this.bodyRigid.push({ id, seg: rigidSeg });
         continue;
       }
+      if (body.mode === "lines") {
+        // Skeleton plus lines of action: soft shapes stay out of the picture.
+        this.bodyHidden.push(id);
+        mesh.visible = false;
+        continue;
+      }
       const positions = mesh.geometry.attributes.position.array as Float32Array;
       const skin = body.skinOf(id, positions, c);
       if (!skin) {
@@ -947,6 +970,18 @@ export class AnatomyEngine {
       skinned.bind(this.bodySkeleton, new THREE.Matrix4());
       this.bodyTwins.push({ id, skinned, material, uniforms });
       mesh.visible = false;
+    }
+    if (body.mode === "lines") {
+      for (const path of body.paths) {
+        const material = new THREE.MeshStandardMaterial({ color: LINE_NEUTRAL, roughness: 0.55, metalness: 0 });
+        const first = new THREE.Mesh(new THREE.CylinderGeometry(LINE_RADIUS, LINE_RADIUS, 1, 8, 1, false), material);
+        const second = new THREE.Mesh(new THREE.CylinderGeometry(LINE_RADIUS, LINE_RADIUS, 1, 8, 1, false), material);
+        first.userData.catalogId = path.id;
+        second.userData.catalogId = path.id;
+        first.castShadow = second.castShadow = this.level === "high";
+        this.lineGroup.add(first, second);
+        this.bodyLines.push({ id: path.id, path, first, second, material });
+      }
     }
     if (body.bat) {
       this.batMesh = new THREE.Mesh(
@@ -1010,9 +1045,29 @@ export class AnatomyEngine {
       AnatomyEngine.placeSegment(cable.second, via, to);
       cable.dot.position.copy(to);
     }
+    const vec = (v: Vec3) => new THREE.Vector3(v[0], v[1], v[2]);
+    for (const line of this.bodyLines) {
+      const p = line.path;
+      const from = place(p.fromSeg, vec(p.from));
+      const to = place(p.toSeg, vec(p.to));
+      const via = new THREE.Vector3();
+      p.viaSegments.forEach((s, i) => via.addScaledVector(place(s, vec(p.via)), p.viaWeights[i]));
+      AnatomyEngine.placeSegment(line.first, from, via);
+      AnatomyEngine.placeSegment(line.second, via, to);
+      const selected = line.id === this.selectedId;
+      const hovered = line.id === this.hoverId;
+      const k = selected ? 2 : hovered ? 1.5 : 1;
+      line.first.scale.x = line.first.scale.z = k;
+      line.second.scale.x = line.second.scale.z = k;
+      if (selected) line.material.color.set(COLORS.selected);
+      else line.material.color.copy(lineColor(body.ratioAt(line.id, frame) - 1));
+      line.material.emissive.set(selected ? COLORS.selectedEmissive : hovered ? "#4a4238" : "#000000");
+    }
     if (this.batMesh && body.bat) {
       const f = Math.min(body.bat.dirs.length - 1, Math.max(0, Math.round(frame)));
-      const knob = place(body.bat.hand, new THREE.Vector3(...body.bat.anchor));
+      const knob = place(body.bat.hands[0], vec(body.bat.anchors[0]))
+        .add(place(body.bat.hands[1], vec(body.bat.anchors[1])))
+        .multiplyScalar(0.5);
       const dir = body.bat.dirs[f];
       const tip = knob.clone().add(new THREE.Vector3(dir[0], dir[1], dir[2]).multiplyScalar(0.85));
       AnatomyEngine.placeSegment(this.batMesh, knob, tip);
@@ -1041,6 +1096,19 @@ export class AnatomyEngine {
       mesh.matrixWorldNeedsUpdate = true;
     }
     this.bodyRigid = [];
+    for (const id of this.bodyHidden) {
+      const mesh = this.meshes.get(id);
+      const target = this.targets.get(id);
+      if (mesh) mesh.visible = target ? target.style.visible : true;
+    }
+    this.bodyHidden = [];
+    for (const line of this.bodyLines) {
+      this.lineGroup.remove(line.first, line.second);
+      line.first.geometry.dispose();
+      line.second.geometry.dispose();
+      line.material.dispose();
+    }
+    this.bodyLines = [];
     this.bodyBones.clear();
     this.bodySkeleton = null;
     if (this.batMesh) {
@@ -1450,6 +1518,11 @@ export class AnatomyEngine {
 
   private setHover(id: string | null): void {
     if (id === this.hoverId) return;
+    if (this.body && this.bodyLines.length) {
+      this.hoverId = id;
+      this.applyBody(this.motionPhase * (this.body.frames - 1));
+      return;
+    }
     if (this.hoverId && this.targets.has(this.hoverId)) this.pending.add(this.hoverId);
     this.hoverId = id;
     if (id && this.targets.has(id) && !this.reduced) this.pending.add(id);
@@ -1599,6 +1672,7 @@ export class AnatomyEngine {
     for (const d of this.deformed) if (d.material.opacity > 0.2) candidates.push(d.skinned);
     for (const twin of this.bodyTwins)
       if (twin.skinned.visible && twin.material.opacity > 0.2) candidates.push(twin.skinned);
+    for (const line of this.bodyLines) candidates.push(line.first, line.second);
     return this.raycaster.intersectObjects(candidates, false)[0]?.object as PartMesh | undefined;
   }
 

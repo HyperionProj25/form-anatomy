@@ -14,7 +14,7 @@ export type ViewState = ViewPreset | "custom";
 export type LayerFilter = "all" | "superficial" | "deep";
 export type SideFilter = "both" | "left" | "right";
 export type RegionFilter = Region | "all";
-export type ModalId = "about" | "guide" | "quiz" | "research" | "handout" | null;
+export type ModalId = "about" | "guide" | "quiz" | "research" | "handout" | "swing-report" | null;
 
 export type Filters = {
   region: RegionFilter;
@@ -52,7 +52,7 @@ export type Motion = {
   lines: boolean;
   frameNonce: number;
   /** Set while a measured swing drives the joint: which swing, and playback speed (1 = real time). */
-  swing?: { id: string; speed: number; body: boolean; colour: boolean };
+  swing?: { id: string; speed: number; body: boolean; colour: boolean; shapes: boolean };
 };
 
 export type AppState = {
@@ -165,6 +165,7 @@ export type Action =
   | { type: "swingSpeed"; speed: number }
   | { type: "swingBody"; on: boolean }
   | { type: "swingColour"; on: boolean }
+  | { type: "swingShapes"; on: boolean }
   | { type: "reset" }
   | { type: "hydrate"; state: Partial<AppState> };
 
@@ -529,7 +530,7 @@ export function reducer(s: AppState, a: Action): AppState {
           playing: true,
           lines: false,
           frameNonce: s.cameraNonce + 1,
-          swing: { id: a.id, speed: 0.5, body: true, colour: false },
+          swing: { id: a.id, speed: 0.5, body: true, colour: false, shapes: false },
         },
         cameraNonce: s.cameraNonce + 1,
       };
@@ -561,6 +562,10 @@ export function reducer(s: AppState, a: Action): AppState {
     case "swingColour":
       return s.motion?.swing
         ? { ...s, motion: { ...s.motion, swing: { ...s.motion.swing, colour: a.on } } }
+        : s;
+    case "swingShapes":
+      return s.motion?.swing
+        ? { ...s, motion: { ...s.motion, swing: { ...s.motion.swing, shapes: a.on } } }
         : s;
     case "reset":
       return {

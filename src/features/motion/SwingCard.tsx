@@ -1,4 +1,4 @@
-import { Activity, ChevronDown, Pause, Play, X } from "lucide-react";
+import { Activity, ChevronDown, FileText, Pause, Play, X } from "lucide-react";
 import { useMemo } from "react";
 import { changeRanking, type Ranked } from "../../data/body";
 import { JOINT_LABELS, type JointId } from "../../data/joints";
@@ -233,11 +233,32 @@ export default function SwingCard({ swing, setup, onCollapse }: Props) {
           <label className="motion-lines">
             <input
               type="checkbox"
-              checked={m.swing.colour}
-              onChange={(e) => dispatch({ type: "swingColour", on: e.target.checked })}
+              checked={m.swing.shapes}
+              onChange={(e) => dispatch({ type: "swingShapes", on: e.target.checked })}
             />
-            Colour by change (amber shortens, blue lengthens)
+            Muscle shapes (approximate)
           </label>
+          {m.swing.shapes ? (
+            <label className="motion-lines">
+              <input
+                type="checkbox"
+                checked={m.swing.colour}
+                onChange={(e) => dispatch({ type: "swingColour", on: e.target.checked })}
+              />
+              Colour by change (amber shortens, blue lengthens)
+            </label>
+          ) : (
+            <p className="subtle swing-body-note">
+              Muscle lines of action, origin to insertion: amber as a path shortens, blue as it
+              lengthens, grey within 1 %. Click a line to select the muscle.
+            </p>
+          )}
+          <button
+            className="outline-button swing-report-button"
+            onClick={() => dispatch({ type: "setModal", modal: "swing-report" })}
+          >
+            <FileText size={14} /> Swing report
+          </button>
           {ranked && (
             <div className="motion-roles swing-ranked">
               <div>
