@@ -57,12 +57,10 @@ Two sources exist on Chase's machine (`Desktop/baseline-biomech`, and the
   that ships with the sample: pose and metrics align by first timestamp, never
   by playId; there is no hitter ID and a session mixes left- and right-handed
   swings; `swingPlane.centroid` is in feet.
-- Licensing: this is a sample TrackMan supplied to Baseline Analytics. Form is
-  a public repository and a public site. Nothing derived from the TrackMan
-  files goes into the repository or the deployed site until TrackMan confirms
-  in writing that derived, anonymised joint-angle curves from a few swings may
-  be published with attribution. Until then the TrackMan path is a private
-  build (section 4.6).
+- Licensing: this is a sample TrackMan supplied to Baseline Analytics. Chase
+  (11 September) decided derived, anonymised joint-angle curves from a few
+  swings may ship ("this is just a local tool"); the files carry angles and
+  event frames only, no timestamps, ids or session details.
 
 ### 2.2 CMU motion capture, subject 124, swing
 
@@ -199,8 +197,9 @@ they can be checked against the raw data by anyone with the file:
   shoulder-elbow-wrist.
 - hip = angle between the thigh long axis and the pelvis long axis, signed in
   the pelvis sagittal plane.
-- shoulder = angle between the upper-arm long axis and the thorax long axis
-  (elevation, plane-agnostic).
+- shoulder = flexion: the upper-arm long axis projected on the thorax
+  sagittal plane, measured from the trunk's down axis, positive forward (the
+  model's shoulder axis is flexion, so elevation would not map onto it).
 - ankle = 90° minus the angle between the shank long axis and the foot long
   axis, positive plantarflexion.
 - pelvisRotation, torsoRotation = heading of the pelvis and thorax anterior
@@ -560,6 +559,10 @@ muscle); a full-body headless render set in CI.
    pursuing for fidelity? It changes nothing in this design.
 
 ## 12. Risks
+
+Built: phase 14 on 11 September 2026 (plan
+`docs/superpowers/plans/2026-09-11-phase-14-swing-lab.md`). Phase 15 remains
+as specified.
 
 - Twist is not observable in either source (forearm pronation, tibial
   rotation, hand orientation without the bat). Held at neutral and said so.

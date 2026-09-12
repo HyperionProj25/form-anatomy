@@ -42,6 +42,8 @@ type Props = {
   motionPhase?: number;
   motionPlaying?: boolean;
   motionLines?: boolean;
+  /** Playback speed of a measured curve, 1 = real time. */
+  motionSpeed?: number;
   onMotionPhase?(phase: number): void;
   /** Contraction pulse on one muscle along its line of action. */
   pulse?: { id: string; axisFrom: Vec3; axisTo: Vec3; belly: Vec3 } | null;
@@ -167,6 +169,10 @@ export default function Viewer(props: Props) {
   useEffect(() => {
     if (ready) engine.current?.setCablesVisible(!!props.motionLines);
   }, [ready, props.motionLines, props.motion]);
+
+  useEffect(() => {
+    if (ready) engine.current?.setMotionSpeed(props.motionSpeed ?? 1);
+  }, [ready, props.motionSpeed, props.motion]);
 
   useEffect(() => {
     if (ready) engine.current?.setPulse(props.pulse ?? null);

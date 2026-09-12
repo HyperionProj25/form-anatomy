@@ -51,6 +51,8 @@ export type Motion = {
   /** Draw the lines of action as well as the deformed muscles. */
   lines: boolean;
   frameNonce: number;
+  /** Set while a measured swing drives the joint: which swing, and playback speed (1 = real time). */
+  swing?: { id: string; speed: number };
 };
 
 export type AppState = {
@@ -158,6 +160,9 @@ export type Action =
   | { type: "motionSide"; side: MotionSide }
   | { type: "motionLines"; lines: boolean }
   | { type: "motionStop" }
+  | { type: "swingStart"; id: string; joint: JointId; side: MotionSide }
+  | { type: "swingJoint"; joint: JointId; side: MotionSide }
+  | { type: "swingSpeed"; speed: number }
   | { type: "reset" }
   | { type: "hydrate"; state: Partial<AppState> };
 
@@ -505,6 +510,40 @@ export function reducer(s: AppState, a: Action): AppState {
         : s;
     case "motionStop":
       return { ...s, motion: null };
+    case "swingStart":
+      return {
+        ...s,
+        mode: s.mode === "fascia" ? "muscles" : s.mode,
+        selected: null,
+        isolated: false,
+        quiz: null,
+        playlist: idlePlaylist(s),
+        ...noTour,
+        filters: { ...s.filters, joint: a.joint },
+        motion: {
+          joint: a.joint,
+          side: a.side,
+          phase: 0,
+          playing: true,
+          lines: false,
+          frameNonce: s.cameraNonce + 1,
+          swing: { id: a.id, speed: 0.5 },
+        },
+        cameraNonce: s.cameraNonce + 1,
+      };
+    case "swingJoint":
+      return s.motion?.swing
+        ? {
+            ...s,
+            filters: { ...s.filters, joint: a.joint },
+            motion: { ...s.motion, joint: a.joint, side: a.side, frameNonce: s.cameraNonce + 1 },
+            cameraNonce: s.cameraNonce + 1,
+          }
+        : s;
+    case "swingSpeed":
+      return s.motion?.swing
+        ? { ...s, motion: { ...s.motion, swing: { ...s.motion.swing, speed: a.speed } } }
+        : s;
     case "reset":
       return {
         ...s,

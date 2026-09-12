@@ -46,6 +46,10 @@ export type MotionDrawing = {
   band: number;
   axis: Vec3;
   range: [number, number];
+  /** A measured angle curve, degrees per frame; when present it replaces the range sweep. */
+  curve?: { angles: number[]; fps: number };
+  /** Playback speed for a curve, 1 = real time. */
+  speed?: number;
   movingIds: string[];
   /** Frame radius of the joint region; cable thickness scales with it so a jaw is not drawn with knee-sized tubes. */
   radius: number;
@@ -130,6 +134,18 @@ function bandWeight(signedDistance: number, band: number): number {
 
 /** Seconds for a full sweep of a joint motion in one direction. */
 const MOTION_SWEEP_MS = 2600;
+/** Pause at the end of a measured swing before it restarts. */
+const CURVE_HOLD_MS = 600;
+
+/** Linear sample of a curve at a phase in 0..1. */
+function sampleCurve(angles: number[], phase: number): number {
+  const n = angles.length;
+  if (!n) return 0;
+  const x = Math.min(1, Math.max(0, phase)) * (n - 1);
+  const i = Math.floor(x);
+  const k = x - i;
+  return angles[i] + (angles[Math.min(n - 1, i + 1)] - angles[i]) * k;
+}
 
 type PartMesh = THREE.Mesh<THREE.BufferGeometry, THREE.MeshStandardMaterial>;
 type Target = { style: PartStyle; color: THREE.Color; emissive: THREE.Color };
@@ -222,6 +238,8 @@ export class AnatomyEngine {
   private motionT = 0;
   private motionDir = 1;
   private motionPlaying = false;
+  private motionHold = 0;
+  private motionSpeed = 1;
   private motionReported = 0;
   private posed = new Set<string>();
   private deformed: Deformed[] = [];
@@ -756,10 +774,16 @@ export class AnatomyEngine {
     this.motionPlaying = on && !this.reduced;
   }
 
+  setMotionSpeed(speed: number): void {
+    this.motionSpeed = Math.max(0.05, speed);
+  }
+
   private applyMotion(): void {
     const m = this.motion;
     if (!m) return;
-    const deg = m.range[0] + (m.range[1] - m.range[0]) * this.motionPhase;
+    const deg = m.curve
+      ? sampleCurve(m.curve.angles, this.motionPhase)
+      : m.range[0] + (m.range[1] - m.range[0]) * this.motionPhase;
     const q = new THREE.Quaternion().setFromAxisAngle(
       new THREE.Vector3(...m.axis).normalize(),
       (deg * Math.PI) / 180,
@@ -1272,16 +1296,31 @@ export class AnatomyEngine {
         );
     }
     if (this.motion && this.motionPlaying) {
-      this.motionT += (this.motionDir * dt) / MOTION_SWEEP_MS;
-      if (this.motionT >= 1) {
-        this.motionT = 1;
-        this.motionDir = -1;
-      } else if (this.motionT <= 0) {
-        this.motionT = 0;
-        this.motionDir = 1;
+      if (this.motion.curve) {
+        // A measured curve plays forward at its own rate, holds at the end, then restarts.
+        const frames = Math.max(2, this.motion.curve.angles.length);
+        if (this.motionT >= 1) {
+          this.motionHold += dt;
+          if (this.motionHold >= CURVE_HOLD_MS) {
+            this.motionHold = 0;
+            this.motionT = 0;
+          }
+        } else {
+          this.motionT = Math.min(1, this.motionT + ((dt / 1000) * this.motionSpeed * this.motion.curve.fps) / (frames - 1));
+        }
+        this.motionPhase = this.motionT;
+      } else {
+        this.motionT += (this.motionDir * dt) / MOTION_SWEEP_MS;
+        if (this.motionT >= 1) {
+          this.motionT = 1;
+          this.motionDir = -1;
+        } else if (this.motionT <= 0) {
+          this.motionT = 0;
+          this.motionDir = 1;
+        }
+        // Eased, so the joint slows into each end of its range instead of bouncing off it.
+        this.motionPhase = easeInOut(this.motionT);
       }
-      // Eased, so the joint slows into each end of its range instead of bouncing off it.
-      this.motionPhase = easeInOut(this.motionT);
       this.applyMotion();
       if (now - this.motionReported > 120) {
         this.motionReported = now;

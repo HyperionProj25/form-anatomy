@@ -139,6 +139,15 @@ checks without deploying.
   through any mode, filter or hidden layer.
 - Works offline after the first visit and installs as an app. The 8 MB model
   is cached on first use so later visits open instantly.
+- Measured swings: "Move a joint" also lists four captured baseball swings
+  (CMU subject 124 and three TrackMan markerless captures). A swing drives
+  one joint at a time by its measured angle, with a timeline marking foot
+  plant, peak bat speed and contact, lead and back joint chips, the angle
+  curve, and the shortening and lengthening readout computed between foot
+  plant and contact. `npm run build:swings` rebuilds `public/swings/` from
+  the sources (see `scripts/build-swings.ts`); the files carry angle curves
+  and event frames only. Every joint moves about one axis; the other axes
+  are held, and the card says so.
 - Graphics levels: Auto, High and Low in the left-panel foot. High adds
   ground-truth ambient occlusion, a soft key-light shadow onto a floor that
   also reflects the body faintly, physical tissue materials with fibre

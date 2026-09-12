@@ -132,6 +132,13 @@ function About({ onResearch }: { onResearch: () => void }) {
       <a href={`${import.meta.env.BASE_URL}body.glb`} download>
         Download the anatomy model
       </a>
+      <h3>Swing motion</h3>
+      <p>
+        Measured swings are joint-angle curves derived from motion capture: CMU Graphics Lab Motion
+        Capture Database, subject 124 (NSF EIA-0196217, free, commercial use permitted), and a
+        TrackMan markerless hitting capture supplied to Baseline Analytics. The files carry angles
+        and event frames only; no identities, timestamps or session details.
+      </p>
       <h3>Structure facts</h3>
       <p>
         Origins, insertions, actions, innervation and articulations are adapted from Wikipedia

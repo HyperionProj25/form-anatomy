@@ -7,6 +7,10 @@ import { displayName, saveNamePref } from "./data/names";
 import { pullFor } from "./data/pull";
 import { motionSetup } from "./data/motion";
 import MotionCard from "./features/motion/MotionCard";
+import SwingCard from "./features/motion/SwingCard";
+import { useSwing } from "./features/motion/useSwing";
+import { JOINT_LABELS } from "./data/joints";
+import { curveOf, roleForSide, swingRange } from "./data/swings";
 import type { MotionDrawing } from "./viewer/engine";
 import { StoreProvider, useStore } from "./state/store";
 import { useUrlSync } from "./state/useUrlSync";
@@ -95,9 +99,27 @@ function Shell() {
   const activeLine = lineById(state.line) ?? lines[0];
   const motionJoint = state.motion?.joint;
   const motionSide = state.motion?.side;
-  const motion = useMemo(
-    () => (motionJoint && motionSide ? (motionSetup(motionJoint, motionSide) ?? null) : null),
-    [motionJoint, motionSide],
+  const swingId = state.motion?.swing?.id;
+  const swingSpeed = state.motion?.swing?.speed;
+  const swing = useSwing(swingId);
+  const motion = useMemo(() => {
+    if (!motionJoint || !motionSide) return null;
+    if (swingId) {
+      // A measured swing: the cables' change runs from foot plant to contact, not over a teaching range.
+      if (!swing) return null;
+      const role = roleForSide(motionSide, swing.handedness);
+      return (
+        motionSetup(motionJoint, motionSide, {
+          range: swingRange(swing, motionJoint, motionSide),
+          label: `${role === "lead" ? "Lead" : "Back"} ${JOINT_LABELS[motionJoint].toLowerCase()}`,
+        }) ?? null
+      );
+    }
+    return motionSetup(motionJoint, motionSide) ?? null;
+  }, [motionJoint, motionSide, swingId, swing]);
+  const swingCurve = useMemo(
+    () => (swing && motionJoint && motionSide ? { angles: curveOf(swing, motionJoint, motionSide), fps: swing.fps } : undefined),
+    [swing, motionJoint, motionSide],
   );
   const motionDrawing = useMemo<MotionDrawing | null>(
     () =>
@@ -107,6 +129,8 @@ function Shell() {
         band: motion.band,
         axis: motion.axis,
         range: motion.range,
+        curve: swingCurve,
+        speed: swingSpeed,
         movingIds: motion.movingIds,
         radius: motion.radius,
         cables: motion.cables.map((c) => ({
@@ -120,7 +144,7 @@ function Shell() {
           color: c.role === "shortens" ? "#f2a531" : c.role === "lengthens" ? "#3d8bff" : "#8a8f86",
         })),
       },
-    [motion],
+    [motion, swingCurve, swingSpeed],
   );
   const attachments = useMemo(() => {
     if (!state.attach || state.mode === "fascia" || !state.selected || state.motion) return undefined;
@@ -333,6 +357,7 @@ function Shell() {
             motionPhase={state.motion?.phase ?? 0}
             motionPlaying={!!state.motion?.playing}
             motionLines={!!state.motion?.lines}
+            motionSpeed={swingSpeed ?? 1}
             onMotionPhase={(phase) => dispatch({ type: "motionTick", phase })}
             pulse={pulse}
             graphics={state.graphics}
@@ -389,9 +414,13 @@ function Shell() {
               (folded.has("motion") ? (
                 <DockStrip
                   icon={<Activity size={14} />}
-                  label={motion.joint === "tmj" ? motion.label : `${motion.label} · ${state.motion.side}`}
+                  label={
+                    state.motion.swing || motion.joint === "tmj" ? motion.label : `${motion.label} · ${state.motion.side}`
+                  }
                   onExpand={() => fold("motion", false)}
                 />
+              ) : state.motion.swing && swing ? (
+                <SwingCard swing={swing} setup={motion} onCollapse={() => fold("motion", true)} />
               ) : (
                 <MotionCard setup={motion} onCollapse={() => fold("motion", true)} />
               ))}

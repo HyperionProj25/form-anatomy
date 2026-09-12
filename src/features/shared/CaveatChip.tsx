@@ -3,7 +3,7 @@ import type { ReactNode } from "react";
 
 type Props = {
   /** The chip's label: what kind of caveat this is. */
-  label: "Teaching model" | "Approximate";
+  label: "Teaching model" | "Approximate" | "Measured swing";
   /** The caveat itself, shown when the chip is opened. */
   children: ReactNode;
   /** Dark chips sit on the stage; light chips sit in the panels and cards. */

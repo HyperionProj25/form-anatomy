@@ -1,6 +1,7 @@
 import { ChevronUp, Move, RotateCcw, Square, ZoomIn, ZoomOut } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import { JOINT_IDS, JOINT_LABELS, jointPhrase } from "../../data/joints";
+import { SWING_INDEX, roleForSide, sideForRole, swingById } from "../../data/swings";
 import { useStore } from "../../state/store";
 
 type Props = { onZoom: (factor: number) => void };
@@ -33,6 +34,13 @@ export default function StageToolbar({ onZoom }: Props) {
   }, [open]);
 
   const moving = state.motion?.joint;
+  const swing = state.motion?.swing ? swingById(state.motion.swing.id) : undefined;
+  const menuLabel =
+    moving && swing
+      ? `Swing · ${roleForSide(state.motion!.side, swing.handedness)} ${jointPhrase(moving)}`
+      : moving
+        ? `Moving the ${jointPhrase(moving)}`
+        : "Move a joint";
   const deep = state.filters.layer === "deep";
 
   return (
@@ -60,7 +68,7 @@ export default function StageToolbar({ onZoom }: Props) {
               onClick={() => setOpen((o) => !o)}
             >
               <Move size={14} />
-              {moving ? `Moving the ${jointPhrase(moving)}` : "Move a joint"}
+              {menuLabel}
               <ChevronUp size={13} />
             </button>
             {open && (
@@ -69,13 +77,27 @@ export default function StageToolbar({ onZoom }: Props) {
                   <button
                     key={j}
                     role="menuitem"
-                    className={moving === j ? "active" : ""}
+                    className={moving === j && !swing ? "active" : ""}
                     onClick={() => {
                       setOpen(false);
                       dispatch({ type: "motionStart", joint: j });
                     }}
                   >
                     {JOINT_LABELS[j]}
+                  </button>
+                ))}
+                <p className="menu-group">Measured swing</p>
+                {SWING_INDEX.map((s) => (
+                  <button
+                    key={s.id}
+                    role="menuitem"
+                    className={swing?.id === s.id ? "active" : ""}
+                    onClick={() => {
+                      setOpen(false);
+                      dispatch({ type: "swingStart", id: s.id, joint: "knee", side: sideForRole("lead", s.handedness) });
+                    }}
+                  >
+                    {s.label}
                   </button>
                 ))}
                 {moving && (

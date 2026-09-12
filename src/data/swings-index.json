@@ -1,0 +1,87 @@
+[
+  {
+    "id": "cmu-124-swing",
+    "label": "Hitter A · right-handed · optical capture",
+    "handedness": "R",
+    "kind": "cmu",
+    "frames": 125,
+    "fps": 120,
+    "events": {
+      "contact": 82,
+      "footPlant": 60,
+      "maxBatSpeed": 82
+    },
+    "eventsEstimated": true,
+    "attribution": "CMU Graphics Lab Motion Capture Database, subject 124 (NSF EIA-0196217), via the cgspeed BVH conversion",
+    "caveats": [
+      "optical",
+      "no-bat",
+      "twist-held",
+      "one-axis",
+      "events-estimated"
+    ]
+  },
+  {
+    "id": "trackman-r-1",
+    "label": "Hitter B · right-handed · markerless capture",
+    "handedness": "R",
+    "kind": "trackman",
+    "frames": 137,
+    "fps": 120,
+    "events": {
+      "footPlant": 60,
+      "contact": 94,
+      "maxBatSpeed": 92,
+      "followThrough": 102
+    },
+    "eventsEstimated": false,
+    "attribution": "TrackMan markerless hitting capture, sample supplied to Baseline Analytics",
+    "caveats": [
+      "markerless",
+      "twist-held",
+      "one-axis"
+    ]
+  },
+  {
+    "id": "trackman-r-2",
+    "label": "Hitter C · right-handed · markerless capture",
+    "handedness": "R",
+    "kind": "trackman",
+    "frames": 132,
+    "fps": 120,
+    "events": {
+      "footPlant": 60,
+      "contact": 89,
+      "maxBatSpeed": 86,
+      "followThrough": 101
+    },
+    "eventsEstimated": false,
+    "attribution": "TrackMan markerless hitting capture, sample supplied to Baseline Analytics",
+    "caveats": [
+      "markerless",
+      "twist-held",
+      "one-axis"
+    ]
+  },
+  {
+    "id": "trackman-l-1",
+    "label": "Hitter D · left-handed · markerless capture",
+    "handedness": "L",
+    "kind": "trackman",
+    "frames": 139,
+    "fps": 120,
+    "events": {
+      "footPlant": 60,
+      "contact": 96,
+      "maxBatSpeed": 93,
+      "followThrough": 108
+    },
+    "eventsEstimated": false,
+    "attribution": "TrackMan markerless hitting capture, sample supplied to Baseline Analytics",
+    "caveats": [
+      "markerless",
+      "twist-held",
+      "one-axis"
+    ]
+  }
+]

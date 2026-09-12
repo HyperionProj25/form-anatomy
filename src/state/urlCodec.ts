@@ -2,6 +2,7 @@ import { isPartId } from "../data/catalog";
 import { JOINT_IDS, type JointId } from "../data/joints";
 import { LINE_IDS, lineById, type LineId } from "../data/lines";
 import { REGION_ORDER } from "../data/regions";
+import { SWING_JOINTS, swingById } from "../data/swings";
 import type { Region } from "../data/types";
 import {
   initialState,
@@ -50,6 +51,12 @@ export function encodeState(s: AppState): string {
   if (s.filters.layer !== "all") q.set("d", s.filters.layer);
   if (s.filters.side !== "both") q.set("side", s.filters.side);
   if (s.filters.joint !== "all") q.set("j", s.filters.joint);
+  if (s.motion?.swing) {
+    q.set("sw", s.motion.swing.id);
+    q.set("sj", s.motion.joint);
+    q.set("ss", s.motion.side === "left" ? "l" : "r");
+    if (s.motion.phase > 0) q.set("sp", String(Math.round(s.motion.phase * 1000) / 1000));
+  }
   // Commas and colons are safe in a query string; keep them readable instead of %2C and %3A.
   const str = q.toString().replace(/%2C/g, ",").replace(/%3A/g, ":");
   return str ? `?${str}` : "";
@@ -121,5 +128,24 @@ export function decodeSearch(search: string): Partial<AppState> {
       ...(sideF ? { side: sideF } : {}),
       ...(joint ? { joint } : {}),
     };
+  const sw = q.get("sw");
+  const swing = sw ? swingById(sw) : undefined;
+  if (swing) {
+    const sj = q.get("sj");
+    const swingJoint = sj && (SWING_JOINTS as string[]).includes(sj) ? (sj as JointId) : "knee";
+    const ss = q.get("ss");
+    const side = ss === "r" ? "right" : ss === "l" ? "left" : swing.handedness === "R" ? "left" : "right";
+    const sp = Number(q.get("sp"));
+    out.motion = {
+      joint: swingJoint,
+      side,
+      phase: Number.isFinite(sp) ? Math.min(1, Math.max(0, sp)) : 0,
+      playing: false,
+      lines: false,
+      frameNonce: 0,
+      swing: { id: swing.id, speed: 0.5 },
+    };
+    out.filters = { ...(out.filters ?? initialState.filters), joint: swingJoint };
+  }
   return out;
 }

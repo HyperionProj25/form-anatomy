@@ -176,8 +176,14 @@ function nearestBone(ids: string[], allowed: Set<string>, towards: Vec3): Catalo
     .sort((a, b) => dist(a.centroid, towards) - dist(b.centroid, towards))[0];
 }
 
+export type MotionOptions = {
+  /** Degrees at phase 0 and 1 instead of the joint's teaching range; a measured swing passes foot plant and contact. */
+  range?: [number, number];
+  label?: string;
+};
+
 /** Everything needed to animate one joint on one side, or undefined when the bones are missing. */
-export function motionSetup(joint: JointId, side: MotionSide): MotionSetup | undefined {
+export function motionSetup(joint: JointId, side: MotionSide, opts: MotionOptions = {}): MotionSetup | undefined {
   const cfg = CONFIG[joint];
   const proximal = boneFor(cfg.proximal, side);
   const distal = boneFor(cfg.distal, side);
@@ -192,7 +198,8 @@ export function motionSetup(joint: JointId, side: MotionSide): MotionSetup | und
       ? [0, distal.bbox[1][1] - 0.006, distal.bbox[0][2] + 0.012]
       : clampToBox(proximal.bbox, [distal.centroid[0], distal.bbox[1][1], distal.centroid[2]]);
   const axis: Vec3 = [cfg.sign, 0, 0];
-  const range = cfg.range;
+  const range = opts.range ?? cfg.range;
+  const startAngle = (range[0] * Math.PI) / 180;
   const endAngle = (range[1] * Math.PI) / 180;
   const base = joint === "tmj" ? pivot : proximal.centroid;
   const dirRaw: Vec3 = [
@@ -253,9 +260,11 @@ export function motionSetup(joint: JointId, side: MotionSide): MotionSetup | und
         const plane = (via[0] - pivot[0]) * dir[0] + (via[1] - pivot[1]) * dir[1] + (via[2] - pivot[2]) * dir[2];
         const raw = bandWeight(plane, band);
         const viaWeight = bellyMoves(p, movingBones, fixedBones) ? Math.max(raw, 0.7) : Math.min(raw, 0.3);
+        const via0 = rotatePoint(via, pivot, axis, startAngle * viaWeight);
+        const to0 = rotatePoint(to, pivot, axis, startAngle);
         const via1 = rotatePoint(via, pivot, axis, endAngle * viaWeight);
         const to1 = rotatePoint(to, pivot, axis, endAngle);
-        const len0 = dist(from, via) + dist(via, to);
+        const len0 = dist(from, via0) + dist(via0, to0);
         const len1 = dist(from, via1) + dist(via1, to1);
         const extent = Math.max(
           p.bbox[1][0] - p.bbox[0][0],
@@ -290,7 +299,7 @@ export function motionSetup(joint: JointId, side: MotionSide): MotionSetup | und
   return {
     joint,
     side,
-    label: cfg.motion,
+    label: opts.label ?? cfg.motion,
     pivot,
     dir,
     band,

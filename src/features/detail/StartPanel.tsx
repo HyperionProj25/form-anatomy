@@ -39,8 +39,8 @@ export default function StartPanel() {
         >
           <Move size={16} />
           <p>
-            Move a joint
-            <small>Bend the knee and watch which muscles shorten and which lengthen.</small>
+            Move a joint, or play a measured swing
+            <small>Bend the knee, or let a captured swing drive it, and watch which muscles shorten and which lengthen.</small>
           </p>
         </button>
       </div>
