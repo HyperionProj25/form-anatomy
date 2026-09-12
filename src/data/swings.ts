@@ -1,6 +1,8 @@
 import index from "./swings-index.json";
 import type { JointId } from "./joints";
 import type { MotionSide } from "./motion";
+import type { Quat } from "./quat";
+import type { SegmentId } from "./segments";
 import type { Vec3 } from "./types";
 
 /** Measured swings (spec 2026-09-10-swing-lab-design.md, sections 3 and 5). */
@@ -35,6 +37,10 @@ export type SwingFile = {
   events: SwingEvents;
   eventsEstimated: boolean;
   joints: Record<SwingJointKey, number[]>;
+  /** World rotation of every rig segment relative to its rest basis, per frame (phase 15). */
+  segments?: Record<SegmentId, Quat[]>;
+  /** Pelvis offset per frame, model units, zero at frame 0 (phase 15). */
+  root?: Vec3[];
   bat: { knob: Vec3[]; tip: Vec3[] } | null;
   caveats: string[];
 };

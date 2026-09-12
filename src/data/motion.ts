@@ -29,6 +29,9 @@ export type Cable = {
   viaWeight: number;
   /** Path length change over the full range as a fraction of the muscle's extent; negative shortens. */
   change: number;
+  /** The bones the path ends on, for the full-body rig to move each end with its segment. */
+  originId: string;
+  insertionId: string;
 };
 
 export type MotionSetup = {
@@ -275,7 +278,19 @@ export function motionSetup(joint: JointId, side: MotionSide, opts: MotionOption
         const change = (len1 - len0) / extent;
         const role: CableRole =
           change < -ROLE_THRESHOLD ? "shortens" : change > ROLE_THRESHOLD ? "lengthens" : "neutral";
-        cables.push({ key: p.key, id: p.id, name: p.name, from, via, to, role, viaWeight, change });
+        cables.push({
+          key: p.key,
+          id: p.id,
+          name: p.name,
+          from,
+          via,
+          to,
+          role,
+          viaWeight,
+          change,
+          originId: originBone.id,
+          insertionId: insertionBone.id,
+        });
         hiddenIds.push(p.id);
       } else if (touchesDistal) movingIds.push(p.id);
       continue;

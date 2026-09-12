@@ -52,7 +52,7 @@ export type Motion = {
   lines: boolean;
   frameNonce: number;
   /** Set while a measured swing drives the joint: which swing, and playback speed (1 = real time). */
-  swing?: { id: string; speed: number };
+  swing?: { id: string; speed: number; body: boolean; colour: boolean };
 };
 
 export type AppState = {
@@ -163,6 +163,8 @@ export type Action =
   | { type: "swingStart"; id: string; joint: JointId; side: MotionSide }
   | { type: "swingJoint"; joint: JointId; side: MotionSide }
   | { type: "swingSpeed"; speed: number }
+  | { type: "swingBody"; on: boolean }
+  | { type: "swingColour"; on: boolean }
   | { type: "reset" }
   | { type: "hydrate"; state: Partial<AppState> };
 
@@ -527,7 +529,7 @@ export function reducer(s: AppState, a: Action): AppState {
           playing: true,
           lines: false,
           frameNonce: s.cameraNonce + 1,
-          swing: { id: a.id, speed: 0.5 },
+          swing: { id: a.id, speed: 0.5, body: true, colour: false },
         },
         cameraNonce: s.cameraNonce + 1,
       };
@@ -543,6 +545,22 @@ export function reducer(s: AppState, a: Action): AppState {
     case "swingSpeed":
       return s.motion?.swing
         ? { ...s, motion: { ...s.motion, swing: { ...s.motion.swing, speed: a.speed } } }
+        : s;
+    case "swingBody":
+      return s.motion?.swing
+        ? {
+            ...s,
+            motion: {
+              ...s.motion,
+              swing: { ...s.motion.swing, body: a.on, colour: a.on && s.motion.swing.colour },
+              frameNonce: s.cameraNonce + 1,
+            },
+            cameraNonce: s.cameraNonce + 1,
+          }
+        : s;
+    case "swingColour":
+      return s.motion?.swing
+        ? { ...s, motion: { ...s.motion, swing: { ...s.motion.swing, colour: a.on } } }
         : s;
     case "reset":
       return {

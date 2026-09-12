@@ -10,7 +10,8 @@ import MotionCard from "./features/motion/MotionCard";
 import SwingCard from "./features/motion/SwingCard";
 import { useSwing } from "./features/motion/useSwing";
 import { JOINT_LABELS } from "./data/joints";
-import { curveOf, roleForSide, swingRange } from "./data/swings";
+import { curveOf, frameAt, roleForSide, sideForRole, swingRange } from "./data/swings";
+import { bodyDrawing, changeTint, lengthRatios } from "./data/body";
 import type { MotionDrawing } from "./viewer/engine";
 import { StoreProvider, useStore } from "./state/store";
 import { useUrlSync } from "./state/useUrlSync";
@@ -121,6 +122,20 @@ function Shell() {
     () => (swing && motionJoint && motionSide ? { angles: curveOf(swing, motionJoint, motionSide), fps: swing.fps } : undefined),
     [swing, motionJoint, motionSide],
   );
+  const bodyOn = state.motion?.swing?.body ?? false;
+  const body = useMemo(() => (swing && bodyOn ? bodyDrawing(swing) : null), [swing, bodyOn]);
+  const swingColour = state.motion?.swing?.colour ?? false;
+  const motionPhase = state.motion?.phase ?? 0;
+  const tint = useMemo(() => {
+    if (!swing || !body || !swingColour) return undefined;
+    const frame = frameAt(swing, motionPhase);
+    const map = new Map<string, string>();
+    for (const [id, r] of lengthRatios(swing)) {
+      const c = changeTint(r[frame] - 1);
+      if (c) map.set(id, c);
+    }
+    return map;
+  }, [swing, body, swingColour, motionPhase]);
   const motionDrawing = useMemo<MotionDrawing | null>(
     () =>
       motion && {
@@ -140,11 +155,13 @@ function Shell() {
           to: c.to,
           viaWeight: c.viaWeight,
           change: c.change,
+          fromSeg: body?.segmentOf(c.originId) ?? undefined,
+          toSeg: body?.segmentOf(c.insertionId) ?? undefined,
           // Warm is the end that moves: shortening in insertion amber, lengthening in origin blue.
           color: c.role === "shortens" ? "#f2a531" : c.role === "lengthens" ? "#3d8bff" : "#8a8f86",
         })),
       },
-    [motion, swingCurve, swingSpeed],
+    [motion, swingCurve, swingSpeed, body],
   );
   const attachments = useMemo(() => {
     if (!state.attach || state.mode === "fascia" || !state.selected || state.motion) return undefined;
@@ -154,9 +171,10 @@ function Shell() {
     return ids ? { origin: new Set(ids.origin), insertion: new Set(ids.insertion) } : undefined;
   }, [state.attach, state.mode, state.selected, state.motion]);
   // While a joint moves, only the bones and muscles taking part stay solid.
+  // A whole-body swing shows every muscle; the spotlight belongs to the single-joint view.
   const spotlight = useMemo(
-    () => (motion ? new Set([...motion.movingIds, ...motion.cables.map((c) => c.id)]) : undefined),
-    [motion],
+    () => (motion && !body ? new Set([...motion.movingIds, ...motion.cables.map((c) => c.id)]) : undefined),
+    [motion, body],
   );
   const pull = useMemo(() => {
     if (!attachments || !state.selected) return null;
@@ -186,6 +204,7 @@ function Shell() {
         attachments,
         layer: state.filters.layer,
         spotlight,
+        tint,
       }),
     [
       state.mode,
@@ -199,10 +218,22 @@ function Shell() {
       attachments,
       state.filters.layer,
       spotlight,
+      tint,
     ],
   );
   const cameraCommand = useMemo<CameraCommand>(() => {
-    if (motion && state.motion && state.motion.frameNonce === state.cameraNonce)
+    if (motion && state.motion && state.motion.frameNonce === state.cameraNonce) {
+      if (body && swing) {
+        // The whole body from the open side, three quarters on.
+        const lead = sideForRole("lead", swing.handedness) === "left" ? 1 : -1;
+        return {
+          kind: "frame",
+          center: [0, -0.12, 0],
+          radius: 1.12,
+          direction: [lead * 0.8, 0.22, 0.6],
+          nonce: state.cameraNonce,
+        };
+      }
       return {
         kind: "frame",
         center: motion.pivot,
@@ -210,6 +241,7 @@ function Shell() {
         direction: motion.view,
         nonce: state.cameraNonce,
       };
+    }
     if (state.focus?.flyId)
       return { kind: "fly", id: state.focus.flyId, direction: state.focus.direction, nonce: state.cameraNonce };
     if (state.view === "custom" && state.camera)
@@ -219,7 +251,7 @@ function Shell() {
       preset: state.view === "custom" ? "front" : state.view,
       nonce: state.cameraNonce,
     };
-  }, [state.focus, state.view, state.camera, state.cameraNonce, state.motion, motion]);
+  }, [state.focus, state.view, state.camera, state.cameraNonce, state.motion, motion, body, swing]);
   const paths = useMemo<DrawnPath[]>(
     () =>
       state.mode === "fascia" && state.showPath
@@ -358,6 +390,7 @@ function Shell() {
             motionPlaying={!!state.motion?.playing}
             motionLines={!!state.motion?.lines}
             motionSpeed={swingSpeed ?? 1}
+            body={body}
             onMotionPhase={(phase) => dispatch({ type: "motionTick", phase })}
             pulse={pulse}
             graphics={state.graphics}

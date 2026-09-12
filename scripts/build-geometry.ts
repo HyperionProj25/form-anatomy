@@ -138,7 +138,42 @@ function pivots() {
     const mand = verts(partsByKey("mandible")[0]);
     const top = band(mand, true, 0.05).filter((i) => (side === "left" ? mand[i] > 0 : mand[i] < 0));
     set("tmj", centroid(mand, top));
+    // Full-body rig (spec section 6.2): the clavicle's medial end, the hand and foot tips.
+    const clav = verts(bone("clavicle", side));
+    set("sternoclavicular", centroid(clav, bandX(clav, side === "left", 0.1)));
+    set("handTip", bone("distal-phalanx-of-third-finger-of-hand", side).centroid);
+    set("toeTip", bone("distal-phalanx-of-first-finger-of-foot", side).centroid);
   }
+  // Midline pivots: the same point on both sides.
+  const both = (joint: string, p: Vec3) => {
+    out[joint] = { left: r3(p), right: r3(p) };
+  };
+  const between = (upperKey: string, lowerKey: string) => {
+    const upper = verts(partsByKey(upperKey)[0]);
+    const lower = verts(partsByKey(lowerKey)[0]);
+    return mid(centroid(upper, band(upper, false, 0.15)), centroid(lower, band(lower, true, 0.15)));
+  };
+  both("lumbosacral", between("vertebra-l5", "sacrum"));
+  both("thoracolumbar", between("vertebra-t12", "vertebra-l1"));
+  both("cervicothoracic", between("vertebra-c7", "vertebra-t1"));
+  const parL = verts(bone("parietal-bone", "left"));
+  const parR = verts(bone("parietal-bone", "right"));
+  both("headTop", mid(centroid(parL, band(parL, true, 0.05)), centroid(parR, band(parR, true, 0.05))));
+  return out;
+}
+
+/** Vertex indices in the fraction of a bone nearest the midline (smallest |x| for the left, largest x for the right is mirrored). */
+function bandX(v: Float32Array, left: boolean, frac: number): number[] {
+  let min = Infinity;
+  let max = -Infinity;
+  for (let i = 0; i < v.length; i += 3) {
+    if (v[i] < min) min = v[i];
+    if (v[i] > max) max = v[i];
+  }
+  // The left clavicle lies at +x; its medial end is its minimum x. Mirror for the right.
+  const cut = left ? min + (max - min) * frac : max - (max - min) * frac;
+  const out: number[] = [];
+  for (let i = 0; i < v.length; i += 3) if (left ? v[i] <= cut : v[i] >= cut) out.push(i);
   return out;
 }
 

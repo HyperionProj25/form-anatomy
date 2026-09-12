@@ -1,4 +1,6 @@
 import { Activity, ChevronDown, Pause, Play, X } from "lucide-react";
+import { useMemo } from "react";
+import { changeRanking, type Ranked } from "../../data/body";
 import { JOINT_LABELS, type JointId } from "../../data/joints";
 import { cableRoles, type Cable, type MotionSetup } from "../../data/motion";
 import { prettyName } from "../../data/names";
@@ -42,8 +44,21 @@ function verb(joint: JointId, delta: number): string {
 export default function SwingCard({ swing, setup, onCollapse }: Props) {
   const { state, dispatch } = useStore();
   const reduced = usePrefersReducedMotion();
+  const ranked = useMemo(() => (swing.segments ? changeRanking(swing) : null), [swing]);
   const m = state.motion;
   if (!m?.swing) return null;
+  const pct = (c: number) => `${c < 0 ? "−" : "+"}${Math.round(Math.abs(c) * 100)} %`;
+  const rankedList = (list: Ranked[]) =>
+    list.length
+      ? list.map((r, i) => (
+          <span key={r.id}>
+            {i > 0 && ", "}
+            <button className="link-button" onClick={() => dispatch({ type: "select", id: r.id })}>
+              {prettyName(r.name)} {r.id.endsWith("-l") ? "L" : r.id.endsWith("-r") ? "R" : ""} {pct(r.change)}
+            </button>
+          </span>
+        ))
+      : "none";
   const curve = curveOf(swing, m.joint, m.side);
   const frame = frameAt(swing, m.phase);
   const angle = Math.round(curve[frame] ?? 0);
@@ -203,9 +218,56 @@ export default function SwingCard({ swing, setup, onCollapse }: Props) {
         />
         Show lines of action
       </label>
+      {swing.segments && (
+        <label className="motion-lines">
+          <input
+            type="checkbox"
+            checked={m.swing.body}
+            onChange={(e) => dispatch({ type: "swingBody", on: e.target.checked })}
+          />
+          Whole body
+        </label>
+      )}
+      {swing.segments && m.swing.body && (
+        <>
+          <label className="motion-lines">
+            <input
+              type="checkbox"
+              checked={m.swing.colour}
+              onChange={(e) => dispatch({ type: "swingColour", on: e.target.checked })}
+            />
+            Colour by change (amber shortens, blue lengthens)
+          </label>
+          {ranked && (
+            <div className="motion-roles swing-ranked">
+              <div>
+                <span className="line-dot" style={{ background: SHORTEN }} />
+                <span>
+                  Shortening most, whole body, foot plant to contact
+                  <small>{rankedList(ranked.shortening)}</small>
+                </span>
+              </div>
+              <div>
+                <span className="line-dot" style={{ background: LENGTHEN }} />
+                <span>
+                  Lengthening most
+                  <small>{rankedList(ranked.lengthening)}</small>
+                </span>
+              </div>
+            </div>
+          )}
+          <p className="subtle swing-body-note">
+            Path length between attachments on a generic model. Tendon, wrapping and fibre angle are
+            not modelled; a shortening path means the muscle-tendon unit shortened, not that it
+            contracted. Neck muscles are left out: the head is one rigid block here.
+          </p>
+        </>
+      )}
       <div className="card-caveat">
         <CaveatChip label="Measured swing">
           Angles from motion capture on a generic adult model.{" "}
+          {m.swing.body &&
+            "The whole body follows eighteen rigid segments; the shoulder girdle takes a third of the arm's lift and the patella rides with the shin. "}
           {swing.caveats.map((k) => CAVEATS[k]).filter(Boolean).join(" ")} Percentages are the change
           in path length between attachments as a share of the muscle&apos;s size, not fibre length.
         </CaveatChip>

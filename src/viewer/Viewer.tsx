@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import type { GraphicsLevel, RenderLevel } from "./quality";
+import type { BodyDrawing } from "../data/body";
 import {
   AnatomyEngine,
   type CameraPose,
@@ -44,6 +45,8 @@ type Props = {
   motionLines?: boolean;
   /** Playback speed of a measured curve, 1 = real time. */
   motionSpeed?: number;
+  /** Whole-body pose from a measured swing; null keeps the single-joint motion. */
+  body?: BodyDrawing | null;
   onMotionPhase?(phase: number): void;
   /** Contraction pulse on one muscle along its line of action. */
   pulse?: { id: string; axisFrom: Vec3; axisTo: Vec3; belly: Vec3 } | null;
@@ -173,6 +176,10 @@ export default function Viewer(props: Props) {
   useEffect(() => {
     if (ready) engine.current?.setMotionSpeed(props.motionSpeed ?? 1);
   }, [ready, props.motionSpeed, props.motion]);
+
+  useEffect(() => {
+    if (ready) engine.current?.setBody(props.body ?? null);
+  }, [ready, props.body]);
 
   useEffect(() => {
     if (ready) engine.current?.setPulse(props.pulse ?? null);

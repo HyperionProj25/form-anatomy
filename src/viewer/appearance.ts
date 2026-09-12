@@ -29,6 +29,8 @@ export type StyleInput = {
   layer?: "all" | "superficial" | "deep";
   /** Muscles taking part in a joint motion; every other muscle fades so the moving parts read. */
   spotlight?: Set<string>;
+  /** Per-part colour override: colour by length change during a whole-body swing. */
+  tint?: Map<string, string>;
 };
 
 /** Compare pins: violet, magenta, yellow, deep purple, none near the origin blue or insertion amber. */
@@ -87,15 +89,17 @@ export function computeStyles(input: StyleInput): Map<string, PartStyle> {
       !input.hidden.has(p.id) &&
       (!input.isolated || selected) &&
       (input.mode !== "bones" || bone || selected);
+    const tinted = !selected && !focused ? input.tint?.get(p.id) : undefined;
     const color = selected
       ? COLORS.selected
-      : chain
-        ? input.lineColor
-        : bone
-          ? COLORS.bone
-          : connective
-            ? COLORS.connective
-            : COLORS.muscle;
+      : (tinted ??
+        (chain
+          ? input.lineColor
+          : bone
+            ? COLORS.bone
+            : connective
+              ? COLORS.connective
+              : COLORS.muscle));
     const emissive = selected ? COLORS.selectedEmissive : chain ? input.lineColor : COLORS.none;
     const emissiveIntensity = selected ? 0.32 : focused ? 0.45 : chain ? 0.16 : 0;
     const emissiveColor = focused && !chain && !selected ? input.lineColor : emissive;

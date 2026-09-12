@@ -3080,3 +3080,11 @@ button.start-point:hover {
   font-style: normal;
   color: var(--muted);
 }
+
+.swing-ranked small .link-button {
+  font-size: 12px;
+  padding: 0;
+}
+.swing-body-note {
+  margin: 2px 0 6px;
+}

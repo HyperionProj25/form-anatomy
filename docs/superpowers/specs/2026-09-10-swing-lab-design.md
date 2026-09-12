@@ -373,11 +373,11 @@ SKULL).
 | shank (L, R) | tibia, fibula |
 | foot (L, R) | FOOT |
 
-Scapula and clavicle follow the thorax plus one third of the arm's elevation
-about the shoulder pivot (the textbook 2:1 scapulohumeral rhythm), stated as
-an approximation in the caveat table. The patella rides with the femur (it
-tracks the quadriceps, whose belly is thigh-bound); a knee-region caveat notes
-it.
+Scapula and clavicle follow the thorax plus a quarter of the arm's rotation
+about the sternoclavicular pivot (built: a third, the textbook 2:1 rhythm,
+threw the scapular muscles too far). The patella rides with the tibia (built:
+through the patellar ligament, so the quadriceps lengthen as the knee bends;
+with the femur they did not).
 
 ### 6.2 New pivots (in `scripts/build-geometry.ts`, spec 12.1 method)
 
@@ -561,8 +561,17 @@ muscle); a full-body headless render set in CI.
 ## 12. Risks
 
 Built: phase 14 on 11 September 2026 (plan
-`docs/superpowers/plans/2026-09-11-phase-14-swing-lab.md`). Phase 15 remains
-as specified.
+`docs/superpowers/plans/2026-09-11-phase-14-swing-lab.md`) and phase 15 on
+12 September 2026 (plan `docs/superpowers/plans/2026-09-11-phase-15-full-body-swing.md`).
+Departures from section 6 as built: skin weights fall off with distance from
+each candidate segment's bones (Gaussian over the part's band) rather than
+across joint planes, because attachment text sometimes names a bone on the
+wrong limb and an infinite joint plane let the arm claim trunk muscles;
+candidate segments also include every bone the part's box overlaps; the
+foot's long axis is ankle-to-toe on both sources; hands turn exactly with
+their forearms; the whole-body ranking leaves out neck muscles; skin weights
+are computed in the browser on first use (about 150 ms), not shipped as a
+file.
 
 - Twist is not observable in either source (forearm pronation, tibial
   rotation, hand orientation without the bat). Held at neutral and said so.

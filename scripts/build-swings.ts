@@ -14,9 +14,14 @@
 import { mkdirSync, readFileSync, writeFileSync } from "node:fs";
 import { tmpdir } from "node:os";
 import { join, resolve } from "node:path";
+import type { Quat } from "../src/data/quat";
+import { SEGMENT_IDS, type SegmentId } from "../src/data/segments";
+import type { SwingFile as AppSwingFile } from "../src/data/swings";
 import { fromCmu, fromTrackmanDemo } from "./swings/adapters";
+import { rootTrack, segmentQuats } from "./swings/body";
 import { curves, estimateEvents, faceForward, quality, resample, smooth, trim } from "./swings/kinematics";
 import { JOINT_KEYS, type Curves, type PointCloud } from "./swings/types";
+import { floorCorrect, validateBody } from "./swings/validate";
 
 const OUT_DIR = resolve("public/swings");
 const INDEX_PATH = resolve("src/data/swings-index.json");
@@ -39,6 +44,8 @@ type SwingFile = {
   events: PointCloud["events"];
   eventsEstimated: boolean;
   joints: Curves;
+  segments: Record<SegmentId, Quat[]>;
+  root: number[][];
   bat: { knob: number[][]; tip: number[][] } | null;
   caveats: string[];
 };
@@ -68,23 +75,35 @@ function finish(cloud: PointCloud, id: string, label: string, caveats: string[])
     : null;
   const allCaveats = [...caveats];
   if (t.cloud.eventsEstimated && !allCaveats.includes("events-estimated")) allCaveats.push("events-estimated");
-  return {
-    file: {
-      schema: "form.swing.v1",
-      id,
-      label,
-      source: cloud.source,
-      handedness: cloud.handedness,
-      fps: FPS,
-      frames,
-      events: t.cloud.events,
-      eventsEstimated: t.cloud.eventsEstimated,
-      joints,
-      bat,
-      caveats: allCaveats,
-    },
-    clippedPct: q.clippedPct,
+  // Full-body rig (spec section 6): segment orientations and the pelvis track, on the trimmed clip.
+  const quats = segmentQuats(t.cloud);
+  const segments = Object.fromEntries(
+    SEGMENT_IDS.map((s) => [s, quats[s].map((qv) => qv.map((v) => round(v, 4)) as Quat)]),
+  ) as Record<SegmentId, Quat[]>;
+  const root = rootTrack(t.cloud).map((p) => p.map((v) => round(v, 3)));
+  const file: SwingFile = {
+    schema: "form.swing.v1",
+    id,
+    label,
+    source: cloud.source,
+    handedness: cloud.handedness,
+    fps: FPS,
+    frames,
+    events: t.cloud.events,
+    eventsEstimated: t.cloud.eventsEstimated,
+    joints,
+    segments,
+    root,
+    bat,
+    caveats: allCaveats,
   };
+  floorCorrect(file as unknown as AppSwingFile);
+  const body = validateBody(file as unknown as AppSwingFile);
+  console.log(
+    `  body: knee RMS ${body.kneeRms.toFixed(2)}°, elbow RMS ${body.elbowRms.toFixed(2)}°, lowest toe ${(body.lowestToe * 100).toFixed(1)} cm${body.ok ? "" : " REJECTED"}`,
+  );
+  if (!body.ok) return null;
+  return { file, clippedPct: q.clippedPct };
 }
 
 function buildCmu(): Built | null {

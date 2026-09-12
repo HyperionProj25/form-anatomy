@@ -15,6 +15,7 @@ import {
   type RenderLevel,
 } from "./quality";
 import type { PartStyle } from "./appearance";
+import type { BodyDrawing } from "../data/body";
 import type { Vec3 } from "../data/types";
 
 export type ViewPreset = "front" | "back" | "side";
@@ -62,6 +63,9 @@ export type MotionDrawing = {
     /** Path length change over the full range as a fraction of the muscle's size; negative shortens. */
     change: number;
     color: string;
+    /** Rig segments of each end, so a full-body pose can carry the cable with the bones. */
+    fromSeg?: string;
+    toSeg?: string;
   }[];
 };
 
@@ -232,6 +236,8 @@ export class AnatomyEngine {
     via: THREE.Vector3;
     to: THREE.Vector3;
     viaWeight: number;
+    fromSeg?: string;
+    toSeg?: string;
   }[] = [];
   private motion: MotionDrawing | null = null;
   private motionPhase = 0;
@@ -244,6 +250,17 @@ export class AnatomyEngine {
   private posed = new Set<string>();
   private deformed: Deformed[] = [];
   private deformedIds = new Set<string>();
+  private body: BodyDrawing | null = null;
+  private bodyBones = new Map<string, THREE.Bone>();
+  private bodySkeleton: THREE.Skeleton | null = null;
+  private bodyTwins: {
+    id: string;
+    skinned: THREE.SkinnedMesh;
+    material: THREE.MeshStandardMaterial;
+    uniforms: BulgeUniforms | null;
+  }[] = [];
+  private bodyRigid: { id: string; seg: string }[] = [];
+  private batMesh: THREE.Mesh | null = null;
   private pulse: { id: string; uniforms: BulgeUniforms } | null = null;
   private targets = new Map<string, Target>();
   private pending = new Set<string>();
@@ -689,8 +706,11 @@ export class AnatomyEngine {
         via: new THREE.Vector3(...c.via),
         to: new THREE.Vector3(...c.to),
         viaWeight: c.viaWeight,
+        fromSeg: c.fromSeg,
+        toSeg: c.toSeg,
       });
-      this.deform(c, m);
+      // With a full-body pose the whole model is already skinned; only the cables are needed.
+      if (!this.body) this.deform(c, m);
     }
     this.model?.updateMatrixWorld(true);
     for (const d of this.deformed) d.skinned.bind(d.skinned.skeleton);
@@ -780,6 +800,10 @@ export class AnatomyEngine {
 
   private applyMotion(): void {
     const m = this.motion;
+    if (this.body) {
+      this.applyBody(this.motionPhase * (this.body.frames - 1));
+      return;
+    }
     if (!m) return;
     const deg = m.curve
       ? sampleCurve(m.curve.angles, this.motionPhase)
@@ -836,9 +860,202 @@ export class AnatomyEngine {
     this.floor?.markDirty();
   }
 
-  private clearMotion(): void {
+  /**
+   * Pose the whole body from a measured swing (spec section 6): one skeleton of rig segments,
+   * every bone following its segment rigidly, every soft part re-skinned across the segments its
+   * attachments span. Pass null to restore the model; a single-joint motion, if set, comes back.
+   */
+  setBody(body: BodyDrawing | null): void {
+    this.clearBody();
+    this.body = body;
+    if (!body || !this.model) {
+      if (this.motion) {
+        for (const c of this.motion.cables) this.deform(c, this.motion);
+        this.model?.updateMatrixWorld(true);
+        for (const d of this.deformed) d.skinned.bind(d.skinned.skeleton);
+        this.applyMotion();
+      }
+      return;
+    }
+    this.undoMotionPose();
+    const bones: THREE.Bone[] = [];
+    for (const seg of Object.keys(body.transformsAt(0))) {
+      const bone = new THREE.Bone();
+      bone.matrixAutoUpdate = false;
+      this.bodyBones.set(seg, bone);
+      bones.push(bone);
+    }
+    // Bones start at identity, so the skeleton's inverses are identity and each bone's matrix is
+    // simply its segment's pose in mesh-local coordinates.
+    this.bodySkeleton = new THREE.Skeleton(bones);
+    const boneIndex = new Map(bones.map((b, i) => [b, i]));
+    const c = this.modelCenter;
+    for (const [id, mesh] of this.meshes) {
+      const rigidSeg = body.segmentOf(id);
+      if (rigidSeg) {
+        this.bodyRigid.push({ id, seg: rigidSeg });
+        continue;
+      }
+      const positions = mesh.geometry.attributes.position.array as Float32Array;
+      const skin = body.skinOf(id, positions, c);
+      if (!skin) {
+        this.bodyRigid.push({ id, seg: body.carrierOf(id) });
+        continue;
+      }
+      const geometry = new THREE.BufferGeometry();
+      for (const name of ["position", "normal", "uv"]) {
+        const attr = mesh.geometry.getAttribute(name);
+        if (attr) geometry.setAttribute(name, attr);
+      }
+      if (mesh.geometry.index) geometry.setIndex(mesh.geometry.index);
+      const index = new Uint16Array(skin.index.length);
+      for (let i = 0; i < skin.index.length; i++) {
+        const bone = this.bodyBones.get(skin.segments[skin.index[i]]);
+        index[i] = bone ? (boneIndex.get(bone) ?? 0) : 0;
+      }
+      geometry.setAttribute("skinIndex", new THREE.Uint16BufferAttribute(index, 4));
+      geometry.setAttribute("skinWeight", new THREE.Float32BufferAttribute(skin.weight, 4));
+      if (!mesh.geometry.boundingSphere) mesh.geometry.computeBoundingSphere();
+      geometry.boundingSphere = mesh.geometry.boundingSphere;
+      const material = mesh.material.clone();
+      let uniforms: BulgeUniforms | null = null;
+      const bulge = body.bulgeOf(id);
+      if (bulge) {
+        uniforms = {
+          uAxisOrigin: { value: new THREE.Vector3(bulge.belly[0] + c[0], bulge.belly[1] + c[1], bulge.belly[2] + c[2]) },
+          uAxisDir: {
+            value: new THREE.Vector3(
+              bulge.axisTo[0] - bulge.axisFrom[0],
+              bulge.axisTo[1] - bulge.axisFrom[1],
+              bulge.axisTo[2] - bulge.axisFrom[2],
+            ).normalize(),
+          },
+          uBulge: { value: 1 },
+          uShorten: { value: 1 },
+        };
+        addBulge(material, uniforms);
+      }
+      const skinned = new THREE.SkinnedMesh(geometry, material);
+      // Detached: bone matrices are in the mesh's own space, not the world, so no world inverse is applied.
+      skinned.bindMode = THREE.DetachedBindMode;
+      skinned.frustumCulled = false;
+      skinned.userData.catalogId = id;
+      skinned.castShadow = this.level === "high" && mesh.castShadow;
+      skinned.receiveShadow = this.level === "high";
+      skinned.renderOrder = mesh.renderOrder;
+      this.model.add(skinned);
+      skinned.bind(this.bodySkeleton, new THREE.Matrix4());
+      this.bodyTwins.push({ id, skinned, material, uniforms });
+      mesh.visible = false;
+    }
+    if (body.bat) {
+      this.batMesh = new THREE.Mesh(
+        new THREE.CylinderGeometry(0.014, 0.032, 1, 12, 1, false),
+        new THREE.MeshStandardMaterial({ color: 0x8a6d3b, roughness: 0.55, metalness: 0 }),
+      );
+      this.batMesh.castShadow = this.level === "high";
+      this.scene.add(this.batMesh);
+    }
+    this.model.updateMatrixWorld(true);
+    this.applyBody(this.motionPhase * (body.frames - 1));
+  }
+
+  /** Set every rig bone, rigid part, bulge, cable and the bat for one frame of the swing. */
+  private applyBody(frame: number): void {
+    const body = this.body;
+    if (!body) return;
+    const t = body.transformsAt(frame);
+    const c = this.modelCenter;
+    const rot = new THREE.Matrix4();
+    const back = new THREE.Matrix4();
+    const q = new THREE.Quaternion();
+    for (const [seg, bone] of this.bodyBones) {
+      const s = t[seg as keyof typeof t];
+      if (!s) continue;
+      q.set(s.q[0], s.q[1], s.q[2], s.q[3]);
+      bone.matrixWorld
+        .makeTranslation(s.posed[0] + c[0], s.posed[1] + c[1], s.posed[2] + c[2])
+        .multiply(rot.makeRotationFromQuaternion(q))
+        .multiply(back.makeTranslation(-(s.pivot[0] + c[0]), -(s.pivot[1] + c[1]), -(s.pivot[2] + c[2])));
+    }
+    for (const { id, seg } of this.bodyRigid) {
+      const mesh = this.meshes.get(id);
+      const bone = this.bodyBones.get(seg);
+      if (!mesh || !bone) continue;
+      mesh.matrixAutoUpdate = false;
+      mesh.matrix.copy(bone.matrixWorld);
+      mesh.matrixWorldNeedsUpdate = true;
+    }
+    for (const twin of this.bodyTwins) {
+      if (!twin.uniforms) continue;
+      const ratio = Math.max(0.35, body.ratioAt(twin.id, frame));
+      twin.uniforms.uBulge.value = Math.min(1.45, Math.max(0.75, 1 / Math.sqrt(ratio)));
+    }
+    // Cables and the bat live in the scene (catalog space), so no centre offset here.
+    const place = (seg: string | undefined, v: THREE.Vector3): THREE.Vector3 => {
+      const s = seg ? t[seg as keyof typeof t] : undefined;
+      if (!s) return v.clone();
+      q.set(s.q[0], s.q[1], s.q[2], s.q[3]);
+      return v
+        .clone()
+        .sub(new THREE.Vector3(s.pivot[0], s.pivot[1], s.pivot[2]))
+        .applyQuaternion(q)
+        .add(new THREE.Vector3(s.posed[0], s.posed[1], s.posed[2]));
+    };
+    for (const cable of this.cables) {
+      const from = place(cable.fromSeg, cable.from);
+      const to = place(cable.toSeg, cable.to);
+      const via = place(cable.fromSeg, cable.via).lerp(place(cable.toSeg, cable.via), cable.viaWeight);
+      AnatomyEngine.placeSegment(cable.first, from, via);
+      AnatomyEngine.placeSegment(cable.second, via, to);
+      cable.dot.position.copy(to);
+    }
+    if (this.batMesh && body.bat) {
+      const f = Math.min(body.bat.dirs.length - 1, Math.max(0, Math.round(frame)));
+      const knob = place(body.bat.hand, new THREE.Vector3(...body.bat.anchor));
+      const dir = body.bat.dirs[f];
+      const tip = knob.clone().add(new THREE.Vector3(dir[0], dir[1], dir[2]).multiplyScalar(0.85));
+      AnatomyEngine.placeSegment(this.batMesh, knob, tip);
+    }
     this.shadowDirty = true;
     this.floor?.markDirty();
+  }
+
+  private clearBody(): void {
+    for (const twin of this.bodyTwins) {
+      this.model?.remove(twin.skinned);
+      twin.material.dispose();
+      const original = this.meshes.get(twin.id);
+      const target = this.targets.get(twin.id);
+      if (original) original.visible = target ? target.style.visible : true;
+    }
+    this.bodyTwins = [];
+    for (const { id } of this.bodyRigid) {
+      const mesh = this.meshes.get(id);
+      if (!mesh) continue;
+      mesh.matrix.identity();
+      mesh.position.set(0, 0, 0);
+      mesh.rotation.set(0, 0, 0);
+      mesh.scale.set(1, 1, 1);
+      mesh.matrixAutoUpdate = true;
+      mesh.matrixWorldNeedsUpdate = true;
+    }
+    this.bodyRigid = [];
+    this.bodyBones.clear();
+    this.bodySkeleton = null;
+    if (this.batMesh) {
+      this.scene.remove(this.batMesh);
+      this.batMesh.geometry.dispose();
+      (this.batMesh.material as THREE.Material).dispose();
+      this.batMesh = null;
+    }
+    this.body = null;
+    this.shadowDirty = true;
+    this.floor?.markDirty();
+  }
+
+  /** Put rigidly posed bones back and drop the two-bone twins, keeping the cables. */
+  private undoMotionPose(): void {
     for (const id of this.posed) {
       const mesh = this.meshes.get(id);
       if (!mesh) continue;
@@ -850,15 +1067,6 @@ export class AnatomyEngine {
       mesh.matrixWorldNeedsUpdate = true;
     }
     this.posed.clear();
-    for (const c of this.cables) {
-      this.cableGroup.remove(c.first, c.second, c.dot);
-      c.first.geometry.dispose();
-      c.second.geometry.dispose();
-      (c.second.material as THREE.Material).dispose();
-      c.dot.geometry.dispose();
-      (c.dot.material as THREE.Material).dispose();
-    }
-    this.cables = [];
     for (const d of this.deformed) {
       this.model?.remove(d.skinned);
       d.skinned.geometry.dispose();
@@ -869,21 +1077,42 @@ export class AnatomyEngine {
     }
     this.deformed = [];
     this.deformedIds.clear();
+  }
+
+  private clearMotion(): void {
+    this.shadowDirty = true;
+    this.floor?.markDirty();
+    this.undoMotionPose();
+    for (const c of this.cables) {
+      this.cableGroup.remove(c.first, c.second, c.dot);
+      c.first.geometry.dispose();
+      c.second.geometry.dispose();
+      (c.second.material as THREE.Material).dispose();
+      c.dot.geometry.dispose();
+      (c.dot.material as THREE.Material).dispose();
+    }
+    this.cables = [];
     this.motion = null;
     this.motionPlaying = false;
   }
 
   /** Copy the original's tweened look onto its deformed copy so selection and hover still read. */
   private mirrorDeformed(): void {
-    for (const d of this.deformed) {
-      const src = this.meshes.get(d.id)?.material;
-      if (!src) continue;
-      d.material.color.copy(src.color);
-      d.material.emissive.copy(src.emissive);
-      d.material.emissiveIntensity = src.emissiveIntensity;
-      d.material.opacity = src.opacity;
-      d.material.transparent = src.transparent;
-      d.material.depthWrite = src.depthWrite;
+    const copy = (id: string, material: THREE.MeshStandardMaterial) => {
+      const src = this.meshes.get(id)?.material;
+      if (!src) return;
+      material.color.copy(src.color);
+      material.emissive.copy(src.emissive);
+      material.emissiveIntensity = src.emissiveIntensity;
+      material.opacity = src.opacity;
+      material.transparent = src.transparent;
+      material.depthWrite = src.depthWrite;
+    };
+    for (const d of this.deformed) copy(d.id, d.material);
+    for (const twin of this.bodyTwins) {
+      copy(twin.id, twin.material);
+      const src = this.meshes.get(twin.id);
+      if (src) twin.skinned.visible = this.targets.get(twin.id)?.style.visible ?? true;
     }
   }
 
@@ -1119,6 +1348,7 @@ export class AnatomyEngine {
     this.draco.dispose();
     this.clearPaths();
     this.clearPull();
+    this.clearBody();
     this.clearMotion();
     this.setPulse(null);
     this.setSelected(null);
@@ -1327,7 +1557,7 @@ export class AnatomyEngine {
         this.handlers.onMotionPhase?.(this.motionPhase);
       }
     }
-    if (this.deformed.length) this.mirrorDeformed();
+    if (this.deformed.length || this.bodyTwins.length) this.mirrorDeformed();
     if (this.pulse) {
       // A slow breath: about 7% shorter at the peak, thicker to match.
       const p = (1 - Math.cos((now % 2600) / 2600 * Math.PI * 2)) / 2;
@@ -1367,6 +1597,8 @@ export class AnatomyEngine {
       (m) => m.visible && m.material.opacity > 0.2,
     );
     for (const d of this.deformed) if (d.material.opacity > 0.2) candidates.push(d.skinned);
+    for (const twin of this.bodyTwins)
+      if (twin.skinned.visible && twin.material.opacity > 0.2) candidates.push(twin.skinned);
     return this.raycaster.intersectObjects(candidates, false)[0]?.object as PartMesh | undefined;
   }
 
