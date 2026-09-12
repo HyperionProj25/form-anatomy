@@ -120,7 +120,8 @@ describe("skin weights", () => {
 describe("muscle paths and ranking", () => {
   test("paths exist for most muscles and ratios are one at frame 0", () => {
     const paths = musclePaths();
-    expect(paths.length).toBeGreaterThan(250);
+    // 269 muscles have contacts on both ends; the 77 whose ends share a rigid segment are left out.
+    expect(paths.length).toBeGreaterThan(180);
     const swing = synthetic(3);
     const ratios = lengthRatios(swing);
     for (const [, r] of ratios) {
@@ -152,5 +153,12 @@ describe("muscle paths and ranking", () => {
     const ranking = changeRanking(file);
     expect(ranking.shortening.length).toBeGreaterThan(0);
     expect(ranking.lengthening.length).toBeGreaterThan(0);
+  });
+});
+
+describe("muscle paths under a rigid rig", () => {
+  test("every path crosses at least one segment boundary, so it can change length", () => {
+    const same = musclePaths().filter((p) => p.fromSeg === p.toSeg);
+    expect(same.map((p) => p.id)).toEqual([]);
   });
 });

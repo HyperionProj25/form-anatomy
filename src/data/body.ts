@@ -97,6 +97,9 @@ export function musclePaths(): MusclePath[] {
       }
     }
     if (!from || !to || !fromSeg || !toSeg) continue;
+    // Both ends on one rigid segment (hand intrinsics, jaw, larynx, abdominal wall): the rig cannot
+    // change that path's length, so it is neither drawn nor counted in a group's mean.
+    if (fromSeg === toSeg) continue;
     const viaSegments = candidateSegments(p);
     const viaWeights = pointWeights(p.centroid, viaSegments, bandFor(p));
     out.push({ id: p.id, key: p.key, name: p.name, from, via: p.centroid, to, fromSeg, toSeg, viaSegments, viaWeights });
@@ -191,9 +194,29 @@ export type BodyDrawing = {
   carrierOf(partId: string): SegmentId;
   bulgeOf(partId: string): { axisFrom: Vec3; axisTo: Vec3; belly: Vec3 } | null;
   ratioAt(partId: string, frame: number): number;
-  /** The bat's knob sits between the two posed hand tips, along the measured bat direction (unit, per frame). */
-  bat: { dirs: Vec3[]; anchors: [Vec3, Vec3]; hands: [SegmentId, SegmentId] } | null;
+  /**
+   * The bat: measured direction per frame (unit, knob to tip), the two posed hand tips it is gripped
+   * between, its length, and how far the knob sits below the hands (the capture's "knob" point is the
+   * bottom of the lead hand, so the grip offset is what the measured reach leaves of the bat).
+   */
+  bat: { dirs: Vec3[]; anchors: [Vec3, Vec3]; hands: [SegmentId, SegmentId]; length: number; gripOffset: number } | null;
 };
+
+/** A 34-inch bat, the common adult length. */
+export const BAT_LENGTH = 0.864;
+
+/** Direction per frame plus a grip offset from the measured hand-to-tip reach, clamped to a plausible grip. */
+export function batOf(bat: NonNullable<SwingFile["bat"]>): NonNullable<BodyDrawing["bat"]> {
+  const reach = bat.tip.map((tip, i) => dist(tip as Vec3, bat.knob[i] as Vec3)).sort((a, b) => a - b);
+  const median = reach.length ? reach[Math.floor(reach.length / 2)] : BAT_LENGTH - 0.14;
+  return {
+    dirs: bat.tip.map((tip, i) => normalize(sub(tip as Vec3, bat.knob[i] as Vec3))),
+    anchors: [pivotOf("handTip", "left")!, pivotOf("handTip", "right")!],
+    hands: ["handL", "handR"],
+    length: BAT_LENGTH,
+    gripOffset: Math.min(0.25, Math.max(0.05, BAT_LENGTH - median)),
+  };
+}
 
 export function bodyDrawing(swing: SwingFile, mode: BodyDrawing["mode"] = "lines"): BodyDrawing {
   const ratios = lengthRatios(swing);
@@ -223,12 +246,6 @@ export function bodyDrawing(swing: SwingFile, mode: BodyDrawing["mode"] = "lines
       return p ? { axisFrom: p.from, axisTo: p.to, belly: p.via } : null;
     },
     ratioAt: (id, f) => ratios.get(id)?.[Math.min(swing.frames - 1, Math.max(0, Math.round(f)))] ?? 1,
-    bat: swing.bat
-      ? {
-          dirs: swing.bat.tip.map((tip, i) => normalize(sub(tip, swing.bat!.knob[i]))),
-          anchors: [pivotOf("handTip", "left")!, pivotOf("handTip", "right")!],
-          hands: ["handL", "handR"],
-        }
-      : null,
+    bat: swing.bat ? batOf(swing.bat) : null,
   };
 }

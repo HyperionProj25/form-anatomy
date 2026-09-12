@@ -135,6 +135,46 @@ const LINE_NEUTRAL = new THREE.Color("#cfc7b8");
 const LINE_SHORTEN = new THREE.Color("#f2a531");
 const LINE_LENGTHEN = new THREE.Color("#3d8bff");
 const LINE_RADIUS = 0.004;
+const BAT_WOOD = new THREE.Color("#c9a96e");
+
+/**
+ * A 34-inch wood bat as a lathe profile: unit length along y centred at the origin so placeSegment
+ * stretches it knob to tip, radii in real metres. Vertex colours carry a faint grain along the length.
+ */
+function batGeometry(): THREE.BufferGeometry {
+  const profile: [number, number][] = [
+    [0, 0],
+    [0.026, 0],
+    [0.026, 0.012],
+    [0.018, 0.022],
+    [0.0125, 0.04],
+    [0.0125, 0.34],
+    [0.016, 0.45],
+    [0.024, 0.56],
+    [0.031, 0.68],
+    [0.033, 0.8],
+    [0.033, 0.975],
+    [0.027, 0.995],
+    [0, 1],
+  ];
+  const geometry = new THREE.LatheGeometry(
+    profile.map(([r, f]) => new THREE.Vector2(r, f - 0.5)),
+    28,
+  );
+  const pos = geometry.attributes.position;
+  const colours = new Float32Array(pos.count * 3);
+  for (let i = 0; i < pos.count; i++) {
+    const theta = Math.atan2(pos.getZ(i), pos.getX(i));
+    const f = pos.getY(i) + 0.5;
+    const grain = 0.94 + 0.06 * Math.sin(theta * 7 + f * 4.5) * Math.sin(theta * 3 - f * 11);
+    const knob = f < 0.03 ? 0.8 : 1;
+    colours[i * 3] = BAT_WOOD.r * grain * knob;
+    colours[i * 3 + 1] = BAT_WOOD.g * grain * knob;
+    colours[i * 3 + 2] = BAT_WOOD.b * grain * knob;
+  }
+  geometry.setAttribute("color", new THREE.BufferAttribute(colours, 3));
+  return geometry;
+}
 function lineColor(change: number): THREE.Color {
   if (!Number.isFinite(change) || Math.abs(change) < 0.01) return LINE_NEUTRAL.clone();
   const k = 0.35 + 0.65 * Math.min(1, Math.abs(change) / 0.15);
@@ -271,7 +311,8 @@ export class AnatomyEngine {
     uniforms: BulgeUniforms | null;
   }[] = [];
   private bodyRigid: { id: string; seg: string }[] = [];
-  private bodyHidden: string[] = [];
+  private bodyHidden = new Set<string>();
+  private bodyTwinIds = new Set<string>();
   private bodyLines: { id: string; path: MusclePath; first: THREE.Mesh; second: THREE.Mesh; material: THREE.MeshStandardMaterial }[] = [];
   private lineGroup = new THREE.Group();
   private selectedId: string | null = null;
@@ -439,6 +480,11 @@ export class AnatomyEngine {
     return this.descriptionsById.get(id);
   }
 
+  /** True while the whole-body pose stands in for a part: hidden behind the lines, or replaced by a skinned twin. */
+  private bodyStandsIn(id: string): boolean {
+    return this.bodyHidden.has(id) || this.bodyTwinIds.has(id);
+  }
+
   /** Set the target look of every part. Changes ease in over ~250 ms; the first call snaps. */
   applyAppearance(styles: Map<string, PartStyle>): void {
     for (const [id, mesh] of this.meshes) {
@@ -449,12 +495,12 @@ export class AnatomyEngine {
       const target: Target = { style: s, color: new THREE.Color(s.color), emissive: new THREE.Color(s.emissive) };
       this.targets.set(id, target);
       if (!this.initialized || this.reduced) {
-        this.snap(mesh, target);
+        this.snap(id, mesh, target);
         continue;
       }
       // A muscle with a deformed copy stays hidden itself; its material still tweens so the
       // copy, which mirrors it every frame, follows selection and hover.
-      if (s.visible && !mesh.visible && !this.deformedIds.has(id)) {
+      if (s.visible && !mesh.visible && !this.deformedIds.has(id) && !this.bodyStandsIn(id)) {
         mesh.visible = true;
         mesh.material.opacity = 0;
         mesh.material.transparent = true;
@@ -556,6 +602,7 @@ export class AnatomyEngine {
       this.pipeline?.setSceneBox(this.modelBox);
       if (high && !this.floor) {
         this.floor = createFloor(this.modelBox);
+        this.floor.setMirror(!this.body);
         this.scene.add(this.floor.group);
       } else if (!high && this.floor) {
         this.floor.dispose();
@@ -604,7 +651,7 @@ export class AnatomyEngine {
   /** At High the halo is written brighter than white so it blooms into a soft glow. */
   private haloColor(): THREE.Color {
     const c = new THREE.Color(HALO_COLOR);
-    return this.level === "high" ? c.multiplyScalar(10) : c;
+    return this.level === "high" ? c.multiplyScalar(6) : c;
   }
 
   private meterFrame(dt: number): void {
@@ -895,6 +942,7 @@ export class AnatomyEngine {
       return;
     }
     this.undoMotionPose();
+    this.floor?.setMirror(false);
     const bones: THREE.Bone[] = [];
     for (const seg of Object.keys(body.transformsAt(0))) {
       const bone = new THREE.Bone();
@@ -915,7 +963,7 @@ export class AnatomyEngine {
       }
       if (body.mode === "lines") {
         // Skeleton plus lines of action: soft shapes stay out of the picture.
-        this.bodyHidden.push(id);
+        this.bodyHidden.add(id);
         mesh.visible = false;
         continue;
       }
@@ -969,6 +1017,7 @@ export class AnatomyEngine {
       this.model.add(skinned);
       skinned.bind(this.bodySkeleton, new THREE.Matrix4());
       this.bodyTwins.push({ id, skinned, material, uniforms });
+      this.bodyTwinIds.add(id);
       mesh.visible = false;
     }
     if (body.mode === "lines") {
@@ -985,8 +1034,8 @@ export class AnatomyEngine {
     }
     if (body.bat) {
       this.batMesh = new THREE.Mesh(
-        new THREE.CylinderGeometry(0.014, 0.032, 1, 12, 1, false),
-        new THREE.MeshStandardMaterial({ color: 0x8a6d3b, roughness: 0.55, metalness: 0 }),
+        batGeometry(),
+        new THREE.MeshStandardMaterial({ color: 0xffffff, vertexColors: true, roughness: 0.42, metalness: 0 }),
       );
       this.batMesh.castShadow = this.level === "high";
       this.scene.add(this.batMesh);
@@ -1065,11 +1114,13 @@ export class AnatomyEngine {
     }
     if (this.batMesh && body.bat) {
       const f = Math.min(body.bat.dirs.length - 1, Math.max(0, Math.round(frame)));
-      const knob = place(body.bat.hands[0], vec(body.bat.anchors[0]))
+      const hands = place(body.bat.hands[0], vec(body.bat.anchors[0]))
         .add(place(body.bat.hands[1], vec(body.bat.anchors[1])))
         .multiplyScalar(0.5);
-      const dir = body.bat.dirs[f];
-      const tip = knob.clone().add(new THREE.Vector3(dir[0], dir[1], dir[2]).multiplyScalar(0.85));
+      const dir = vec(body.bat.dirs[f]);
+      // The hands grip the handle, so the knob sits below them and the barrel runs out to the measured tip.
+      const knob = hands.clone().addScaledVector(dir, -body.bat.gripOffset);
+      const tip = knob.clone().addScaledVector(dir, body.bat.length);
       AnatomyEngine.placeSegment(this.batMesh, knob, tip);
     }
     this.shadowDirty = true;
@@ -1085,6 +1136,7 @@ export class AnatomyEngine {
       if (original) original.visible = target ? target.style.visible : true;
     }
     this.bodyTwins = [];
+    this.bodyTwinIds.clear();
     for (const { id } of this.bodyRigid) {
       const mesh = this.meshes.get(id);
       if (!mesh) continue;
@@ -1101,7 +1153,7 @@ export class AnatomyEngine {
       const target = this.targets.get(id);
       if (mesh) mesh.visible = target ? target.style.visible : true;
     }
-    this.bodyHidden = [];
+    this.bodyHidden.clear();
     for (const line of this.bodyLines) {
       this.lineGroup.remove(line.first, line.second);
       line.first.geometry.dispose();
@@ -1119,7 +1171,7 @@ export class AnatomyEngine {
     }
     this.body = null;
     this.shadowDirty = true;
-    this.floor?.markDirty();
+    this.floor?.setMirror(true);
   }
 
   /** Put rigidly posed bones back and drop the two-bone twins, keeping the cables. */
@@ -1465,9 +1517,9 @@ export class AnatomyEngine {
     this.ground = disc;
   }
 
-  private snap(mesh: PartMesh, t: Target): void {
+  private snap(id: string, mesh: PartMesh, t: Target): void {
     const mat = mesh.material;
-    mesh.visible = t.style.visible;
+    mesh.visible = t.style.visible && !this.deformedIds.has(id) && !this.bodyStandsIn(id);
     mat.color.copy(t.color);
     mat.emissive.copy(t.emissive);
     mat.emissiveIntensity = t.style.emissiveIntensity;

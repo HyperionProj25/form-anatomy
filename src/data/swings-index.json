@@ -86,7 +86,7 @@
   },
   {
     "id": "session1-best-r",
-    "label": "Session 1 · best right-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 1 · best right-handed swing by bat speed · markerless capture",
     "handedness": "R",
     "kind": "trackman",
     "frames": 167,
@@ -108,7 +108,7 @@
   },
   {
     "id": "session1-median-r",
-    "label": "Session 1 · median right-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 1 · median right-handed swing by bat speed · markerless capture",
     "handedness": "R",
     "kind": "trackman",
     "frames": 137,
@@ -130,7 +130,7 @@
   },
   {
     "id": "session1-best-l",
-    "label": "Session 1 · best left-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 1 · best left-handed swing by bat speed · markerless capture",
     "handedness": "L",
     "kind": "trackman",
     "frames": 143,
@@ -152,7 +152,7 @@
   },
   {
     "id": "session1-median-l",
-    "label": "Session 1 · median left-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 1 · median left-handed swing by bat speed · markerless capture",
     "handedness": "L",
     "kind": "trackman",
     "frames": 139,
@@ -174,7 +174,7 @@
   },
   {
     "id": "session2-best-r",
-    "label": "Session 2 · best right-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 2 · best right-handed swing by bat speed · markerless capture",
     "handedness": "R",
     "kind": "trackman",
     "frames": 163,
@@ -196,7 +196,7 @@
   },
   {
     "id": "session2-median-r",
-    "label": "Session 2 · median right-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 2 · median right-handed swing by bat speed · markerless capture",
     "handedness": "R",
     "kind": "trackman",
     "frames": 129,
@@ -218,7 +218,7 @@
   },
   {
     "id": "session2-best-l",
-    "label": "Session 2 · best left-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 2 · best left-handed swing by bat speed · markerless capture",
     "handedness": "L",
     "kind": "trackman",
     "frames": 122,
@@ -240,7 +240,7 @@
   },
   {
     "id": "session2-median-l",
-    "label": "Session 2 · median left-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 2 · median left-handed swing by bat speed · markerless capture",
     "handedness": "L",
     "kind": "trackman",
     "frames": 165,
@@ -262,7 +262,7 @@
   },
   {
     "id": "session3-best-r",
-    "label": "Session 3 · best right-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 3 · best right-handed swing by bat speed · markerless capture",
     "handedness": "R",
     "kind": "trackman",
     "frames": 110,
@@ -284,7 +284,7 @@
   },
   {
     "id": "session3-median-r",
-    "label": "Session 3 · median right-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 3 · median right-handed swing by bat speed · markerless capture",
     "handedness": "R",
     "kind": "trackman",
     "frames": 115,
@@ -306,7 +306,7 @@
   },
   {
     "id": "session3-best-l",
-    "label": "Session 3 · best left-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 3 · best left-handed swing by bat speed · markerless capture",
     "handedness": "L",
     "kind": "trackman",
     "frames": 165,
@@ -328,7 +328,7 @@
   },
   {
     "id": "session3-median-l",
-    "label": "Session 3 · median left-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 3 · median left-handed swing by bat speed · markerless capture",
     "handedness": "L",
     "kind": "trackman",
     "frames": 119,
@@ -350,7 +350,7 @@
   },
   {
     "id": "session4-best-r",
-    "label": "Session 4 · best right-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 4 · best right-handed swing by bat speed · markerless capture",
     "handedness": "R",
     "kind": "trackman",
     "frames": 166,
@@ -372,7 +372,7 @@
   },
   {
     "id": "session4-median-r",
-    "label": "Session 4 · median right-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 4 · median right-handed swing by bat speed · markerless capture",
     "handedness": "R",
     "kind": "trackman",
     "frames": 138,
@@ -394,7 +394,7 @@
   },
   {
     "id": "session4-best-l",
-    "label": "Session 4 · best left-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 4 · best left-handed swing by bat speed · markerless capture",
     "handedness": "L",
     "kind": "trackman",
     "frames": 145,
@@ -416,7 +416,7 @@
   },
   {
     "id": "session4-median-l",
-    "label": "Session 4 · median left-handed swing by bat speed · markerless capture",
+    "label": "TrackMan session 4 · median left-handed swing by bat speed · markerless capture",
     "handedness": "L",
     "kind": "trackman",
     "frames": 114,

@@ -152,7 +152,12 @@ checks without deploying.
   default) poses all eighteen rig segments from the capture and draws the
   skeleton with every muscle as a line of action, origin to insertion,
   coloured amber as its path shortens and blue as it lengthens; click a line
-  to select the muscle. "Muscle shapes (approximate)" re-skins the muscle
+  to select the muscle. Muscles whose two attachments sit on one rigid segment
+  (hand intrinsics, jaw, larynx, abdominal wall: 77 of 269 with contacts)
+  cannot change length under the rig, so they are neither drawn nor counted
+  in a group's mean. The bat is a 34-inch lathe profile gripped above the
+  knob, pointed along the measured tip direction each frame. "Muscle shapes
+  (approximate)" re-skins the muscle
   meshes across the segments instead, with a caveat. The swing report
   (button on the card) gives, per functional muscle group and side, the
   path-length change from foot plant to contact, the fastest shortening and

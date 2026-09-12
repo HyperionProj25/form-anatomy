@@ -9,6 +9,8 @@ import { Reflector } from "three/addons/objects/Reflector.js";
 export type Floor = {
   group: THREE.Group;
   markDirty(): void;
+  /** Show or hide the mirror; the shadow stays. Off during a whole-body swing, when the hitter leaves the mirror's centre and only fragments would show. */
+  setMirror(on: boolean): void;
   dispose(): void;
 };
 
@@ -70,6 +72,10 @@ export function createFloor(box: THREE.Box3): Floor {
   return {
     group,
     markDirty: () => {
+      dirty = true;
+    },
+    setMirror: (on) => {
+      mirror.visible = on;
       dirty = true;
     },
     dispose: () => {

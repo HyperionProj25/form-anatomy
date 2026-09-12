@@ -184,8 +184,10 @@ export default function SwingReport() {
       <p className="subtle">
         Path length between attachments on a generic adult model, posed from the capture&apos;s
         segment orientations. Tendon, wrapping and fibre angle are not modelled, so these are
-        muscle-tendon path changes, not fibre lengths or contraction. Forearm and shin rotation are
-        held; the head is one block; the shoulder girdle follows a quarter of the arm. The report
+        muscle-tendon path changes, not fibre lengths or contraction. Muscles with both attachments
+        on one rigid segment (hand intrinsics, jaw, abdominal wall) cannot change length here and are
+        left out. Forearm and shin rotation are held; the head is one block; the shoulder girdle
+        follows a quarter of the arm. The report
         states what moved and when; it makes no recommendation. Motion: {swing.source.attribution}.
       </p>
       <p className="subtle">
