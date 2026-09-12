@@ -572,7 +572,7 @@ export class AnatomyEngine {
   /** At High the halo is written brighter than white so it blooms into a soft glow. */
   private haloColor(): THREE.Color {
     const c = new THREE.Color(HALO_COLOR);
-    return this.level === "high" ? c.multiplyScalar(3) : c;
+    return this.level === "high" ? c.multiplyScalar(10) : c;
   }
 
   private meterFrame(dt: number): void {

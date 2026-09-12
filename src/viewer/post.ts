@@ -89,8 +89,8 @@ export function createPipeline(
   gtao.output = GTAOPass.OUTPUT.Default;
   gtao.blendIntensity = 0.9;
 
-  // Threshold above any lit bone or highlight: only the HDR halo blooms.
-  const bloom = new UnrealBloomPass(new THREE.Vector2(width, height), 0.3, 0.4, 1.6);
+  // Threshold far above any lit bone or highlight on any GPU: only the HDR halo blooms.
+  const bloom = new UnrealBloomPass(new THREE.Vector2(width, height), 0.3, 0.4, 4.0);
   // The stock blend writes alpha 1 everywhere, which paints the empty stage black. Keep the
   // scene's alpha and let glow add its own brightness as coverage.
   bloom.blendMaterial.fragmentShader = `
